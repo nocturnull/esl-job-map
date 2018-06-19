@@ -6,21 +6,38 @@
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}ESL Job Map{% endblock %}</title>
+        <title>{% block title %}Full-time English Teaching Jobs in South Korea on a Map - Koco Tutor{% endblock %}</title>
+        <link rel="shortcut icon" type="image/png" href="{% static 'esljobmap/favicon.png' %}"/>
+        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'foundation/css/app.css' %}">
     </head>
     <body>
-        <div class="page-header">
-            <h1><a href="/">ESL Job Map</a></h1>
+        <div class="top-bar">
+            <div class="top-bar-left">
+                <a href="{% url 'home' %}">
+                    <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
+                </a>
+            </div>
+
+            <div class="top-bar-right">
+                <ul class="dropdown menu" data-dropdown-menu>
+                    <li>
+                        {% if user.is_authenticated %}
+                            <span>{{ user.username }}</span>
+                            <p><a href="{% url 'logout' %}">Logout</a></p>
+                        {% else %}
+                            <a href="{% url 'login' %}">Login</a>
+                        {% endif %}
+                    </li>
+                    <li><a href="#post-job">Post a job</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </div>
         </div>
 
-        <div class="content container">
-            <div class="row">
-                <div class="col-md-8">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
+        <div class="content">
+            {% block content %}
+            {% endblock %}
         </div>
 
         <script src="{% static 'foundation/node_modules/jquery/dist/jquery.js' %}"></script>
