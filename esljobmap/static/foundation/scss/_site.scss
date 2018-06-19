@@ -15,6 +15,10 @@ a {
     color: nth($brand-secondary, 1);
 }
 
+input[type="text"], input[type="password"], input[type="email"] {
+    border-radius: 10px;
+}
+
 // ==========================================================================
 // Pre-Sequenced Modules
 // ==========================================================================
