@@ -1,11 +1,40 @@
 <!-- templates/home.html -->
 {% extends 'base.html' %}
 
+{% load static %}
+
 {% block title %}Home{% endblock %}
 
 {% block content %}
 
-    <p>Home sweet home</p>
+    <div class="grid-container home">
+
+        <div class="spacing-10"></div>
+
+        <div class="grid-x grid-margin-x">
+
+            <div class="cell medium-4">
+                <button class="bubble">
+                    <img src="{% static 'esljobmap/part-time-jobs.png' %}" alt="Part Time Jobs">
+                    <span>Part Time Jobs</span>
+                </button>
+            </div>
+            <div class="cell medium-4">
+                <button class="bubble">
+                    <img src="{% static 'esljobmap/full-time-jobs.png' %}" alt="Full Time Jobs">
+                    <span>Full Time Jobs</span>
+                </button>
+            </div>
+            <div class="cell medium-4">
+                <button class="bubble">
+                    <img src="{% static 'esljobmap/post-job.png' %}" alt="Post Job">
+                    <span>Post A Job</span>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
 
 {% endblock %}
 

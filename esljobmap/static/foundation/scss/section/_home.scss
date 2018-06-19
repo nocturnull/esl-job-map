@@ -1,0 +1,27 @@
+// ==========================================================================
+// Home
+// ==========================================================================
+
+.home {
+    .bubble {
+        position: relative;
+        color: black;
+        background-color: #eaeaea;
+        border-radius: 50%;
+        width: 22rem;
+        height: 22rem;
+
+        img {
+            width: 93%;
+        }
+
+        span {
+            //display: none;
+            font-size: 2.2rem;
+            position: absolute;
+            top: 42%;
+            left: 0%;
+            width: 100%;
+        }
+    }
+}

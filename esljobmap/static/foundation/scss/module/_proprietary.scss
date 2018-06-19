@@ -1,0 +1,23 @@
+// ==========================================================================
+// Proprietary
+// ==========================================================================
+
+.ejm-logo {
+    width: 107px;
+}
+
+.primary-button {
+    background-color: nth($brand-primary, 2);
+    color: white;
+    font-weight: bold;
+    border-radius: $btn-border-radius;
+
+    &:hover {
+        background-color: nth($brand-secondary, 2);
+        color: white;
+    }
+}
+
+.spacing-10 {
+    margin-top: 10rem;
+}

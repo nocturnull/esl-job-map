@@ -4,6 +4,9 @@
 ## Getting Started
 The following instructions will point you in the right direction and help you get started with installing the website.
 
+## Images Sources
+* https://www.flaticon.com/
+* http://www.online-image-editor.com/
 
 ### Prerequisites
 
