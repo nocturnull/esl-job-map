@@ -3,4 +3,3 @@
 __pycache__
 esljobmap/sent_emails/*.log
 **/db.sqlite3
-**/migrations/*.py

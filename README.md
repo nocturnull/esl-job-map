@@ -4,9 +4,10 @@
 ## Getting Started
 The following instructions will point you in the right direction and help you get started with installing the website.
 
-## Images Sources
-* https://www.flaticon.com/
-* http://www.online-image-editor.com/
+## Resources
+* Free Images: https://www.flaticon.com/
+* Image Edit Tools: http://www.online-image-editor.com/
+* Country Database: https://datahub.io/core/country-list#data
 
 ### Prerequisites
 
