@@ -2,6 +2,7 @@
 // Base
 // ==========================================================================
 @import "config/variables";
+@import "config/mixins";
 
 // ==========================================================================
 // Common DOM Elements
@@ -12,7 +13,11 @@ body, html {
 }
 
 a {
-    color: nth($brand-secondary, 1);
+    color: nth($brand-secondary, 2);
+
+    &:hover {
+        color: nth($brand-secondary, 2);
+    }
 }
 
 input[type="text"], input[type="password"], input[type="email"] {

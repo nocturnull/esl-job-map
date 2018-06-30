@@ -1,8 +1,10 @@
 # account/urls.py
 
 from django.urls import path
-from . import views
+from .views.signup import SignUp, TeacherSignUp, RecruiterSignUp
 
 urlpatterns = [
-    path('signup/', views.SignUp.as_view(), name='signup')
+    path('signup/', SignUp.as_view(), name='signup'),
+    path('signup/teacher', TeacherSignUp.as_view(), name='teacher_signup'),
+    path('signup/recruiter', RecruiterSignUp.as_view(), name='recruiter_signup'),
 ]

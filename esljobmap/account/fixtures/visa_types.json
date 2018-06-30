@@ -1,0 +1,23 @@
+[
+  {
+    "model": "account.VisaType",
+    "pk": 1,
+    "fields": {
+      "name": "E-1"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 2,
+    "fields": {
+      "name": "E-2"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 3,
+    "fields": {
+      "name": "E-3"
+    }
+  }
+]
