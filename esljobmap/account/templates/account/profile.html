@@ -1,0 +1,40 @@
+{%  extends 'base.html' %}
+
+{% block title %}My Profile{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+        <h2>Profile Page</h2>
+
+        <div class="grid-x grid-margin-x">
+            <div class="medium-10 mt-1 mb-1 cell">
+                <a href="{% url 'account_profile_edit' %}" class="primary-button">Edit Account</a>
+            </div>
+
+            <div class="medium-10 cell">
+                <form>
+                    <label>First Name
+                        <input type="text" value="{{ user.first_name }}" readonly>
+                    </label>
+                    <label>Last Name
+                        <input type="text" value="{{ user.last_name }}" readonly>
+                    </label>
+                    <label>Email
+                        <input type="text" value="{{ user.email }}" readonly>
+                    </label>
+                    <label>Phone Number
+                        <input type="text" value="{{ user.phone_number}}" readonly>
+                    </label>
+                </form>
+
+            </div>
+
+            <div class="medium-10 mt-1 cell">
+                <a href="#delete" class="danger-button">Delete Account</a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

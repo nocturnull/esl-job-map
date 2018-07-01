@@ -2,7 +2,6 @@
 
 from django.contrib.auth import login
 from django.shortcuts import redirect
-# from django.urls import reverse_lazy
 from django.views import generic
 
 from ..forms import SiteUserCreationForm, SiteUserTeacherCreationForm, SiteUserRecruiterCreationForm
@@ -15,7 +14,6 @@ class SignUp(generic.CreateView):
 
 class TeacherSignUp(generic.CreateView):
     form_class = SiteUserTeacherCreationForm
-    # success_url = reverse_lazy('login')
     template_name = 'registration/signup/teacher.html'
 
     def get_context_data(self, **kwargs):
@@ -30,7 +28,6 @@ class TeacherSignUp(generic.CreateView):
 
 class RecruiterSignUp(generic.CreateView):
     form_class = SiteUserRecruiterCreationForm
-    # success_url = reverse_lazy('login')
     template_name = 'registration/signup/recruiter.html'
 
     def get_context_data(self, **kwargs):

@@ -32,10 +32,23 @@
     }
 }
 
-.spacing-1 {
+.danger-button {
+    @extend .primary-button;
+    color: $brand-danger;
+
+    &:hover {
+        background-color: lighten($brand-danger, 30%);
+    }
+}
+
+.mt-1 {
     margin-top: 1rem;
 }
 
-.spacing-10 {
+.mb-1 {
+    margin-bottom: 1rem;
+}
+
+.mt-10 {
     margin-top: 10rem;
 }
