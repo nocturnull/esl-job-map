@@ -8,14 +8,14 @@ class SiteUserCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = SiteUser
-        fields = ('username', 'email')
+        fields = ('email',)
 
 
 class SiteUserTeacherCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = SiteUser
-        fields = ('username', 'email')
+        fields = ('email',)
 
     @transaction.atomic
     def save(self, commit=True):
@@ -30,7 +30,7 @@ class SiteUserRecruiterCreationForm(UserCreationForm):
 
     class Meta(UserCreationForm.Meta):
         model = SiteUser
-        fields = ('username', 'email')
+        fields = ('email',)
 
     def save(self, commit=True):
         user = super().save(commit=False)

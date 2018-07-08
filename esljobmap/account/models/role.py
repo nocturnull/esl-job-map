@@ -1,24 +1,16 @@
-# account/models.py
-from django.contrib.auth.models import AbstractUser
+# account/models/role.py
+
 from django.db import models
+from .user import SiteUser
 
-
-class SiteUser(AbstractUser):
-    USER_ROLES = (
-        (1, 'nil'),
-        (2, 'recruiter'),
-        (3, 'teacher')
-    )
-    email = models.EmailField(blank=False, max_length=255, help_text='Required. Provide a valid email address.')
-    phone_number = models.CharField(blank=True, max_length=255, verbose_name='Contact phone number')
-    role = models.PositiveSmallIntegerField(choices=USER_ROLES, default=1)
-
-    def __str__(self):
-        return self.email
+from ..apps import AccountConfig
 
 
 class VisaType(models.Model):
     name = models.CharField(blank=False, max_length=255)
+
+    class Meta:
+        db_table = AccountConfig.name + '_visa_type'
 
 
 class Country(models.Model):
