@@ -129,9 +129,10 @@ STATICFILES_DIRS = [
 ]
 
 # Custom Settings
-
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'account_profile'
 LOGOUT_REDIRECT_URL = 'home'
+
 EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 AUTH_USER_MODEL = 'account.SiteUser'

@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Profile{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+
+        <form method="post">{% csrf_token %}
+            <p>Are you sure you want to delete your account {{ request.user.email }}?</p>
+            <input type="submit" value="Confirm" />
+        </form>
+
+    </div>
+
+{% endblock %}

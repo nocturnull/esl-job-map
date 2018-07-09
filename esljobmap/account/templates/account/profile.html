@@ -1,4 +1,4 @@
-{%  extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}My Profile{% endblock %}
 
@@ -49,7 +49,7 @@
 
         <div class="grid-x grid-margin-x mt-1 mb-1">
             <div class="medium-10 mt-1 cell">
-                <a href="#delete" class="danger-button">Delete Account</a>
+                <a href="{% url 'account_profile_delete' %}" class="danger-button">Delete Account</a>
             </div>
         </div>
 

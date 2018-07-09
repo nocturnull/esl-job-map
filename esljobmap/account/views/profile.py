@@ -1,13 +1,16 @@
 # account/views/profile.py
 
-from django.views.generic import TemplateView
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth import logout
+from django.views.generic import TemplateView, DeleteView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 
+from ..models import SiteUser
 from ..forms import UserUpdateForm, TeacherUpdateForm
 
 
-class ViewProfile(TemplateView):
+class ViewProfile(LoginRequiredMixin, TemplateView):
     template_name = 'account/profile.html'
 
     def get_context_data(self, **kwargs):
@@ -18,7 +21,7 @@ class ViewProfile(TemplateView):
         return kwargs
 
 
-class EditProfile(TemplateView):
+class EditProfile(LoginRequiredMixin, TemplateView):
     template_name = 'account/edit_profile_form.html'
     success_url = reverse_lazy('account_profile')
 
@@ -47,3 +50,12 @@ class EditProfile(TemplateView):
                 self.template_name,
                 {'user_form': user_form, 'teacher_form': teacher_form}
             )
+
+
+class DeleteProfile(LoginRequiredMixin, DeleteView):
+    model = SiteUser
+    success_url = reverse_lazy('home')
+    template_name = 'account/profile_confirm_delete.html'
+
+    def get_object(self, queryset=None):
+        return self.request.user
