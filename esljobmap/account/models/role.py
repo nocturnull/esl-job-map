@@ -9,6 +9,9 @@ from ..apps import AccountConfig
 class VisaType(models.Model):
     name = models.CharField(blank=False, max_length=255)
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         db_table = AccountConfig.name + '_visa_type'
 
@@ -16,6 +19,9 @@ class VisaType(models.Model):
 class Country(models.Model):
     name = models.CharField(blank=False, max_length=255)
     code = models.CharField(blank=False, max_length=10)
+
+    def __str__(self):
+        return self.name
 
 
 class Teacher(models.Model):

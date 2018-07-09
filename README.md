@@ -37,8 +37,13 @@ brew install postgresql
 brew services start postgresql
 createdb esljobmap
 psql esljobmap
+```
+
+Once logged into PostgreSQL, set the password for your account.
+```postgresql
 \password YOUR_USERNAME
 ```
+
 * Install Redis
 ```bash
 brew install redis

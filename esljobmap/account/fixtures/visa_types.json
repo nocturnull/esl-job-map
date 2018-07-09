@@ -3,21 +3,70 @@
     "model": "account.VisaType",
     "pk": 1,
     "fields": {
-      "name": "E-1"
+      "name": "E-1 Eligible"
     }
   },
   {
     "model": "account.VisaType",
     "pk": 2,
     "fields": {
-      "name": "E-2"
+      "name": "E-2 Eligible"
     }
   },
   {
     "model": "account.VisaType",
     "pk": 3,
     "fields": {
-      "name": "E-3"
+      "name": "E-1 Holder"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 4,
+    "fields": {
+      "name": "E-2 Holder"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 5,
+    "fields": {
+      "name": "F-2"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 6,
+    "fields": {
+      "name": "F-4"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 7,
+    "fields": {
+      "name": "F-5"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 8,
+    "fields": {
+      "name": "F-6"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 9,
+    "fields": {
+      "name": "D-2"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 10,
+    "fields": {
+      "name": "Other Visa"
     }
   }
 ]

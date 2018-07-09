@@ -7,29 +7,47 @@
     <div class="grid-container">
         <h2>Profile Page</h2>
 
-        <div class="grid-x grid-margin-x">
-            <div class="medium-10 mt-1 mb-1 cell">
+        <div class="grid-x grid-margin-x mt-1 mb-1">
+            <div class="medium-10 cell">
                 <a href="{% url 'account_profile_edit' %}" class="primary-button">Edit Account</a>
             </div>
+        </div>
 
-            <div class="medium-10 cell">
-                <form>
-                    <label>First Name
-                        <input type="text" value="{{ user.first_name }}" readonly>
-                    </label>
-                    <label>Last Name
-                        <input type="text" value="{{ user.last_name }}" readonly>
-                    </label>
-                    <label>Email
-                        <input type="text" value="{{ user.email }}" readonly>
-                    </label>
-                    <label>Phone Number
-                        <input type="text" value="{{ user.phone_number}}" readonly>
-                    </label>
-                </form>
+        <div class="grid-x grid-margin-x mt-1 mb-1 p-1">
+            <div class="medium-3 cell">First Name</div>
+            <div class="medium-6 cell">{{ user.first_name|default_if_none:'' }}</div>
+        </div>
 
+        <div class="grid-x grid-margin-x mt-1 mb-1 p-1">
+            <div class="medium-3 cell">Last Name</div>
+            <div class="medium-6 cell">{{ user.last_name|default_if_none:'' }}</div>
+        </div>
+
+        <div class="grid-x grid-margin-x mt-1 mb-1 p-1">
+            <div class="medium-3 cell">Email</div>
+            <div class="medium-6 cell">{{ user.email }}</div>
+        </div>
+
+        <div class="grid-x grid-margin-x mt-1 mb-1 p-1">
+            <div class="medium-3 cell">Phone</div>
+            <div class="medium-6 cell">{{ user.phone_number|default_if_none:'' }}</div>
+        </div>
+
+        {% if teacher is not None %}
+
+            <div class="grid-x grid-margin-x mt-1 mb-1 p-1">
+                <div class="medium-3 cell">Country</div>
+                <div class="medium-6 cell">{{ teacher.country|default_if_none:'' }}</div>
             </div>
 
+            <div class="grid-x grid-margin-x mt-1 mb-1 p-1">
+                <div class="medium-3 cell">Visa Type</div>
+                <div class="medium-6 cell">{{ teacher.visa_type|default_if_none:'' }}</div>
+            </div>
+
+        {% endif %}
+
+        <div class="grid-x grid-margin-x mt-1 mb-1">
             <div class="medium-10 mt-1 cell">
                 <a href="#delete" class="danger-button">Delete Account</a>
             </div>

@@ -2,6 +2,7 @@
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import SiteUser, Teacher
 from django.db import transaction
+from django.forms import ModelForm
 
 
 class SiteUserCreationForm(UserCreationForm):
@@ -44,3 +45,17 @@ class SiteUserChangeForm(UserChangeForm):
     class Meta:
         model = SiteUser
         fields = UserChangeForm.Meta.fields
+
+
+class UserUpdateForm(ModelForm):
+
+    class Meta:
+        model = SiteUser
+        fields = ('first_name', 'last_name', 'email', 'phone_number')
+
+
+class TeacherUpdateForm(ModelForm):
+
+    class Meta:
+        model = Teacher
+        fields = ('country', 'visa_type')

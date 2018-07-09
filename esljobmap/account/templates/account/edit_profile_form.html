@@ -13,18 +13,8 @@
                 <form method="post">
                     {% csrf_token %}
 
-                    <label>First Name
-                        <input type="text" name="first_name" value="{{ user.first_name }}">
-                    </label>
-                    <label>Last Name
-                        <input type="text" name="last_name" value="{{ user.last_name }}">
-                    </label>
-                    <label>Email
-                        <input type="text" name="email" value="{{ user.email }}">
-                    </label>
-                    <label>Phone Number
-                        <input type="text" name="phone_number" value="{{ user.phone_number}}">
-                    </label>
+                    {{ user_form }}
+                    {{ teacher_form }}
 
                     <button type="submit" class="primary-button">Save</button>
                 </form>
