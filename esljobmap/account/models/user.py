@@ -43,6 +43,14 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
         """
         return self.role == 3
 
+    @property
+    def is_recruiter(self) -> bool:
+        """
+        TODO: Replace with permissions.
+        :return:
+        """
+        return self.role == 1 or self.role == 2
+
     def __str__(self):
         return self.email
 

@@ -8,7 +8,9 @@
                     <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
                 </a>
             </li>
-            <li><a href="#post-job">Post a job</a></li>
+            {% if user.is_recruiter %}
+                <li><a href="{% url 'employment_job_create' %}">Post a job</a></li>
+            {% endif %}
             <li><a href="#about">About</a></li>
         </ul>
     </div>
