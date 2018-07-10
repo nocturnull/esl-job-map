@@ -35,6 +35,14 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     objects = SiteUserManager()
 
+    @property
+    def is_teacher(self) -> bool:
+        """
+        TODO: Replace with permissions.
+        :return:
+        """
+        return self.role == 3
+
     def __str__(self):
         return self.email
 

@@ -13,8 +13,9 @@
                 <form method="post">
                     {% csrf_token %}
 
-                    {{ user_form }}
-                    {{ teacher_form }}
+                    {% for f in forms %}
+                        {{ f }}
+                    {% endfor %}
 
                     <button type="submit" class="primary-button">Save</button>
                 </form>
