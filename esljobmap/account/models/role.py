@@ -28,12 +28,12 @@ class Teacher(models.Model):
     user = models.OneToOneField(SiteUser, on_delete=models.CASCADE)
     visa_type = models.ForeignKey(VisaType,
                                   on_delete=models.CASCADE,
-                                  verbose_name='The visa the person possesses',
+                                  verbose_name='Visa Type',
                                   blank=True,
                                   null=True)
     country = models.ForeignKey(Country,
                                 on_delete=models.CASCADE,
-                                verbose_name="The person's nationality",
+                                verbose_name="Nationality",
                                 blank=True,
                                 null=True
                                 )

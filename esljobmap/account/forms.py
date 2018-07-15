@@ -51,7 +51,7 @@ class UserUpdateForm(ModelForm):
 
     class Meta:
         model = SiteUser
-        fields = ('first_name', 'last_name', 'email', 'phone_number')
+        fields = ('first_name', 'last_name', 'phone_number')
 
 
 class TeacherUpdateForm(ModelForm):
