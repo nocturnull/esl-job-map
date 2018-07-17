@@ -13,10 +13,10 @@
                     {{ job_post }}
                 </div>
                 <div class="cell medium-1">
-                    <a href="#edit" class="safe-button">Edit</a>
+                    <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>
                 </div>
-                <div class="cell medium-1">
-                    <a href="#delete" class="danger-button">Delete</a>
+                <div class="cell medium-2">
+                    <a href="#takedown" class="danger-button">Take Down</a>
                 </div>
             </div>
         {% endfor %}
