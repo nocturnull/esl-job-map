@@ -32,6 +32,16 @@
     }
 }
 
+.safe-button {
+    @extend .primary-button;
+    color: white;
+    background-color: $brand-safe;
+    border: 2px solid $brand-safe;
+
+    &:hover {
+        background-color: lighten($brand-safe, 30%);
+    }
+}
 .danger-button {
     @extend .primary-button;
     color: $brand-danger;
@@ -51,6 +61,10 @@
 
 .mb-1 {
     margin-bottom: 1rem;
+}
+
+.mtb-3 {
+    margin: 3rem auto;
 }
 
 .mt-10 {

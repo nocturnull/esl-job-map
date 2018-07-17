@@ -1,9 +1,11 @@
 from django.db import models
 
 from ..apps import EmploymentConfig
+from account.models.user import SiteUser
 
 
 class JobPost(models.Model):
+    site_user = models.ForeignKey(SiteUser, related_name='job_posts', on_delete=models.CASCADE)
     title = models.CharField(max_length=512)
     class_type = models.CharField(max_length=255)
     location = models.CharField(max_length=512)
@@ -17,8 +19,14 @@ class JobPost(models.Model):
     salary = models.PositiveIntegerField(verbose_name='Yearly Salary', blank=True, default=0)
     benefits = models.CharField(max_length=1024, blank=True, default='')
 
+    @property
+    def pretty_employment_type(self):
+        if self.is_full_time:
+            return '[Full Time]'
+        return '[Part Time]'
+
     def __str__(self):
-        return '%s' % self.title
+        return '%s %s' % (self.title, self.pretty_employment_type)
 
     class Meta:
         db_table = EmploymentConfig.name + '_job_post'

@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload a job{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+        <h2>My Jobs</h2>
+
+        {% for job_post in object_list %}
+            <div class="grid-x mtb-3">
+                <div class="cell medium-4">
+                    {{ job_post }}
+                </div>
+                <div class="cell medium-1">
+                    <a href="#edit" class="safe-button">Edit</a>
+                </div>
+                <div class="cell medium-1">
+                    <a href="#delete" class="danger-button">Delete</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
