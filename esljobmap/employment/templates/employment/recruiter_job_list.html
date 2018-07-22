@@ -15,10 +15,17 @@
                 <div class="cell medium-1">
                     <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>
                 </div>
-                <div class="cell medium-2">
-                    <a href="#takedown" class="danger-button">Take Down</a>
-                </div>
+                {% if job_post.is_visible %}
+                    <div class="cell medium-2">
+                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="danger-button">Take Down</a>
+                    </div>
+                {% else %}
+                    <div class="callout warning">Job taken down</div>
+                {% endif %}
             </div>
+        {% empty %}
+            <p>You have not created any job posts yet.</p>
+            <a href="{% url 'employment_create_job' %}">Click here to make one!</a>
         {% endfor %}
     </div>
 

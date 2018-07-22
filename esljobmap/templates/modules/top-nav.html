@@ -9,7 +9,7 @@
                 </a>
             </li>
             {% if user.is_recruiter %}
-                <li><a href="{% url 'employment_job_create' %}">Post a job</a></li>
+                <li><a href="{% url 'employment_create_job' %}">Post a job</a></li>
                 <li><a href="{% url 'employment_my_job_posts' %}">My Jobs</a></li>
             {% endif %}
             <li><a href="#about">About</a></li>

@@ -18,6 +18,7 @@ class JobPost(models.Model):
     pay_rate = models.PositiveIntegerField(blank=True, default=0, help_text='** ,000 won per hour')
     salary = models.PositiveIntegerField(verbose_name='Yearly Salary', blank=True, default=0)
     benefits = models.CharField(max_length=1024, blank=True, default='')
+    is_visible = models.BooleanField(default=True)
 
     @property
     def pretty_employment_type(self):

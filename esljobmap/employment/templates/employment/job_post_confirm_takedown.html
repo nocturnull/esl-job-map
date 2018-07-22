@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}Takedown Job Post{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+
+        <h3>Confirm Job Post Takedown</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <input type="hidden" name="{{ field.html_name }}" value="1">
+            {% endfor %}
+            <p>Are you sure you want to take down {{ object }}?</p>
+            <input type="submit" value="Confirm" class="primary-button" />
+        </form>
+
+    </div>
+
+{% endblock %}
