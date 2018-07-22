@@ -7,31 +7,22 @@
 
 {% block content %}
 
-    <div class="grid-container home">
+    <div class="home">
 
-        <div class="mt-10"></div>
-
-        <div class="grid-x grid-margin-x">
-
-            <div class="cell medium-4">
-                <button class="bubble">
-                    <img src="{% static 'esljobmap/part-time-jobs.png' %}" alt="Part Time Jobs">
-                    <span>Part Time Jobs</span>
-                </button>
-            </div>
-            <div class="cell medium-4">
-                <button class="bubble">
-                    <img src="{% static 'esljobmap/full-time-jobs.png' %}" alt="Full Time Jobs">
-                    <span>Full Time Jobs</span>
-                </button>
-            </div>
-            <div class="cell medium-4">
-                <button class="bubble">
-                    <img src="{% static 'esljobmap/post-job.png' %}" alt="Post Job">
+        <div class="welcome-content">
+            <h1>Teach English in South Korea</h1>
+            <br>
+            <a href="{% url 'employment_full_time_jobs' %}" class="secondary-button">
+                <span>Full Time Jobs</span>
+            </a>
+            <a href="{% url 'employment_part_time_jobs' %}" class="secondary-button">
+                <span>Part Time Jobs</span>
+            </a>
+            {% if user.is_recruiter %}
+                <a class="secondary-button" href="{% url 'employment_create_job' %}">
                     <span>Post A Job</span>
-                </button>
-            </div>
-
+                </a>
+            {% endif %}
         </div>
 
     </div>
