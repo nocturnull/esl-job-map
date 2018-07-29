@@ -1,12 +1,15 @@
 # employment/views/recruitment.py
 from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
 
 from ..models import JobPost
+from ..decorators import recruiter_required
 from ..forms.recruitment import CreateJobForm, TakeDownJobForm
 
 
+@method_decorator(recruiter_required, name='dispatch')
 class CreateJobPost(LoginRequiredMixin, CreateView):
     """
     Job Post creation view.
@@ -23,6 +26,7 @@ class CreateJobPost(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
+@method_decorator(recruiter_required, name='dispatch')
 class ListJobPost(LoginRequiredMixin, ListView):
     """
     View for recruiters to view all their job posts.
@@ -34,6 +38,7 @@ class ListJobPost(LoginRequiredMixin, ListView):
         return self.request.user.job_posts.all()
 
 
+@method_decorator(recruiter_required, name='dispatch')
 class EditJobPost(LoginRequiredMixin, UpdateView):
     """
     View for editing existing job posts.
@@ -46,6 +51,7 @@ class EditJobPost(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('employment_my_job_posts')
 
 
+@method_decorator(recruiter_required, name='dispatch')
 class TakeDownJobPost(LoginRequiredMixin, UpdateView):
     """
     View for taking down a job post.
