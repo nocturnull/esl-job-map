@@ -42,6 +42,7 @@
         background-color: lighten($brand-safe, 30%);
     }
 }
+
 .danger-button {
     @extend .primary-button;
     color: $brand-danger;

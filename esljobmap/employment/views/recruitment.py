@@ -2,6 +2,7 @@
 from django.views.generic import ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from ..models import JobPost
@@ -49,6 +50,12 @@ class EditJobPost(LoginRequiredMixin, UpdateView):
     form_class = CreateJobForm
     template_name = 'employment/job_post_form.html'
     success_url = reverse_lazy('employment_my_job_posts')
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.is_editable:
+            return super().get(request, *args, **kwargs)
+        return redirect('employment_my_job_posts')
 
 
 @method_decorator(recruiter_required, name='dispatch')

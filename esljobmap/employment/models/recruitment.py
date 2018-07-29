@@ -29,6 +29,10 @@ class JobPost(models.Model):
         return '[Part Time]'
 
     @property
+    def is_editable(self):
+        return datetime.now() < (self.created_at + timedelta(days=1))
+
+    @property
     def is_expired(self):
         return datetime.now() > (self.created_at + timedelta(weeks=2))
 

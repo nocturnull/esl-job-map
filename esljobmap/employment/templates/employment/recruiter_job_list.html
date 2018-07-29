@@ -12,8 +12,12 @@
                 <div class="cell medium-4">
                     {{ job_post }}
                 </div>
-                <div class="cell medium-1">
-                    <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>
+                <div class="cell medium-2">
+                    {% if job_post.is_editable %}
+                        <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>
+                    {% else %}
+                        <p class="callout alert">Job only editable within 24 hours.</p>
+                    {% endif %}
                 </div>
                 {% if job_post.is_visible %}
                     <div class="cell medium-2">
