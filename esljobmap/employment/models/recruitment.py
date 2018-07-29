@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.db import models
 
 from ..apps import EmploymentConfig
@@ -18,12 +19,18 @@ class JobPost(models.Model):
     pay_rate = models.CharField(max_length=512)
     benefits = models.CharField(max_length=1024, blank=True, default='')
     is_visible = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     @property
     def pretty_employment_type(self):
         if self.is_full_time:
             return '[Full Time]'
         return '[Part Time]'
+
+    @property
+    def is_expired(self):
+        return datetime.now() > (self.created_at + timedelta(weeks=2))
 
     def __str__(self):
         return '%s %s' % (self.title, self.pretty_employment_type)

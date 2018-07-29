@@ -20,7 +20,10 @@
                         <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="danger-button">Take Down</a>
                     </div>
                 {% else %}
-                    <div class="callout warning">Job taken down</div>
+                    <div class="cell medium-1 callout warning">Job taken down</div>
+                {% endif %}
+                {% if job_post.is_expired %}
+                    <div class="cell medium-1 callout alert">Expired</div>
                 {% endif %}
             </div>
         {% empty %}

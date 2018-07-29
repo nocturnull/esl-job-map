@@ -10,6 +10,8 @@ class ListFullTimeJobs(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # We don't want to show jobs that have expired.
+        context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['title'] = 'Full Time Jobs'
         return context
 
@@ -21,5 +23,7 @@ class ListPartTimeJobs(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # We don't want to show jobs that have expired.
+        context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['title'] = 'Part Time Jobs'
         return context

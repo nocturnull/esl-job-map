@@ -4,6 +4,7 @@ from ..models.recruitment import JobPost
 
 
 class CreateJobForm(forms.ModelForm):
+    """Form for recruiters to create a new job post."""
     JOB_TYPE_CHOICES = ((True, 'Full-time'), (False, 'Part-time'))
 
     title = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Give a short, descriptive title!'}))
@@ -30,6 +31,7 @@ class CreateJobForm(forms.ModelForm):
 
 
 class TakeDownJobForm(forms.ModelForm):
+    """Form for recruiters to hide their job post from the public."""
     is_visible = forms.HiddenInput()
 
     def save(self, commit=True):
