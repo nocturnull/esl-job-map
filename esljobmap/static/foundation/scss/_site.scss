@@ -19,6 +19,9 @@ a {
         color: nth($brand-secondary, 2);
     }
 }
+ul, li {
+    list-style-type: none;
+}
 
 input[type="text"], input[type="password"], input[type="email"] {
     border-radius: 10px;
@@ -34,6 +37,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 // Main Sections
 // ==========================================================================
 @import "section/home";
+@import "section/job_post";
 
 // ==========================================================================
 // Foundation Overrides

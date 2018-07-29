@@ -14,9 +14,8 @@ class JobPost(models.Model):
     contact_number = models.CharField(max_length=255)
     schedule = models.CharField(max_length=512)
     other_requirements = models.CharField(max_length=1024, blank=True, default='')
-    is_full_time = models.BooleanField(default=False)
-    pay_rate = models.PositiveIntegerField(blank=True, default=0, help_text='** ,000 won per hour')
-    salary = models.PositiveIntegerField(verbose_name='Yearly Salary', blank=True, default=0)
+    is_full_time = models.BooleanField('Job type', default=False)
+    pay_rate = models.CharField(max_length=512)
     benefits = models.CharField(max_length=1024, blank=True, default='')
     is_visible = models.BooleanField(default=True)
 
