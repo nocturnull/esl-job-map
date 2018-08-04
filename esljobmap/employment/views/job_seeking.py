@@ -1,6 +1,9 @@
 # employment/views/job_seeking.py
-from django.views.generic import ListView
-from ..models import JobPost
+from django.views.generic import ListView, TemplateView
+from django.shortcuts import render
+
+from ..models import JobPost, JobApplication
+from ..forms.recruitment import ApplyToJobForm
 
 
 class ListFullTimeJobs(ListView):
@@ -27,3 +30,47 @@ class ListPartTimeJobs(ListView):
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['title'] = 'Part Time Jobs'
         return context
+
+
+class ApplyToJobPost(TemplateView):
+    template_name = 'employment/apply_job_post_form.html'
+
+    def get(self, request, job_post_id):
+        job_post = JobPost.objects.get(pk=job_post_id)
+        contact_email = request.user.email if request.user.is_authenticated else ''
+
+        job_form = ApplyToJobForm(initial={
+            'title': job_post.title,
+            'email_body': 'Insert template here',
+            'contact_email': contact_email
+        })
+
+        return render(request,
+                      self.template_name,
+                      {
+                          'job_post': job_post,
+                          'job_form': job_form
+                      })
+
+    def post(self, request, job_post_id):
+        job_post = JobPost.objects.get(pk=job_post_id)
+        job_form = ApplyToJobForm(request.POST, request.FILES)
+
+        if job_form.is_valid():
+            kwargs = {
+                'job_post': job_post,
+                'contact_email': job_form.cleaned_data['contact_email']
+            }
+            if request.user.is_authenticated:
+                kwargs['site_user'] = request.user
+
+            JobApplication.objects.create(**kwargs)
+
+            return render(request, 'employment/apply_job_post_success.html')
+        else:
+            return render(request,
+                          self.template_name,
+                          {
+                              'job_post': job_post,
+                              'job_form': job_form
+                          })

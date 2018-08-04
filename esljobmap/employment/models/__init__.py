@@ -1,1 +1,1 @@
-from .recruitment import JobPost
+from .recruitment import JobPost, JobApplication

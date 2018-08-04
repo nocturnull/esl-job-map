@@ -41,3 +41,13 @@ class JobPost(models.Model):
 
     class Meta:
         db_table = EmploymentConfig.name + '_job_post'
+
+
+class JobApplication(models.Model):
+    job_post = models.ForeignKey(JobPost, on_delete=models.CASCADE)
+    site_user = models.ForeignKey(SiteUser,
+                                  related_name='job_applications',
+                                  on_delete=models.CASCADE,
+                                  blank=True,
+                                  null=True)
+    contact_email = models.EmailField(max_length=255)

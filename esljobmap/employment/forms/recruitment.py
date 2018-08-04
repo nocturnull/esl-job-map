@@ -47,5 +47,12 @@ class TakeDownJobForm(forms.ModelForm):
         return super(TakeDownJobForm, self).save(commit=commit)
 
     class Meta:
-        model =  JobPost
+        model = JobPost
         fields = ['is_visible']
+
+
+class ApplyToJobForm(forms.Form):
+    title = forms.CharField()
+    contact_email = forms.EmailField(max_length=255)
+    email_body = forms.CharField(widget=forms.Textarea)
+    resume = forms.FileField()

@@ -13,7 +13,7 @@
                     {{ job_post.title }}
                 </div>
                 <div class="cell medium-1">
-                    <a href="#" class="safe-button">Apply</a>
+                    <a href="{% url 'employment_apply_to_job' job_post.id %}" class="safe-button">Apply</a>
                 </div>
             </div>
         {% empty %}
