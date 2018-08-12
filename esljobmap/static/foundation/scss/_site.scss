@@ -45,3 +45,9 @@ input[type="text"], input[type="password"], input[type="email"] {
 .top-bar {
     border-bottom: 1px solid #efefef;
 }
+
+.errorlist {
+    color: $brand-danger;
+    font-weight: bold;
+    font-size: 1.1rem;
+}

@@ -20,7 +20,6 @@ class JobToggle {
     }
 
     update(val) {
-        console.log(val);
         if (val === 'True') {
             this.partTime.hide();
             this.fullTime.show('slow');

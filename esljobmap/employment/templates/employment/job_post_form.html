@@ -48,19 +48,25 @@
                         {{ form.other_requirements }}
                     </div>
                     <div>
-                        {{ form.pay_rate.errors }}
-                        {{ form.pay_rate.label_tag }} {{ form.pay_rate.help_text }}
-                        {{ form.pay_rate }}
-                    </div>
-                    <div>
                         {{ form.is_full_time.errors }}
                         {{ form.is_full_time.label_tag }}
                         {{ form.is_full_time }}
                     </div>
                     <div class="job-type-selection">
-                        <div id="partTimeFields"></div>
+                        <div id="partTimeFields">
+                            <div>
+                                {{ form.pay_rate.errors }}
+                                {{ form.pay_rate.label_tag }} {{ form.pay_rate.help_text }}
+                                {{ form.pay_rate }}
+                            </div>
+                        </div>
                         <div id="fullTimeFields" class="no-show">
-                            <h5>Full Time Job Related Information</h5>
+                            <h5>Full-Time</h5>
+                            <div>
+                                {{ form.salary.errors }}
+                                {{ form.salary.label_tag }}
+                                {{ form.salary }}
+                            </div>
                             <div>
                                 {{ form.benefits.errors }}
                                 {{ form.benefits.label_tag }}

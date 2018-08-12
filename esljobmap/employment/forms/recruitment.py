@@ -17,17 +17,21 @@ class CreateJobForm(forms.ModelForm):
     is_full_time = forms.ChoiceField(label='Job Type',
                                      widget=forms.RadioSelect,
                                      choices=((True, 'Full-time'), (False, 'Part-time')))
-    pay_rate = forms.CharField(label='Pay Rate', widget=forms.TextInput(attrs={'placeholder': 'i.e 45,000 per hour'}))
+    pay_rate = forms.CharField(label='Pay Rate',
+                               widget=forms.TextInput(attrs={'placeholder': 'i.e 45,000 per hour'}),
+                               required=False)
+    salary = forms.CharField(label='Salary',
+                             widget=forms.TextInput(attrs={'placeholder': 'i.e Negotiable'}),
+                             required=False)
     benefits = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'i.e Accommodation provided'}),
                                empty_value='',
-                               required=False
-                               )
+                               required=False)
 
     class Meta:
         model = JobPost
         fields = ['title', 'class_type', 'contact_name', 'contact_email',
                   'contact_number', 'schedule', 'other_requirements', 'is_full_time',
-                  'pay_rate', 'benefits']
+                  'pay_rate', 'salary', 'benefits']
 
 
 class TakeDownJobForm(forms.ModelForm):
