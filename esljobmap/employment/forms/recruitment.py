@@ -56,7 +56,6 @@ class TakeDownJobForm(forms.ModelForm):
 
 
 class ApplyToJobForm(forms.Form):
-    title = forms.CharField()
-    contact_email = forms.EmailField(max_length=255)
     email_body = forms.CharField(widget=forms.Textarea)
     resume = forms.FileField()
+    contact_email = forms.EmailField(label='Your email [You will receive a copy of this email]', max_length=255)

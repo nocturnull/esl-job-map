@@ -52,3 +52,6 @@ class JobApplication(models.Model):
                                   blank=True,
                                   null=True)
     contact_email = models.EmailField(max_length=255)
+
+    def __str__(self):
+        return self.job_post.__str__()

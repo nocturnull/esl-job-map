@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %}Job Applications{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+        <h2>My Job Applications</h2>
+
+        {% for application in object_list %}
+            <div class="grid-x mtb-3">
+                <div class="cell medium-4">
+                    {{ application }}
+                </div>
+{#                <div class="cell medium-2">#}
+{#                    {% if job_post.is_editable %}#}
+{#                        <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>#}
+{#                    {% else %}#}
+{#                        <p class="callout alert">Job only editable within 24 hours.</p>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#                {% if job_post.is_visible %}#}
+{#                    <div class="cell medium-2">#}
+{#                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="danger-button">Take Down</a>#}
+{#                    </div>#}
+{#                {% else %}#}
+{#                    <div class="cell medium-1 callout warning">Job taken down</div>#}
+{#                {% endif %}#}
+{#                {% if job_post.is_expired %}#}
+{#                    <div class="cell medium-1 callout alert">Expired</div>#}
+{#                {% endif %}#}
+            </div>
+        {% empty %}
+            <p>You have not applied to any jobs yet.</p>
+        {% endfor %}
+    </div>
+
+{% endblock %}

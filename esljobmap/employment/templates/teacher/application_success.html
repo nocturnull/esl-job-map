@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Application Complete{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+
+        <h3>Job Application Submitted Successfully!</h3>
+        <div><a href="{% url 'employment_applications' %}">My Job Applications</a></div>
+        {% if job_post.is_full_time %}
+            <a href="{% url 'employment_full_time_jobs' %}" class="primary-button">Apply to more Full-Time jobs</a>
+        {% else %}
+            <a href="{% url 'employment_part_time_jobs' %}" class="primary-button">Apply to more Part-time jobs</a>
+        {% endif %}
+    </div>
+
+{% endblock %}

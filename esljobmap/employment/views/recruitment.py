@@ -17,7 +17,7 @@ class CreateJobPost(LoginRequiredMixin, CreateView):
     """
     model = JobPost
     form_class = CreateJobForm
-    template_name = 'employment/job_post_form.html'
+    template_name = 'recruiter/job_post_form.html'
     success_url = reverse_lazy('employment_my_job_posts')
 
     def form_valid(self, form):
@@ -33,7 +33,7 @@ class ListJobPost(LoginRequiredMixin, ListView):
     View for recruiters to view all their job posts.
     """
     model = JobPost
-    template_name = 'employment/recruiter_job_list.html'
+    template_name = 'recruiter/job_post_list.html'
 
     def get_queryset(self):
         return self.request.user.job_posts.all()
@@ -48,7 +48,7 @@ class EditJobPost(LoginRequiredMixin, UpdateView):
     """
     model = JobPost
     form_class = CreateJobForm
-    template_name = 'employment/job_post_form.html'
+    template_name = 'recruiter/job_post_form.html'
     success_url = reverse_lazy('employment_my_job_posts')
 
     def get(self, request, *args, **kwargs):
@@ -65,5 +65,5 @@ class TakeDownJobPost(LoginRequiredMixin, UpdateView):
     """
     model = JobPost
     form_class = TakeDownJobForm
-    template_name = 'employment/job_post_confirm_takedown.html'
+    template_name = 'recruiter/job_post_confirm_takedown.html'
     success_url = reverse_lazy('employment_my_job_posts')

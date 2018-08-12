@@ -2,7 +2,7 @@
 
 from django.urls import path
 
-from .views.job_seeking import ListFullTimeJobs, ListPartTimeJobs, ApplyToJobPost
+from .views.job_seeking import ListFullTimeJobs, ListPartTimeJobs, ApplyToJobPost, ListApplications
 from .views.recruitment import CreateJobPost, ListJobPost, EditJobPost, TakeDownJobPost
 
 urlpatterns = [
@@ -12,5 +12,6 @@ urlpatterns = [
     path('job/my-posts', ListJobPost.as_view(), name='employment_my_job_posts'),
     path('job/edit/<int:pk>', EditJobPost.as_view(), name='employment_edit_job_post'),
     path('job/take_down/<int:pk>', TakeDownJobPost.as_view(), name='employment_takedown_job_post'),
-    path('apply/<int:job_post_id>', ApplyToJobPost.as_view(), name='employment_apply_to_job')
+    path('apply/<int:job_post_id>', ApplyToJobPost.as_view(), name='employment_apply_to_job'),
+    path('applications', ListApplications.as_view(), name='employment_applications')
 ]

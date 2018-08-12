@@ -33,7 +33,7 @@ class ListPartTimeJobs(ListView):
 
 
 class ApplyToJobPost(TemplateView):
-    template_name = 'employment/apply_job_post_form.html'
+    template_name = 'teacher/application_form.html'
 
     def get(self, request, job_post_id):
         job_post = JobPost.objects.get(pk=job_post_id)
@@ -66,7 +66,11 @@ class ApplyToJobPost(TemplateView):
 
             JobApplication.objects.create(**kwargs)
 
-            return render(request, 'employment/apply_job_post_success.html')
+            return render(request,
+                          'teacher/application_success.html',
+                          {
+                              'job_post': job_post
+                          })
         else:
             return render(request,
                           self.template_name,
@@ -74,3 +78,8 @@ class ApplyToJobPost(TemplateView):
                               'job_post': job_post,
                               'job_form': job_form
                           })
+
+
+class ListApplications(ListView):
+    model = JobApplication
+    template_name = 'teacher/application_list.html'
