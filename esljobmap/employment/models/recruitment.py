@@ -26,8 +26,8 @@ class JobPost(models.Model):
     @property
     def pretty_employment_type(self):
         if self.is_full_time:
-            return '[Full Time]'
-        return '[Part Time]'
+            return '[Full-Time]'
+        return '[Part-Time]'
 
     @property
     def is_editable(self):

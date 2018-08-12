@@ -12,11 +12,10 @@
                 {% if user.is_authenticated %}
                     <li><a href="{% url 'employment_my_job_posts' %}">My Jobs</a></li>
                 {% endif %}
-                <li><a href="{% url 'employment_create_job' %}">Post a job</a></li>
-            {% elif user.is_teacher %}
-                <li><a href="{% url 'employment_full_time_jobs' %}">Full Time Jobs</a></li>
-                <li><a href="{% url 'employment_part_time_jobs' %}">Part Time Jobs</a></li>
+                <li><a href="{% url 'employment_create_job' %}">Post a Job</a></li>
             {% endif %}
+            <li><a href="{% url 'employment_full_time_jobs' %}">Full-Time Jobs</a></li>
+            <li><a href="{% url 'employment_part_time_jobs' %}">Part-Time Jobs</a></li>
             <li><a href="#about">About</a></li>
         </ul>
     </div>
