@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Job Applicants{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+        <h3>Applicants for {{ object.title }}</h3>
+        {% for applicant in object.applicants.all %}
+            {% with user=applicant.site_user %}
+                <div class="grid-x mtb-2">
+                    <div class="cell medium-3">Name: {{ user.full_name }}</div>
+                    <div class="cell medium-3">Visa: {{ user.teacher.visa_type }} </div>
+                    <div class="cell medium-3">Resume: TODO</div>
+                </div>
+            {% endwith %}
+        {% endfor %}
+    </div>
+
+{% endblock %}

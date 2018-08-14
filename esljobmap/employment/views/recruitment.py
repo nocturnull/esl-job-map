@@ -1,5 +1,5 @@
 # employment/views/recruitment.py
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
@@ -37,6 +37,15 @@ class ListJobPost(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         return self.request.user.job_posts.all()
+
+
+@method_decorator(recruiter_required, name='dispatch')
+class ListJobApplicants(LoginRequiredMixin, DetailView):
+    """
+    View for recruiters to view applicants for their own job posts.
+    """
+    model = JobPost
+    template_name = 'recruiter/job_post_applicants.html'
 
 
 @method_decorator(recruiter_required, name='dispatch')

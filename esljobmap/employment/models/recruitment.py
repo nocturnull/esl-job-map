@@ -45,7 +45,9 @@ class JobPost(models.Model):
 
 
 class JobApplication(models.Model):
-    job_post = models.ForeignKey(JobPost, on_delete=models.CASCADE)
+    job_post = models.ForeignKey(JobPost,
+                                 on_delete=models.CASCADE,
+                                 related_name='applicants')
     site_user = models.ForeignKey(SiteUser,
                                   related_name='job_applications',
                                   on_delete=models.CASCADE,
