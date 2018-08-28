@@ -8,36 +8,44 @@
         <h3>My Jobs</h3>
 
         {% for job_post in object_list %}
-            <div class="grid-x mtb-3">
-                <div class="cell medium-4">
-                    {{ job_post }}
-                </div>
-                <div class="cell medium-2">
-                    {% if job_post.is_editable %}
-                        <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>
-                    {% else %}
-                        <p class="callout alert">Job only editable within 24 hours.</p>
-                    {% endif %}
-                </div>
-                {% if job_post.is_visible %}
-                    <div class="cell medium-2 text-center">
-                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="danger-button">Take Down</a>
+            <div class="grid-x">
+                <div class="cell callout">
+                    <h5>{{ job_post }}</h5>
+                    <div>
+                        <p>Class Type: {{ job_post.class_type }}</p>
                     </div>
-                {% else %}
-                    <div class="cell medium-1 callout warning">Job taken down</div>
-                {% endif %}
-                {% with applicants=job_post.applicants.count %}
-                    <div class="cell medium-1">
-                        {% if applicants > 0 %}
-                            <a href="{% url 'employment_job_applicants' job_post.id %}">Applicants: {{ applicants }}</a>
+                    <div>
+                        <p>Schedule: {{ job_post.schedule }}</p>
+                    </div>
+                    <div>
+                        <p>Other Requirements: {{ job_post.other_requirements }}</p>
+                    </div>
+                    <div class="mtb-2">
+                        {% if job_post.is_editable %}
+                            <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>
                         {% else %}
-                            No applicants
+                            <a href="#" class="disabled-button">Only editable within 24 hours.</a>
+                        {% endif %}
+                        {% if job_post.is_visible %}
+                            {% if job_post.is_expired %}
+                                <a href="#" class="disabled-button">Expired.</a>
+                            {% else %}
+                                <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="danger-button">Take Down</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="#" class="disabled-button">Taken down.</a>
                         {% endif %}
                     </div>
-                {% endwith %}
-                {% if job_post.is_expired %}
-                    <div class="cell medium-1 callout alert">Expired</div>
-                {% endif %}
+                    {% with applicants=job_post.applicants.count %}
+                        <div class="cell medium-1">
+                            {% if applicants > 0 %}
+                                <a href="{% url 'employment_job_applicants' job_post.id %}">Applicants: {{ applicants }}</a>
+                            {% else %}
+                                No applicants
+                            {% endif %}
+                        </div>
+                    {% endwith %}
+                </div>
             </div>
         {% empty %}
             <p>You have not created any job posts yet.</p>

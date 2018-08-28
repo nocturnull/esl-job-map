@@ -17,7 +17,7 @@ class VisaType(models.Model):
 
 
 class Country(models.Model):
-    name = models.CharField(blank=False, max_length=255)
+    name = models.CharField(blank=False, max_length=255, verbose_name='Nationality')
     code = models.CharField(blank=False, max_length=10)
 
     def __str__(self):
@@ -28,7 +28,7 @@ class Teacher(models.Model):
     user = models.OneToOneField(SiteUser, on_delete=models.CASCADE)
     visa_type = models.ForeignKey(VisaType,
                                   on_delete=models.CASCADE,
-                                  verbose_name='Visa Type',
+                                  verbose_name='Visa Status',
                                   blank=True,
                                   null=True)
     country = models.ForeignKey(Country,
