@@ -38,6 +38,14 @@ class JobPost(models.Model):
     def is_expired(self):
         return datetime.now() > (self.created_at + timedelta(weeks=2))
 
+    def has_applicant_applied(self, user) -> bool:
+        if user.is_authenticated:
+            job_applications = self.applicants.all()
+            if len(job_applications) > 0:
+                applicants = map(lambda j: j.site_user, job_applications)
+                return user in applicants
+        return False
+
     def __str__(self):
         return '%s %s' % (self.title, self.pretty_employment_type)
 

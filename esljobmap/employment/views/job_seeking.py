@@ -40,15 +40,18 @@ class ApplyToJobPost(TemplateView):
     def get(self, request, job_post_id):
         job_post = JobPost.objects.get(pk=job_post_id)
         contact_email = request.user.email if request.user.is_authenticated else ''
-
+        template = self.template_name
         job_form = ApplyToJobForm(initial={
             'title': job_post.title,
             'email_body': EmailTemplateManager.generate_email_body(request.user, job_post),
             'contact_email': contact_email
         })
 
+        if job_post.has_applicant_applied(request.user):
+            template = 'teacher/application_applied.html'
+
         return render(request,
-                      self.template_name,
+                      template,
                       {
                           'job_post': job_post,
                           'job_form': job_form
