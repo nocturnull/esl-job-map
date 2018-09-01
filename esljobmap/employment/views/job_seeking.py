@@ -4,6 +4,7 @@ from django.shortcuts import render
 
 from ..models import JobPost, JobApplication
 from ..forms.recruitment import ApplyToJobForm
+from ..email.template_manager import TemplateManager as EmailTemplateManager
 
 
 class ListFullTimeJobs(ListView):
@@ -41,7 +42,7 @@ class ApplyToJobPost(TemplateView):
 
         job_form = ApplyToJobForm(initial={
             'title': job_post.title,
-            'email_body': 'Insert template here',
+            'email_body': EmailTemplateManager.generate_email_body(request.user, job_post),
             'contact_email': contact_email
         })
 

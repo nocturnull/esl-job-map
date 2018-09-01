@@ -51,11 +51,17 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
         """
         return self.role == 1 or self.role == 2
 
+    @property
+    def full_name(self) -> str:
+        """
+        The full name of the site user, formatted.
+
+        :return:
+        """
+        return self.first_name + ' ' + self.last_name
+
     def __str__(self):
         return self.email
-
-    def full_name(self):
-        return self.first_name + ' ' + self.last_name
 
     class Meta:
         db_table = AccountConfig.name + '_site_user'
