@@ -2,6 +2,7 @@
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import render
 
+from djangomailgun.message.api import MessageApi
 from ..models import JobPost, JobApplication
 from ..forms.recruitment import ApplyToJobForm
 from ..email.template_manager import TemplateManager as EmailTemplateManager
@@ -56,16 +57,22 @@ class ApplyToJobPost(TemplateView):
     def post(self, request, job_post_id):
         job_post = JobPost.objects.get(pk=job_post_id)
         job_form = ApplyToJobForm(request.POST, request.FILES)
+        message_api = MessageApi()
 
         if job_form.is_valid():
+            applicant_email = job_form.cleaned_data['contact_email']
             kwargs = {
                 'job_post': job_post,
-                'contact_email': job_form.cleaned_data['contact_email']
+                'contact_email': applicant_email
             }
             if request.user.is_authenticated:
                 kwargs['site_user'] = request.user
 
             JobApplication.objects.create(**kwargs)
+            message_api.send(sender=applicant_email,
+                             recipient=job_post.contact_email,
+                             subject=EmailTemplateManager.generate_email_subject(job_post),
+                             body=job_form.cleaned_data['email_body'])
 
             return render(request,
                           'teacher/application_success.html',

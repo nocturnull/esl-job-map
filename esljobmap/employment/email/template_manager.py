@@ -8,10 +8,20 @@ class TemplateManager:
     Manager that aides in building the email body for job applications.
     """
 
+    @staticmethod
+    def generate_email_subject(job_post: JobPost) -> str:
+        """
+        The main API that creates the email subject.
+
+        :param job_post:
+        :return:
+        """
+        return SUBJECT_BASE_SCHEME.format(title=job_post.title)
+
     @classmethod
     def generate_email_body(cls, user, job_post: JobPost) -> str:
         """
-        The main 'public' method that serves the correct template based off of the users login status.
+        The main API that creates the email body using a template and the users submitted info.
 
         :param user:
         :param job_post:
@@ -34,7 +44,7 @@ class TemplateManager:
         """
         teacher = applicant.teacher
 
-        return BASE_SCHEME.format(
+        return BODY_BASE_SCHEME.format(
             recruiter_contact_name=recruiter.full_name,
             applicant_visa_type=teacher.visa_type,
             applicant_country=teacher.country,
@@ -56,7 +66,7 @@ class TemplateManager:
         :param job_post:
         :return:
         """
-        return BASE_SCHEME.format(
+        return BODY_BASE_SCHEME.format(
             recruiter_contact_name=recruiter.full_name,
             applicant_visa_type='YOUR VISA TYPE',
             applicant_country='YOUR NATIONALITY',

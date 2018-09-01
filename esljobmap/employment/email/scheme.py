@@ -1,4 +1,5 @@
-BASE_SCHEME = """Dear {recruiter_contact_name},
+SUBJECT_BASE_SCHEME = """{title} via ESLJobMap.com"""
+BODY_BASE_SCHEME = """Dear {recruiter_contact_name},
 
 I am in Korea on a {applicant_visa_type} visa, from {applicant_country}. I'm applying for the below job:
 
