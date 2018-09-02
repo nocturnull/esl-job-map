@@ -16,7 +16,8 @@ class MessageApi(object):
         self._endpoint = 'https://api.mailgun.net/v3/{}/messages'.format(settings.MAILGUN_DOMAIN)
         self._api_key = settings.MAILGUN_PRIVATE_API_KEY
 
-    def send(self, sender, recipient, subject, body):
+    def send(self, sender, recipient, subject, body, filename, attachment):
+        files = {filename: attachment}
         payload = {
             'from': sender,
             'to': recipient,
@@ -24,4 +25,6 @@ class MessageApi(object):
             'subject': subject,
             'text': body
         }
-        requests.post(self._endpoint, data=payload, auth=('api', self._api_key))
+        response = requests.post(self._endpoint, data=payload, files=files, auth=('api', self._api_key))
+        print('%r' % response)
+

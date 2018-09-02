@@ -61,11 +61,17 @@ Add the following environment variables to your .bashrc or .bash_profile file
 ```bash
 export ESLJOBMAP_DEBUG=True
 export ESLJOBMAP_DB_NAME="esljobmap"
-export ESLJOBMAP_DB_USER="YOUR_USERNAME"
+export ESLJOBMAP_DB_USER="username"
 export ESLJOBMAP_DB_PASSWORD="secretpassword"
 export ESLJOBMAP_DB_HOST="127.0.0.1"
 export ESLJOBMAP_DB_PORT=5432
 export ESLJOBMAP_REDIS_HOST="redis://127.0.0.1:6379/"
+export MAILGUN_DOMAIN="mail.yourdomain.com"
+export MAILGUN_PRIVATE_API_KEY="secretkey"
+export AWS_ACCESS_KEY_ID="accesskey"
+export AWS_SECRET_ACCESS_KEY="secretkey"
+export AWS_DEFAULT_REGION="region"
+export AWS_S3_BUCKET="bucket"
 ```
 
 ### Installing

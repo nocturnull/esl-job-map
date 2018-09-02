@@ -4,6 +4,7 @@ from django.db import models
 
 from ..apps import EmploymentConfig
 from account.models.user import SiteUser
+from cloud.storage import build_storage_url
 
 
 class JobPost(models.Model):
@@ -63,6 +64,18 @@ class JobApplication(models.Model):
                                   blank=True,
                                   null=True)
     contact_email = models.EmailField(max_length=255)
+    resume_filename = models.CharField(max_length=512, default='')
+
+    @property
+    def storage_path(self) -> str:
+        return 'job/{0}/applicant/{1}'.format(self.job_post.id, self.resume_filename)
+
+    @property
+    def cdn_url(self) -> str:
+        return build_storage_url(self.storage_path)
 
     def __str__(self):
         return self.job_post.__str__()
+
+    class Meta:
+        db_table = EmploymentConfig.name + '_job_application'

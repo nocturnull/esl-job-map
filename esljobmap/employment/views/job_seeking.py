@@ -3,6 +3,7 @@ from django.views.generic import ListView, TemplateView
 from django.shortcuts import render
 
 from djangomailgun.message.api import MessageApi
+from cloud.file_manager import FileManager
 from ..models import JobPost, JobApplication
 from ..forms.recruitment import ApplyToJobForm
 from ..email.template_manager import TemplateManager as EmailTemplateManager
@@ -61,21 +62,28 @@ class ApplyToJobPost(TemplateView):
         job_post = JobPost.objects.get(pk=job_post_id)
         job_form = ApplyToJobForm(request.POST, request.FILES)
         message_api = MessageApi()
+        file_manager = FileManager()
 
         if job_form.is_valid():
             applicant_email = job_form.cleaned_data['contact_email']
+            resume = job_form.cleaned_data.get('resume', None)
             kwargs = {
                 'job_post': job_post,
-                'contact_email': applicant_email
+                'contact_email': applicant_email,
+                'resume_filename': resume.name
             }
             if request.user.is_authenticated:
                 kwargs['site_user'] = request.user
 
-            JobApplication.objects.create(**kwargs)
+            application = JobApplication.objects.create(**kwargs)
+            file_manager.upload_file(application.storage_path, resume)
+
             message_api.send(sender=applicant_email,
                              recipient=job_post.contact_email,
                              subject=EmailTemplateManager.generate_email_subject(job_post),
-                             body=job_form.cleaned_data['email_body'])
+                             body=job_form.cleaned_data['email_body'],
+                             filename=resume.name,
+                             attachment=resume.file)
 
             return render(request,
                           'teacher/application_success.html',
