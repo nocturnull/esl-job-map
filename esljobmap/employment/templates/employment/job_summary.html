@@ -6,6 +6,18 @@
     <div>
         <p>Schedule: {{ job_post.schedule }}</p>
     </div>
+    {% if job_post.is_full_time %}
+        <div>
+            <p>Salary: {{ job_post.salary }}</p>
+        </div>
+        <div>
+            <p>Benefits: {{ job_post.benefits }}</p>
+        </div>
+    {% else %}
+        <div>
+            <p>Pay Rate: {{ job_post.pay_rate }}</p>
+        </div>
+    {% endif %}
     <div>
         <p>Other Requirements: {{ job_post.other_requirements }}</p>
     </div>

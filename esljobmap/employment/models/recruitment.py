@@ -71,8 +71,12 @@ class JobApplication(models.Model):
         return 'job/{0}/applicant/{1}'.format(self.job_post.id, self.resume_filename)
 
     @property
-    def cdn_url(self) -> str:
+    def resume_url(self) -> str:
         return build_storage_url(self.storage_path)
+
+    @property
+    def has_resume(self) -> bool:
+        return len(self.resume_filename) > 0
 
     def __str__(self):
         return self.job_post.__str__()
