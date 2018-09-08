@@ -1,4 +1,5 @@
 # employment/models/recruitment.py
+import time
 from datetime import datetime, timedelta
 from django.db import models
 
@@ -84,6 +85,14 @@ class JobApplication(models.Model):
     @property
     def has_resume(self) -> bool:
         return len(self.resume_filename) > 0
+
+    @classmethod
+    def create_job(cls, job_post, contact_email, filename, site_user=None):
+        unique_filename = str(int(time.time())) + filename[filename.find('.'):]
+        return cls.objects.create(job_post=job_post,
+                                  contact_email=contact_email,
+                                  resume_filename=unique_filename,
+                                  site_user=site_user)
 
     def __str__(self):
         return self.job_post.__str__()

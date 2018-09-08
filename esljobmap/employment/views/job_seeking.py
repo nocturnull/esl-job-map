@@ -70,12 +70,12 @@ class ApplyToJobPost(TemplateView):
             kwargs = {
                 'job_post': job_post,
                 'contact_email': applicant_email,
-                'resume_filename': resume.name
+                'filename': resume.name
             }
             if request.user.is_authenticated:
                 kwargs['site_user'] = request.user
 
-            application = JobApplication.objects.create(**kwargs)
+            application = JobApplication.create_job(**kwargs)
             file_manager.upload_file(application.storage_path, resume)
 
             message_api.send(sender=applicant_email,

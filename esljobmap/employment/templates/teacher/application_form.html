@@ -15,7 +15,7 @@
                     <input type="submit" value="Submit" class="primary-button" />
                 </form>
                 {% if request.user.is_anonymous %}
-                    <p>*<a href="{% url 'signup' %}">Register</a> to have this email auto-generated.</p>
+                    <p>*<a href="{% url 'signup' %}">Register</a> to have this email template auto-generated.</p>
                 {% endif %}
             </div>
         </div>
