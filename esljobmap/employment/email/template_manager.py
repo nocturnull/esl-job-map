@@ -30,7 +30,7 @@ class TemplateManager:
         recruiter = job_post.site_user
         if user.is_authenticated:
             return cls._generate_applicant_email_body(recruiter, user, job_post)
-        return cls._generate_anonymous_email_body(recruiter, job_post)
+        return cls._generate_anonymous_email_body(recruiter)
 
     @classmethod
     def append_resume_to_body(cls, body, job_application: JobApplication) -> str:
@@ -55,7 +55,7 @@ class TemplateManager:
         """
         teacher = applicant.teacher
 
-        return BODY_BASE_SCHEME.format(
+        return AUTHENTICATED_USER_BASE_SCHEME.format(
             recruiter_contact_name=recruiter.full_name,
             applicant_visa_type=teacher.visa_type,
             applicant_country=teacher.country,
@@ -69,26 +69,14 @@ class TemplateManager:
         )
 
     @classmethod
-    def _generate_anonymous_email_body(cls, recruiter: SiteUser, job_post: JobPost) -> str:
+    def _generate_anonymous_email_body(cls, recruiter: SiteUser) -> str:
         """
         Builds the email body for applicants that are simply 'guests' to the site.
 
         :param recruiter:
-        :param job_post:
         :return:
         """
-        return BODY_BASE_SCHEME.format(
-            recruiter_contact_name=recruiter.full_name,
-            applicant_visa_type='YOUR VISA TYPE',
-            applicant_country='YOUR NATIONALITY',
-            job_post_title=job_post.title,
-            exclusive_job_post_info=cls._generate_job_exclusive_template(job_post),
-            job_post_schedule=job_post.schedule,
-            job_post_class_type=job_post.class_type,
-            job_post_other_requirements=job_post.other_requirements,
-            applicant_full_name='YOUR NAME',
-            applicant_contact_number='YOUR CONTACT NUMBER'
-        )
+        return ANONYMOUS_USER_BASE_SCHEME.format(recruiter_contact_name=recruiter.full_name)
 
     @staticmethod
     def _generate_job_exclusive_template(job_post: JobPost) -> str:
