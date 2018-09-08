@@ -26,18 +26,25 @@ class JobPost(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
-    def pretty_employment_type(self):
+    def pretty_employment_type(self) -> str:
         if self.is_full_time:
             return '[Full-Time]'
         return '[Part-Time]'
 
     @property
-    def is_editable(self):
+    def is_editable(self) -> bool:
         return datetime.now() < (self.created_at + timedelta(days=1))
 
     @property
-    def is_expired(self):
+    def is_expired(self) -> bool:
         return datetime.now() > (self.created_at + timedelta(weeks=2))
+
+    @property
+    def pretty_days_till_expired(self) -> str:
+        days_left = 14 - (datetime.now() - self.created_at).days
+        if days_left > 0:
+            return 'Expires in: {0} days'.format(days_left)
+        return 'Expired'
 
     def has_applicant_applied(self, user) -> bool:
         if user.is_authenticated:

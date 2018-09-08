@@ -32,6 +32,9 @@
                     <div>
                         <p>Other Requirements: {{ job_post.other_requirements }}</p>
                     </div>
+                    <div>
+                        <p>{{ job_post.pretty_days_till_expired }}</p>
+                    </div>
                     <div class="mtb-2">
                         {% if job_post.is_editable %}
                             <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>
