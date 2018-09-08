@@ -4,6 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.db.models import F
 
 from ..models import JobPost
 from ..decorators import recruiter_required
@@ -36,7 +37,7 @@ class ListJobPost(LoginRequiredMixin, ListView):
     template_name = 'recruiter/job_post_list.html'
 
     def get_queryset(self):
-        return self.request.user.job_posts.all()
+        return self.request.user.job_posts.all().order_by(F('created_at').desc(nulls_last=True))
 
 
 @method_decorator(recruiter_required, name='dispatch')

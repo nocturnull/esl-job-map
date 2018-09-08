@@ -81,9 +81,9 @@ class ApplyToJobPost(TemplateView):
             message_api.send(sender=applicant_email,
                              recipient=job_post.contact_email,
                              subject=EmailTemplateManager.generate_email_subject(job_post),
-                             body=job_form.cleaned_data['email_body'],
-                             filename=resume.name,
-                             attachment=resume.file)
+                             body=EmailTemplateManager.append_resume_to_body(
+                                 job_form.cleaned_data['email_body'], application
+                             ))
 
             return render(request,
                           'teacher/application_success.html',

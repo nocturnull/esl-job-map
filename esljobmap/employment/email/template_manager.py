@@ -1,5 +1,5 @@
 from .scheme import *
-from ..models.recruitment import JobPost
+from ..models.recruitment import JobPost, JobApplication
 from account.models.user import SiteUser
 
 
@@ -31,6 +31,17 @@ class TemplateManager:
         if user.is_authenticated:
             return cls._generate_applicant_email_body(recruiter, user, job_post)
         return cls._generate_anonymous_email_body(recruiter, job_post)
+
+    @classmethod
+    def append_resume_to_body(cls, body, job_application: JobApplication) -> str:
+        """
+        Appends the resume to the end of the email body as a link to where the file is stored.
+
+        :param body:
+        :param job_application:
+        :return:
+        """
+        return '{0}\n\nResume: {1}'.format(body, job_application.resume_url)
 
     @classmethod
     def _generate_applicant_email_body(cls, recruiter: SiteUser, applicant: SiteUser, job_post: JobPost) -> str:
@@ -87,7 +98,7 @@ class TemplateManager:
         :param job_post:
         :return:
         """
-        if JobPost.is_full_time:
+        if JobPost.is_full_time is True:
             return FULL_TIME_EXCLUSIVE_SCHEME.format(
                 job_post_salary=job_post.salary,
                 job_post_benefits=job_post.benefits
