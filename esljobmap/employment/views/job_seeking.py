@@ -1,4 +1,5 @@
 # employment/views/job_seeking.py
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import render
 
@@ -99,6 +100,9 @@ class ApplyToJobPost(TemplateView):
                           })
 
 
-class ListApplications(ListView):
+class ListApplications(LoginRequiredMixin, ListView):
     model = JobApplication
     template_name = 'teacher/application_list.html'
+
+    def get_queryset(self):
+        return JobApplication.objects.filter(site_user=self.request.user)
