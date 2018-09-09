@@ -28,7 +28,7 @@ class TemplateManager:
         :return:
         """
         recruiter = job_post.site_user
-        if user.is_authenticated:
+        if user.is_authenticated and user.is_teacher:
             return cls._generate_applicant_email_body(recruiter, user, job_post)
         return cls._generate_anonymous_email_body(recruiter)
 

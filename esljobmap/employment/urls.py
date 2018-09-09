@@ -11,7 +11,7 @@ urlpatterns = [
     path('part-time-jobs', ListPartTimeJobs.as_view(), name='employment_part_time_jobs'),
     # Recruiter only pages
     path('recruiter/job/post', CreateJobPost.as_view(), name='employment_create_job'),
-    path('recruiter/job/my-posts', ListJobPost.as_view(), name='employment_my_job_posts'),
+    path('recruiter/job/my-jobs', ListJobPost.as_view(), name='employment_my_job_posts'),
     path('recruiter/job/applicants/<int:pk>', ListJobApplicants.as_view(), name='employment_job_applicants'),
     path('recruiter/job/edit/<int:pk>', EditJobPost.as_view(), name='employment_edit_job_post'),
     path('recruiter/job/take_down/<int:pk>', TakeDownJobPost.as_view(), name='employment_takedown_job_post'),
