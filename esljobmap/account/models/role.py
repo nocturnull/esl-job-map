@@ -3,6 +3,7 @@
 from django.db import models
 from .user import SiteUser
 
+from cloud.storage import build_storage_url
 from ..apps import AccountConfig
 
 
@@ -37,3 +38,16 @@ class Teacher(models.Model):
                                 blank=True,
                                 null=True
                                 )
+    resume_filename = models.CharField(max_length=512, default='', verbose_name='Resume', blank=True, null=True)
+
+    @property
+    def resume_storage_path(self) -> str:
+        return 'resume/{0}'.format(self.resume_filename)
+
+    @property
+    def resume_url(self) -> str:
+        return build_storage_url(self.resume_storage_path)
+
+    @property
+    def has_resume(self) -> bool:
+        return len(self.resume_filename) > 0

@@ -41,7 +41,13 @@ class TemplateManager:
         :param job_application:
         :return:
         """
-        return '{0}\n\nResume: {1}'.format(body, job_application.resume_url)
+        # The resume can either come from the user or the application itself.
+        if job_application.use_existing_resume:
+            resume_url = job_application.site_user.teacher.resume_url
+        else:
+            resume_url = job_application.resume_url
+
+        return '{0}\n\nResume: {1}'.format(body, resume_url)
 
     @classmethod
     def _generate_applicant_email_body(cls, recruiter: SiteUser, applicant: SiteUser, job_post: JobPost) -> str:

@@ -1,27 +1,44 @@
-{%  extends 'base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Edit Profile{% endblock %}
 
 {% block content %}
 
     <div class="grid-container">
-        <h2>Edit Profile</h2>
+        <h3>Edit Profile</h3>
 
         <div class="grid-x grid-margin-x">
-
             <div class="medium-10 cell">
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
+                    {{ user_form }}
+                    {% if teacher_form %}
+                        <div>
+                            {{ teacher_form.country.errors }}
+                            {{ teacher_form.country.label_tag }}
+                            {{ teacher_form.country }}
+                        </div>
+                        <div>
+                            {{ teacher_form.visa_type.errors }}
+                            {{ teacher_form.visa_type.label_tag }}
+                            {{ teacher_form.visa_type }}
+                        </div>
+                        <div>
+                            {{ teacher_form.resume_filename.errors }}
 
-                    {% for f in forms %}
-                        {{ f }}
-                    {% endfor %}
+                            {% if teacher_form.resume_filename.value %}
+                                <p>Existing resume: {{ teacher_form.resume_filename.value }}</p>
+                                <label for="{{ teacher_form.resume_filename.id_for_label }}">Update Resume</label>
+                            {% else %}
+                                <label for="{{ teacher_form.resume_filename.id_for_label }}">Set Resume</label>
+                            {% endif %}
 
+                            {{ teacher_form.resume_filename }}
+                        </div>
+                    {% endif %}
                     <button type="submit" class="primary-button">Save</button>
                 </form>
-
             </div>
-
         </div>
 
     </div>

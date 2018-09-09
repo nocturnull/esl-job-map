@@ -67,17 +67,24 @@ class ApplyToJobPost(TemplateView):
 
         if job_form.is_valid():
             applicant_email = job_form.cleaned_data['contact_email']
-            resume = job_form.cleaned_data.get('resume', None)
+            use_existing_resume = job_form.cleaned_data['use_existing_resume']
+            resume = None
+
             kwargs = {
                 'job_post': job_post,
-                'contact_email': applicant_email,
-                'filename': resume.name
+                'contact_email': applicant_email
             }
             if request.user.is_authenticated:
                 kwargs['site_user'] = request.user
+            if use_existing_resume:
+                kwargs['use_existing_resume'] = True
+            else:
+                resume = job_form.cleaned_data.get('resume', None)
+                kwargs['filename'] = resume.name
 
             application = JobApplication.create_job(**kwargs)
-            file_manager.upload_file(application.storage_path, resume)
+            if resume is not None:
+                file_manager.upload_file(application.storage_path, resume)
 
             message_api.send(sender=applicant_email,
                              recipient=job_post.contact_email,

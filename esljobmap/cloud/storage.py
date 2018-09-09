@@ -47,6 +47,24 @@ class Client(object):
                 'ACL': 'public-read'
             })
 
+    def delete_object(self, skey):
+        """
+        Wrapper function to the delete_objects method for the S3 bucket.
+
+        :param skey:
+        :return:
+        """
+        self.bucket.delete_objects(
+            Delete={
+                'Objects': [
+                    {
+                        'Key': skey
+                    }
+                ],
+                'Quiet': True
+            }
+        )
+
 
 def build_storage_url(uri: str) -> str:
     return AWS_S3_BASE_LINK.format(

@@ -13,6 +13,8 @@
                     <div class="cell medium-3">Visa: {{ user.teacher.visa_type }} </div>
                     {% if applicant.has_resume %}
                         <div class="cell medium-3">Resume: <a href="{{ applicant.resume_url }}">Download</a></div>
+                    {% elif applicant.use_existing_resume %}
+                        <div class="cell medium-3">Resume: <a href="{{ applicant.site_user.teacher.resume_url }}">Download</a></div>
                     {% endif %}
                 </div>
             {% endwith %}

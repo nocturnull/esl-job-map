@@ -1,8 +1,8 @@
 # account/forms.py
+from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import SiteUser, Teacher
 from django.db import transaction
-from django.forms import ModelForm
 
 
 class SiteUserCreationForm(UserCreationForm):
@@ -47,15 +47,16 @@ class SiteUserChangeForm(UserChangeForm):
         fields = UserChangeForm.Meta.fields
 
 
-class UserUpdateForm(ModelForm):
+class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = SiteUser
         fields = ('first_name', 'last_name', 'phone_number')
 
 
-class TeacherUpdateForm(ModelForm):
+class TeacherUpdateForm(forms.ModelForm):
+    resume_filename = forms.FileField(allow_empty_file=True, label='Resume')
 
     class Meta:
         model = Teacher
-        fields = ('country', 'visa_type')
+        fields = ('country', 'visa_type', 'resume_filename')

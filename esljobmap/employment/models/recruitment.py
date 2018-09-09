@@ -72,7 +72,8 @@ class JobApplication(models.Model):
                                   blank=True,
                                   null=True)
     contact_email = models.EmailField(max_length=255)
-    resume_filename = models.CharField(max_length=512, default='')
+    resume_filename = models.CharField(max_length=512, default='', blank=True)
+    use_existing_resume = models.BooleanField(default=False)
 
     @property
     def storage_path(self) -> str:
@@ -87,11 +88,12 @@ class JobApplication(models.Model):
         return len(self.resume_filename) > 0
 
     @classmethod
-    def create_job(cls, job_post, contact_email, filename, site_user=None):
-        unique_filename = str(int(time.time())) + '-' + filename
+    def create_job(cls, job_post, contact_email, filename=None, use_existing_resume=False, site_user=None):
+        unique_filename = str(int(time.time())) + '-' + filename if filename is not None else ''
         return cls.objects.create(job_post=job_post,
                                   contact_email=contact_email,
                                   resume_filename=unique_filename,
+                                  use_existing_resume=use_existing_resume,
                                   site_user=site_user)
 
     def __str__(self):

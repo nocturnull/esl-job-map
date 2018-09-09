@@ -9,7 +9,7 @@
 
         <div class="grid-x grid-margin-x mt-1 mb-1">
             <div class="medium-10 cell">
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
                     {{ form.non_field_errors }}
                     <div>
@@ -23,8 +23,14 @@
                             Want to track which jobs you applied for, and if they are still open?<br>
                             <a href="{% url 'signup' %}">Register</a> and let us automate that for you.
                         </p>
+                    {% elif request.user.is_teacher %}
+                        <div>
+                            {{ job_form.use_existing_resume.errors }}
+                            <label for="{{ job_form.use_existing_resume.id_for_label }}">Use existing resume:</label>
+                            {{ job_form.use_existing_resume }}
+                        </div>
                     {% endif %}
-                    <div>
+                    <div id="resumeFileUploadField">
                         {{ job_form.resume.errors }}
                         {{ job_form.resume.label_tag }}
                         {{ job_form.resume }}

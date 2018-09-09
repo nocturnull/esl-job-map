@@ -22,3 +22,12 @@ class FileManager(object):
             self.storage_client.upload_large_file(file_path, file_obj.temporary_file_path())
         except AttributeError:
             self.storage_client.upload_small_file(file_path, file_obj.read())
+
+    def delete_file(self, file_path: str):
+        """
+        Attempt to delete a file saved in the bucket.
+
+        :param file_path:
+        :return:
+        """
+        self.storage_client.delete_object(file_path)
