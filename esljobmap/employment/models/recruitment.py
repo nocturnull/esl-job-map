@@ -88,7 +88,7 @@ class JobApplication(models.Model):
 
     @classmethod
     def create_job(cls, job_post, contact_email, filename, site_user=None):
-        unique_filename = str(int(time.time())) + filename[filename.find('.'):]
+        unique_filename = str(int(time.time())) + '-' + filename
         return cls.objects.create(job_post=job_post,
                                   contact_email=contact_email,
                                   resume_filename=unique_filename,
