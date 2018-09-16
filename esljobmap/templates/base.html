@@ -9,7 +9,7 @@
         <title>{% block title %}Full-time English Teaching Jobs in South Korea on a Map - Koco Tutor{% endblock %}</title>
         <link rel="shortcut icon" type="image/png" href="{% static 'esljobmap/favicon.png' %}"/>
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'foundation/css/app.css' %}">
+        <link rel="stylesheet" href="{% static 'foundation/dist/app.min.css' %}">
     </head>
     <body>
         {% include 'modules/top-nav.html' %}
@@ -19,9 +19,8 @@
             {% endblock %}
         </div>
 
-        <script src="{% static 'foundation/node_modules/jquery/dist/jquery.js' %}"></script>
-        <script src="{% static 'foundation/node_modules/what-input/dist/what-input.js' %}"></script>
-        <script src="{% static 'foundation/node_modules/foundation-sites/dist/js/foundation.js' %}"></script>
-        <script src="{% static 'foundation/js/app.js' %}" type="module"></script>
+        <script src="{% static 'foundation/dist/vendor.min.js' %}"></script>
+        <script src="{% static 'foundation/dist/app.min.js' %}"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCl9E_fGPyG_Bc8vBkvDDu2BTJwtKayw6E&callback=initMap" async defer></script>
     </body>
 </html>

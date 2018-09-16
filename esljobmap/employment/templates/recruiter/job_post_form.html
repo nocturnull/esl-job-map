@@ -7,9 +7,12 @@
     <div class="grid-container">
         <h2>Post a Job</h2>
 
+        <h3>Pick a location for the job on the map.</h3>
+        <div id="map"></div>
+
         <div class="grid-x grid-margin-x mt-1 mb-1">
             <div class="medium-10 cell">
-                <form method="post" novalidate>
+                <form method="post" novalidate id="jobPostForm" action="{% url 'employment_create_job' %}">
                     {% csrf_token %}
                     {{ form.non_field_errors }}
                     <div>
@@ -74,6 +77,7 @@
                             </div>
                         </div>
                     </div>
+                    <div id="postJobformErrors" class="no-show callout alert">Please select a location on the map and fill in all required fields.</div>
                     <input type="submit" value="Save" class="primary-button" />
                 </form>
             </div>

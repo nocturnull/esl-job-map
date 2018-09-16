@@ -25,6 +25,9 @@ class JobPost(models.Model):
     is_visible = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    latitude = models.FloatField(default=0)
+    longitude = models.FloatField(default=0)
+    address = models.CharField(max_length=1024, default='')
 
     @property
     def pretty_employment_type(self) -> str:

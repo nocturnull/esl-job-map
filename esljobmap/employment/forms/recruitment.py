@@ -31,7 +31,7 @@ class CreateJobForm(forms.ModelForm):
         model = JobPost
         fields = ['title', 'class_type', 'contact_name', 'contact_email',
                   'contact_number', 'schedule', 'other_requirements', 'is_full_time',
-                  'pay_rate', 'salary', 'benefits']
+                  'pay_rate', 'salary', 'benefits', 'latitude', 'longitude', 'address']
 
 
 class TakeDownJobForm(forms.ModelForm):
