@@ -7,21 +7,31 @@
     <div class="grid-container">
         <h2>{{ title }}</h2>
 
-        {% for job_post in object_list %}
-            <div class="grid-x mtb-3">
-                <div class="cell medium-4">
-                    {{ job_post.title }}
-                </div>
-                <div class="cell medium-2">
-                    {{ job_post.pretty_days_till_expired }}
-                </div>
-                <div class="cell medium-1">
-                    <a href="{% url 'employment_apply_to_job' job_post.id %}" class="safe-button">Apply</a>
-                </div>
-            </div>
-        {% empty %}
-            <p>No {{ title }} available.</p>
-        {% endfor %}
+        <div id="jobPostingsMap" class="google-map"></div>
+
+{#        {{ job_post.pretty_days_till_expired }}#}
+{#    <a href="{% url 'employment_apply_to_job' job_post.id %}" class="safe-button">Apply</a>#}
+
     </div>
 
+{% endblock %}
+
+{% block javascript %}
+    {% if object_list|length > 0 %}
+        <script>
+            $(document).ready(function () {
+                window.mapMarkers = [];
+                {% for job_post in object_list %}
+                    window.mapMarkers.push({
+                        title: '{{ job_post.title }}',
+                        lat: {{ job_post.latitude }},
+                        lng: {{ job_post.longitude }}
+                    });
+                {% endfor %}
+                console.log(window.mapMarkers);
+            });
+        </script>
+    {% else %}
+        <p>No {{ title }} available.</p>
+    {% endif %}
 {% endblock %}

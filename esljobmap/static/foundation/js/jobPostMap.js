@@ -6,7 +6,7 @@
  * @link https://developers.google.com/maps/documentation/javascript/infowindows
  * @link https://developers.google.com/maps/documentation/javascript/geocoding#ReverseGeocoding
  */
-class GoogleMap {
+class JobPostMap {
 
     /**
      * Constructor
@@ -122,7 +122,7 @@ class GoogleMap {
             'contact_number': $('#id_contact_number').val(),
             'schedule': $('#id_schedule').val(),
             'other_requirements': $('#id_other_requirements').val(),
-            'is_full_time': $('input[name="is_full_time"]').val(),
+            'is_full_time': (/true/i).test($('input[name="is_full_time"]').val()),
             'salary': $('#id_salary').val(),
             'benefits': $('#id_benefits').val(),
             'pay_rate': $('#id_pay_rate').val(),
@@ -145,4 +145,4 @@ class GoogleMap {
     }
 }
 
-export default GoogleMap;
+export default JobPostMap;
