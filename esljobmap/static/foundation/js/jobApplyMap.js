@@ -26,17 +26,14 @@ class JobApplyMap {
                 center: {lat: 37.5, lng: 127}
             });
 
-            console.log('job postings map init')
             this.addMarkers();
         }
     }
 
     addMarkers() {
-        console.log('adding markers' );
         for (let i = 0; i < window.mapMarkers.length; i++) {
             let marker = window.mapMarkers[i],
                 latlng = new google.maps.LatLng(marker.lat, marker.lng);
-            console.log(marker);
 
             let newMarker = new google.maps.Marker({
                 position: latlng,

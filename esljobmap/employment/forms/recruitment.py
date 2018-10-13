@@ -16,7 +16,7 @@ class CreateJobForm(forms.ModelForm):
     other_requirements = forms.CharField(label='Other Requirements', widget=forms.TextInput(attrs={'placeholder': 'Ex) Teaching certificate'}))
     is_full_time = forms.ChoiceField(label='Job Type',
                                      widget=forms.RadioSelect,
-                                     choices=((True, 'Full-time'), (False, 'Part-time')))
+                                     choices=JOB_TYPE_CHOICES)
     pay_rate = forms.CharField(label='Pay Rate',
                                widget=forms.TextInput(attrs={'placeholder': 'Ex) 45,000 per hour'}),
                                required=False)
