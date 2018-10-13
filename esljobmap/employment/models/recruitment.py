@@ -1,11 +1,11 @@
 # employment/models/recruitment.py
-import time
+
 from datetime import datetime, timedelta
 from django.db import models
 
 from ..apps import EmploymentConfig
 from account.models.user import SiteUser
-from cloud.storage import build_storage_url
+from account.models.resume import Resume
 
 
 class JobPost(models.Model):
@@ -75,28 +75,13 @@ class JobApplication(models.Model):
                                   blank=True,
                                   null=True)
     contact_email = models.EmailField(max_length=255)
-    resume_filename = models.CharField(max_length=512, default='', blank=True)
-    use_existing_resume = models.BooleanField(default=False)
-
-    @property
-    def storage_path(self) -> str:
-        return 'job/{0}/applicant/{1}'.format(self.job_post.id, self.resume_filename)
-
-    @property
-    def resume_url(self) -> str:
-        return build_storage_url(self.storage_path)
-
-    @property
-    def has_resume(self) -> bool:
-        return len(self.resume_filename) > 0
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=False)
 
     @classmethod
-    def create_job(cls, job_post, contact_email, filename=None, use_existing_resume=False, site_user=None):
-        unique_filename = str(int(time.time())) + '-' + filename if filename is not None else ''
+    def create_application(cls, job_post, contact_email, resume, site_user=None):
         return cls.objects.create(job_post=job_post,
                                   contact_email=contact_email,
-                                  resume_filename=unique_filename,
-                                  use_existing_resume=use_existing_resume,
+                                  resume=resume,
                                   site_user=site_user)
 
     def __str__(self):

@@ -6,6 +6,7 @@ from django.shortcuts import render
 
 from djangomailgun.message.api import MessageApi
 from cloud.file_manager import FileManager
+from account.models.resume import Resume
 from ..models import JobPost, JobApplication
 from ..forms.recruitment import ApplyToJobForm
 from ..email.template_manager import TemplateManager as EmailTemplateManager
@@ -43,23 +44,26 @@ class ApplyToJobPost(TemplateView):
         if job_form.is_valid():
             applicant_email = job_form.cleaned_data['contact_email']
             use_existing_resume = job_form.cleaned_data['use_existing_resume']
-            resume = None
 
             kwargs = {
                 'job_post': job_post,
                 'contact_email': applicant_email
             }
+
+            # Attempt to use an existing resume if opted in.
             if request.user.is_authenticated:
                 kwargs['site_user'] = request.user
-            if use_existing_resume:
-                kwargs['use_existing_resume'] = True
-            else:
-                resume = job_form.cleaned_data.get('resume', None)
-                kwargs['filename'] = resume.name
+                if use_existing_resume and request.user.teacher.has_resume:
+                    kwargs['resume'] = request.user.teacher.resume
 
-            application = JobApplication.create_job(**kwargs)
-            if resume is not None:
-                file_manager.upload_file(application.storage_path, resume)
+            # Make a new resume that is for this application only if needed.
+            resume = job_form.cleaned_data.get('resume', None)
+            if resume is not None and not use_existing_resume:
+                new_resume = Resume.create_resume(filename=resume.name)
+                file_manager.upload_file(new_resume.storage_path, resume)
+                kwargs['resume'] = new_resume
+
+            application = JobApplication.create_application(**kwargs)
 
             message_api.send(sender=applicant_email,
                              recipient=job_post.contact_email,

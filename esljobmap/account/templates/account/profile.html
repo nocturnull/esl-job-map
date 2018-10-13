@@ -47,7 +47,9 @@
 
             <div class="grid-x grid-margin-x mt-1 mb-1 p-1">
                 <div class="medium-3 cell">Resume</div>
-                <div class="medium-6 cell">{{ teacher.resume_filename|default_if_none:'' }}</div>
+                {% if teacher.has_resume %}
+                    <div class="medium-6 cell">{{ teacher.resume.filename }}</div>
+                {% endif %}
             </div>
 
         {% endif %}

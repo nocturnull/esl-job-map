@@ -7,6 +7,7 @@ from django.urls import reverse_lazy
 
 from cloud.file_manager import FileManager
 from ..models import SiteUser
+from ..models import Resume
 from ..forms import UserUpdateForm, TeacherUpdateForm
 
 
@@ -48,18 +49,16 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
 
         if user_form.is_valid() and teacher_form.is_valid():
             resume = teacher_form.cleaned_data.get('resume_filename', None)
-            teacher = request.user.teacher
-
-            # Delete the old resume if we need to.
-            if teacher.has_resume and resume:
-                file_manager.delete_file(teacher.resume_storage_path)
 
             user_form.save()
             teacher = teacher_form.save()
 
             # Attempt to upload new resume if necessary.
             if resume:
-                file_manager.upload_file(teacher.resume_storage_path, resume)
+                new_resume = Resume.create_resume(filename=resume.name)
+                file_manager.upload_file(new_resume.storage_path, resume)
+                teacher.resume = new_resume
+                teacher.save()
 
             return redirect(self.success_url)
         else:

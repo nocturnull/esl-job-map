@@ -25,9 +25,18 @@
                         </p>
                     {% elif request.user.is_teacher %}
                         <div>
-                            {{ job_form.use_existing_resume.errors }}
-                            <label for="{{ job_form.use_existing_resume.id_for_label }}">Use existing resume:</label>
-                            {{ job_form.use_existing_resume }}
+                            {% if request.user.teacher.has_resume %}
+                                <label for="{{ job_form.use_existing_resume.id_for_label }}">Use existing resume:</label>
+                                {{ job_form.use_existing_resume }}
+                            {% else %}
+                                <p>
+                                    Upload a resume to your
+                                    <a href="{% url 'account_profile' %}" target="_blank">Profile</a>
+                                    to select an existing resume.
+                                </p>
+                                <label for="{{ job_form.use_existing_resume.id_for_label }}">Use existing resume:</label>
+                                <input type="checkbox" name="{{ job_form.use_existing_resume.html_name }}" disabled/>
+                            {% endif %}
                         </div>
                     {% endif %}
                     <div id="resumeFileUploadField">

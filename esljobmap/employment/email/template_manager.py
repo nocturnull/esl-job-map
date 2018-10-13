@@ -41,11 +41,8 @@ class TemplateManager:
         :param job_application:
         :return:
         """
-        # The resume can either come from the user or the application itself.
-        if job_application.use_existing_resume:
-            resume_url = job_application.site_user.teacher.resume_url
-        else:
-            resume_url = job_application.resume_url
+        # Append a link that points to CDN file location.
+        resume_url = job_application.resume.cdn_url
 
         return '{0}\n\nResume: {1}'.format(body, resume_url)
 
