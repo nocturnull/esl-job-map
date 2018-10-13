@@ -18,7 +18,7 @@ class CreateJobPost(LoginRequiredMixin, CreateView):
     """
     model = JobPost
     form_class = CreateJobForm
-    template_name = 'recruiter/job_post_form.html'
+    template_name = 'map/index.html'
     success_url = reverse_lazy('employment_my_job_posts')
 
     def form_valid(self, form):

@@ -8,16 +8,13 @@
                     <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
                 </a>
             </li>
-            {% if user.is_recruiter or not user.is_authenticated %}
-                {% if user.is_authenticated %}
-                    <li><a href="{% url 'employment_my_job_posts' %}">My Jobs</a></li>
-                {% endif %}
-                <li><a href="{% url 'employment_create_job' %}">Post a Job</a></li>
+            {% if user.is_authenticated and user.is_recruiter %}
+                <li><a href="{% url 'employment_my_job_posts' %}">My Jobs</a></li>
             {% elif user.is_teacher %}
                 <li><a href="{% url 'employment_applications' %}">My Applications</a></li>
             {% endif %}
-            <li><a href="{% url 'employment_full_time_jobs' %}">Full-Time Map</a></li>
-            <li><a href="{% url 'employment_part_time_jobs' %}">Part-Time Map</a></li>
+            <li><a href="{% url 'employment_full_time_map' %}">Full-Time Map</a></li>
+            <li><a href="{% url 'employment_part_time_map' %}">Part-Time Map</a></li>
             <li><a href="#about">About</a></li>
         </ul>
     </div>

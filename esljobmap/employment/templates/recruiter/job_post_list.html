@@ -66,8 +66,9 @@
                 </div>
             </div>
         {% empty %}
-            <p>You have not created any job posts yet.</p>
-            <a href="{% url 'employment_create_job' %}">Click here to make one!</a>
+            <p>You have not created any job posts yet. Visit one of the maps to upload a job!</p>
+            <li><a href="{% url 'employment_full_time_map' %}">Full-Time Map</a></li>
+            <li><a href="{% url 'employment_part_time_map' %}">Part-Time Map</a></li>
         {% endfor %}
     </div>
 

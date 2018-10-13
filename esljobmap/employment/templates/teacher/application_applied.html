@@ -8,9 +8,9 @@
 
         <h3>You've already applied to this job.</h3>
         {% if job_post.is_full_time %}
-            <a href="{% url 'employment_full_time_jobs' %}">Apply to more Full-Time jobs</a>
+            <a href="{% url 'employment_full_time_map' %}">Apply to more Full-Time jobs</a>
         {% else %}
-            <a href="{% url 'employment_part_time_jobs' %}">Apply to more Part-time jobs</a>
+            <a href="{% url 'employment_part_time_map' %}">Apply to more Part-time jobs</a>
         {% endif %}
     </div>
 

@@ -1,4 +1,5 @@
 # employment/views/job_seeking.py
+
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import render
@@ -8,32 +9,6 @@ from cloud.file_manager import FileManager
 from ..models import JobPost, JobApplication
 from ..forms.recruitment import ApplyToJobForm
 from ..email.template_manager import TemplateManager as EmailTemplateManager
-
-
-class ListFullTimeJobs(ListView):
-    model = JobPost
-    template_name = 'employment/job_list.html'
-    queryset = JobPost.objects.filter(is_full_time=True, is_visible=True)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # We don't want to show jobs that have expired.
-        context['object_list'] = [o for o in self.object_list if not o.is_expired]
-        context['title'] = 'Full-Time Map'
-        return context
-
-
-class ListPartTimeJobs(ListView):
-    model = JobPost
-    template_name = 'employment/job_list.html'
-    queryset = JobPost.objects.filter(is_full_time=False, is_visible=True)
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # We don't want to show jobs that have expired.
-        context['object_list'] = [o for o in self.object_list if not o.is_expired]
-        context['title'] = 'Part-Time Map'
-        return context
 
 
 class ApplyToJobPost(TemplateView):

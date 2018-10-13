@@ -2,8 +2,7 @@ $(document).foundation();
 
 import JobToggle from './job.js'
 import JobApplication from './apply.js';
-import JobPostMap from './jobPostMap.js';
-import JobApplyMap from './jobApplyMap.js';
+import JobMapSetup from './jobMap.js';
 
 
 $(document).ready(function() {
@@ -15,10 +14,7 @@ $(document).ready(function() {
 });
 
 function initMap() {
-    let jpmap = new JobPostMap(),
-        jamap = new JobApplyMap();
-
-    jpmap.init();
-    jamap.init();
+    let jmap = new JobMapSetup();
+    jmap.init();
 }
 window.initMap = initMap;

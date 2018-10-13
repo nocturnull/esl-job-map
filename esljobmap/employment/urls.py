@@ -2,13 +2,14 @@
 
 from django.urls import path
 
-from .views.job_seeking import ListFullTimeJobs, ListPartTimeJobs, ApplyToJobPost, ListApplications
+from .views.map import FullTimeMap, PartTimeMap
+from .views.job_seeking import ApplyToJobPost, ListApplications
 from .views.recruitment import CreateJobPost, ListJobPost, ListJobApplicants, EditJobPost, TakeDownJobPost
 
 urlpatterns = [
     # Common urls
-    path('full-time-jobs', ListFullTimeJobs.as_view(), name='employment_full_time_jobs'),
-    path('part-time-jobs', ListPartTimeJobs.as_view(), name='employment_part_time_jobs'),
+    path('full-time', FullTimeMap.as_view(), name='employment_full_time_map'),
+    path('part-time', PartTimeMap.as_view(), name='employment_part_time_map'),
     # Recruiter only pages
     path('recruiter/job/post', CreateJobPost.as_view(), name='employment_create_job'),
     path('recruiter/job/my-jobs', ListJobPost.as_view(), name='employment_my_job_posts'),

@@ -12,17 +12,12 @@
         <div class="welcome-content">
             <h1>Teach English in South Korea</h1>
             <br>
-            <a href="{% url 'employment_full_time_jobs' %}" class="secondary-button">
+            <a href="{% url 'employment_full_time_map' %}" class="secondary-button">
                 <span>Full-Time Map</span>
             </a>
-            <a href="{% url 'employment_part_time_jobs' %}" class="secondary-button">
+            <a href="{% url 'employment_part_time_map' %}" class="secondary-button">
                 <span>Part-Time Map</span>
             </a>
-            {% if user.is_recruiter or not user.is_authenticated %}
-                <a class="secondary-button" href="{% url 'employment_create_job' %}">
-                    <span>Post a Job</span>
-                </a>
-            {% endif %}
         </div>
 
     </div>

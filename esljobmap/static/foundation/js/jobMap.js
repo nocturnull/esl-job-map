@@ -6,14 +6,14 @@
  * @link https://developers.google.com/maps/documentation/javascript/infowindows
  * @link https://developers.google.com/maps/documentation/javascript/geocoding#ReverseGeocoding
  */
-class JobPostMap {
+class JobMapSetup {
 
     /**
      * Constructor
      */
     constructor() {
-        this.currentMarker = null;
         this.map = null;
+        this.currentMarker = null;
         this.infoWindow = null;
         this.geocoder = null;
         this.latitude = 0;
@@ -33,6 +33,7 @@ class JobPostMap {
                 zoom: 13,
                 center: {lat: 37.5, lng: 127}
             });
+            this.addExistingJobMarkers();
             this.infoWindow = new google.maps.InfoWindow;
             this.geocoder = new google.maps.Geocoder;
             this.$formErrors = $('#postJobformErrors');
@@ -50,6 +51,20 @@ class JobPostMap {
                 e.preventDefault();
                 return false;
             })
+        }
+    }
+
+    addExistingJobMarkers() {
+        for (let i = 0; i < window.mapMarkers.length; i++) {
+            let marker = window.mapMarkers[i],
+                latlng = new google.maps.LatLng(marker.lat, marker.lng);
+
+            let newMarker = new google.maps.Marker({
+                position: latlng,
+                title: marker.title
+            });
+
+            newMarker.setMap(this.map);
         }
     }
 
@@ -145,4 +160,4 @@ class JobPostMap {
     }
 }
 
-export default JobPostMap;
+export default JobMapSetup;

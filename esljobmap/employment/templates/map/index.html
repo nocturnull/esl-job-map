@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+        <h2>{{ title }}</h2>
+
+        <div id="map" class="google-map"></div>
+
+        {% if user.is_recruiter %}
+            {% include 'recruiter/job_post_form.html' %}
+        {% endif %}
+
+{#        {{ job_post.pretty_days_till_expired }}#}
+{#    <a href="{% url 'employment_apply_to_job' job_post.id %}" class="safe-button">Apply</a>#}
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        window.mapMarkers = [];
+        {% for job_post in object_list %}
+            window.mapMarkers.push({
+                title: '{{ job_post.title }}',
+                lat: {{ job_post.latitude }},
+                lng: {{ job_post.longitude }}
+            });
+        {% endfor %}
+    </script>
+{% endblock %}
