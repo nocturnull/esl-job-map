@@ -13,9 +13,6 @@
             {% include 'recruiter/job_post_form.html' %}
         {% endif %}
 
-{#        {{ job_post.pretty_days_till_expired }}#}
-{#    <a href="{% url 'employment_apply_to_job' job_post.id %}" class="safe-button">Apply</a>#}
-
     </div>
 
 {% endblock %}
@@ -27,7 +24,10 @@
             window.mapMarkers.push({
                 title: '{{ job_post.title }}',
                 lat: {{ job_post.latitude }},
-                lng: {{ job_post.longitude }}
+                lng: {{ job_post.longitude }},
+                address: '{{ job_post.address }}',
+                expires: '{{ job_post.pretty_days_till_expired }}',
+                applyLink: '{% url "employment_apply_to_job" job_post.id %}'
             });
         {% endfor %}
     </script>

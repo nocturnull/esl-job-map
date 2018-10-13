@@ -56,15 +56,25 @@ class JobMapSetup {
 
     addExistingJobMarkers() {
         for (let i = 0; i < window.mapMarkers.length; i++) {
-            let marker = window.mapMarkers[i],
-                latlng = new google.maps.LatLng(marker.lat, marker.lng);
+            let markerData = window.mapMarkers[i],
+                latlng = new google.maps.LatLng(markerData.lat, markerData.lng);
 
-            let newMarker = new google.maps.Marker({
+            let marker = new google.maps.Marker({
                 position: latlng,
-                title: marker.title
+                title: markerData.title
             });
 
-            newMarker.setMap(this.map);
+            marker.setMap(this.map);
+            marker.addListener('click', () => {
+                // Open up the window and display the job info.
+                this.infoWindow.setContent(
+                    'Title: ' + markerData.title + '<br>' +
+                    'Address: ' + markerData.address + '<br>' +
+                    markerData.expires + '<br>' +
+                    '<a href="' + markerData.applyLink + '" target="_blank">Apply</a>'
+                );
+                this.infoWindow.open(this.map, marker);
+            });
         }
     }
 
