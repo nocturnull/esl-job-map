@@ -5,6 +5,8 @@ from django.views.generic import ListView
 from ..forms.recruitment import CreateJobForm
 from ..models import JobPost
 
+from cloud.templatetags.remote import cdn_image
+
 
 class FullTimeMap(ListView):
     model = JobPost
@@ -16,6 +18,7 @@ class FullTimeMap(ListView):
         # We don't want to show jobs that have expired.
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['title'] = 'Full-Time Map'
+        context['icon_image'] = cdn_image('koco-man/koco-blue-40x40.png')
         context['form'] = CreateJobForm()
         return context
 
@@ -30,5 +33,6 @@ class PartTimeMap(ListView):
         # We don't want to show jobs that have expired.
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['title'] = 'Part-Time Map'
+        context['icon_image'] = cdn_image('koco-man/koco-orange-40x40.png')
         context['form'] = CreateJobForm()
         return context

@@ -3,6 +3,7 @@
  *
  * Relevant documentation
  * @link https://developers.google.com/maps/documentation/javascript/events
+ * @link https://developers.google.com/maps/documentation/javascript/markers
  * @link https://developers.google.com/maps/documentation/javascript/infowindows
  * @link https://developers.google.com/maps/documentation/javascript/geocoding#ReverseGeocoding
  */
@@ -52,7 +53,7 @@ class JobMapSetup {
                 this.appendMapData(this.form.attr('action'));
                 e.preventDefault();
                 return false;
-            })
+            });
         }
     }
 
@@ -62,7 +63,8 @@ class JobMapSetup {
                 latlng = new google.maps.LatLng(markerData.lat, markerData.lng);
 
             let marker = new google.maps.Marker({
-                position: latlng
+                position: latlng,
+                icon: window.mapIconImage
             });
 
             marker.setMap(this.map);
@@ -94,6 +96,7 @@ class JobMapSetup {
         this.currentMarker = new google.maps.Marker({
             position: latLng,
             map: this.map,
+            icon: window.mapIconImage,
             animation: google.maps.Animation.DROP
         });
         this.map.panTo(latLng);

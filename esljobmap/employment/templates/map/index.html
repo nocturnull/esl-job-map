@@ -20,6 +20,8 @@
 {% block javascript %}
     <script>
         window.mapMarkers = [];
+        window.mapIconImage = '{{ icon_image }}';
+
         {% if user.is_recruiter %}
             window.isRecruiter = true;
         {% else %}
