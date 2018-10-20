@@ -20,14 +20,17 @@
 {% block javascript %}
     <script>
         window.mapMarkers = [];
+        {% if user.is_recruiter %}
+            window.isRecruiter = true;
+        {% else %}
+            window.isRecruiter = false;
+        {% endif %}
+
         {% for job_post in object_list %}
             window.mapMarkers.push({
-                title: '{{ job_post.title }}',
                 lat: {{ job_post.latitude }},
                 lng: {{ job_post.longitude }},
-                address: '{{ job_post.address }}',
-                expires: '{{ job_post.pretty_days_till_expired }}',
-                applyLink: '{% url "employment_apply_to_job" job_post.id %}'
+                content: '{{ job_post.html_content|safe }}'
             });
         {% endfor %}
     </script>

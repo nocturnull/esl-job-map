@@ -38,10 +38,12 @@ class JobMapSetup {
             this.geocoder = new google.maps.Geocoder;
             this.$formErrors = $('#postJobformErrors');
 
-            // Add click listener to the map.
-            this.map.addListener('click', (e) => {
-                this.placeMarkerAndPanTo(e.latLng);
-            });
+            // Add click listener to the map if a recruiter.
+            if (window.isRecruiter) {
+                this.map.addListener('click', (e) => {
+                    this.placeMarkerAndPanTo(e.latLng);
+                });
+            }
 
             // Bind ajax form listener.
             this.form = $('#jobPostForm');
@@ -60,20 +62,19 @@ class JobMapSetup {
                 latlng = new google.maps.LatLng(markerData.lat, markerData.lng);
 
             let marker = new google.maps.Marker({
-                position: latlng,
-                title: markerData.title
+                position: latlng
             });
 
             marker.setMap(this.map);
-            marker.addListener('click', () => {
+            marker.addListener('mouseover', () => {
                 // Open up the window and display the job info.
-                this.infoWindow.setContent(
-                    'Title: ' + markerData.title + '<br>' +
-                    'Address: ' + markerData.address + '<br>' +
-                    markerData.expires + '<br>' +
-                    '<a href="' + markerData.applyLink + '" target="_blank">Apply</a>'
-                );
+                this.infoWindow.setContent(markerData.content);
                 this.infoWindow.open(this.map, marker);
+            });
+            marker.addListener('mouseout', function () {
+                if (this.infoWindow) {
+                    this.infoWindow.close();
+                }
             });
         }
     }

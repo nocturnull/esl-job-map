@@ -2,6 +2,7 @@
 
 from datetime import datetime, timedelta
 from django.db import models
+from django.shortcuts import reverse
 
 from ..apps import EmploymentConfig
 from account.models.user import SiteUser
@@ -31,26 +32,75 @@ class JobPost(models.Model):
 
     @property
     def pretty_employment_type(self) -> str:
+        """
+        Display the employment information in neatly formatted text.
+
+        :return: str
+        """
         if self.is_full_time:
             return '[Full-Time]'
         return '[Part-Time]'
 
     @property
     def is_editable(self) -> bool:
+        """
+        Determine if the user can edit this Job Post.
+
+        :return: bool
+        """
         return datetime.now() < (self.created_at + timedelta(days=1))
 
     @property
     def is_expired(self) -> bool:
+        """
+        Determine if the Job Post has expired.
+
+        :return: bool
+        """
         return datetime.now() > (self.created_at + timedelta(weeks=2))
 
     @property
     def pretty_days_till_expired(self) -> str:
+        """
+        Display the amount of days until the job expires in a neat format.
+
+        :return:
+        """
         days_left = 14 - (datetime.now() - self.created_at).days
         if days_left > 0:
             return 'Expires in: {0} days'.format(days_left)
         return 'Expired'
 
+    @property
+    def html_content(self):
+        """
+        Build the map HTML content for ths Job Post.
+
+        :return:
+        """
+        content = 'Title: ' + self.title + '<br>'
+        if self.is_full_time:
+            content += 'Salary: ' + self.salary + '<br>'
+        else:
+            content += 'Pay Rate: ' + self.pay_rate + '<br>'
+        content += 'Schedule: ' + self.schedule + '<br>'
+        content += 'Class Type: ' + self.class_type + '<br>'
+
+        if self.is_full_time:
+            content += 'Benefits: ' + self.benefits + '<br>'
+
+        content += 'Other Requirements: ' + self.other_requirements + '<br>'
+        content += self.pretty_days_till_expired + '<br>'
+        content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + '" target="_blank">Apply</a>'
+        return content
+
     def has_applicant_applied(self, user) -> bool:
+        """
+        Determine if the supplied applicant has already applied to this Job Post.
+
+        :param user:
+        :return: bool
+        """
         if user.is_authenticated:
             job_applications = self.applicants.all()
             if len(job_applications) > 0:
