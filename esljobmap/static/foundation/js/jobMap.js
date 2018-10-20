@@ -21,7 +21,8 @@ class JobMapSetup {
         this.longitude = 0;
         this.address = '';
         this.form = null;
-        this.$formErrors = null;
+        this.$locationError = null;
+        this.$generalJobFields = null;
     }
 
     /**
@@ -42,7 +43,7 @@ class JobMapSetup {
             this.addExistingJobMarkers();
             this.infoWindow = new google.maps.InfoWindow;
             this.geocoder = new google.maps.Geocoder;
-            this.$formErrors = $('#postJobformErrors');
+            this.$locationError = $('#postJobLocationError');
 
             // Add click listener to the map if a recruiter.
             if (window.isRecruiter) {
@@ -54,11 +55,18 @@ class JobMapSetup {
             // Bind ajax form listener.
             this.form = $('#jobPostForm');
             this.form.submit((e) => {
-                this.$formErrors.addClass('no-show');
-                this.appendMapData(this.form.attr('action'));
+                this.$locationError.addClass('no-show');
+                if (this.latitude > 0 && this.longitude > 0) {
+                    this.submitMapData(this.form.attr('action'));
+                } else {
+                    this.$locationError.removeClass('no-show');
+                }
                 e.preventDefault();
                 return false;
             });
+
+            // Bind job field sets.
+            this.$generalJobFields = $('#generalJobFields');
         }
     }
 
@@ -133,10 +141,10 @@ class JobMapSetup {
                   // Open up the window and display the address.
                   this.infoWindow.open(this.map, marker);
               } else {
-                window.alert('No results found');
+                console.log('No results found');
               }
             } else {
-              window.alert('Geocoder failed due to: ' + status);
+              console.log('Geocoder failed due to: ' + status);
             }
           });
     }
@@ -146,7 +154,7 @@ class JobMapSetup {
      *
      * @param action
      */
-    appendMapData(action) {
+    submitMapData(action) {
         let formData = {
             'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
             'title': $('#id_title').val(),
@@ -170,10 +178,13 @@ class JobMapSetup {
             url: action,
             data: formData
         }).done((response) => {
+            let responseHtml = $.parseHTML(response);
+            let extGeneralJobFields = $(responseHtml).find('#generalJobFields');
+
             if (response.includes('jobPostListConfirm')) {
                 window.location = '/employment/recruiter/job/my-jobs';
             } else {
-                this.$formErrors.removeClass('no-show');
+                this.$generalJobFields.html(extGeneralJobFields.html());
             }
         });
     }
