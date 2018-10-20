@@ -1,4 +1,5 @@
 {% load static %}
+{% load nav %}
 
 <div class="top-bar top-site-nav">
     <div class="top-bar-left">
@@ -9,12 +10,12 @@
                 </a>
             </li>
             {% if user.is_authenticated and user.is_recruiter %}
-                <li><a href="{% url 'employment_my_job_posts' %}">My Jobs</a></li>
+                <li><a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">My Jobs</a></li>
             {% elif user.is_teacher %}
-                <li><a href="{% url 'employment_applications' %}">My Applications</a></li>
+                <li><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
             {% endif %}
-            <li><a href="{% url 'employment_full_time_map' %}">Full-Time Map</a></li>
-            <li><a href="{% url 'employment_part_time_map' %}">Part-Time Map</a></li>
+            <li><a href="{% url 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">Full-Time Map</a></li>
+            <li><a href="{% url 'employment_part_time_map' %}" class="{% menu_class request 'employment_part_time_map' %}">Part-Time Map</a></li>
             <li><a href="#about">About</a></li>
         </ul>
     </div>
@@ -26,7 +27,7 @@
                     <p class="mt-1">{{ user.username }}</p>
                 </li>
                 <li>
-                    <a href="{% url 'account_profile' %}">Profile</a>
+                    <a href="{% url 'account_profile' %}" class="{% menu_class request 'account_profile' %}">Profile</a>
                 </li>
                 <li>
                     <p><a href="{% url 'logout' %}">Logout</a></p>

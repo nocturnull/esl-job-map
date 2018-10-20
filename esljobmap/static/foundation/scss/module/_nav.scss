@@ -5,6 +5,11 @@
 .top-site-nav {
     a {
         line-height: 2rem;
+
+        &.active {
+            color: nth($brand-primary, 1);
+            font-weight: bold;
+        }
     }
 }
 
