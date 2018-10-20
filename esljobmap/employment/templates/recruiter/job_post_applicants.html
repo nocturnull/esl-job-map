@@ -11,7 +11,7 @@
                 <div class="grid-x mtb-2">
                     <div class="cell medium-3">Name: {{ user.full_name }}</div>
                     <div class="cell medium-3">Visa: {{ user.teacher.visa_type }} </div>
-                    <div class="cell medium-3">Resume: <a href="{{ applicant.resume.cdn_url }}">Download</a></div>
+                    <div class="cell medium-3">Resume: <a href="{{ applicant.resume.cdn_url }}" target="_blank">View</a></div>
                 </div>
             {% endwith %}
         {% endfor %}

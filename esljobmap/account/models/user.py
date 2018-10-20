@@ -17,8 +17,8 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
     )
     email = models.EmailField(unique=True, blank=False, max_length=255)
     date_joined = models.DateTimeField('Date Joined', auto_now_add=True)
-    first_name = models.CharField(max_length=255, null=True, blank=True, verbose_name='First Name')
-    last_name = models.CharField(max_length=255, null=True, blank=True, verbose_name='Last Name')
+    first_name = models.CharField(max_length=255, blank=True, verbose_name='First Name', default='')
+    last_name = models.CharField(max_length=255, blank=True, verbose_name='Last Name', default='')
     phone_number = models.CharField(blank=True, max_length=255, verbose_name='Contact Number')
     role = models.PositiveSmallIntegerField(choices=USER_ROLES, default=1)
 

@@ -125,6 +125,7 @@ class JobApplication(models.Model):
                                   blank=True,
                                   null=True)
     contact_email = models.EmailField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=False)
 
     @classmethod

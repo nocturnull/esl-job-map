@@ -27,7 +27,8 @@ class Client(object):
         :param fobject:
         :return:
         """
-        self.bucket.put_object(Key=skey, Body=fobject, ACL='public-read')
+        self.bucket.put_object(Key=skey, Body=fobject, ContentDisposition='inline',
+                               ContentType=self._detect_content_type(skey), ACL='public-read')
 
     def upload_large_file(self, skey, fpath):
         """
@@ -44,6 +45,8 @@ class Client(object):
             Filename=fpath,
             Key=skey,
             ExtraArgs={
+                'ContentDisposition': 'inline',
+                'ContentType': self._detect_content_type(skey),
                 'ACL': 'public-read'
             })
 
@@ -64,6 +67,12 @@ class Client(object):
                 'Quiet': True
             }
         )
+
+    @classmethod
+    def _detect_content_type(cls, path):
+        if 'pdf' in path:
+            return 'application/pdf'
+        return 'application/msword'
 
 
 def build_storage_url(uri: str) -> str:

@@ -2,6 +2,7 @@
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView
+from django.db.models import F
 from django.shortcuts import render
 
 from djangomailgun.message.api import MessageApi
@@ -91,4 +92,4 @@ class ListApplications(LoginRequiredMixin, ListView):
     template_name = 'teacher/application_list.html'
 
     def get_queryset(self):
-        return JobApplication.objects.filter(site_user=self.request.user)
+        return JobApplication.objects.filter(site_user=self.request.user).order_by(F('created_at').desc())

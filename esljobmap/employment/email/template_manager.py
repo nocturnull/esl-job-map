@@ -89,7 +89,7 @@ class TemplateManager:
         :param job_post:
         :return:
         """
-        if JobPost.is_full_time is True:
+        if job_post.is_full_time:
             return FULL_TIME_EXCLUSIVE_SCHEME.format(
                 job_post_salary=job_post.salary,
                 job_post_benefits=job_post.benefits
