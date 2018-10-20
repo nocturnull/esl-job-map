@@ -32,7 +32,12 @@ class JobMapSetup {
         if (mapContainer !== null ) {
             this.map = new google.maps.Map(mapContainer, {
                 zoom: 13,
-                center: {lat: 37.5, lng: 127}
+                center: {lat: 37.5, lng: 127},
+                mapTypeControlOptions: {
+                    mapTypeIds: ['roadmap'],
+                },
+                mapTypeControl: false,
+                streetViewControl: false
             });
             this.addExistingJobMarkers();
             this.infoWindow = new google.maps.InfoWindow;

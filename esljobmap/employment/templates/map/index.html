@@ -4,16 +4,11 @@
 
 {% block content %}
 
-    <div class="grid-container">
-        <h2>{{ title }}</h2>
+    <div id="map" class="google-map {{ map_class }}"></div>
 
-        <div id="map" class="google-map"></div>
-
-        {% if user.is_recruiter %}
-            {% include 'recruiter/job_post_form.html' %}
-        {% endif %}
-
-    </div>
+    {% if user.is_recruiter %}
+        {% include 'recruiter/job_post_form.html' %}
+    {% endif %}
 
 {% endblock %}
 

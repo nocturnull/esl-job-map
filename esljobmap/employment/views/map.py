@@ -6,6 +6,7 @@ from ..forms.recruitment import CreateJobForm
 from ..models import JobPost
 
 from cloud.templatetags.remote import cdn_image
+from account.templatetags.profile import is_recruiter
 
 
 class FullTimeMap(ListView):
@@ -17,8 +18,8 @@ class FullTimeMap(ListView):
         context = super().get_context_data(**kwargs)
         # We don't want to show jobs that have expired.
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
-        context['title'] = 'Full-Time Map'
         context['icon_image'] = cdn_image('koco-man/koco-blue-40x40.png')
+        context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['form'] = CreateJobForm()
         return context
 
@@ -32,7 +33,7 @@ class PartTimeMap(ListView):
         context = super().get_context_data(**kwargs)
         # We don't want to show jobs that have expired.
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
-        context['title'] = 'Part-Time Map'
         context['icon_image'] = cdn_image('koco-man/koco-orange-40x40.png')
+        context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['form'] = CreateJobForm()
         return context
