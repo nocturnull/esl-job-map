@@ -32,13 +32,38 @@ class CreateFullTimeJobForm(CreateJobForm):
 
 class CreatePartTimeJobForm(CreateJobForm):
     pay_rate = forms.CharField(label='Pay Rate',
-                               widget=forms.TextInput(attrs={'placeholder': 'Ex) 45,000 per hour'}))
+                               widget=forms.TextInput(attrs={'placeholder': 'Ex) 45,000 per hour'}),
+                               required=True)
 
     class Meta:
         model = JobPost
         fields = ['title', 'class_type', 'contact_name', 'contact_email',
                   'contact_number', 'schedule', 'other_requirements', 'is_full_time',
                   'pay_rate', 'latitude', 'longitude', 'address']
+
+
+class EditFullTimeJobForm(CreateJobForm):
+    salary = forms.CharField(label='Salary',
+                             widget=forms.TextInput(attrs={'placeholder': 'Ex) Negotiable'}),
+                             required=True)
+    benefits = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex) Accommodation provided'}),
+                               empty_value='')
+
+    class Meta:
+        model = JobPost
+        fields = ['title', 'class_type', 'contact_name', 'contact_email',
+                  'contact_number', 'schedule', 'other_requirements', 'salary', 'benefits']
+
+
+class EditPartTimeJobForm(CreateJobForm):
+    pay_rate = forms.CharField(label='Pay Rate',
+                               widget=forms.TextInput(attrs={'placeholder': 'Ex) 45,000 per hour'}),
+                               required=True)
+
+    class Meta:
+        model = JobPost
+        fields = ['title', 'class_type', 'contact_name', 'contact_email',
+                  'contact_number', 'schedule', 'other_requirements', 'pay_rate']
 
 
 class TakeDownJobForm(forms.ModelForm):

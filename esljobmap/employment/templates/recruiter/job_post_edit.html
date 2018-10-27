@@ -5,9 +5,9 @@
 {% block content %}
 
     {% if is_full_time %}
-        {% include 'recruiter/job_post_full_time_form.html' with form_title='Edit Full-Time Job' back=True %}
+        {% include 'recruiter/job_post_full_time_form.html' with form_title='Edit Full-Time Job' is_edit=True %}
     {% else %}
-        {% include 'recruiter/job_post_part_time_form.html' with form_title='Edit Part-Time Job' back=True %}
+        {% include 'recruiter/job_post_part_time_form.html' with form_title='Edit Part-Time Job' is_edit=True %}
     {% endif %}
 
 {% endblock %}

@@ -2,13 +2,14 @@
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, reverse
 from django.urls import reverse_lazy
 from django.db.models import F
 
 from ..models import JobPost
 from ..decorators import recruiter_required
-from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm, TakeDownJobForm
+from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm,\
+    EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm
 
 
 @method_decorator(recruiter_required, name='dispatch')
@@ -76,10 +77,15 @@ class EditFullTimeJobPost(LoginRequiredMixin, UpdateView):
     https://docs.djangoproject.com/en/2.0/topics/class-based-views/generic-display/#performing-extra-work
     """
     model = JobPost
-    form_class = CreateFullTimeJobForm
+    form_class = EditFullTimeJobForm
     template_name = 'recruiter/job_post_edit.html'
     success_url = reverse_lazy('employment_my_job_posts')
-    extra_context = {'is_full_time': True}
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['is_full_time'] = True
+        context['post_url'] = self.request.path
+        return context
 
     def get(self, request, *args, **kwargs):
         obj = self.get_object()
@@ -96,9 +102,14 @@ class EditPartTimeJobPost(LoginRequiredMixin, UpdateView):
     https://docs.djangoproject.com/en/2.0/topics/class-based-views/generic-display/#performing-extra-work
     """
     model = JobPost
-    form_class = CreatePartTimeJobForm
+    form_class = EditPartTimeJobForm
     template_name = 'recruiter/job_post_edit.html'
     success_url = reverse_lazy('employment_my_job_posts')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['post_url'] = self.request.path
+        return context
 
     def get(self, request, *args, **kwargs):
         obj = self.get_object()

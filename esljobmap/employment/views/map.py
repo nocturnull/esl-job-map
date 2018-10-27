@@ -1,6 +1,7 @@
 # employment/views/map.py
 
 from django.views.generic import ListView
+from django.shortcuts import reverse
 
 from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm
 from ..models import JobPost
@@ -22,6 +23,7 @@ class FullTimeMap(ListView):
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['is_full_time'] = True
         context['form'] = CreateFullTimeJobForm()
+        context['post_url'] = reverse('employment_create_full_time_job')
         return context
 
 
@@ -37,5 +39,6 @@ class PartTimeMap(ListView):
         context['icon_image'] = cdn_image('koco-man/koco-orange-40x40.png')
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['is_full_time'] = False
+        context['post_url'] = reverse('employment_create_part_time_job')
         context['form'] = CreatePartTimeJobForm()
         return context

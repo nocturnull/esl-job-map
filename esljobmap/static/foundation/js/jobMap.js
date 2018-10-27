@@ -20,7 +20,10 @@ class JobMapSetup {
         this.latitude = 0;
         this.longitude = 0;
         this.address = '';
-        this.form = null;
+        this.$form = null;
+        this.$addressForm = null;
+        this.$addressInput = null;
+        this.$addressError = null;
         this.$locationError = null;
         this.$generalJobFields = null;
     }
@@ -33,7 +36,7 @@ class JobMapSetup {
         if (mapContainer !== null ) {
             this.map = new google.maps.Map(mapContainer, {
                 zoom: 13,
-                center: {lat: 37.5, lng: 127},
+                center: {lat: 37.529451, lng: 126.997417},
                 mapTypeControlOptions: {
                     mapTypeIds: ['roadmap'],
                 },
@@ -43,7 +46,9 @@ class JobMapSetup {
             this.addExistingJobMarkers();
             this.infoWindow = new google.maps.InfoWindow;
             this.geocoder = new google.maps.Geocoder;
+            this.$addressError = $('#addressSearchError');
             this.$locationError = $('#postJobLocationError');
+            this.$addressInput = $('#mapAddressInput');
 
             // Add click listener to the map if a recruiter.
             if (window.isRecruiter) {
@@ -53,15 +58,25 @@ class JobMapSetup {
             }
 
             // Bind ajax form listener.
-            this.form = $('#jobPostForm');
-            this.form.submit((e) => {
+            this.$form = $('#jobPostForm');
+            this.$form.submit((e) => {
+                console.log('submitting form');
                 this.$locationError.addClass('no-show');
                 if (this.latitude > 0 && this.longitude > 0) {
-                    this.submitMapData(this.form.attr('action'));
+                    this.submitMapData(this.$form.attr('action'));
                 } else {
                     this.$locationError.removeClass('no-show');
                 }
                 e.preventDefault();
+                return false;
+            });
+
+            // Bind address lookup form.
+            this.$addressForm = $('#addressSearchForm');
+            this.$addressForm.submit((e) => {
+                this.$addressError.addClass('no-show');
+                e.preventDefault();
+                this.geocodeAddressAndPlaceMarker($('#mapAddressInput').val());
                 return false;
             });
 
@@ -122,6 +137,45 @@ class JobMapSetup {
         this.geocodeLatLng(this.latitude, this.longitude, this.currentMarker);
     }
 
+    geocodeAddressAndPlaceMarker(address) {
+        this.geocoder.geocode({'address': address}, (results, status) => {
+            if (status === 'OK') {
+                let loc = results[0].geometry.location,
+                    formatted_address = results[0].formatted_address;
+
+                this.map.setCenter(loc);
+                // Clear old marker location.
+                if (this.currentMarker !== null) {
+                    this.currentMarker.setMap(null);
+                }
+
+                // Add new marker.
+                this.currentMarker = new google.maps.Marker({
+                    map: this.map,
+                    position: loc,
+                    icon: window.mapIconImage,
+                    animation: google.maps.Animation.DROP
+                });
+
+                // Track the location.
+                this.latitude = loc.lat();
+                this.longitude = loc.lng();
+
+                // Track the human readable address.
+                this.address = formatted_address;
+
+                // Show in the info window.
+                this.infoWindow.setContent(formatted_address);
+
+                // Open up the window and display the address.
+                this.infoWindow.open(this.map, this.currentMarker);
+            } else {
+                console.log(status);
+                this.$addressError.removeClass('no-show');
+            }
+        });
+    }
+
     /**
      * Callback: Looks up the user-friendly address and displays it in the marker.
      *
@@ -134,8 +188,13 @@ class JobMapSetup {
         this.geocoder.geocode({'location': latlng}, (results, status) => {
             if (status === 'OK') {
               if (results[0]) {
-                  // Track the address.
+                  // Track the human readable address.
                   this.address = results[0].formatted_address;
+
+                  // Update the address in the input field.
+                  this.$addressInput.val(results[0].formatted_address);
+
+                  // Show in the info window.
                   this.infoWindow.setContent(this.address);
 
                   // Open up the window and display the address.

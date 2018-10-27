@@ -4,8 +4,20 @@
 
     <div class="grid-x grid-margin-x mt-1 mb-1">
         <div class="medium-10 cell">
-            <form method="post" novalidate id="jobPostForm" action="{{ request.path }}">
+            {% if not is_edit %}
+                <form action="#" id="addressSearchForm">
+                    <label>
+                        <input type="text" name="address" id="mapAddressInput">
+                    </label>
+                    <div id="addressSearchError" class="no-show callout alert">Invalid address.</div>
+                    <input type="submit" value="Search" class="safe-button" />
+                </form>
+            {% endif %}
+            <br>
+            <form method="post" novalidate id="jobPostForm" action="{{ post_url }}">
+
                 {% csrf_token %}
+
                 <div id="generalJobFields">
                     {{ form.non_field_errors }}
                     <div>
@@ -56,9 +68,9 @@
                 </div>
                 <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>
                 <input type="submit" value="Save" class="safe-button" />
-{#                {% if back %}#}
+                {% if is_edit %}
                     <a href="{% url 'employment_my_job_posts' %}" class="secondary-button">Back</a>
-{#                {% endif %}#}
+                {% endif %}
             </form>
         </div>
     </div>
