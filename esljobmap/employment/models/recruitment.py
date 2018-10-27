@@ -83,6 +83,12 @@ class JobPost(models.Model):
         return str(self.applicants.count()) + ' applicant(s)'
 
     @property
+    def edit_link(self):
+        if self.is_full_time:
+            return reverse('employment_edit_full_time_job_post', args=[self.id])
+        return reverse('employment_edit_part_time_job_post', args=[self.id])
+
+    @property
     def html_content(self):
         """
         Build the map HTML content for ths Job Post.

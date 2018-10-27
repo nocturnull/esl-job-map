@@ -40,7 +40,7 @@
                     </div>
                     <div class="mtb-2">
                         {% if job_post.is_editable %}
-                            <a href="{% url 'employment_edit_job_post' job_post.id %}" class="safe-button">Edit</a>
+                            <a href="{{ job_post.edit_link }}" class="safe-button">Edit</a>
                         {% else %}
                             <a href="#" class="disabled-button">Only editable within 24 hours.</a>
                         {% endif %}

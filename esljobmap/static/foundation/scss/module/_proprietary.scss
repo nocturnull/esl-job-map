@@ -24,15 +24,12 @@
 }
 
 .secondary-button {
-    color: white;
-    border-radius: $btn-border-radius;
-    font-weight: bold;
-    padding: 1rem 1.5rem;
-    @include linear-gradient(to right, nth($brand-primary, 2), nth($brand-accent, 2));
+    @extend .primary-button;
+    color: nth($brand-secondary, 2);
+    border: 2px solid nth($brand-secondary, 2);
 
     &:hover {
-        @include linear-gradient(to left, nth($brand-primary, 2), nth($brand-accent, 2));
-        color: white;
+        background-color: lighten(nth($brand-secondary, 2), 30%);
     }
 }
 

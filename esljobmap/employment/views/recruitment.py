@@ -2,7 +2,7 @@
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.db.models import F
 
@@ -69,14 +69,34 @@ class ListJobApplicants(LoginRequiredMixin, DetailView):
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class EditJobPost(LoginRequiredMixin, UpdateView):
+class EditFullTimeJobPost(LoginRequiredMixin, UpdateView):
     """
-    View for editing existing job posts.
+    View for editing existing full time job posts.
 
     https://docs.djangoproject.com/en/2.0/topics/class-based-views/generic-display/#performing-extra-work
     """
     model = JobPost
     form_class = CreateFullTimeJobForm
+    template_name = 'recruiter/job_post_edit.html'
+    success_url = reverse_lazy('employment_my_job_posts')
+    extra_context = {'is_full_time': True}
+
+    def get(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.is_editable:
+            return super().get(request, *args, **kwargs)
+        return redirect('employment_my_job_posts')
+
+
+@method_decorator(recruiter_required, name='dispatch')
+class EditPartTimeJobPost(LoginRequiredMixin, UpdateView):
+    """
+    View for editing existing part time job posts.
+
+    https://docs.djangoproject.com/en/2.0/topics/class-based-views/generic-display/#performing-extra-work
+    """
+    model = JobPost
+    form_class = CreatePartTimeJobForm
     template_name = 'recruiter/job_post_edit.html'
     success_url = reverse_lazy('employment_my_job_posts')
 

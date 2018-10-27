@@ -1,10 +1,10 @@
 <div class="grid-container">
 
-    <h4>Pick a location on the map to post a new job.</h4>
+    <h4>{{ form_title }}</h4>
 
     <div class="grid-x grid-margin-x mt-1 mb-1">
         <div class="medium-10 cell">
-            <form method="post" novalidate id="jobPostForm" action="{% url 'employment_create_full_time_job' %}">
+            <form method="post" novalidate id="jobPostForm" action="{{ request.path }}">
                 {% csrf_token %}
                 <div id="generalJobFields">
                     {{ form.non_field_errors }}
@@ -55,7 +55,10 @@
                     </div>
                 </div>
                 <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>
-                <input type="submit" value="Save" class="primary-button" />
+                <input type="submit" value="Save" class="safe-button" />
+{#                {% if back %}#}
+                    <a href="{% url 'employment_my_job_posts' %}" class="secondary-button">Back</a>
+{#                {% endif %}#}
             </form>
         </div>
     </div>

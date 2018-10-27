@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+    {% if is_full_time %}
+        {% include 'recruiter/job_post_full_time_form.html' with form_title='Edit Full-Time Job' back=True %}
+    {% else %}
+        {% include 'recruiter/job_post_part_time_form.html' with form_title='Edit Part-Time Job' back=True %}
+    {% endif %}
+
+{% endblock %}
