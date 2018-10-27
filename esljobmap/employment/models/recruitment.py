@@ -72,26 +72,38 @@ class JobPost(models.Model):
         return 'Expired'
 
     @property
+    def pretty_closes_in(self) -> str:
+        days_left = 14 - (datetime.now() - self.created_at).days
+        if days_left > 0:
+            return 'closes in: {0} days'.format(days_left)
+        return 'closed'
+
+    @property
+    def pretty_num_applicants(self) -> str:
+        return str(self.applicants.count()) + ' applicant(s)'
+
+    @property
     def html_content(self):
         """
         Build the map HTML content for ths Job Post.
 
         :return:
         """
-        content = 'Title: ' + self.title + '<br>'
+        content = '<span class="bold-text">' + self.title + '</span><br>'
         if self.is_full_time:
-            content += 'Salary: ' + self.salary + '<br>'
+            content += '<span class="bold-text">Salary: </span>' + self.salary + '<br>'
         else:
-            content += 'Pay Rate: ' + self.pay_rate + '<br>'
-        content += 'Schedule: ' + self.schedule + '<br>'
-        content += 'Class Type: ' + self.class_type + '<br>'
+            content += '<span class="bold-text">Pay Rate: </span>' + self.pay_rate + '<br>'
+        content += '<span class="bold-text">Schedule: </span>' + self.schedule + '<br>'
+        content += '<span class="bold-text">Class Type: </span>' + self.class_type + '<br>'
 
         if self.is_full_time:
-            content += 'Benefits: ' + self.benefits + '<br>'
+            content += '<span class="bold-text">Benefits: </span>' + self.benefits + '<br>'
 
-        content += 'Other Requirements: ' + self.other_requirements + '<br>'
-        content += self.pretty_days_till_expired + '<br>'
-        content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + '" target="_blank">Apply</a>'
+        content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
+        content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
+                   '" class="bold-text" target="_blank">Apply</a><br>'
+        content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
         return content
 
     def has_applicant_applied(self, user) -> bool:

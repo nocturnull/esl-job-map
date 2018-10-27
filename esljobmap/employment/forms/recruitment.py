@@ -11,9 +11,9 @@ class CreateJobForm(forms.ModelForm):
     class_type = forms.CharField(label='Class Type', widget=forms.TextInput(attrs={'placeholder': 'Ex) 1:1 Business English / Speaking'}))
     contact_name = forms.CharField(label='Contact Name', widget=forms.TextInput(attrs={'placeholder': 'Ex) Your name'}))
     contact_email = forms.CharField(label='Contact Email', widget=forms.TextInput(attrs={'placeholder': 'Ex) name@email.com'}))
-    contact_number = forms.CharField(label='Contact Number', widget=forms.TextInput(attrs={'placeholder': 'Ex) 010-0000-0000'}))
+    contact_number = forms.CharField(label='Contact Number', widget=forms.TextInput(attrs={'placeholder': 'Ex) 010-0000-0000'}), required=False)
     schedule = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex) Mon-Fri 9-6'}))
-    other_requirements = forms.CharField(label='Other Requirements', widget=forms.TextInput(attrs={'placeholder': 'Ex) Teaching certificate'}))
+    other_requirements = forms.CharField(label='Other Requirements', widget=forms.TextInput(attrs={'placeholder': 'Ex) Teaching certificate'}), required=False)
     is_full_time = forms.ChoiceField(label='Job Type',
                                      widget=forms.RadioSelect,
                                      choices=JOB_TYPE_CHOICES)

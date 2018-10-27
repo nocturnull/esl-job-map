@@ -6,6 +6,10 @@
     width: 107px;
 }
 
+.bold-text {
+    font-weight: bold;
+}
+
 .primary-button {
     color: nth($brand-primary, 2);
     font-weight: bold;
