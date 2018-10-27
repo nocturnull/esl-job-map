@@ -7,7 +7,11 @@
     <div id="map" class="google-map {{ map_class }}"></div>
 
     {% if user.is_recruiter %}
-        {% include 'recruiter/job_post_form.html' %}
+        {% if is_full_time %}
+            {% include 'recruiter/job_post_full_time_form.html' %}
+        {% else %}
+            {% include 'recruiter/job_post_part_time_form.html' %}
+        {% endif %}
     {% endif %}
 
 {% endblock %}

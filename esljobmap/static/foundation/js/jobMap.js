@@ -178,6 +178,7 @@ class JobMapSetup {
             url: action,
             data: formData
         }).done((response) => {
+            console.log(response);
             let responseHtml = $.parseHTML(response);
             let extGeneralJobFields = $(responseHtml).find('#generalJobFields');
 

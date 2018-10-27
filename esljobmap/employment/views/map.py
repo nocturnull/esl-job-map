@@ -2,7 +2,7 @@
 
 from django.views.generic import ListView
 
-from ..forms.recruitment import CreateJobForm
+from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm
 from ..models import JobPost
 
 from cloud.templatetags.remote import cdn_image
@@ -20,7 +20,8 @@ class FullTimeMap(ListView):
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['icon_image'] = cdn_image('koco-man/koco-blue-40x40.png')
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
-        context['form'] = CreateJobForm()
+        context['is_full_time'] = True
+        context['form'] = CreateFullTimeJobForm()
         return context
 
 
@@ -35,5 +36,6 @@ class PartTimeMap(ListView):
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['icon_image'] = cdn_image('koco-man/koco-orange-40x40.png')
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
-        context['form'] = CreateJobForm()
+        context['is_full_time'] = False
+        context['form'] = CreatePartTimeJobForm()
         return context

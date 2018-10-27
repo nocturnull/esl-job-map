@@ -4,7 +4,7 @@
 
     <div class="grid-x grid-margin-x mt-1 mb-1">
         <div class="medium-10 cell">
-            <form method="post" novalidate id="jobPostForm" action="{% url 'employment_create_job' %}">
+            <form method="post" novalidate id="jobPostForm" action="{% url 'employment_create_full_time_job' %}">
                 {% csrf_token %}
                 <div id="generalJobFields">
                     {{ form.non_field_errors }}
@@ -43,32 +43,15 @@
                         {{ form.other_requirements.label_tag }}
                         {{ form.other_requirements }}
                     </div>
-                </div>
-                <div>
-                    {{ form.is_full_time.errors }}
-                    {{ form.is_full_time.label_tag }}
-                    {{ form.is_full_time }}
-                </div>
-                <div class="job-type-selection">
-                    <div id="partTimeFields">
-                        <div>
-                            {{ form.pay_rate.errors }}
-                            {{ form.pay_rate.label_tag }} {{ form.pay_rate.help_text }}
-                            {{ form.pay_rate }}
-                        </div>
+                    <div>
+                        {{ form.salary.errors }}
+                        {{ form.salary.label_tag }}
+                        {{ form.salary }}
                     </div>
-                    <div id="fullTimeFields" class="no-show">
-                        <h5>Full-Time</h5>
-                        <div>
-                            {{ form.salary.errors }}
-                            {{ form.salary.label_tag }}
-                            {{ form.salary }}
-                        </div>
-                        <div>
-                            {{ form.benefits.errors }}
-                            {{ form.benefits.label_tag }}
-                            {{ form.benefits }}
-                        </div>
+                    <div>
+                        {{ form.benefits.errors }}
+                        {{ form.benefits.label_tag }}
+                        {{ form.benefits }}
                     </div>
                 </div>
                 <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>

@@ -1,0 +1,57 @@
+<div class="grid-container">
+
+    <h4>Pick a location on the map to post a new job.</h4>
+
+    <div class="grid-x grid-margin-x mt-1 mb-1">
+        <div class="medium-10 cell">
+            <form method="post" novalidate id="jobPostForm" action="{% url 'employment_create_part_time_job' %}">
+                {% csrf_token %}
+                <div id="generalJobFields">
+                    {{ form.non_field_errors }}
+                    <div>
+                        {{ form.title.errors }}
+                        {{ form.title.label_tag }}
+                        {{ form.title }}
+                    </div>
+                    <div>
+                        {{ form.class_type.errors }}
+                        {{ form.class_type.label_tag }}
+                        {{ form.class_type }}
+                    </div>
+                    <div>
+                        {{ form.contact_name.errors }}
+                        {{ form.contact_name.label_tag }}
+                        {{ form.contact_name }}
+                    </div>
+                    <div>
+                        {{ form.contact_email.errors }}
+                        {{ form.contact_email.label_tag }}
+                        {{ form.contact_email }}
+                    </div>
+                    <div>
+                        {{ form.contact_number.errors }}
+                        {{ form.contact_number.label_tag }}
+                        {{ form.contact_number }}
+                    </div>
+                    <div>
+                        {{ form.schedule.errors }}
+                        {{ form.schedule.label_tag }}
+                        {{ form.schedule }}
+                    </div>
+                    <div>
+                        {{ form.other_requirements.errors }}
+                        {{ form.other_requirements.label_tag }}
+                        {{ form.other_requirements }}
+                    </div>
+                    <div>
+                        {{ form.pay_rate.errors }}
+                        {{ form.pay_rate.label_tag }} {{ form.pay_rate.help_text }}
+                        {{ form.pay_rate }}
+                    </div>
+                </div>
+                <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>
+                <input type="submit" value="Save" class="primary-button" />
+            </form>
+        </div>
+    </div>
+</div>

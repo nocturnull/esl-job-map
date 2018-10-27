@@ -8,16 +8,35 @@ from django.db.models import F
 
 from ..models import JobPost
 from ..decorators import recruiter_required
-from ..forms.recruitment import CreateJobForm, TakeDownJobForm
+from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm, TakeDownJobForm
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class CreateJobPost(LoginRequiredMixin, CreateView):
+class CreateFullTimeJobPost(LoginRequiredMixin, CreateView):
     """
     Job Post creation view.
     """
     model = JobPost
-    form_class = CreateJobForm
+    form_class = CreateFullTimeJobForm
+    template_name = 'map/index.html'
+    success_url = reverse_lazy('employment_my_job_posts')
+    extra_context = {'is_full_time': True}
+
+    def form_valid(self, form):
+        new_job_post = form.save(commit=False)
+        new_job_post.is_full_time = True
+        new_job_post.site_user = self.request.user
+        new_job_post.save()
+        return super().form_valid(form)
+
+
+@method_decorator(recruiter_required, name='dispatch')
+class CreatePartTimeJobPost(LoginRequiredMixin, CreateView):
+    """
+    Job Post creation view.
+    """
+    model = JobPost
+    form_class = CreatePartTimeJobForm
     template_name = 'map/index.html'
     success_url = reverse_lazy('employment_my_job_posts')
 
@@ -57,8 +76,8 @@ class EditJobPost(LoginRequiredMixin, UpdateView):
     https://docs.djangoproject.com/en/2.0/topics/class-based-views/generic-display/#performing-extra-work
     """
     model = JobPost
-    form_class = CreateJobForm
-    template_name = 'recruiter/job_post_form.html'
+    form_class = CreateFullTimeJobForm
+    template_name = 'recruiter/job_post_edit.html'
     success_url = reverse_lazy('employment_my_job_posts')
 
     def get(self, request, *args, **kwargs):
