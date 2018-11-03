@@ -155,6 +155,14 @@ class JobApplication(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=False)
 
+    @property
+    def tags(self):
+        tags = 'closed'
+        if self.job_post.is_visible and not self.job_post.is_expired:
+            tags = 'in-consideration'
+
+        return tags
+
     @classmethod
     def create_application(cls, job_post, contact_email, resume, site_user=None):
         return cls.objects.create(job_post=job_post,
