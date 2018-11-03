@@ -109,6 +109,17 @@ class JobPost(models.Model):
             return 'full-time'
         return 'part-time'
 
+    @property
+    def tags(self) -> str:
+        tags = 'part-time'
+
+        if self.is_full_time:
+            tags = 'full-time'
+        if self.is_expired:
+            tags += ',expired'
+
+        return tags
+
     def has_applicant_applied(self, user) -> bool:
         """
         Determine if the supplied applicant has already applied to this Job Post.

@@ -1,0 +1,56 @@
+// ==========================================================================
+// Button
+// ==========================================================================
+
+.primary-button {
+    color: nth($brand-primary, 2);
+    font-weight: bold;
+    border-radius: $btn-border-radius;
+    border: 2px solid nth($brand-primary, 2);
+    padding: 1rem 1.5rem;
+
+    &:hover {
+        background-color: nth($brand-secondary, 2);
+        color: white;
+    }
+}
+
+.secondary-button {
+    @extend .primary-button;
+    color: nth($brand-primary, 1);
+    border: 2px solid nth($brand-primary, 1);
+
+    &:hover {
+        background-color: lighten(nth($brand-primary, 1), 30%);
+    }
+}
+
+.safe-button {
+    @extend .primary-button;
+    color: $brand-safe;
+    border: 2px solid $brand-safe;
+
+    &:hover {
+        background-color: lighten($brand-safe, 30%);
+    }
+}
+
+.danger-button {
+    @extend .primary-button;
+    color: $brand-danger;
+
+    &:hover {
+        background-color: lighten($brand-danger, 30%);
+    }
+}
+
+.disabled-button {
+    @extend .primary-button;
+    color: black;
+    border: 2px solid black;
+    background-color: $brand-disabled;
+
+    &:hover {
+        background-color: darken($brand-disabled, 15%);
+    }
+}

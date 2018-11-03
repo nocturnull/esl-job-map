@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load job %}
-
 {% block title %}My Jobs{% endblock %}
 
 {% block content %}
@@ -12,13 +10,19 @@
     <div class="grid-container">
         <h3>My Jobs</h3>
 
-        <div class="grid-x">
+        <div id="searchFilters">
+            <button class="secondary-button" data-filtertag="full-time" data-isactive="0">Full-Time</button>
+            <button class="secondary-button" data-filtertag="part-time" data-isactive="0">Part-Time</button>
+            <button class="secondary-button" data-filtertag="expired" data-isactive="0">Expired</button>
+        </div>
+
+        <div class="grid-x" id="filterCardsParent">
 
             {% for job_post in object_list %}
 
                 <div class="cell medium-4">
-                    <div class="flow-card {{ job_post.card_class }}">
-                        <h5>{{ job_post }}</h5>
+                    <div class="flow-card {{ job_post.card_class }}" data-filtertaglist="{{ job_post.tags }}">
+                        <h5>{{ job_post.title }}</h5>
                         <div class="flow-card-content">
                             <div>Class Type: {{ job_post.class_type }}</div>
                             <div>Schedule: {{ job_post.schedule }}</div>
