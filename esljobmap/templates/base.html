@@ -19,10 +19,10 @@
             {% endblock %}
         </div>
 
+        {% block prejavascript %}{% endblock %}
         <script src="{% static 'foundation/dist/vendor.min.js' %}"></script>
         <script src="{% static 'foundation/dist/app.min.js' %}"></script>
-        {% block javascript %}
-        {% endblock %}
+        {% block postjavascript %}{% endblock %}
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCl9E_fGPyG_Bc8vBkvDDu2BTJwtKayw6E&callback=initMap" async defer></script>
     </body>
 </html>

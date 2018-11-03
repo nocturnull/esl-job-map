@@ -14,6 +14,7 @@
             <button class="secondary-button" data-filtertag="full-time" data-isactive="0">Full-Time</button>
             <button class="secondary-button" data-filtertag="part-time" data-isactive="0">Part-Time</button>
             <button class="secondary-button" data-filtertag="expired" data-isactive="0">Expired</button>
+            <div id="listFilterResults"></div>
         </div>
 
         <div class="grid-x" id="filterCardsParent">
@@ -72,4 +73,11 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block prejavascript %}
+    <script>
+        window.listFilter = {};
+        window.listFilter.itemCount = {{ object_list.count }};
+    </script>
 {% endblock %}

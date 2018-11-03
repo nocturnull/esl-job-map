@@ -64,6 +64,7 @@ class ListFiler {
         this.$cards = $('.flow-card');
         this.$filterCardsParent = $('#filterCardsParent');
         this.flowCardList = [];
+        this.listFilterResults = null;
     }
 
     /**
@@ -80,6 +81,7 @@ class ListFiler {
      */
     init() {
         if (this.isValid()) {
+            this.listFilterResults = $('#listFilterResults');
             this.attachFilterListeners();
             this.organizeData();
         }
@@ -135,6 +137,9 @@ class ListFiler {
                 }
             }
         }
+
+        // Inform the user how many items are showing.
+        this.updateDisplayCount();
     }
 
     /**
@@ -150,8 +155,24 @@ class ListFiler {
                 fc.attach();
             }
         }
+
+        // Inform the user how many items are showing.
+        this.updateDisplayCount();
     }
 
+    /**
+     * Each time a filter is added a removed we need to show the new shown amount.
+     */
+    updateDisplayCount() {
+        if (this.$filterCardsParent.children().length === this.flowCardList.length) {
+            this.listFilterResults.html('');
+        } else {
+            let filterCount = this.$filterCardsParent.children().length,
+            totalCount = this.flowCardList.length;
+            
+            this.listFilterResults.html(`Currently displaying ${filterCount}/${totalCount}`);
+        }
+    }
 }
 
 export default ListFiler;
