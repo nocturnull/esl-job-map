@@ -169,7 +169,7 @@ class ListFiler {
         } else {
             let filterCount = this.$filterCardsParent.children().length,
             totalCount = this.flowCardList.length;
-            
+
             this.listFilterResults.html(`Currently displaying ${filterCount}/${totalCount}`);
         }
     }

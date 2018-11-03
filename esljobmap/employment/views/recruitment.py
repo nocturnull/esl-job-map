@@ -3,14 +3,13 @@
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.db.models import F
 
 from ..models import JobPost
 from ..decorators import recruiter_required
 from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm,\
-    EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm
+    EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm, ArchiveJobForm
 
 
 @method_decorator(recruiter_required, name='dispatch')
@@ -52,13 +51,27 @@ class CreatePartTimeJobPost(LoginRequiredMixin, CreateView):
 @method_decorator(recruiter_required, name='dispatch')
 class ListJobPost(LoginRequiredMixin, ListView):
     """
-    View for recruiters to view all their job posts.
+    View for recruiters to view all their active job posts.
     """
     model = JobPost
     template_name = 'recruiter/job_post_list.html'
+    extra_context = {'title': 'Active Jobs'}
 
     def get_queryset(self):
-        return self.request.user.job_posts.all().order_by(F('created_at').desc(nulls_last=True))
+        return self.request.user.job_posts.filter(is_archived=False).order_by(F('created_at').desc(nulls_last=True))
+
+
+@method_decorator(recruiter_required, name='dispatch')
+class ListArchivedJobPost(LoginRequiredMixin, ListView):
+    """
+    View for recruiters to view all their archived job posts.
+    """
+    model = JobPost
+    template_name = 'recruiter/job_post_list.html'
+    extra_context = {'title': 'Archived Jobs'}
+
+    def get_queryset(self):
+        return self.request.user.job_posts.filter(is_archived=True).order_by(F('created_at').desc(nulls_last=True))
 
 
 @method_decorator(recruiter_required, name='dispatch')
@@ -115,4 +128,15 @@ class TakeDownJobPost(LoginRequiredMixin, UpdateView):
     model = JobPost
     form_class = TakeDownJobForm
     template_name = 'recruiter/job_post_confirm_takedown.html'
+    success_url = reverse_lazy('employment_my_job_posts')
+
+
+@method_decorator(recruiter_required, name='dispatch')
+class ArchiveJobPost(LoginRequiredMixin, UpdateView):
+    """
+    View for archiving a job post.
+    """
+    model = JobPost
+    form_class = ArchiveJobForm
+    template_name = 'recruiter/job_post_confirm_archive.html'
     success_url = reverse_lazy('employment_my_job_posts')

@@ -3,14 +3,20 @@
 
 <div class="top-bar top-site-nav">
     <div class="top-bar-left">
-        <ul class="menu" data-dropdown-menu>
+        <ul class="dropdown menu" data-dropdown-menu>
             <li>
                 <a href="{% url 'home' %}">
                     <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
                 </a>
             </li>
             {% if user.is_authenticated and user.is_recruiter %}
-                <li><a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">My Jobs</a></li>
+                <li>
+                    <a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">My Jobs</a>
+                    <ul class="submenu menu vertical" data-submenu>
+                        <li><a href="{% url 'employment_my_job_posts' %}">Active</a></li>
+                        <li><a href="{% url 'employment_my_archived_job_posts' %}">Archived</a></li>
+                    </ul>
+                </li>
             {% elif user.is_teacher %}
                 <li><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
             {% endif %}

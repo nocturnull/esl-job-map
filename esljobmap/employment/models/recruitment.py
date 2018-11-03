@@ -29,6 +29,7 @@ class JobPost(models.Model):
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
     address = models.CharField(max_length=1024, default='')
+    is_archived = models.BooleanField(default=False)
 
     @property
     def pretty_employment_type(self) -> str:

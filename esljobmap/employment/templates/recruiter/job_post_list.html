@@ -8,7 +8,7 @@
     <div id="jobPostListConfirm" class="no-show"></div>
 
     <div class="grid-container">
-        <h3>My Jobs</h3>
+        <h3>{{ title }}</h3>
 
         <div id="searchFilters">
             <button class="secondary-button" data-filtertag="full-time" data-isactive="0">Full-Time</button>
@@ -35,18 +35,20 @@
                             {% endif %}
                             <div>Other Requirements: {{ job_post.other_requirements }}</div>
                             <div>{{ job_post.pretty_days_till_expired }}</div>
+                            {% if not job_post.is_visible %}
+                                <div>Taken down.</div>
+                            {% endif %}
                         </div>
                         <div class="flow-card-footer">
                             <div class="mtb-2">
                                 {% if job_post.is_visible %}
-                                    {% if job_post.is_expired %}
-                                        <a href="#" class="disabled-button">Expired.</a>
-                                    {% else %}
+                                    {% if not job_post.is_expired %}
                                         <a href="{{ job_post.edit_link }}" class="safe-button">Edit</a>
-                                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="danger-button">Take Down</a>
+                                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="secondary-button">Take down</a>
                                     {% endif %}
-                                {% else %}
-                                    <div>Taken down.</div>
+                                {% endif %}
+                                {% if job_post.is_expired or not job_post.is_visible and not job_post.is_archived %}
+                                    <a href="{% url 'employment_archive_job_post' job_post.id %}" class="secondary-button">Archive</a>
                                 {% endif %}
                             </div>
                             {% with applicants=job_post.applicants.count %}

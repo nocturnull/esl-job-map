@@ -49,6 +49,10 @@ input[type="text"], input[type="password"], input[type="email"] {
     border-bottom: 1px solid #efefef;
 }
 
+.dropdown.menu>li.opens-right>.is-dropdown-submenu {
+    background-color: white;
+}
+
 .errorlist {
     color: $brand-danger;
     font-weight: bold;
