@@ -7,7 +7,7 @@
         line-height: 2rem;
 
         &.active {
-            color: nth($brand-primary, 1);
+            color: $koco-full-time;
             font-weight: bold;
         }
     }

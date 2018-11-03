@@ -7,8 +7,8 @@
     <div class="grid-container">
         <h2>My Applications</h2>
 
-        <div class="grid-x mtb-3">
-            <h4>Applications Under Consideration</h4>
+        <h4>Applications Under Consideration</h4>
+        <div class="grid-x">
             {% for application in object_list %}
                 {% if application.job_post.is_visible and not application.job_post.is_expired %}
                     {% include 'employment/job_summary.html' with job_post=application.job_post %}
@@ -18,14 +18,12 @@
             {% endfor %}
         </div>
 
+        <h4>Expired Applications</h4>
         <div class="grid-x">
-            <h4>Expired Applications</h4>
             {% for application in object_list %}
-                <div class="cell">
-                    {% if not application.job_post.is_visible or application.job_post.is_expired %}
-                        {% include 'employment/job_summary.html' with job_post=application.job_post %}
-                    {% endif %}
-                </div>
+                {% if not application.job_post.is_visible or application.job_post.is_expired %}
+                    {% include 'employment/job_summary.html' with job_post=application.job_post %}
+                {% endif %}
             {% endfor %}
         </div>
     </div>

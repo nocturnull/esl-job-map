@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load job %}
+
 {% block title %}My Jobs{% endblock %}
 
 {% block content %}
@@ -10,48 +12,60 @@
     <div class="grid-container">
         <h3>My Jobs</h3>
 
-        {% for job_post in object_list %}
-            <div class="grid-x">
-                <div class="cell callout">
-                    <h5 class="ejm-bold">{{ job_post }}</h5>
-                    <div>Class Type: {{ job_post.class_type }}</div>
-                    <div>Schedule: {{ job_post.schedule }}</div>
-                    {% if job_post.is_full_time %}
-                        <div>Salary: {{ job_post.salary }}</div>
-                        <div>Benefits: {{ job_post.benefits }}</div>
-                    {% else %}
-                        <div>Pay Rate: {{ job_post.pay_rate }}</div>
-                    {% endif %}
-                    <div>Other Requirements: {{ job_post.other_requirements }}</div>
-                    <div>{{ job_post.pretty_days_till_expired }}</div>
-                    <div class="mtb-2">
-                        {% if job_post.is_visible %}
-                            {% if job_post.is_expired %}
-                                <a href="#" class="disabled-button">Expired.</a>
+        <div class="grid-x">
+
+            {% for job_post in object_list %}
+
+                <div class="cell medium-4">
+                    <div class="flow-card {{ job_post.card_class }}">
+                        <h5>{{ job_post }}</h5>
+                        <div class="flow-card-content">
+                            <div>Class Type: {{ job_post.class_type }}</div>
+                            <div>Schedule: {{ job_post.schedule }}</div>
+                            {% if job_post.is_full_time %}
+                                <div>Salary: {{ job_post.salary }}</div>
+                                <div>Benefits: {{ job_post.benefits }}</div>
                             {% else %}
-                                <a href="{{ job_post.edit_link }}" class="safe-button">Edit</a>
-                                <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="danger-button">Take Down</a>
+                                <div>Pay Rate: {{ job_post.pay_rate }}</div>
                             {% endif %}
-                        {% else %}
-                            <a href="#" class="disabled-button">Taken down.</a>
-                        {% endif %}
-                    </div>
-                    {% with applicants=job_post.applicants.count %}
-                        <div class="cell medium-1">
-                            {% if applicants > 0 %}
-                                <a href="{% url 'employment_job_applicants' job_post.id %}">Applicants: {{ applicants }}</a>
-                            {% else %}
-                                No applicants
-                            {% endif %}
+                            <div>Other Requirements: {{ job_post.other_requirements }}</div>
+                            <div>{{ job_post.pretty_days_till_expired }}</div>
                         </div>
-                    {% endwith %}
+                        <div class="flow-card-footer">
+                            <div class="mtb-2">
+                                {% if job_post.is_visible %}
+                                    {% if job_post.is_expired %}
+                                        <a href="#" class="disabled-button">Expired.</a>
+                                    {% else %}
+                                        <a href="{{ job_post.edit_link }}" class="safe-button">Edit</a>
+                                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="danger-button">Take Down</a>
+                                    {% endif %}
+                                {% else %}
+                                    <div>Taken down.</div>
+                                {% endif %}
+                            </div>
+                            {% with applicants=job_post.applicants.count %}
+                                <div class="cell medium-1">
+                                    {% if applicants > 0 %}
+                                        <a href="{% url 'employment_job_applicants' job_post.id %}">Applicants: {{ applicants }}</a>
+                                    {% else %}
+                                        No applicants
+                                    {% endif %}
+                                </div>
+                            {% endwith %}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        {% empty %}
-            <p>You have not created any job posts yet. Visit one of the maps to upload a job!</p>
-            <li><a href="{% url 'employment_full_time_map' %}">Full-Time Map</a></li>
-            <li><a href="{% url 'employment_part_time_map' %}">Part-Time Map</a></li>
-        {% endfor %}
+
+            {% empty %}
+
+                <p>You have not created any job posts yet. Visit one of the maps to upload a job!</p>
+                <li><a href="{% url 'employment_full_time_map' %}">Full-Time Map</a></li>
+                <li><a href="{% url 'employment_part_time_map' %}">Part-Time Map</a></li>
+
+            {% endfor %}
+
+        </div>
     </div>
 
 {% endblock %}

@@ -1,13 +1,17 @@
-<div class="cell callout">
-    <h5 class="ejm-bold">{{ job_post }}</h5>
-    <div>Class Type: {{ job_post.class_type }}</div>
-    <div>Schedule: {{ job_post.schedule }}</div>
-    {% if job_post.is_full_time %}
-        <div>Salary: {{ job_post.salary }}</div>
-        <div>Benefits: {{ job_post.benefits }}</div>
-    {% else %}
-        <div>Pay Rate: {{ job_post.pay_rate }}</div>
-    {% endif %}
-    <div>Other Requirements: {{ job_post.other_requirements }}</div>
-    <div>{{ job_post.pretty_days_till_expired }}</div>
+<div class="cell medium-4">
+    <div class="flow-card {{ job_post.card_class }}">
+        <h5>{{ job_post }}</h5>
+        <div class="flow-card-content">
+            <div>Class Type: {{ job_post.class_type }}</div>
+            <div>Schedule: {{ job_post.schedule }}</div>
+            {% if job_post.is_full_time %}
+                <div>Salary: {{ job_post.salary }}</div>
+                <div>Benefits: {{ job_post.benefits }}</div>
+            {% else %}
+                <div>Pay Rate: {{ job_post.pay_rate }}</div>
+            {% endif %}
+            <div>Other Requirements: {{ job_post.other_requirements }}</div>
+            <div>{{ job_post.pretty_days_till_expired }}</div>
+        </div>
+    </div>
 </div>

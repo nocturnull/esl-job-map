@@ -103,6 +103,12 @@ class JobPost(models.Model):
         content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
         return content
 
+    @property
+    def card_class(self) -> str :
+        if self.is_full_time:
+            return 'full-time'
+        return 'part-time'
+
     def has_applicant_applied(self, user) -> bool:
         """
         Determine if the supplied applicant has already applied to this Job Post.
