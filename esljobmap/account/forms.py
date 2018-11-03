@@ -1,4 +1,5 @@
 # account/forms.py
+
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from .models import SiteUser, Teacher
@@ -55,8 +56,13 @@ class UserUpdateForm(forms.ModelForm):
 
 
 class TeacherUpdateForm(forms.ModelForm):
-    resume_filename = forms.FileField(allow_empty_file=True, label='Resume')
+    resume_filename = forms.FileField(allow_empty_file=True, required=False, label='Resume')
+
+    def __init__(self, *args, **kwargs):
+        super(TeacherUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['can_transfer_visa'].required = False
+        self.fields['can_work_second_job'].required = False
 
     class Meta:
         model = Teacher
-        fields = ('country', 'visa_type', 'resume_filename')
+        fields = ('country', 'visa_type', 'can_transfer_visa', 'can_work_second_job', 'resume_filename')

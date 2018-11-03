@@ -2,6 +2,8 @@
 
 {% block title %}Edit Profile{% endblock %}
 
+{% load profile %}
+
 {% block content %}
 
     <div class="grid-container">
@@ -9,7 +11,7 @@
 
         <div class="grid-x grid-margin-x">
             <div class="medium-10 cell">
-                <form method="post" enctype="multipart/form-data">
+                <form method="post" enctype="multipart/form-data" novalidate="novalidate">
                     {% csrf_token %}
                     {{ user_form }}
                     {% if teacher_form %}
@@ -22,6 +24,18 @@
                             {{ teacher_form.visa_type.errors }}
                             {{ teacher_form.visa_type.label_tag }}
                             {{ teacher_form.visa_type }}
+                        </div>
+                        <div id="visaConditions" class="{% visa_conditions_class request.user %}">
+                            <div>
+                                {{ teacher_form.can_transfer_visa.errors }}
+                                {{ teacher_form.can_transfer_visa.label_tag }}
+                                {{ teacher_form.can_transfer_visa }}
+                            </div>
+                            <div>
+                                {{ teacher_form.can_work_second_job.errors }}
+                                {{ teacher_form.can_work_second_job.label_tag }}
+                                {{ teacher_form.can_work_second_job }}
+                            </div>
                         </div>
                         <div>
                             {{ teacher_form.resume_filename.errors }}

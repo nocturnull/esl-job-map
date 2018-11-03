@@ -2,6 +2,7 @@ from .scheme import *
 from ..models.recruitment import JobPost
 from ..models.job_seeking import JobApplication
 from account.models.user import SiteUser
+from account.models.role import Teacher
 
 
 class TemplateManager:
@@ -34,7 +35,7 @@ class TemplateManager:
         return cls._generate_anonymous_email_body(recruiter)
 
     @classmethod
-    def append_resume_to_body(cls, body, job_application: JobApplication) -> str:
+    def append_resume_to_body(cls, body: str, job_application: JobApplication) -> str:
         """
         Appends the resume to the end of the email body as a link to where the file is stored.
 
@@ -62,6 +63,7 @@ class TemplateManager:
         return AUTHENTICATED_USER_BASE_SCHEME.format(
             recruiter_contact_name=recruiter.full_name,
             applicant_visa_type=teacher.visa_type,
+            applicant_visa_conditions=cls._generate_visa_conditions(teacher),
             applicant_country=teacher.country,
             job_post_title=job_post.title,
             exclusive_job_post_info=cls._generate_job_exclusive_template(job_post),
@@ -96,3 +98,20 @@ class TemplateManager:
                 job_post_benefits=job_post.benefits
             )
         return PART_TIME_EXCLUSIVE_SCHEME.format(job_post_pay_rate=job_post.pay_rate)
+
+    @staticmethod
+    def _generate_visa_conditions(teacher: Teacher) -> str:
+        """
+        Generate additional info when the teacher has extra visa conditions.
+
+        :param teacher:
+        :return: str
+        """
+        conditions = ''
+        if teacher.is_e1e2_holder:
+            if teacher.can_transfer_visa:
+                conditions += ' and I can transfer my visa'
+            if teacher.can_work_second_job:
+                conditions += ' and I can work a second job, '
+
+        return conditions

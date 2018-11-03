@@ -32,14 +32,23 @@ class Teacher(models.Model):
                                   verbose_name='Visa Status',
                                   blank=True,
                                   null=True)
+    can_transfer_visa = models.BooleanField(verbose_name='My visa can be transferred to new employer',
+                                            default=False,
+                                            blank=True)
+    can_work_second_job = models.BooleanField(verbose_name='My current employer has given permission to work a second job',
+                                              default=False,
+                                              blank=True)
     country = models.ForeignKey(Country,
                                 on_delete=models.CASCADE,
                                 verbose_name="Nationality",
                                 blank=True,
-                                null=True
-                                )
+                                null=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=True, null=True)
 
     @property
     def has_resume(self) -> bool:
         return self.resume is not None
+
+    @property
+    def is_e1e2_holder(self) -> bool:
+        return self.visa_type.id == 2

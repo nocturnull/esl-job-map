@@ -6,3 +6,8 @@ register = template.Library()
 @register.simple_tag
 def is_recruiter(request) -> bool:
     return request.user.is_authenticated and request.user.is_recruiter
+
+
+@register.simple_tag
+def visa_conditions_class(user) -> str:
+    return '' if user.teacher.is_e1e2_holder else 'invisible'

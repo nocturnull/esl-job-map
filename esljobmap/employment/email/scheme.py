@@ -1,7 +1,7 @@
 SUBJECT_BASE_SCHEME = """{title} via ESLJobMap.com"""
 AUTHENTICATED_USER_BASE_SCHEME = """Dear {recruiter_contact_name},
 
-I am in Korea on a {applicant_visa_type} visa, from {applicant_country}. I'm applying for the below job:
+I am {applicant_visa_type}{applicant_visa_conditions} from {applicant_country}. I'm applying for the below job:
 
 {job_post_title}
 {exclusive_job_post_info}
@@ -14,8 +14,7 @@ Please find attached my photo and resume. Thank you for considering my applicati
 Regards,
 
 {applicant_full_name}
-{applicant_contact_number}
-"""
+{applicant_contact_number}"""
 ANONYMOUS_USER_BASE_SCHEME = "Dear {recruiter_contact_name},"
 
 FULL_TIME_EXCLUSIVE_SCHEME = """Salary: {job_post_salary}

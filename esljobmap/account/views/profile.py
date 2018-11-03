@@ -39,7 +39,7 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
             {
                 'user_form': user_form,
                 'teacher_form': teacher_form
-             }
+            }
         )
 
     def post(self, request, **kwargs):
@@ -65,7 +65,10 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
             return render(
                 request,
                 self.template_name,
-                {'forms': [user_form, teacher_form]}
+                {
+                    'user_form': user_form,
+                    'teacher_form': teacher_form
+                 }
             )
 
 

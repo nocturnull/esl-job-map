@@ -3,14 +3,14 @@
     "model": "account.VisaType",
     "pk": 1,
     "fields": {
-      "name": "E-1 + E-2 Eligible"
+      "name": "E-1 and E-2 Eligible"
     }
   },
   {
     "model": "account.VisaType",
     "pk": 2,
     "fields": {
-      "name": "E-1 + E-2 Holder"
+      "name": "E-1 or E-2 Holder"
     }
   },
   {
