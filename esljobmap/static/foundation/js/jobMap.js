@@ -88,11 +88,16 @@ class JobMapSetup {
     addExistingJobMarkers() {
         for (let i = 0; i < window.mapMarkers.length; i++) {
             let markerData = window.mapMarkers[i],
-                latlng = new google.maps.LatLng(markerData.lat, markerData.lng);
+                latlng = new google.maps.LatLng(markerData.lat, markerData.lng),
+                markerIcon = window.mapIconImage;
+
+            if (markerData.hasApplied === 1) {
+                markerIcon = window.mapDisableIconImage;
+            }
 
             let marker = new google.maps.Marker({
                 position: latlng,
-                icon: window.mapIconImage
+                icon: markerIcon
             });
 
             marker.setMap(this.map);

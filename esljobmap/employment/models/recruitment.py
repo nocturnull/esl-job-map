@@ -31,6 +31,8 @@ class JobPost(models.Model):
     address = models.CharField(max_length=1024, default='')
     is_archived = models.BooleanField(default=False)
 
+    _applicants = []
+
     @property
     def pretty_employment_type(self) -> str:
         """
@@ -81,30 +83,6 @@ class JobPost(models.Model):
         return reverse('employment_edit_part_time_job_post', args=[self.id])
 
     @property
-    def html_content(self):
-        """
-        Build the map HTML content for ths Job Post.
-
-        :return:
-        """
-        content = '<span class="bold-text">' + self.title + '</span><br>'
-        if self.is_full_time:
-            content += '<span class="bold-text">Salary: </span>' + self.salary + '<br>'
-        else:
-            content += '<span class="bold-text">Pay Rate: </span>' + self.pay_rate + '<br>'
-        content += '<span class="bold-text">Schedule: </span>' + self.schedule + '<br>'
-        content += '<span class="bold-text">Class Type: </span>' + self.class_type + '<br>'
-
-        if self.is_full_time:
-            content += '<span class="bold-text">Benefits: </span>' + self.benefits + '<br>'
-
-        content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
-        content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
-                   '" class="bold-text" target="_blank">Apply</a><br>'
-        content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
-        return content
-
-    @property
     def card_class(self) -> str :
         if self.is_full_time:
             return 'full-time'
@@ -121,6 +99,45 @@ class JobPost(models.Model):
 
         return tags
 
+    def build_html_content(self, user) -> str:
+        """
+        Build the map HTML content for ths Job Post.
+
+        :return: str
+        """
+        container_class = ''
+
+        if self.not_interested(user):
+            container_class = 'not-interested'
+
+        content = '<div class="' + container_class + '">'
+        content += '<span class="bold-text">' + self.title + '</span><br>'
+        if self.is_full_time:
+            content += '<span class="bold-text">Salary: </span>' + self.salary + '<br>'
+        else:
+            content += '<span class="bold-text">Pay Rate: </span>' + self.pay_rate + '<br>'
+        content += '<span class="bold-text">Schedule: </span>' + self.schedule + '<br>'
+        content += '<span class="bold-text">Class Type: </span>' + self.class_type + '<br>'
+
+        if self.is_full_time:
+            content += '<span class="bold-text">Benefits: </span>' + self.benefits + '<br>'
+
+        content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
+        if user.is_authenticated:
+            if user.is_recruiter:
+                can_apply = False
+            else:
+                can_apply = not self.has_applicant_applied(user)
+        else:
+            can_apply = True
+
+        if can_apply:
+            content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
+                       '" class="bold-text" target="_blank">Apply</a><br>'
+        content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
+        content += '</div>'
+        return content
+
     def has_applicant_applied(self, user) -> bool:
         """
         Determine if the supplied applicant has already applied to this Job Post.
@@ -129,10 +146,17 @@ class JobPost(models.Model):
         :return: bool
         """
         if user.is_authenticated:
-            job_applications = self.applicants.all()
-            if len(job_applications) > 0:
-                applicants = map(lambda j: j.site_user, job_applications)
-                return user in applicants
+            # Recruiters cannot apply to job posts.
+            if not user.is_recruiter:
+                if len(self._applicants) == 0:
+                    self._applicants = self.applicants.all()
+
+                if len(self._applicants) > 0:
+                    applicants = map(lambda j: j.site_user, self._applicants)
+                    return user in applicants
+        return False
+
+    def not_interested(self, user) -> bool:
         return False
 
     def __str__(self):
