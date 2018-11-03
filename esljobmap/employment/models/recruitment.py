@@ -6,7 +6,6 @@ from django.shortcuts import reverse
 
 from ..apps import EmploymentConfig
 from account.models.user import SiteUser
-from account.models.resume import Resume
 
 
 class JobPost(models.Model):
@@ -51,7 +50,8 @@ class JobPost(models.Model):
 
         :return: bool
         """
-        return datetime.now() > (self.created_at + timedelta(weeks=2))
+        time_frame = 2 if self.is_full_time else 1
+        return datetime.now() > (self.created_at + timedelta(weeks=time_frame))
 
     @property
     def pretty_days_till_expired(self) -> str:
@@ -60,7 +60,8 @@ class JobPost(models.Model):
 
         :return:
         """
-        days_left = 14 - (datetime.now() - self.created_at).days
+        time_frame = 14 if self.is_full_time else 7
+        days_left = time_frame - (datetime.now() - self.created_at).days
         if days_left > 0:
             return 'Expires in: {0} day(s)'.format(days_left)
         return 'Expired'
@@ -106,11 +107,13 @@ class JobPost(models.Model):
         :return: str
         """
         container_class = ''
+        not_interested = self.not_interested(user)
 
-        if self.not_interested(user):
-            container_class = 'not-interested'
+        if not_interested:
+            container_class = 'job-not-interested'
 
-        content = '<div class="' + container_class + '">'
+        content = '<div class="job-post">'
+        content += '<div class="job-description ' + container_class + '">'
         content += '<span class="bold-text">' + self.title + '</span><br>'
         if self.is_full_time:
             content += '<span class="bold-text">Salary: </span>' + self.salary + '<br>'
@@ -131,9 +134,21 @@ class JobPost(models.Model):
         else:
             can_apply = True
 
+        content += '</div>'
         if can_apply:
-            content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
-                       '" class="bold-text" target="_blank">Apply</a><br>'
+            content += '<div>'
+
+            if not_interested:
+                content += '<a href="#" class="job-apply-link disabled">Apply</a>'
+                content += '<a href="' + reverse('employment_remove_job_disinterest', args=(self.id,)) + \
+                           '" class="bold-text float-right">Interested</a>'
+            else:
+                content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
+                           '" class="job-apply-link">Apply</a>'
+                content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
+                           '" class="job-not-interested-link">Not Interested</a>'
+            content += '</div><br>'
+
         content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
         content += '</div>'
         return content
@@ -157,6 +172,18 @@ class JobPost(models.Model):
         return False
 
     def not_interested(self, user) -> bool:
+        """
+        Determine if the user marked the current job post is not interesting.
+
+        :param user:
+        :return:
+        """
+        if user.is_authenticated:
+            # Recruiters cannot mark a job post is not interesting.
+            if not user.is_recruiter:
+                for disinterested_job_post in user.disinterested_job_posts.all():
+                    if self == disinterested_job_post.job_post:
+                        return True
         return False
 
     def __str__(self):
@@ -164,38 +191,3 @@ class JobPost(models.Model):
 
     class Meta:
         db_table = EmploymentConfig.name + '_job_post'
-
-
-class JobApplication(models.Model):
-    job_post = models.ForeignKey(JobPost,
-                                 on_delete=models.CASCADE,
-                                 related_name='applicants')
-    site_user = models.ForeignKey(SiteUser,
-                                  related_name='job_applications',
-                                  on_delete=models.CASCADE,
-                                  blank=True,
-                                  null=True)
-    contact_email = models.EmailField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=False)
-
-    @property
-    def tags(self):
-        tags = 'closed'
-        if self.job_post.is_visible and not self.job_post.is_expired:
-            tags = 'in-consideration'
-
-        return tags
-
-    @classmethod
-    def create_application(cls, job_post, contact_email, resume, site_user=None):
-        return cls.objects.create(job_post=job_post,
-                                  contact_email=contact_email,
-                                  resume=resume,
-                                  site_user=site_user)
-
-    def __str__(self):
-        return self.job_post.__str__()
-
-    class Meta:
-        db_table = EmploymentConfig.name + '_job_application'

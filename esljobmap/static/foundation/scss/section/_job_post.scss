@@ -2,6 +2,27 @@
 // Job Post
 // ==========================================================================
 
-.job-type-selection {
-    height: 26vh;
+.job-post {
+    .job-not-interested {
+        text-decoration: line-through;
+    }
+
+    .job-apply-link {
+        font-weight: bold;
+        float: left;
+
+        &.disabled {
+            color: #8a8a8a;
+            cursor: not-allowed;
+        }
+    }
+
+    .job-not-interested-link {
+        font-weight: bold;
+        float: right;
+        color: #8a8a8a;
+        &:hover {
+            color: #cacaca;
+        }
+    }
 }

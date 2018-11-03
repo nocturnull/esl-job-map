@@ -1,5 +1,6 @@
 from .scheme import *
-from ..models.recruitment import JobPost, JobApplication
+from ..models.recruitment import JobPost
+from ..models.job_seeking import JobApplication
 from account.models.user import SiteUser
 
 

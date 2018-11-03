@@ -6,6 +6,8 @@ from .views.map import FullTimeMap, PartTimeMap
 from .views.job_seeking import ApplyToJobPost, ListApplications
 from .views.recruitment import CreateFullTimeJobPost, CreatePartTimeJobPost, ListJobPost, ListArchivedJobPost,\
     EditFullTimeJobPost, EditPartTimeJobPost, ListJobApplicants, TakeDownJobPost, ArchiveJobPost
+from .views.job_metadata import DisinterestedJobPostCreate, DisinterestedJobPostDelete
+
 
 urlpatterns = [
     # Common urls
@@ -23,5 +25,7 @@ urlpatterns = [
     path('recruiter/job/archive/<int:pk>', ArchiveJobPost.as_view(), name='employment_archive_job_post'),
     # Teacher only pages
     path('teacher/apply/<int:job_post_id>', ApplyToJobPost.as_view(), name='employment_apply_to_job'),
-    path('teacher/applications', ListApplications.as_view(), name='employment_applications')
+    path('teacher/applications', ListApplications.as_view(), name='employment_applications'),
+    path('teacher/job/not-interested/<int:pk>', DisinterestedJobPostCreate.as_view(), name='employment_track_job_disinterest'),
+    path('teacher/job/interested/<int:pk>', DisinterestedJobPostDelete.as_view(), name='employment_remove_job_disinterest')
 ]

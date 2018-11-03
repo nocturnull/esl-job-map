@@ -58,7 +58,9 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
 
         :return:
         """
-        return self.first_name + ' ' + self.last_name
+        if len(self.first_name) > 0:
+            return self.first_name + ' ' + self.last_name
+        return 'Recruiter'
 
     def __str__(self):
         return self.email
