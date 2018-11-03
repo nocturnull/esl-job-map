@@ -1,8 +1,9 @@
 # employment/views/recruitment.py
+
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect, reverse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.db.models import F
 
@@ -87,12 +88,6 @@ class EditFullTimeJobPost(LoginRequiredMixin, UpdateView):
         context['post_url'] = self.request.path
         return context
 
-    def get(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.is_editable:
-            return super().get(request, *args, **kwargs)
-        return redirect('employment_my_job_posts')
-
 
 @method_decorator(recruiter_required, name='dispatch')
 class EditPartTimeJobPost(LoginRequiredMixin, UpdateView):
@@ -110,12 +105,6 @@ class EditPartTimeJobPost(LoginRequiredMixin, UpdateView):
         context = super().get_context_data(**kwargs)
         context['post_url'] = self.request.path
         return context
-
-    def get(self, request, *args, **kwargs):
-        obj = self.get_object()
-        if obj.is_editable:
-            return super().get(request, *args, **kwargs)
-        return redirect('employment_my_job_posts')
 
 
 @method_decorator(recruiter_required, name='dispatch')

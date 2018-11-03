@@ -42,15 +42,6 @@ class JobPost(models.Model):
         return '[Part-Time]'
 
     @property
-    def is_editable(self) -> bool:
-        """
-        Determine if the user can edit this Job Post.
-
-        :return: bool
-        """
-        return datetime.now() < (self.created_at + timedelta(days=1))
-
-    @property
     def is_expired(self) -> bool:
         """
         Determine if the Job Post has expired.
@@ -68,7 +59,7 @@ class JobPost(models.Model):
         """
         days_left = 14 - (datetime.now() - self.created_at).days
         if days_left > 0:
-            return 'Expires in: {0} days'.format(days_left)
+            return 'Expires in: {0} day(s)'.format(days_left)
         return 'Expired'
 
     @property

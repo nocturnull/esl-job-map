@@ -1,27 +1,13 @@
 <div class="cell callout">
-    <h5>{{ job_post }}</h5>
-    <div>
-        <p>Class Type: {{ job_post.class_type }}</p>
-    </div>
-    <div>
-        <p>Schedule: {{ job_post.schedule }}</p>
-    </div>
+    <h5 class="ejm-bold">{{ job_post }}</h5>
+    <div>Class Type: {{ job_post.class_type }}</div>
+    <div>Schedule: {{ job_post.schedule }}</div>
     {% if job_post.is_full_time %}
-        <div>
-            <p>Salary: {{ job_post.salary }}</p>
-        </div>
-        <div>
-            <p>Benefits: {{ job_post.benefits }}</p>
-        </div>
+        <div>Salary: {{ job_post.salary }}</div>
+        <div>Benefits: {{ job_post.benefits }}</div>
     {% else %}
-        <div>
-            <p>Pay Rate: {{ job_post.pay_rate }}</p>
-        </div>
+        <div>Pay Rate: {{ job_post.pay_rate }}</div>
     {% endif %}
-    <div>
-        <p>Other Requirements: {{ job_post.other_requirements }}</p>
-    </div>
-    <div>
-        <p>{{ job_post.pretty_days_till_expired }}</p>
-    </div>
+    <div>Other Requirements: {{ job_post.other_requirements }}</div>
+    <div>{{ job_post.pretty_days_till_expired }}</div>
 </div>
