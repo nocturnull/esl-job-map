@@ -13,8 +13,12 @@
         <div id="searchFilters">
             <button class="secondary-button" data-filtertag="full-time" data-isactive="0">Full-Time</button>
             <button class="secondary-button" data-filtertag="part-time" data-isactive="0">Part-Time</button>
-            <button class="secondary-button" data-filtertag="expired" data-isactive="0">Expired</button>
-            <div id="listFilterResults" class="display-inline"></div>
+            {% if show_expired %}
+                <button class="secondary-button" data-filtertag="expired" data-isactive="0">Expired</button>
+            {% endif %}
+            {% with item_count=object_list|length %}
+                <div id="listFilterResults" class="display-inline">Currently displaying {{ item_count }}/{{ item_count }}</div>
+            {% endwith %}
         </div>
 
         <div class="grid-x" id="filterCardsParent">
@@ -47,8 +51,10 @@
                                         <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="secondary-button">Take down</a>
                                     {% endif %}
                                 {% endif %}
-                                {% if job_post.is_expired or not job_post.is_visible and not job_post.is_archived %}
-                                    <a href="{% url 'employment_archive_job_post' job_post.id %}" class="secondary-button">Archive</a>
+                                {% if job_post.is_expired or not job_post.is_visible %}
+                                    {% if not job_post.is_archived %}
+                                        <a href="{% url 'employment_archive_job_post' job_post.id %}" class="secondary-button">Archive</a>
+                                    {% endif %}
                                 {% endif %}
                             </div>
                             {% with applicants=job_post.applicants.count %}

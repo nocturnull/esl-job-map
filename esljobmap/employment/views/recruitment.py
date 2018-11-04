@@ -55,7 +55,7 @@ class ListJobPost(LoginRequiredMixin, ListView):
     """
     model = JobPost
     template_name = 'recruiter/job_post_list.html'
-    extra_context = {'title': 'Active Jobs'}
+    extra_context = {'title': 'Active Jobs', 'show_expired': True}
 
     def get_queryset(self):
         return self.request.user.job_posts.filter(is_archived=False).order_by(F('created_at').desc(nulls_last=True))
@@ -68,7 +68,7 @@ class ListArchivedJobPost(LoginRequiredMixin, ListView):
     """
     model = JobPost
     template_name = 'recruiter/job_post_list.html'
-    extra_context = {'title': 'Archived Jobs'}
+    extra_context = {'title': 'Archived Jobs', 'show_expired': False}
 
     def get_queryset(self):
         return self.request.user.job_posts.filter(is_archived=True).order_by(F('created_at').desc(nulls_last=True))

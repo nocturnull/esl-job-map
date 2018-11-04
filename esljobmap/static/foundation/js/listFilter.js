@@ -164,11 +164,12 @@ class ListFiler {
      * Each time a filter is added a removed we need to show the new shown amount.
      */
     updateDisplayCount() {
+        let totalCount = this.flowCardList.length;
+
         if (this.$filterCardsParent.children().length === this.flowCardList.length) {
-            this.listFilterResults.html('');
+            this.listFilterResults.html(`Currently displaying ${totalCount}/${totalCount}`);
         } else {
-            let filterCount = this.$filterCardsParent.children().length,
-            totalCount = this.flowCardList.length;
+            let filterCount = this.$filterCardsParent.children().length;
 
             this.listFilterResults.html(`Currently displaying ${filterCount}/${totalCount}`);
         }
