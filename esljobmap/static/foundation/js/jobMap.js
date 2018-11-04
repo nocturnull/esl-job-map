@@ -92,7 +92,9 @@ class JobMapSetup {
                 markerIcon = window.mapIconImage;
 
             if (markerData.hasApplied === 1) {
-                markerIcon = window.mapDisableIconImage;
+                markerIcon = window.mapAppliedIconImage;
+            } else if (markerData.isDisinterested === 1) {
+                markerIcon = window.mapDisinterestedIconImage;
             }
 
             let marker = new google.maps.Marker({

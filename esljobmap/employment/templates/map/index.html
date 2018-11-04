@@ -22,7 +22,8 @@
     <script>
         window.mapMarkers = [];
         window.mapIconImage = '{{ icon_image }}';
-        window.mapDisableIconImage = '{{ disabled_icon_image }}';
+        window.mapDisinterestedIconImage = '{{ disinterested_icon_image }}';
+        window.mapAppliedIconImage = '{{ applied_icon_image }}';
 
         {% if user.is_recruiter %}
             window.isRecruiter = true;
@@ -35,7 +36,8 @@
                 lat: {{ job_post.latitude }},
                 lng: {{ job_post.longitude }},
                 content: '{% build_info_html job_post user %}',
-                hasApplied: {% has_applied job_post user %}
+                hasApplied: {% has_applied job_post user %},
+                isDisinterested: {% is_disinterested job_post user %}
             });
         {% endfor %}
     </script>

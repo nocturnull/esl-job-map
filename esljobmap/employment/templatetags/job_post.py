@@ -13,3 +13,8 @@ def build_info_html(job_post, user) -> str:
 @register.simple_tag
 def has_applied(job_post, user) -> int:
     return 1 if job_post.has_applicant_applied(user) else 0
+
+
+@register.simple_tag
+def is_disinterested(job_post, user) -> int:
+    return 1 if job_post.not_interested(user) else 0

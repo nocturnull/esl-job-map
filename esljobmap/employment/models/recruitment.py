@@ -126,13 +126,8 @@ class JobPost(models.Model):
             content += '<span class="bold-text">Benefits: </span>' + self.benefits + '<br>'
 
         content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
-        if user.is_authenticated:
-            if user.is_recruiter:
-                can_apply = False
-            else:
-                can_apply = not self.has_applicant_applied(user)
-        else:
-            can_apply = True
+        can_apply = self.can_apply(user)
+        has_applied = self.has_applicant_applied(user)
 
         content += '</div>'
         if can_apply:
@@ -142,11 +137,13 @@ class JobPost(models.Model):
                 content += '<a href="#" class="job-apply-link disabled">Apply</a>'
                 content += '<a href="' + reverse('employment_remove_job_disinterest', args=(self.id,)) + \
                            '" class="bold-text float-right">Interested</a>'
-            else:
+            elif not has_applied:
                 content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
                            '" class="job-apply-link">Apply</a>'
                 content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
                            '" class="job-not-interested-link">Not Interested</a>'
+            else:
+                content += '<span class="bold-text">Applied</span>'
             content += '</div><br>'
 
         content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
@@ -161,7 +158,7 @@ class JobPost(models.Model):
         :return: bool
         """
         if user.is_authenticated:
-            # Recruiters cannot apply to job posts.
+            # Only check applicants.
             if not user.is_recruiter:
                 if len(self._applicants) == 0:
                     self._applicants = self.applicants.all()
@@ -170,6 +167,18 @@ class JobPost(models.Model):
                     applicants = map(lambda j: j.site_user, self._applicants)
                     return user in applicants
         return False
+
+    def can_apply(self, user) -> bool:
+        """
+        Determine if the user can apply.
+
+        :param user:
+        :return:
+        """
+        if user.is_authenticated:
+            # Recruiters cannot apply to job posts.
+            return not user.is_recruiter
+        return True
 
     def not_interested(self, user) -> bool:
         """
