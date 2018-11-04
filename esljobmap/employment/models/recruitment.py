@@ -136,12 +136,14 @@ class JobPost(models.Model):
             if not_interested:
                 content += '<a href="#" class="job-apply-link disabled">Apply</a>'
                 content += '<a href="' + reverse('employment_remove_job_disinterest', args=(self.id,)) + \
-                           '" class="bold-text float-right">Interested</a>'
+                           '" class="bold-text float-right" onclick="return updateMapMarker(event, this, ' +\
+                           str(self.id) + ', 0);">Interested</a>'
             elif not has_applied:
                 content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
                            '" class="job-apply-link">Apply</a>'
                 content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
-                           '" class="job-not-interested-link">Not Interested</a>'
+                           '" class="job-not-interested-link" onclick="return updateMapMarker(event, this, ' +\
+                           str(self.id) + ', 1);">Not Interested</a>'
             else:
                 content += '<span class="bold-text">Applied</span>'
             content += '</div><br>'

@@ -38,6 +38,7 @@
 
         {% for job_post in object_list %}
             window.jobMap.markers.push({
+                id: {{ job_post.id }},
                 lat: {{ job_post.latitude }},
                 lng: {{ job_post.longitude }},
                 content: '{% build_info_html job_post user %}',

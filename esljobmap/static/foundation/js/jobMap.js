@@ -26,6 +26,8 @@ class JobMapSetup {
         this.$addressError = null;
         this.$locationError = null;
         this.$generalJobFields = null;
+        this.googleMarkerMap = {};
+        this.googleMarkerMapListeners = {};
     }
 
     /**
@@ -102,17 +104,45 @@ class JobMapSetup {
             });
 
             marker.setMap(this.map);
-            marker.addListener('mouseover', () => {
+            let listener = marker.addListener('mouseover', () => {
                 // Open up the window and display the job info.
                 this.infoWindow.setContent(markerData.content);
                 this.infoWindow.open(this.map, marker);
             });
-            marker.addListener('mouseout', function () {
-                if (this.infoWindow) {
-                    this.infoWindow.close();
-                }
-            });
+
+            this.googleMarkerMap[markerData.id] = marker;
+            this.googleMarkerMapListeners[markerData.id] = listener;
         }
+    }
+
+    /**
+     * Go through the markers and update the one that matches the supplied id.
+     *
+     * @param id
+     * @param content
+     * @param isDisinterested
+     */
+    updateExistingJobMarker(id, content, isDisinterested) {
+        let marker = this.googleMarkerMap[id];
+        if (isDisinterested === 1) {
+            marker.setIcon(window.jobMap.disinterestedIconImage);
+        } else {
+            marker.setIcon(window.jobMap.iconImage);
+        }
+
+        // Remove the old listener.
+        let listener = this.googleMarkerMapListeners[id];
+        google.maps.event.removeListener(listener);
+        delete this.googleMarkerMapListeners[id];
+
+        // Add a new listener with the updated data.
+        marker.addListener('mouseover', () => {
+            // Open up the window and display the job info.
+            this.infoWindow.setContent(content);
+            this.infoWindow.open(this.map, marker);
+        });
+
+        this.infoWindow.close();
     }
 
     /**
