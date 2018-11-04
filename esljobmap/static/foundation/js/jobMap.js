@@ -33,7 +33,7 @@ class JobMapSetup {
      */
     init() {
         let mapContainer = document.getElementById('map');
-        if (mapContainer !== null ) {
+        if (mapContainer !== null) {
             this.map = new google.maps.Map(mapContainer, {
                 zoom: 13,
                 center: {lat: 37.529451, lng: 126.997417},

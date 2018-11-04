@@ -1,6 +1,11 @@
+{% load job_post %}
+
 <div class="cell medium-4">
     <div class="flow-card {{ job_post.card_class }}" data-filtertaglist="{{ application.tags }}">
-        <h5>{{ job_post.title }}</h5>
+        <h5>
+            <img src="{% resolve_koco_image job_post %}" alt="kocoman">
+            {{ job_post.title }}
+        </h5>
         <div class="flow-card-content">
             <div>Class Type: {{ job_post.class_type }}</div>
             <div>Schedule: {{ job_post.schedule }}</div>
