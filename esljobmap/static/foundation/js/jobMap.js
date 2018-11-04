@@ -35,8 +35,8 @@ class JobMapSetup {
         let mapContainer = document.getElementById('map');
         if (mapContainer !== null) {
             this.map = new google.maps.Map(mapContainer, {
-                zoom: 13,
-                center: {lat: 37.529451, lng: 126.997417},
+                zoom: window.jobMap.zoom,
+                center: {lat: window.jobMap.lat, lng: window.jobMap.lng},
                 mapTypeControlOptions: {
                     mapTypeIds: ['roadmap'],
                 },
@@ -51,7 +51,7 @@ class JobMapSetup {
             this.$addressInput = $('#mapAddressInput');
 
             // Add click listener to the map if a recruiter.
-            if (window.isRecruiter) {
+            if (window.jobMap.isRecruiter) {
                 this.map.addListener('click', (e) => {
                     this.placeMarkerAndPanTo(e.latLng);
                 });
@@ -60,7 +60,6 @@ class JobMapSetup {
             // Bind ajax form listener.
             this.$form = $('#jobPostForm');
             this.$form.submit((e) => {
-                console.log('submitting form');
                 this.$locationError.addClass('no-show');
                 if (this.latitude > 0 && this.longitude > 0) {
                     this.submitMapData(this.$form.attr('action'));
@@ -86,15 +85,15 @@ class JobMapSetup {
     }
 
     addExistingJobMarkers() {
-        for (let i = 0; i < window.mapMarkers.length; i++) {
-            let markerData = window.mapMarkers[i],
+        for (let i = 0; i < window.jobMap.markers.length; i++) {
+            let markerData = window.jobMap.markers[i],
                 latlng = new google.maps.LatLng(markerData.lat, markerData.lng),
-                markerIcon = window.mapIconImage;
+                markerIcon = window.jobMap.iconImage;
 
             if (markerData.hasApplied === 1) {
-                markerIcon = window.mapAppliedIconImage;
+                markerIcon = window.jobMap.appliedIconImage;
             } else if (markerData.isDisinterested === 1) {
-                markerIcon = window.mapDisinterestedIconImage;
+                markerIcon = window.jobMap.disinterestedIconImage;
             }
 
             let marker = new google.maps.Marker({
@@ -131,7 +130,7 @@ class JobMapSetup {
         this.currentMarker = new google.maps.Marker({
             position: latLng,
             map: this.map,
-            icon: window.mapIconImage,
+            icon: window.jobMap.iconImage,
             animation: google.maps.Animation.DROP
         });
         this.map.panTo(latLng);
@@ -160,7 +159,7 @@ class JobMapSetup {
                 this.currentMarker = new google.maps.Marker({
                     map: this.map,
                     position: loc,
-                    icon: window.mapIconImage,
+                    icon: window.jobMap.iconImage,
                     animation: google.maps.Animation.DROP
                 });
 
@@ -177,7 +176,6 @@ class JobMapSetup {
                 // Open up the window and display the address.
                 this.infoWindow.open(this.map, this.currentMarker);
             } else {
-                console.log(status);
                 this.$addressError.removeClass('no-show');
             }
         });
@@ -244,7 +242,6 @@ class JobMapSetup {
             url: action,
             data: formData
         }).done((response) => {
-            console.log(response);
             let responseHtml = $.parseHTML(response);
             let extGeneralJobFields = $(responseHtml).find('#generalJobFields');
 

@@ -5,6 +5,7 @@ from django.shortcuts import reverse
 
 from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm
 from ..models import JobPost
+from ..managers.map_manager import MapManager
 
 from cloud.templatetags.remote import cdn_image
 from account.templatetags.profile import is_recruiter
@@ -17,6 +18,11 @@ class FullTimeMap(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        try:
+            city = self.kwargs['city']
+        except KeyError:
+            city = ''
+
         # We don't want to show jobs that have expired.
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['icon_image'] = cdn_image('koco-man/koco-blue-40x40.png')
@@ -26,6 +32,8 @@ class FullTimeMap(ListView):
         context['is_full_time'] = True
         context['form'] = CreateFullTimeJobForm()
         context['post_url'] = reverse('employment_create_full_time_job')
+        context['location'] = MapManager.resolve_location_data(city)
+
         return context
 
 
@@ -36,6 +44,11 @@ class PartTimeMap(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        try:
+            city = self.kwargs['city']
+        except KeyError:
+            city = ''
+
         # We don't want to show jobs that have expired.
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
         context['icon_image'] = cdn_image('koco-man/koco-orange-40x40.png')
@@ -43,6 +56,8 @@ class PartTimeMap(ListView):
         context['applied_icon_image'] = cdn_image('koco-man/koco-black-40x40.png')
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['is_full_time'] = False
-        context['post_url'] = reverse('employment_create_part_time_job')
         context['form'] = CreatePartTimeJobForm()
+        context['post_url'] = reverse('employment_create_part_time_job')
+        context['location'] = MapManager.resolve_location_data(city)
+
         return context

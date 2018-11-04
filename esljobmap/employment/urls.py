@@ -11,8 +11,10 @@ from .views.job_metadata import DisinterestedJobPostCreate, DisinterestedJobPost
 
 urlpatterns = [
     # Common urls
-    path('full-time', FullTimeMap.as_view(), name='employment_full_time_map'),
-    path('part-time', PartTimeMap.as_view(), name='employment_part_time_map'),
+    path('full-time/', FullTimeMap.as_view(), name='employment_full_time_map'),
+    path('full-time/<str:city>', FullTimeMap.as_view(), name='employment_full_time_map_city'),
+    path('part-time/', PartTimeMap.as_view(), name='employment_part_time_map'),
+    path('part-time/<str:city>', PartTimeMap.as_view(), name='employment_part_time_map_city'),
     # Recruiter only pages
     path('recruiter/job/post/full-time', CreateFullTimeJobPost.as_view(), name='employment_create_full_time_job'),
     path('recruiter/job/post/part-time', CreatePartTimeJobPost.as_view(), name='employment_create_part_time_job'),

@@ -20,19 +20,24 @@
 
 {% block postjavascript %}
     <script>
-        window.mapMarkers = [];
-        window.mapIconImage = '{{ icon_image }}';
-        window.mapDisinterestedIconImage = '{{ disinterested_icon_image }}';
-        window.mapAppliedIconImage = '{{ applied_icon_image }}';
+        window.jobMap = {
+            markers: [],
+            iconImage: '{{ icon_image }}',
+            disinterestedIconImage: '{{ disinterested_icon_image }}',
+            appliedIconImage: '{{ applied_icon_image }}',
+            zoom: {{ location.zoom }},
+            lat: {{ location.lat }},
+            lng: {{ location.lng }}
+        };
 
         {% if user.is_recruiter %}
-            window.isRecruiter = true;
+            window.jobMap.isRecruiter = true;
         {% else %}
-            window.isRecruiter = false;
+            window.jobMap.isRecruiter = false;
         {% endif %}
 
         {% for job_post in object_list %}
-            window.mapMarkers.push({
+            window.jobMap.markers.push({
                 lat: {{ job_post.latitude }},
                 lng: {{ job_post.longitude }},
                 content: '{% build_info_html job_post user %}',
