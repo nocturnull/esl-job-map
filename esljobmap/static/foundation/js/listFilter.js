@@ -65,6 +65,7 @@ class ListFiler {
         this.$filterCardsParent = $('#filterCardsParent');
         this.flowCardList = [];
         this.listFilterResults = null;
+        this.buttonList = [];
     }
 
     /**
@@ -82,6 +83,7 @@ class ListFiler {
     init() {
         if (this.isValid()) {
             this.listFilterResults = $('#listFilterResults');
+            this.buttonList = this.$searchFilters.find('button');
             this.attachFilterListeners();
             this.organizeData();
         }
@@ -91,23 +93,20 @@ class ListFiler {
      * Attach button listeners to apply filters.
      */
     attachFilterListeners() {
-        let buttonList = this.$searchFilters.find('button');
-
-        for (let i = 0; i < buttonList.length; i++) {
-            let $cur = $(buttonList[i]);
+        for (let i = 0; i < this.buttonList.length; i++) {
+            let $cur = $(this.buttonList[i]);
 
             $cur.on('click', () => {
                 let tag = $cur.data('filtertag');
 
                 if ($cur.data('isactive') === 0) {
                     this.applyFilter(tag);
-                    $cur.data('isactive', 1)
-                        .attr('class', 'disabled-button');
+                    $cur.data('isactive', 1);
                 } else {
                     this.removeFilter(tag);
-                    $cur.data('isactive', 0)
-                        .attr('class', 'secondary-button');
+                    $cur.data('isactive', 0);
                 }
+                this.applyDisabledButtonAppearances(tag);
             })
         }
     }
@@ -140,6 +139,24 @@ class ListFiler {
 
         // Inform the user how many items are showing.
         this.updateDisplayCount();
+    }
+
+    /**
+     * Go through each button and determine if it should be on or not.
+     *
+     * @param tag
+     */
+    applyDisabledButtonAppearances() {
+        for (let i = 0; i < this.buttonList.length; i++) {
+            let $cur = $(this.buttonList[i]);
+
+            // Apply the appropriate colors to each button.
+            if ($cur.data('isactive') === 1) {
+                $cur.attr('class', 'secondary-button');
+            } else {
+                $cur.attr('class', 'disabled-button');
+            }
+        }
     }
 
     /**

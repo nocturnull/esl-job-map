@@ -13,10 +13,10 @@
         <h3>{{ title }}</h3>
 
         <div id="searchFilters">
-            <button class="secondary-button" data-filtertag="full-time" data-isactive="0">Full-Time</button>
-            <button class="secondary-button" data-filtertag="part-time" data-isactive="0">Part-Time</button>
+            <button class="disabled-button" data-filtertag="full-time" data-isactive="0">Full-Time</button>
+            <button class="disabled-button" data-filtertag="part-time" data-isactive="0">Part-Time</button>
             {% if show_expired %}
-                <button class="secondary-button" data-filtertag="expired" data-isactive="0">Expired</button>
+                <button class="disabled-button" data-filtertag="expired" data-isactive="0">Expired</button>
             {% endif %}
             {% with item_count=object_list|length %}
                 <div id="listFilterResults" class="display-inline">Currently displaying {{ item_count }}/{{ item_count }}</div>
