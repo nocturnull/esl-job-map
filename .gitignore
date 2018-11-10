@@ -3,3 +3,7 @@
 __pycache__
 esljobmap/sent_emails/*.log
 **/db.sqlite3
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

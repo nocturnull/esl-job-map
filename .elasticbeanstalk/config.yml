@@ -1,2 +1,20 @@
+branch-defaults:
+  master:
+    environment: esl-job-map
+environment-defaults:
+  esl-job-map:
+    branch: null
+    repository: null
 global:
+  application_name: ESLJobMap
+  default_ec2_keyname: esljobmap-key-pair
+  default_platform: arn:aws:elasticbeanstalk:ap-northeast-2::platform/Python 3.6 running
+    on 64bit Amazon Linux/2.7.5
+  default_region: null
+  include_git_submodules: true
+  instance_profile: null
+  platform_name: null
+  platform_version: null
   profile: null
+  sc: git
+  workspace_type: Application
