@@ -25,8 +25,9 @@ SECRET_KEY = 'j-q498+4qj04^pu%i7cq9i&e4792k^k_ps(5c*v1gkn*n(r3%j'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('ESLJOBMAP_DEBUG', False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+INTERNAL_IPS = ('127.0.0.1', 'localhost')
 
 # Application definition
 
