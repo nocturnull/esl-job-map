@@ -37,4 +37,8 @@
     .flow-card-footer {
         padding: 0.5rem;
     }
+
+    @include breakpoint(medium down) {
+        margin: 0 auto;
+    }
 }

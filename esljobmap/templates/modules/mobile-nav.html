@@ -1,0 +1,71 @@
+{% load static %}
+{% load nav %}
+
+<div class="mobile-top-nav">
+    <div>
+        <a href="#" data-open="offCanvas" class="hamburger-link">
+            <span class="hamburger-menu-icon">Menu</span>
+        </a>
+    </div>
+    <div>
+        <a href="{% url 'home' %}" class="logo">
+            <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
+        </a>
+    </div>
+</div>
+
+<div class="off-canvas position-left" id="offCanvas" data-off-canvas>
+    <ul class="vertical dropdown menu" data-dropdown-menu>
+        <li>
+            <a href="{% url 'home' %}">
+                <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
+            </a>
+        </li>
+        {% if user.is_authenticated and user.is_recruiter %}
+            <li>
+                <a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">My Jobs</a>
+                <ul class="menu vertical nested" data-submenu>
+                    <li><a href="{% url 'employment_my_job_posts' %}">Active</a></li>
+                    <li><a href="{% url 'employment_my_archived_job_posts' %}">Archived</a></li>
+                </ul>
+            </li>
+        {% elif user.is_teacher %}
+            <li><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
+        {% endif %}
+        <li>
+            <a href="{% url 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">Full-Time Map</a>
+            <ul class="menu vertical nested" data-submenu>
+                <li><a href="{% url 'employment_full_time_map_city' 'seoul' %}">Seoul</a></li>
+                <li><a href="{% url 'employment_full_time_map_city' 'busan' %}">Busan</a></li>
+            </ul>
+        </li>
+        <li>
+            <a href="{% url 'employment_part_time_map' %}" class="{% menu_class request 'employment_part_time_map' %}">Part-Time Map</a>
+            <ul class="menu vertical nested" data-submenu>
+                <li><a href="{% url 'employment_part_time_map_city' 'seoul' %}">Seoul</a></li>
+                <li><a href="{% url 'employment_part_time_map_city' 'busan' %}">Busan</a></li>
+            </ul>
+        </li>
+        <li><a href="#about">About</a></li>
+    </ul>
+
+    <br>
+    <ul class="vertical dropdown menu" data-dropdown-menu>
+        {% if user.is_authenticated %}
+            <li>
+                <p class="mt-1">{{ user.username }}</p>
+            </li>
+            <li>
+                <a href="{% url 'account_profile' %}" class="{% menu_class request 'account_profile' %} primary-button">Profile</a>
+            </li>
+            <li>
+                <p><a href="{% url 'logout' %}" class="primary-button">Logout</a></p>
+            </li>
+            {% else %}
+            <li>
+                <a href="{% url 'login' %}" class="primary-button">Login</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+

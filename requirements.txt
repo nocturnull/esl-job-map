@@ -4,3 +4,7 @@ psycopg2-binary==2.7.5
 requests==2.19.1
 boto3==1.8.6
 awsebcli==3.14.6
+PyYAML==3.13
+ua-parser==0.8.0
+user-agents==1.1.0
+django-user-agents==0.3.2

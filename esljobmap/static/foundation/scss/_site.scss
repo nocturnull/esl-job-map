@@ -35,12 +35,18 @@ input[type="text"], input[type="password"], input[type="email"] {
 @import "module/flow_card";
 @import "module/button";
 @import "module/nav";
+@import "module/mobile_nav";
 
 // ==========================================================================
 // Main Sections
 // ==========================================================================
 @import "section/home";
 @import "section/job_post";
+
+// ==========================================================================
+// Components
+// ==========================================================================
+@import "component/hamburger_icon";
 
 // ==========================================================================
 // Foundation Overrides
@@ -57,4 +63,8 @@ input[type="text"], input[type="password"], input[type="email"] {
     color: $brand-danger;
     font-weight: bold;
     font-size: 1.1rem;
+}
+
+.off-canvas {
+    background: white;
 }

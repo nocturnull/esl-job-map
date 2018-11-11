@@ -32,6 +32,7 @@ INTERNAL_IPS = ('127.0.0.1', 'localhost')
 # Application definition
 
 INSTALLED_APPS = [
+    'django_user_agents',
     'account',
     'employment',
     'cloud',
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_user_agents.middleware.UserAgentMiddleware',
 ]
 
 ROOT_URLCONF = 'esljobmap.urls'

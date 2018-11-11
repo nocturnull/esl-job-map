@@ -1,4 +1,3 @@
-<!-- templates/base.html -->
 <!doctype html>
 <html class="no-js" lang="en">
     {% load staticfiles %}
@@ -12,9 +11,13 @@
         <link rel="stylesheet" href="{% static 'foundation/dist/app.min.css' %}">
     </head>
     <body>
-        {% include 'modules/top-nav.html' %}
+        {% if request.user_agent.is_mobile %}
+            {% include 'modules/mobile-nav.html' %}
+        {% else %}
+            {% include 'modules/top-nav.html' %}
+        {% endif %}
 
-        <div class="content">
+        <div class="content off-canvas-content" data-off-canvas-content>
             {% block content %}
             {% endblock %}
         </div>

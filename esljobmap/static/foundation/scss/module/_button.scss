@@ -13,6 +13,10 @@
         background-color: nth($brand-secondary, 2);
         color: white;
     }
+
+    @include breakpoint(medium down) {
+        font-size: 0.8rem;
+    }
 }
 
 .secondary-button {
@@ -22,6 +26,15 @@
 
     &:hover {
         background-color: lighten(nth($brand-primary, 1), 30%);
+    }
+
+    &.inverse {
+        background-color: lighten(nth($brand-primary, 1), 30%);
+        color: white;
+
+        &:hover {
+            background-color: lighten(nth($brand-primary, 1), 40%);
+        }
     }
 }
 

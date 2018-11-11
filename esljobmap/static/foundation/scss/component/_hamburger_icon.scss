@@ -1,0 +1,32 @@
+// ==========================================================================
+// Hamburger Menu Icon
+// ==========================================================================
+
+.hamburger-menu-icon {
+    position: relative;
+    cursor: pointer;
+    padding-left: 2.25rem;
+    color: nth($brand-primary, 1);
+    font-weight: bold;
+    z-index: 2; // Prevent content from overlapping the icon.
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0.25rem;
+        width: 1.5rem;
+        height: 0.2rem;
+        background: nth($brand-primary, 1);
+        box-shadow:
+                0 0.45rem 0 0 nth($brand-primary, 1),
+                0 0.9rem 0 0 nth($brand-primary, 1);
+    }
+
+    &.alternative::before {
+        background: white;
+        box-shadow:
+                0 0.45rem 0 0 white,
+                0 0.9rem 0 0 white;
+    }
+}

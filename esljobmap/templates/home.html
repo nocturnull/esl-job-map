@@ -1,4 +1,3 @@
-<!-- templates/home.html -->
 {% extends 'base.html' %}
 
 {% load static %}
@@ -12,12 +11,18 @@
         <div class="welcome-content">
             <h1>Teach English in South Korea</h1>
             <br>
-            <a href="{% url 'employment_full_time_map' %}" class="secondary-button">
-                <span>Full-Time Map</span>
-            </a>
-            <a href="{% url 'employment_part_time_map' %}" class="secondary-button">
-                <span>Part-Time Map</span>
-            </a>
+            <div class="map-info">
+                <a href="{% url 'employment_full_time_map' %}" class="secondary-button inverse">
+                    <span>Full-Time Map</span>
+                </a>
+                <h5>Jobs expire in 14 days</h5>
+            </div>
+            <div class="map-info">
+                <a href="{% url 'employment_part_time_map' %}" class="secondary-button inverse">
+                    <span>Part-Time Map</span>
+                </a>
+                <h5>Jobs expire in 7 days</h5>
+            </div>
         </div>
 
     </div>
