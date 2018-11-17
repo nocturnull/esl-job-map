@@ -26,7 +26,7 @@ class MapManager:
         :return:
         """
         if city_name == CITY_SEOUL:
-            return MapLocation(13, 37.529451, 126.997417)
+            return MapLocation(11, 37.529451, 126.997417)
         elif city_name == CITY_BUSAN:
-            return MapLocation(13, 35.1796, 129.0756)
-        return MapLocation(8, 35.9078, 127.7669)
+            return MapLocation(12, 35.1796, 129.0756)
+        return MapLocation(8, 36.5078, 127.7669)

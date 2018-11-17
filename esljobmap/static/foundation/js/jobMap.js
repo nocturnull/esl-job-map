@@ -90,17 +90,18 @@ class JobMapSetup {
         for (let i = 0; i < window.jobMap.markers.length; i++) {
             let markerData = window.jobMap.markers[i],
                 latlng = new google.maps.LatLng(markerData.lat, markerData.lng),
-                markerIcon = window.jobMap.iconImage;
+                iconImageUrl = window.jobMap.iconImage;
 
             if (markerData.hasApplied === 1) {
-                markerIcon = window.jobMap.appliedIconImage;
+                iconImageUrl = window.jobMap.appliedIconImage;
             } else if (markerData.isDisinterested === 1) {
-                markerIcon = window.jobMap.disinterestedIconImage;
+                iconImageUrl = window.jobMap.disinterestedIconImage;
             }
 
             let marker = new google.maps.Marker({
                 position: latlng,
-                icon: markerIcon
+                optimized: false,
+                icon: this.makeComplexIcon(iconImageUrl)
             });
 
             marker.setMap(this.map);
@@ -160,8 +161,9 @@ class JobMapSetup {
         this.currentMarker = new google.maps.Marker({
             position: latLng,
             map: this.map,
-            icon: window.jobMap.iconImage,
-            animation: google.maps.Animation.DROP
+            icon: this.makeComplexIcon(window.jobMap.iconImage),
+            animation: google.maps.Animation.DROP,
+            draggable: true
         });
         this.map.panTo(latLng);
 
@@ -171,6 +173,14 @@ class JobMapSetup {
 
         // Inform the user of the address.
         this.geocodeLatLng(this.latitude, this.longitude, this.currentMarker);
+    }
+
+    makeComplexIcon(imageUrl) {
+        return {
+            url: imageUrl,
+            size: new google.maps.Size(30, 30),
+            scaledSize: new google.maps.Size(30, 30)
+        };
     }
 
     geocodeAddressAndPlaceMarker(address) {
