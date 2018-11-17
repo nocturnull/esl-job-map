@@ -38,7 +38,8 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
     @property
     def is_teacher(self) -> bool:
         """
-        TODO: Replace with permissions.
+        Determine if the user is an applicant.
+
         :return:
         """
         return self.role == 3
@@ -46,7 +47,8 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
     @property
     def is_recruiter(self) -> bool:
         """
-        TODO: Replace with permissions.
+        Determine if the user is a recruiter.
+
         :return:
         """
         return self.role == 1 or self.role == 2

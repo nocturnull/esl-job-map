@@ -1,6 +1,8 @@
 # employment/forms/recruitment.py
+
 from django import forms
 from ..models.recruitment import JobPost
+from account.templatetags.profile import is_recruiter
 
 
 class CreateJobForm(forms.ModelForm):
@@ -15,12 +17,21 @@ class CreateJobForm(forms.ModelForm):
     schedule = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex) Mon-Fri 9-6'}))
     other_requirements = forms.CharField(label='Other Requirements', widget=forms.TextInput(attrs={'placeholder': 'Ex) Teaching certificate'}), required=False)
 
+    def __init__(self, request=None, *args, **kwargs):
+        """Constructor override"""
+        super(CreateJobForm, self).__init__(*args, **kwargs)
+        if is_recruiter(request):
+            user = request.user
+            self.fields['contact_name'].initial = user.full_name
+            self.fields['contact_email'].initial = user.email
+            self.fields['contact_number'].initial = user.phone_number
+
 
 class CreateFullTimeJobForm(CreateJobForm):
     salary = forms.CharField(label='Salary',
-                             widget=forms.TextInput(attrs={'placeholder': 'Ex) Negotiable'}),
-                             required=True)
+                             widget=forms.TextInput(attrs={'placeholder': 'Ex) Negotiable'}))
     benefits = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex) Accommodation provided'}),
+                               required=False,
                                empty_value='')
 
     class Meta:

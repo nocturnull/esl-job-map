@@ -5,7 +5,9 @@ register = template.Library()
 
 @register.simple_tag
 def is_recruiter(request) -> bool:
-    return request.user.is_authenticated and request.user.is_recruiter
+    if request is not None:
+        return request.user.is_authenticated and request.user.is_recruiter
+    return False
 
 
 @register.simple_tag

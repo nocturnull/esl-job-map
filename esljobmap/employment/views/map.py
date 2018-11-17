@@ -30,7 +30,7 @@ class FullTimeMap(ListView):
         context['applied_icon_image'] = cdn_image('koco-man/koco-black-40x40.png')
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['is_full_time'] = True
-        context['form'] = CreateFullTimeJobForm()
+        context['form'] = CreateFullTimeJobForm(self.request)
         context['post_url'] = reverse('employment_create_full_time_job')
         context['location'] = MapManager.resolve_location_data(city)
 
@@ -56,7 +56,7 @@ class PartTimeMap(ListView):
         context['applied_icon_image'] = cdn_image('koco-man/koco-black-40x40.png')
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['is_full_time'] = False
-        context['form'] = CreatePartTimeJobForm()
+        context['form'] = CreatePartTimeJobForm(self.request)
         context['post_url'] = reverse('employment_create_part_time_job')
         context['location'] = MapManager.resolve_location_data(city)
 
