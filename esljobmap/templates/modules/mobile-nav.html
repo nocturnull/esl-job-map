@@ -15,7 +15,7 @@
 </div>
 
 <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
-    <ul class="vertical dropdown menu" data-dropdown-menu>
+    <ul class="vertical menu">
         <li>
             <a href="{% url 'home' %}">
                 <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
@@ -24,7 +24,7 @@
         {% if user.is_authenticated and user.is_recruiter %}
             <li>
                 <a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">My Jobs</a>
-                <ul class="menu vertical nested" data-submenu>
+                <ul class="menu vertical nested">
                     <li><a href="{% url 'employment_my_job_posts' %}">Active</a></li>
                     <li><a href="{% url 'employment_my_archived_job_posts' %}">Archived</a></li>
                 </ul>
@@ -34,14 +34,14 @@
         {% endif %}
         <li>
             <a href="{% url 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">Full-Time Map</a>
-            <ul class="menu vertical nested" data-submenu>
+            <ul class="menu vertical nested">
                 <li><a href="{% url 'employment_full_time_map_city' 'seoul' %}">Seoul</a></li>
                 <li><a href="{% url 'employment_full_time_map_city' 'busan' %}">Busan</a></li>
             </ul>
         </li>
         <li>
             <a href="{% url 'employment_part_time_map' %}" class="{% menu_class request 'employment_part_time_map' %}">Part-Time Map</a>
-            <ul class="menu vertical nested" data-submenu>
+            <ul class="menu vertical nested">
                 <li><a href="{% url 'employment_part_time_map_city' 'seoul' %}">Seoul</a></li>
                 <li><a href="{% url 'employment_part_time_map_city' 'busan' %}">Busan</a></li>
             </ul>
