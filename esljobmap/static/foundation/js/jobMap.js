@@ -165,14 +165,35 @@ class JobMapSetup {
         });
         this.map.panTo(latLng);
 
+        // Add drag listener.
+        google.maps.event.addListener(this.currentMarker, 'dragend', (e) => {
+            this.retrackCurrentLocation(e.latLng)
+        });
+
+        // Track new location.
+        this.retrackCurrentLocation(latLng);
+    }
+
+    /**
+     * When the marker is placed or moved, we need to track the new value and inform the user.
+     *
+     * @param latLng
+     */
+    retrackCurrentLocation(latLng) {
         // Track the location.
         this.latitude = latLng.lat();
         this.longitude = latLng.lng();
 
-        // Inform the user of the address.
+        // Show the user the current address.
         this.geocodeLatLng(this.latitude, this.longitude, this.currentMarker);
     }
 
+    /**
+     * Make a complex google maps icon from an image URL.
+     *
+     * @param imageUrl
+     * @returns {{url: *, size: google.maps.Size, scaledSize: google.maps.Size}}
+     */
     makeComplexIcon(imageUrl) {
         return {
             url: imageUrl,
@@ -181,6 +202,11 @@ class JobMapSetup {
         };
     }
 
+    /**
+     * Lookup the real address, get the latitude and longitude values, and place a marker.
+     *
+     * @param address
+     */
     geocodeAddressAndPlaceMarker(address) {
         this.geocoder.geocode({'address': address}, (results, status) => {
             if (status === 'OK') {
