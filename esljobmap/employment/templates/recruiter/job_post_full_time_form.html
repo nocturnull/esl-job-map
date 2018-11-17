@@ -15,9 +15,7 @@
             {% endif %}
             <br>
             <form method="post" novalidate id="jobPostForm" action="{{ post_url }}">
-
                 {% csrf_token %}
-
                 <div id="generalJobFields">
                     {{ form.non_field_errors }}
                     <div>

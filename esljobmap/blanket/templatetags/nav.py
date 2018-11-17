@@ -1,3 +1,5 @@
+# blanket/templatetags/nav.py
+
 from django.urls import reverse, NoReverseMatch
 from django import template
 
@@ -24,3 +26,13 @@ def menu_class(request, named_url, *args):
         mclass = 'active'
 
     return mclass
+
+
+@register.simple_tag
+def map_url(user, uri, location=''):
+    rargs = [location] if len(location) > 0 else []
+    url = reverse(uri, args=rargs)
+    if user.is_authenticated and user.is_recruiter:
+        url += '#jobPostForm'
+
+    return url
