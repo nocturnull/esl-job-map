@@ -124,12 +124,10 @@ class JobMapSetup {
      * @param isDisinterested
      */
     updateExistingJobMarker(id, content, isDisinterested) {
-        let marker = this.googleMarkerMap[id];
-        if (isDisinterested === 1) {
-            marker.setIcon(window.jobMap.disinterestedIconImage);
-        } else {
-            marker.setIcon(window.jobMap.iconImage);
-        }
+        let marker = this.googleMarkerMap[id],
+            iconImage = isDisinterested === 1 ? window.jobMap.disinterestedIconImage : window.jobMap.iconImage;
+
+        marker.setIcon(this.makeComplexIcon(iconImage));
 
         // Remove the old listener.
         let listener = this.googleMarkerMapListeners[id];

@@ -5,10 +5,12 @@ from django.db import models
 from django.shortcuts import reverse
 
 from ..apps import EmploymentConfig
+from ..settings import FULL_TIME_JOB_DAYS_VALID, PART_TIME_JOB_DAYS_VALID
 from account.models.user import SiteUser
 
 
 class JobPost(models.Model):
+    """Model for a job post made by recruiters."""
     site_user = models.ForeignKey(SiteUser, related_name='job_posts', on_delete=models.CASCADE)
     title = models.CharField(max_length=512)
     class_type = models.CharField(max_length=255)
@@ -33,6 +35,26 @@ class JobPost(models.Model):
     _applicants = []
 
     @property
+    def days_valid(self) -> int:
+        """
+        Get how many days the job is valid for.
+
+        :return: int
+        """
+        if self.is_full_time:
+            return FULL_TIME_JOB_DAYS_VALID
+        return PART_TIME_JOB_DAYS_VALID
+
+    @property
+    def expires_in(self) -> int:
+        """
+        Determine how many days are left until the job expires.
+
+        :return:
+        """
+        return self.days_valid - (datetime.now() - self.created_at).days
+
+    @property
     def pretty_employment_type(self) -> str:
         """
         Display the employment information in neatly formatted text.
@@ -50,8 +72,7 @@ class JobPost(models.Model):
 
         :return: bool
         """
-        time_frame = 2 if self.is_full_time else 1
-        return datetime.now() > (self.created_at + timedelta(weeks=time_frame))
+        return self.expires_in < 1
 
     @property
     def pretty_days_till_expired(self) -> str:
@@ -60,15 +81,14 @@ class JobPost(models.Model):
 
         :return:
         """
-        time_frame = 14 if self.is_full_time else 7
-        days_left = time_frame - (datetime.now() - self.created_at).days
+        days_left = self.expires_in
         if days_left > 0:
             return 'Expires in: {0} day(s)'.format(days_left)
         return 'Expired'
 
     @property
     def pretty_closes_in(self) -> str:
-        days_left = 14 - (datetime.now() - self.created_at).days
+        days_left = self.expires_in
         if days_left > 0:
             return 'closes in: {0} days'.format(days_left)
         return 'closed'

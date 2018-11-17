@@ -1,3 +1,4 @@
+# employment/models/job_seeking.py
 
 from django.db import models
 
@@ -9,6 +10,7 @@ from ..models.recruitment import JobPost
 
 
 class JobApplication(models.Model):
+    """Model for job applications made by applicants."""
     job_post = models.ForeignKey(JobPost,
                                  on_delete=models.CASCADE,
                                  related_name='applicants')
