@@ -42,6 +42,7 @@ class Teacher(models.Model):
                                 on_delete=models.CASCADE,
                                 verbose_name="Nationality",
                                 blank=True,
+                                default='',
                                 null=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=True, null=True)
 
@@ -51,4 +52,18 @@ class Teacher(models.Model):
 
     @property
     def is_e1e2_holder(self) -> bool:
-        return self.visa_type.id == 2
+        if self.visa_type is not None:
+            return self.visa_type.id == 2
+        return False
+
+    @property
+    def nice_visa_type(self) -> str:
+        if self.visa_type is None:
+            return 'VISA HOLDER'
+        return self.visa_type.__str__()
+
+    @property
+    def nice_country(self) -> str:
+        if self.country is None:
+            return 'YOUR COUNTRY'
+        return self.country.__str__()

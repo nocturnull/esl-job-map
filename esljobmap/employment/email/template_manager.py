@@ -1,3 +1,5 @@
+# account/models/role.py
+
 from .scheme import *
 from ..models.recruitment import JobPost
 from ..models.job_seeking import JobApplication
@@ -62,9 +64,9 @@ class TemplateManager:
 
         return AUTHENTICATED_USER_BASE_SCHEME.format(
             recruiter_contact_name=recruiter.full_name,
-            applicant_visa_type=teacher.visa_type,
+            applicant_visa_type=teacher.nice_visa_type,
             applicant_visa_conditions=cls._generate_visa_conditions(teacher),
-            applicant_country=teacher.country,
+            applicant_country=teacher.nice_country,
             job_post_title=job_post.title,
             exclusive_job_post_info=cls._generate_job_exclusive_template(job_post),
             job_post_schedule=job_post.schedule,
