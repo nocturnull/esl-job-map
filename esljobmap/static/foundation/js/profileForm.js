@@ -26,8 +26,10 @@ class ProfileForm {
     init() {
         if (this.isValid()) {
             this.visaType.change(e => {
-                if (this.visaType.val() === 2) {
-                    this.visaConditions.toggleClass('invisible');
+                if (this.visaType.val() === 2 || this.visaType.val() === '2') {
+                    this.visaConditions.removeClass('invisible');
+                } else {
+                    this.visaConditions.addClass('invisible');
                 }
             });
         }

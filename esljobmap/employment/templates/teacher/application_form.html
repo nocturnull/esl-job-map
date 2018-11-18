@@ -12,7 +12,6 @@
                 <form method="post" enctype="multipart/form-data" novalidate>
                     {% csrf_token %}
                     {{ form.non_field_errors }}
-                    <h3>{{ referring_map_url }}</h3>
                     <div>
                         {{ job_form.email_body.errors }}
                         {{ job_form.email_body.label_tag }}

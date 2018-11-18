@@ -9,9 +9,10 @@ from ..apps import AccountConfig
 
 class VisaType(models.Model):
     name = models.CharField(blank=False, max_length=255)
+    email_text = models.CharField(max_length=512, default='')
 
     def __str__(self):
-        return self.name
+        return self.email_text
 
     class Meta:
         db_table = AccountConfig.name + '_visa_type'

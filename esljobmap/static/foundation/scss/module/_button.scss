@@ -68,6 +68,7 @@
 .danger-button {
     @extend .primary-button-1;
     color: $brand-danger;
+    border: 2px solid nth($brand-danger, 1);
 
     &:hover {
         background-color: lighten($brand-danger, 30%);
