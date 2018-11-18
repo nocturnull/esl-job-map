@@ -3,7 +3,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import ListView, TemplateView
 from django.db.models import F
-from django.shortcuts import render
+from django.shortcuts import render, reverse
 
 from djangomailgun.message.api import MessageApi
 from cloud.file_manager import FileManager
@@ -25,6 +25,7 @@ class ApplyToJobPost(TemplateView):
             'email_body': EmailTemplateManager.generate_email_body(request.user, job_post),
             'contact_email': contact_email
         })
+        request.session['referring_map_url'] = request.META['HTTP_REFERER']
 
         if job_post.has_applicant_applied(request.user):
             template = 'teacher/application_applied.html'
@@ -32,6 +33,7 @@ class ApplyToJobPost(TemplateView):
         return render(request,
                       template,
                       {
+                          'referring_map_url': request.session['referring_map_url'],
                           'job_post': job_post,
                           'job_form': job_form
                       })
@@ -76,6 +78,7 @@ class ApplyToJobPost(TemplateView):
             return render(request,
                           'teacher/application_success.html',
                           {
+                              'referring_map_url': request.session.get('referring_map_url', reverse('home')),
                               'job_post': job_post
                           })
         else:
