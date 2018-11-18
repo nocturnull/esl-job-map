@@ -190,6 +190,17 @@ class JobPost(models.Model):
                     return user in applicants
         return False
 
+    def is_job_poster(self, user) -> bool:
+        """
+        Determine if the supplied user is the original poster.
+
+        :param user:
+        :return:
+        """
+        if user.is_authenticated:
+            return self.site_user == user
+        return False
+
     def can_apply(self, user) -> bool:
         """
         Determine if the user can apply.

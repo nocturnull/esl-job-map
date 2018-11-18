@@ -27,3 +27,8 @@ def has_applied(job_post, user) -> int:
 @register.simple_tag
 def is_disinterested(job_post, user) -> int:
     return 1 if job_post.not_interested(user) else 0
+
+
+@register.simple_tag
+def is_job_poster(job_post, user) -> int:
+    return 1 if job_post.is_job_poster(user) else 0

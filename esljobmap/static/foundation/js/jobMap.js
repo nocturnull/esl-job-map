@@ -86,17 +86,14 @@ class JobMapSetup {
         }
     }
 
+    /**
+     * Load all uploaded job posts into the map.
+     */
     addExistingJobMarkers() {
         for (let i = 0; i < window.jobMap.markers.length; i++) {
             let markerData = window.jobMap.markers[i],
                 latlng = new google.maps.LatLng(markerData.lat, markerData.lng),
-                iconImageUrl = window.jobMap.iconImage;
-
-            if (markerData.hasApplied === 1) {
-                iconImageUrl = window.jobMap.appliedIconImage;
-            } else if (markerData.isDisinterested === 1) {
-                iconImageUrl = window.jobMap.disinterestedIconImage;
-            }
+                iconImageUrl = this.resolveIconImage(markerData);
 
             let marker = new google.maps.Marker({
                 position: latlng,
@@ -114,6 +111,31 @@ class JobMapSetup {
             this.googleMarkerMap[markerData.id] = marker;
             this.googleMarkerMapListeners[markerData.id] = listener;
         }
+    }
+
+    /**
+     * Determine which image to use for the marker icon.
+     *
+     * @param markerData
+     * @returns {string}
+     */
+    resolveIconImage(markerData) {
+        let iconImageUrl = window.jobMap.iconImage;
+
+        if (window.jobMap.isRecruiter) {
+            // When the job post does not belong to the recruiter, gray it out.
+            if (markerData.isJobPoster === 0) {
+                iconImageUrl = window.jobMap.disinterestedIconImage;
+            }
+        } else {
+            if (markerData.hasApplied === 1) {
+                iconImageUrl = window.jobMap.appliedIconImage;
+            } else if (markerData.isDisinterested === 1) {
+                iconImageUrl = window.jobMap.disinterestedIconImage;
+            }
+        }
+
+        return iconImageUrl;
     }
 
     /**
