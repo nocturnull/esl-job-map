@@ -7,10 +7,16 @@
     <div class="grid-container">
         <h2>My Applications</h2>
 
-        <div id="searchFilters">
-            <button class="disabled-button" data-filtertag="in-consideration" data-isactive="0">In Consideration</button>
-            <button class="disabled-button" data-filtertag="closed" data-isactive="0">Closed</button>
-            <div id="listFilterResults" class="display-inline"></div>
+        <div class="mtb-1">
+            <button id="resetFiltersButton" class="primary-button-1">All</button>
+        </div>
+
+        <div id="searchFilters" class="mb-1">
+            <button class="secondary-selected-button-1" data-filtertag="in-consideration">In Consideration</button>
+            <button class="secondary-selected-button-1" data-filtertag="closed">Closed</button>
+            {% with item_count=object_list|length %}
+                <div id="listFilterResults" class="display-inline">Currently displaying {{ item_count }}/{{ item_count }}</div>
+            {% endwith %}
         </div>
 
         <div class="grid-x" id="filterCardsParent">

@@ -82,6 +82,7 @@ class ListFiler {
      */
     constructor() {
         this.$searchFilters = $('#searchFilters');
+        this.$resetFiltersButton = $('#resetFiltersButton');
         this.$cards = $('.flow-card');
         this.$filterCardsParent = $('#filterCardsParent');
         this.flowCardList = [];
@@ -108,6 +109,9 @@ class ListFiler {
             this.buttonList = this.$searchFilters.find('button');
             this.attachFilterListeners();
             this.organizeData();
+            this.$resetFiltersButton.on('click', () => {
+                this.resetAllFilters();
+            });
         }
     }
 
@@ -132,7 +136,7 @@ class ListFiler {
                     this.buttonStateMap[ctag] = false;
                     this.removeFilter(ctag);
                 } else {
-                    $button.attr('class', 'accent-selected-button-1');
+                    $button.attr('class', 'secondary-selected-button-1');
                     this.buttonStateMap[ctag] = true;
                     this.applyFilter(ctag);
                 }
@@ -154,7 +158,6 @@ class ListFiler {
                     fc.attach();
                 }
             } else if (!fc.hasTag(tag) && !fc.hasAnActiveTag(this.buttonStateMap)) {
-                console.log(this.buttonStateMap);
                 // Detach if we dont have the tag, is currently showing, and the card has no active filter.
                 if (!fc.isDetached) {
                     fc.detach();
@@ -174,8 +177,8 @@ class ListFiler {
         for (let k = 0; k < this.flowCardList.length; k++) {
             let fc = this.flowCardList[k];
 
-            // Attach if we have the tag and is currently hidden.
-            if (!fc.hasTag(tag) && fc.isDetached) {
+            // Attach if we have the tag, is currently hidden, and has an active filter.
+            if (!fc.hasTag(tag) && fc.isDetached && fc.hasAnActiveTag(this.buttonStateMap)) {
                 fc.attach();
             } else if (fc.hasTag(tag)) {
                 if (!fc.isDetached && !fc.hasAnActiveTag(this.buttonStateMap)) {
@@ -185,6 +188,30 @@ class ListFiler {
         }
 
         // Inform the user how many items are showing.
+        this.updateDisplayCount();
+    }
+
+    /**
+     * Adjust all buttons and cards to default values.
+     */
+    resetAllFilters() {
+        // Reset buttons
+        for (let i = 0; i < this.buttonList.length; i++) {
+            let $button = $(this.buttonList[i]),
+                tag = $button.data('filtertag');
+
+            this.buttonStateMap[tag] = true;
+            $button.attr('class', 'secondary-selected-button-1');
+        }
+
+        // Reset cards.
+        for (let k = 0; k < this.flowCardList.length; k++) {
+            let fc = this.flowCardList[k];
+            if (fc.isDetached) {
+                fc.attach();
+            }
+        }
+
         this.updateDisplayCount();
     }
 

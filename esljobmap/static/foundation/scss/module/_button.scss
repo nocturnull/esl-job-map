@@ -14,6 +14,10 @@
         color: white;
     }
 
+    &:focus {
+        outline: none;
+    }
+
     &.inverse {
         background-color: lighten(nth($brand-primary, 1), 30%);
         color: white;
@@ -25,6 +29,7 @@
 
     @include breakpoint(medium down) {
         font-size: 0.8rem;
+        padding: 0.8rem;
     }
 }
 
@@ -38,7 +43,7 @@
     }
 }
 
-.accent-selected-button-1 {
+.secondary-selected-button-1 {
     @extend .primary-button-1;
     color: white;
     background-color: nth($brand-secondary, 1);

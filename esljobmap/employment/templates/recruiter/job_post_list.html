@@ -12,11 +12,16 @@
     <div class="grid-container">
         <h3>{{ title }}</h3>
 
-        <div id="searchFilters">
-            <button class="accent-selected-button-1" data-filtertag="full-time">Full-Time</button>
-            <button class="accent-selected-button-1" data-filtertag="part-time">Part-Time</button>
+        <div class="mtb-1">
+            <button id="resetFiltersButton" class="primary-button-1">All</button>
+        </div>
+
+        <div id="searchFilters" class="mb-1">
+            <button class="secondary-selected-button-1" data-filtertag="full-time">Full-Time</button>
+            <button class="secondary-selected-button-1" data-filtertag="part-time">Part-Time</button>
             {% if show_expired %}
-                <button class="accent-selected-button-1" data-filtertag="expired">Expired</button>
+                <button class="secondary-selected-button-1" data-filtertag="active">Active</button>
+                <button class="secondary-selected-button-1" data-filtertag="expired">Expired</button>
             {% endif %}
             {% with item_count=object_list|length %}
                 <div id="listFilterResults" class="display-inline">Currently displaying {{ item_count }}/{{ item_count }}</div>

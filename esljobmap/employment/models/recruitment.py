@@ -111,12 +111,17 @@ class JobPost(models.Model):
 
     @property
     def tags(self) -> str:
-        tags = 'part-time'
-
+        # Job type
         if self.is_full_time:
             tags = 'full-time'
+        else:
+            tags = 'part-time'
+
+        # Status
         if self.is_expired:
             tags += ',expired'
+        else:
+            tags += ',active'
 
         return tags
 
