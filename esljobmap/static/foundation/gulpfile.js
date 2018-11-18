@@ -44,7 +44,7 @@ function siteJs() {
             output: {
                 filename: 'app.min.js'
             },
-            mode: 'production'
+            mode: 'development'
         }))
         .pipe(gulp.dest('dist/'));
 }

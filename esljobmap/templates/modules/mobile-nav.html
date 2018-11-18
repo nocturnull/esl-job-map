@@ -56,14 +56,14 @@
                 <p class="mt-1">{{ user.username }}</p>
             </li>
             <li>
-                <a href="{% url 'account_profile' %}" class="{% menu_class request 'account_profile' %} primary-button">Profile</a>
+                <a href="{% url 'account_profile' %}" class="{% menu_class request 'account_profile' %} primary-button-2">Profile</a>
             </li>
             <li>
-                <p><a href="{% url 'logout' %}" class="primary-button">Logout</a></p>
+                <p><a href="{% url 'logout' %}" class="primary-button-2">Logout</a></p>
             </li>
             {% else %}
             <li>
-                <a href="{% url 'login' %}" class="primary-button">Login</a>
+                <a href="{% url 'login' %}" class="primary-button-2">Login</a>
             </li>
         {% endif %}
     </ul>

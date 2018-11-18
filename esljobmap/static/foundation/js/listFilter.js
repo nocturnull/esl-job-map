@@ -35,6 +35,27 @@ class FlowCard {
     }
 
     /**
+     * Determine if the current card possesses a tag that is active.
+     *
+     * @param tagList
+     * @returns {boolean}
+     */
+    hasAnActiveTag(tagList) {
+        for (let tag in tagList) {
+            if (tagList.hasOwnProperty(tag)) {
+                // Check the active tags only.
+                if (tagList[tag]) {
+                    if (this.hasTag(tag)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Hide the underlying DOM.
      */
     detach() {
@@ -66,6 +87,7 @@ class ListFiler {
         this.flowCardList = [];
         this.listFilterResults = null;
         this.buttonList = [];
+        this.buttonStateMap = {};
     }
 
     /**
@@ -94,43 +116,46 @@ class ListFiler {
      */
     attachFilterListeners() {
         for (let i = 0; i < this.buttonList.length; i++) {
-            let $cur = $(this.buttonList[i]);
+            let $button = $(this.buttonList[i]),
+                tag = $button.data('filtertag');
 
-            $cur.on('click', () => {
-                let tag = $cur.data('filtertag');
+            // Track states and set default values.
+            this.buttonStateMap[tag] = true;
 
-                if ($cur.data('isactive') === 0) {
-                    this.applyFilter(tag);
-                    $cur.data('isactive', 1);
+            // Attach listener
+            $button.on('click', () => {
+                let ctag = $button.data('filtertag');
+
+                // Update active state and button styling.
+                if (this.buttonStateMap[ctag]) {
+                    $button.attr('class', 'primary-button-1');
+                    this.buttonStateMap[ctag] = false;
+                    this.removeFilter(ctag);
                 } else {
-                    this.removeFilter(tag);
-                    $cur.data('isactive', 0);
+                    $button.attr('class', 'accent-selected-button-1');
+                    this.buttonStateMap[ctag] = true;
+                    this.applyFilter(ctag);
                 }
-                this.applyDisabledButtonAppearances(tag);
-            })
+            });
         }
     }
 
     /**
-     * Prepare items to make filtering easier.
-     */
-    organizeData() {
-        for (let j = 0; j < this.$cards.length; j++) {
-            let d = this.$cards[j];
-            this.flowCardList.push(new FlowCard($(d).data('filtertaglist'), d, this.$filterCardsParent));
-        }
-    }
-
-    /**
-     * Applies the filter and hides the relevant items.
-     *
-     * @param tag
+     * Applies the filter and shows the relevant items.
      */
     applyFilter(tag) {
+        // Go through each flow card and check the filter.
         for (let k = 0; k < this.flowCardList.length; k++) {
             let fc = this.flowCardList[k];
 
-            if (!fc.hasTag(tag)) {
+            if (fc.hasTag(tag)) {
+                // Attach if we have the tag and is currently hidden.
+                if (fc.isDetached) {
+                    fc.attach();
+                }
+            } else if (!fc.hasTag(tag) && !fc.hasAnActiveTag(this.buttonStateMap)) {
+                console.log(this.buttonStateMap);
+                // Detach if we dont have the tag, is currently showing, and the card has no active filter.
                 if (!fc.isDetached) {
                     fc.detach();
                 }
@@ -142,39 +167,35 @@ class ListFiler {
     }
 
     /**
-     * Go through each button and determine if it should be on or not.
-     *
-     * @param tag
-     */
-    applyDisabledButtonAppearances() {
-        for (let i = 0; i < this.buttonList.length; i++) {
-            let $cur = $(this.buttonList[i]);
-
-            // Apply the appropriate colors to each button.
-            if ($cur.data('isactive') === 1) {
-                $cur.attr('class', 'secondary-button');
-            } else {
-                $cur.attr('class', 'disabled-button');
-            }
-        }
-    }
-
-    /**
-     * Removes a filter and shows previously hidden items.
-     *
-     * @param tag
+     * Removes the filter and hides the relevant items.
      */
     removeFilter(tag) {
+        // Go through each flow card and check the filter.
         for (let k = 0; k < this.flowCardList.length; k++) {
             let fc = this.flowCardList[k];
 
+            // Attach if we have the tag and is currently hidden.
             if (!fc.hasTag(tag) && fc.isDetached) {
                 fc.attach();
+            } else if (fc.hasTag(tag)) {
+                if (!fc.isDetached && !fc.hasAnActiveTag(this.buttonStateMap)) {
+                    fc.detach();
+                }
             }
         }
 
         // Inform the user how many items are showing.
         this.updateDisplayCount();
+    }
+
+    /**
+     * Prepare items to make filtering easier.
+     */
+    organizeData() {
+        for (let j = 0; j < this.$cards.length; j++) {
+            let d = this.$cards[j];
+            this.flowCardList.push(new FlowCard($(d).data('filtertaglist'), d, this.$filterCardsParent));
+        }
     }
 
     /**

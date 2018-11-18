@@ -13,10 +13,10 @@
         <h3>{{ title }}</h3>
 
         <div id="searchFilters">
-            <button class="disabled-button" data-filtertag="full-time" data-isactive="0">Full-Time</button>
-            <button class="disabled-button" data-filtertag="part-time" data-isactive="0">Part-Time</button>
+            <button class="accent-selected-button-1" data-filtertag="full-time">Full-Time</button>
+            <button class="accent-selected-button-1" data-filtertag="part-time">Part-Time</button>
             {% if show_expired %}
-                <button class="disabled-button" data-filtertag="expired" data-isactive="0">Expired</button>
+                <button class="accent-selected-button-1" data-filtertag="expired">Expired</button>
             {% endif %}
             {% with item_count=object_list|length %}
                 <div id="listFilterResults" class="display-inline">Currently displaying {{ item_count }}/{{ item_count }}</div>
@@ -53,12 +53,12 @@
                                 {% if job_post.is_visible %}
                                     {% if not job_post.is_expired %}
                                         <a href="{{ job_post.edit_link }}" class="safe-button">Edit</a>
-                                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="secondary-button">Take down</a>
+                                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="primary-button-1">Take down</a>
                                     {% endif %}
                                 {% endif %}
                                 {% if job_post.is_expired or not job_post.is_visible %}
                                     {% if not job_post.is_archived %}
-                                        <a href="{% url 'employment_archive_job_post' job_post.id %}" class="secondary-button">Archive</a>
+                                        <a href="{% url 'employment_archive_job_post' job_post.id %}" class="primary-button-1">Archive</a>
                                     {% endif %}
                                 {% endif %}
                             </div>

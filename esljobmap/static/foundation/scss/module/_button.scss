@@ -2,30 +2,16 @@
 // Button
 // ==========================================================================
 
-.primary-button {
-    color: nth($brand-primary, 2);
+.primary-button-1 {
+    color: nth($brand-primary, 1);
     font-weight: bold;
     border-radius: $btn-border-radius;
-    border: 2px solid nth($brand-primary, 2);
+    border: 2px solid nth($brand-primary, 1);
     padding: 1rem 1.5rem;
 
     &:hover {
-        background-color: nth($brand-secondary, 2);
-        color: white;
-    }
-
-    @include breakpoint(medium down) {
-        font-size: 0.8rem;
-    }
-}
-
-.secondary-button {
-    @extend .primary-button;
-    color: nth($brand-primary, 1);
-    border: 2px solid nth($brand-primary, 1);
-
-    &:hover {
         background-color: lighten(nth($brand-primary, 1), 30%);
+        color: white;
     }
 
     &.inverse {
@@ -36,10 +22,36 @@
             background-color: lighten(nth($brand-primary, 1), 40%);
         }
     }
+
+    @include breakpoint(medium down) {
+        font-size: 0.8rem;
+    }
+}
+
+.primary-button-2 {
+    @extend .primary-button-1;
+    color: nth($brand-primary, 2);
+    border: 2px solid nth($brand-primary, 2);
+
+    &:hover {
+        background-color: nth($brand-secondary, 2);
+    }
+}
+
+.accent-selected-button-1 {
+    @extend .primary-button-1;
+    color: white;
+    background-color: nth($brand-accent, 1);
+    border: 2px solid nth($brand-accent, 1);
+
+    &:hover {
+        background-color: lighten(nth($brand-accent, 1), 15%);
+        color: nth($brand-primary, 1);
+    }
 }
 
 .safe-button {
-    @extend .primary-button;
+    @extend .primary-button-1;
     color: $brand-safe;
     border: 2px solid $brand-safe;
 
@@ -49,7 +61,7 @@
 }
 
 .danger-button {
-    @extend .primary-button;
+    @extend .primary-button-1;
     color: $brand-danger;
 
     &:hover {
@@ -58,7 +70,7 @@
 }
 
 .disabled-button {
-    @extend .primary-button;
+    @extend .primary-button-1;
     color: black;
     border: 2px solid black;
     background-color: $brand-disabled;
