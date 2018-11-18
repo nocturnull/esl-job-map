@@ -41,12 +41,12 @@
 .accent-selected-button-1 {
     @extend .primary-button-1;
     color: white;
-    background-color: nth($brand-accent, 1);
-    border: 2px solid nth($brand-accent, 1);
+    background-color: nth($brand-secondary, 1);
+    border: 2px solid nth($brand-secondary, 1);
 
     &:hover {
-        background-color: lighten(nth($brand-accent, 1), 15%);
-        color: nth($brand-primary, 1);
+        background-color: lighten(nth($brand-secondary, 1), 15%);
+        color: white;
     }
 }
 
@@ -71,11 +71,11 @@
 
 .disabled-button {
     @extend .primary-button-1;
-    color: black;
-    border: 2px solid black;
-    background-color: $brand-disabled;
+    border: none;
+    color: nth($brand-disabled, 2);
+    background-color: nth($brand-disabled, 1);
 
     &:hover {
-        background-color: darken($brand-disabled, 15%);
+        background-color: darken(nth($brand-disabled, 1), 15%);
     }
 }

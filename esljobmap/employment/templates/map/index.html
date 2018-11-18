@@ -8,6 +8,7 @@
 
     <div id="map" class="google-map {{ map_class }}"></div>
 
+    <div id="postAnchor" class="post-anchor"></div>
     {% if user.is_recruiter %}
         {% if is_full_time %}
             {% include 'recruiter/job_post_full_time_form.html' with form_title='Pick a location on the map' %}

@@ -128,7 +128,7 @@ class ListFiler {
 
                 // Update active state and button styling.
                 if (this.buttonStateMap[ctag]) {
-                    $button.attr('class', 'primary-button-1');
+                    $button.attr('class', 'disabled-button');
                     this.buttonStateMap[ctag] = false;
                     this.removeFilter(ctag);
                 } else {

@@ -11,7 +11,7 @@
     border: 1px solid #b6b6b6;
 
     h5 {
-        background-color: $brand-disabled;
+        background-color: nth($brand-disabled, 2);
         border-bottom: 1px solid #b6b6b6;
         border-radius: 1rem 1rem 0 0;
         position: relative;

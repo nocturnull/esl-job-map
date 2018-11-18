@@ -33,6 +33,6 @@ def map_url(user, uri, location=''):
     rargs = [location] if len(location) > 0 else []
     url = reverse(uri, args=rargs)
     if user.is_authenticated and user.is_recruiter:
-        url += '#jobPostForm'
+        url += '#postAnchor'
 
     return url
