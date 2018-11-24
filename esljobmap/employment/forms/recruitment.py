@@ -58,6 +58,7 @@ class EditFullTimeJobForm(CreateJobForm):
                              widget=forms.TextInput(attrs={'placeholder': 'Ex) Negotiable'}),
                              required=True)
     benefits = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex) Accommodation provided'}),
+                               required=False,
                                empty_value='')
 
     class Meta:
@@ -68,8 +69,7 @@ class EditFullTimeJobForm(CreateJobForm):
 
 class EditPartTimeJobForm(CreateJobForm):
     pay_rate = forms.CharField(label='Pay Rate',
-                               widget=forms.TextInput(attrs={'placeholder': 'Ex) 45,000 per hour'}),
-                               required=True)
+                               widget=forms.TextInput(attrs={'placeholder': 'Ex) 45,000 per hour'}))
 
     class Meta:
         model = JobPost
