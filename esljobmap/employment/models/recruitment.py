@@ -118,7 +118,7 @@ class JobPost(models.Model):
             tags = 'part-time'
 
         # Status
-        if self.is_expired:
+        if self.is_expired or not self.is_visible:
             tags += ',expired'
         else:
             tags += ',active'
