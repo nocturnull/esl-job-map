@@ -114,6 +114,6 @@ class TemplateManager:
             if teacher.can_transfer_visa:
                 conditions += ' and I can transfer my visa'
             if teacher.can_work_second_job:
-                conditions += ' and I can work a second job, '
+                conditions += ' and I can work a second job'
 
         return conditions
