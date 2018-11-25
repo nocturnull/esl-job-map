@@ -62,7 +62,9 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
         """
         if len(self.first_name) > 0:
             return self.first_name + ' ' + self.last_name
-        return 'Recruiter'
+        if self.is_recruiter:
+            return 'Recruiter'
+        return 'YOUR NAME'
 
     def __str__(self):
         return self.email
