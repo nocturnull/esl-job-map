@@ -1,19 +1,6 @@
 {% load static %}
 {% load nav %}
 
-<div class="mobile-top-nav">
-    <div>
-        <a href="#" data-open="offCanvas" class="hamburger-link">
-            <span class="hamburger-menu-icon">Menu</span>
-        </a>
-    </div>
-    <div>
-        <a href="{% url 'home' %}" class="logo">
-            <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
-        </a>
-    </div>
-</div>
-
 <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
     <ul class="vertical menu">
         <li>

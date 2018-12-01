@@ -12,12 +12,16 @@
     </head>
     <body>
         {% if request.user_agent.is_mobile %}
-            {% include 'modules/mobile-nav.html' %}
+            {% include 'modules/off-canvas-nav.html' %}
         {% else %}
             {% include 'modules/top-nav.html' %}
         {% endif %}
 
         <div class="content off-canvas-content" data-off-canvas-content>
+            {% if request.user_agent.is_mobile %}
+                {% include 'modules/top-mobile-nav.html' %}
+            {% endif %}
+
             {% block content %}
             {% endblock %}
         </div>
