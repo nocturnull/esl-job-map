@@ -11,6 +11,7 @@ from account.models.resume import Resume
 from ..models import JobPost, JobApplication
 from ..forms.recruitment import ApplyToJobForm
 from ..email.template_manager import TemplateManager as EmailTemplateManager
+from ..managers.apply_manager import ApplyManager
 
 
 class ApplyToJobPost(TemplateView):
@@ -41,6 +42,7 @@ class ApplyToJobPost(TemplateView):
     def post(self, request, job_post_id):
         job_post = JobPost.objects.get(pk=job_post_id)
         job_form = ApplyToJobForm(request.POST, request.FILES)
+        referer = request.session.get('referring_map_url', reverse('home'))
         message_api = MessageApi()
         file_manager = FileManager()
 
@@ -78,8 +80,8 @@ class ApplyToJobPost(TemplateView):
             return render(request,
                           'teacher/application_success.html',
                           {
-                              'referring_map_url': request.session.get('referring_map_url', reverse('home')),
-                              'job_post': job_post
+                              'referring_map_url': referer,
+                              'success_text': ApplyManager.resolve_success_text(referer),
                           })
         else:
             return render(request,
