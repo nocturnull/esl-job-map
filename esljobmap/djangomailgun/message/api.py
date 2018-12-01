@@ -16,11 +16,11 @@ class MessageApi(object):
         self._endpoint = 'https://api.mailgun.net/v3/{}/messages'.format(settings.MAILGUN_DOMAIN)
         self._api_key = settings.MAILGUN_PRIVATE_API_KEY
 
-    def send(self, sender, recipient, subject, body):
+    def send(self, applicant, recipient, subject, body):
         payload = {
-            'from': sender,
+            'from': settings.NO_REPLY_EMAIL,
             'to': recipient,
-            'cc': sender,
+            'cc': applicant,
             'subject': subject,
             'text': body
         }

@@ -70,7 +70,7 @@ class ApplyToJobPost(TemplateView):
 
             application = JobApplication.create_application(**kwargs)
 
-            message_api.send(sender=applicant_email,
+            message_api.send(applicant=applicant_email,
                              recipient=job_post.contact_email,
                              subject=EmailTemplateManager.generate_email_subject(job_post),
                              body=EmailTemplateManager.append_resume_to_body(
