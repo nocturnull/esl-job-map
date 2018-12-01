@@ -1,0 +1,20 @@
+// ==========================================================================
+// Google Map
+// ==========================================================================
+
+.google-map {
+    height: 100vh;
+
+    &.recruiter {
+        height: 800px;
+    }
+}
+
+.submit-job-form {
+    padding-bottom: 3rem;
+}
+
+.post-anchor {
+    position: absolute;
+    top: 35%;
+}

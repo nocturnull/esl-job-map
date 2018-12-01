@@ -1,16 +1,11 @@
 // ==========================================================================
-// Google Map
+// Text
 // ==========================================================================
 
-.google-map {
-    height: 100vh;
-
-    &.recruiter {
-        height: 800px;
-    }
+.koco-full-time-text {
+    color: $koco-full-time;
 }
 
-.post-anchor {
-    position: absolute;
-    top: 35%;
+.koco-part-time-text {
+    color: $koco-part-time;
 }

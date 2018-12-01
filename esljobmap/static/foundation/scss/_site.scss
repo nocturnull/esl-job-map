@@ -31,12 +31,12 @@ input[type="text"], input[type="password"], input[type="email"] {
 // ==========================================================================
 // Pre-Sequenced Modules
 // ==========================================================================
-@import "module/googlemap";
-@import "module/proprietary";
-@import "module/flow_card";
 @import "module/button";
-@import "module/nav";
+@import "module/footer";
 @import "module/mobile_nav";
+@import "module/nav";
+@import "module/proprietary";
+@import "module/text";
 
 // ==========================================================================
 // Main Sections
@@ -48,6 +48,8 @@ input[type="text"], input[type="password"], input[type="email"] {
 // ==========================================================================
 // Components
 // ==========================================================================
+@import "component/flow_card";
+@import "component/googlemap";
 @import "component/hamburger_icon";
 
 // ==========================================================================
@@ -56,6 +58,8 @@ input[type="text"], input[type="password"], input[type="email"] {
 .top-bar {
     border-bottom: 1px solid #efefef;
     background-color: white;
+    min-height: 10vh;
+
     & ul {
         background-color: white;
     }

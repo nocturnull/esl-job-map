@@ -2,7 +2,7 @@
 
     <h4>{{ form_title }}</h4>
 
-    <div class="grid-x grid-margin-x mt-1 mb-1">
+    <div class="grid-x grid-margin-x mt-1">
         <div class="medium-10 cell">
             {% if not is_edit %}
                 <form action="#" id="addressSearchForm">
@@ -14,7 +14,7 @@
                 </form>
             {% endif %}
 
-            <form method="post" novalidate id="jobPostForm" action="{{ post_url }}">
+            <form method="post" novalidate id="jobPostForm" action="{{ post_url }}" class="submit-job-form">
                 {% csrf_token %}
                 <div id="generalJobFields">
                     {{ form.non_field_errors }}

@@ -17,14 +17,17 @@
             {% include 'modules/top-nav.html' %}
         {% endif %}
 
-        <div class="content off-canvas-content" data-off-canvas-content>
+        <div class="content off-canvas-content {{ request.path|slugify }}" data-off-canvas-content>
             {% if request.user_agent.is_mobile %}
                 {% include 'modules/top-mobile-nav.html' %}
             {% endif %}
 
             {% block content %}
             {% endblock %}
+
+            {% include 'modules/footer.html' %}
         </div>
+
 
         {% block prejavascript %}{% endblock %}
         <script src="{% static 'foundation/dist/vendor.min.js' %}"></script>

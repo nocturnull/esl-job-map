@@ -1,0 +1,19 @@
+// ==========================================================================
+// Footer
+// ==========================================================================
+
+footer {
+    background-color: nth($brand-accent, 3);
+    position: absolute;
+    bottom: 0;
+    color: white;
+    width: 100%;
+
+    section {
+        font-weight: bold;
+        width: 50%;
+        margin: 0 auto;
+        text-align: center;
+        padding: 0.5rem 0;
+    }
+}
