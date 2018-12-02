@@ -136,13 +136,22 @@ STATICFILES_DIRS = [
 ]
 
 # Custom Settings
+AUTH_USER_MODEL = 'account.SiteUser'
+AUTHENTICATION_BACKENDS = [
+    'account.authbackend.UserAccountBackend'
+]
+
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'account_profile'
 LOGOUT_REDIRECT_URL = 'home'
 
-EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
-EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
-AUTH_USER_MODEL = 'account.SiteUser'
+
+EMAIL_HOST = 'smtp.mailgun.org'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('ESLJOBMAP_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('ESLJOBMAP_EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+
 
 CACHES = {
     "default": {

@@ -23,6 +23,7 @@ class SiteUserTeacherCreationForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.role = 3
+        user.email = user.email.lower()
         user.save()
         Teacher.objects.create(user=user)
         return user
@@ -37,6 +38,7 @@ class SiteUserRecruiterCreationForm(UserCreationForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.role = 2
+        user.email = user.email.lower()
         user.save()
         return user
 

@@ -22,12 +22,13 @@
             </div>
 
             <div class="medium-10 cell mt-1">
-
                 <section>
-                    <p>Don't have an account?</p>
-                    <a href="{% url 'signup' %}">Register here</a>
+                    Don't have an account? <a href="{% url 'signup' %}">Register here</a>
                 </section>
 
+                <section>
+                    Forgot your password? <a href="{% url 'password_reset' %}">Reset password</a>
+                </section>
             </div>
         </div>
 
