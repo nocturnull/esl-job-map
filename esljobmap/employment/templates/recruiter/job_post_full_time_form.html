@@ -10,8 +10,12 @@
                         <input type="text" name="address" id="mapAddressInput">
                     </label>
                     <div id="addressSearchError" class="no-show callout alert">Invalid address.</div>
-                    <button type="submit" class="safe-button">Search</button>
+                    <button type="submit" class="primary-button-2">Search</button>
                 </form>
+            {% endif %}
+
+            {% if is_edit %}
+                <a href="{% url 'employment_my_job_posts' %}">Back</a>
             {% endif %}
 
             <form method="post" novalidate id="jobPostForm" action="{{ post_url }}" class="submit-job-form">
@@ -119,10 +123,7 @@
                     </div>
                 </div>
                 <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>
-                <button type="submit" class="safe-button">Submit Job</button>
-                {% if is_edit %}
-                    <a href="{% url 'employment_my_job_posts' %}" class="primary-button-1">Back</a>
-                {% endif %}
+                <button type="submit" class="primary-button-2">Submit Job</button>
             </form>
         </div>
     </div>

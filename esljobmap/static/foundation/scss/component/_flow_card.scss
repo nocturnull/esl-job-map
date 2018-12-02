@@ -7,13 +7,13 @@
     min-height: 20rem;
     margin: 1rem 0;
     min-width: 230px;
-    border-radius: 1rem;
+    border-radius: 5px;
     border: 1px solid #b6b6b6;
 
     h5 {
         background-color: nth($brand-disabled, 2);
         border-bottom: 1px solid #b6b6b6;
-        border-radius: 1rem 1rem 0 0;
+        border-radius: 5px 5px 0 0;
         position: relative;
         padding: 0.5rem 0;
         font-weight: bold;

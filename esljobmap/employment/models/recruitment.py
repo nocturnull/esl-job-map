@@ -82,7 +82,7 @@ class JobPost(models.Model):
         """
         days_left = self.expires_in
         if days_left > 0:
-            return 'Expires in: {0} day(s)'.format(days_left)
+            return '<span class="bold-text">Expires in:</span> {0} day(s)'.format(days_left)
         return 'Expired'
 
     @property

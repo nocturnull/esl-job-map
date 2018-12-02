@@ -3,28 +3,20 @@
 // ==========================================================================
 
 .primary-button-1 {
-    color: nth($brand-primary, 1);
-    font-weight: bold;
+    background-color: nth($brand-primary, 1);
     border-radius: $btn-border-radius;
-    border: 2px solid nth($brand-primary, 1);
     padding: 1rem 1.5rem;
+    font-weight: bold;
+    color: white;
 
     &:hover {
         background-color: lighten(nth($brand-primary, 1), 30%);
+        text-decoration: none;
         color: white;
     }
 
     &:focus {
         outline: none;
-    }
-
-    &.inverse {
-        background-color: lighten(nth($brand-primary, 1), 30%);
-        color: white;
-
-        &:hover {
-            background-color: lighten(nth($brand-primary, 1), 40%);
-        }
     }
 
     @include breakpoint(medium down) {
@@ -35,8 +27,7 @@
 
 .primary-button-2 {
     @extend .primary-button-1;
-    color: nth($brand-primary, 2);
-    border: 2px solid nth($brand-primary, 2);
+    background-color: nth($brand-primary, 2);
 
     &:hover {
         background-color: nth($brand-secondary, 2);
@@ -45,33 +36,11 @@
 
 .secondary-selected-button-1 {
     @extend .primary-button-1;
-    color: white;
     background-color: nth($brand-secondary, 1);
-    border: 2px solid nth($brand-secondary, 1);
 
     &:hover {
         background-color: lighten(nth($brand-secondary, 1), 15%);
         color: white;
-    }
-}
-
-.safe-button {
-    @extend .primary-button-1;
-    color: $brand-safe;
-    border: 2px solid $brand-safe;
-
-    &:hover {
-        background-color: lighten($brand-safe, 30%);
-    }
-}
-
-.danger-button {
-    @extend .primary-button-1;
-    color: $brand-danger;
-    border: 2px solid nth($brand-danger, 1);
-
-    &:hover {
-        background-color: lighten($brand-danger, 30%);
     }
 }
 

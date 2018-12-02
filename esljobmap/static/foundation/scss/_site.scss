@@ -13,10 +13,11 @@ body, html {
 }
 
 a {
-    color: nth($brand-secondary, 2);
+    color: nth($brand-primary, 1);
 
     &:hover {
-        color: nth($brand-secondary, 2);
+        text-decoration: underline;
+        text-decoration-color: nth($brand-primary, 2);
     }
 }
 
@@ -36,6 +37,7 @@ input[type="text"], input[type="password"], input[type="email"] {
 @import "module/mobile_nav";
 @import "module/nav";
 @import "module/proprietary";
+@import "module/link";
 @import "module/text";
 
 // ==========================================================================

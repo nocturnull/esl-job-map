@@ -7,16 +7,16 @@
             {{ job_post.title }}
         </h5>
         <div class="flow-card-content">
-            <div>Class Type: {{ job_post.class_type }}</div>
-            <div>Schedule: {{ job_post.schedule }}</div>
+            <div><span class="bold-text">Class Type:</span> {{ job_post.class_type }}</div>
+            <div><span class="bold-text">Schedule:</span> {{ job_post.schedule }}</div>
             {% if job_post.is_full_time %}
-                <div>Salary: {{ job_post.salary }}</div>
-                <div>Benefits: {{ job_post.benefits }}</div>
+                <div><span class="bold-text">Salary:</span> {{ job_post.salary }}</div>
+                <div><span class="bold-text">Benefits:</span> {{ job_post.benefits }}</div>
             {% else %}
-                <div>Pay Rate: {{ job_post.pay_rate }}</div>
+                <div><span class="bold-text">Pay Rate:</span> {{ job_post.pay_rate }}</div>
             {% endif %}
-            <div>Other Requirements: {{ job_post.other_requirements }}</div>
-            <div>{{ job_post.pretty_days_till_expired }}</div>
+            <div><span class="bold-text">Other Requirements:</span> {{ job_post.other_requirements }}</div>
+            <div>{{ job_post.pretty_days_till_expired|safe }}</div>
         </div>
     </div>
 </div>

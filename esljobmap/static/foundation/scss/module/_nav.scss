@@ -5,11 +5,14 @@
 .top-site-nav {
     a {
         line-height: 2rem;
-
-        &.active {
-            color: $koco-full-time;
-            font-weight: bold;
-        }
     }
 }
 
+.menu {
+    a.active {
+        color: $koco-full-time;
+        font-weight: bold;
+        text-decoration: underline;
+        text-decoration-color: nth($brand-primary, 2);
+    }
+}
