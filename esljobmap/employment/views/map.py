@@ -32,7 +32,7 @@ class FullTimeMap(ListView):
         context['is_full_time'] = True
         context['form'] = CreateFullTimeJobForm(self.request)
         context['post_url'] = reverse('employment_create_full_time_job')
-        context['location'] = MapManager.resolve_location_data(city)
+        context['location'] = MapManager.resolve_location_data(self.request, city)
 
         return context
 
@@ -58,6 +58,6 @@ class PartTimeMap(ListView):
         context['is_full_time'] = False
         context['form'] = CreatePartTimeJobForm(self.request)
         context['post_url'] = reverse('employment_create_part_time_job')
-        context['location'] = MapManager.resolve_location_data(city)
+        context['location'] = MapManager.resolve_location_data(self.request, city)
 
         return context
