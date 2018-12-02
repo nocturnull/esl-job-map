@@ -61,7 +61,8 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
         :return:
         """
         if len(self.first_name) > 0:
-            return self.first_name + ' ' + self.last_name
+            n = self.first_name + ' ' + self.last_name
+            return n.strip()
         if self.is_recruiter:
             return 'Recruiter'
         return 'YOUR NAME'
