@@ -14,7 +14,6 @@ class JobPost(models.Model):
     site_user = models.ForeignKey(SiteUser, related_name='job_posts', on_delete=models.CASCADE)
     title = models.CharField(max_length=512)
     class_type = models.CharField(max_length=255)
-    location = models.CharField(max_length=512)
     contact_name = models.CharField(max_length=512)
     contact_email = models.EmailField(max_length=255)
     contact_number = models.CharField(max_length=255)
