@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+
+    <div class="about">
+
+        <div class="grid-container">
+            <h2>About ESL Job Map</h2>
+            <div class="grid-x grid-margin-x grid-margin-y">
+                <section class="cell medium-6">
+                    <h4>Map-base Job Board</h4>
+                    <p>
+                        Find jobs near you! Zoom into your neighborhood to look for jobs near you.
+                        ESL Job Map is now available across Korea!
+                    </p>
+                </section>
+                <section class="cell medium-6">
+                    <h4>Old Jobs are Removed!</h4>
+                    <p>
+                        Part-time job postings disappear from our map after 15 days and full-time jobs postings expire after 30 days.
+                        this keeps our jobs fresh. The table below the map shows the all postings on the map, with the newest ones first!
+                    </p>
+                </section>
+            </div>
+            <div class="grid-x grid-margin-x grid-margin-y">
+                <section class="cell medium-6">
+                    <h4>Separate Part-Time and Full-Time</h4>
+                    <p>
+                        Finding part-time English tutoring positions near you is difficult on other sites which present jobs
+                        in list format with part and full-time jobs mixed together. And if you are looking for full-time work,
+                        you don’t want to see those part-time jobs! Find the right type of job for you on the dedicated map.
+                    </p>
+                </section>
+                <section class="cell medium-6">
+                    <h4>Autofill Email</h4>
+                    <p>
+                        Click the email button, to start an email with the subject line and body of the email already
+                        pre-filled with the job information you are apply for. Just fill in your visa type, name,
+                        and then attach your photo and resume. If you have any additional questions,
+                        please reach out to us at support@kocotutor.com
+                    </p>
+                </section>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <h2>Posting Jobs</h2>
+            <div class="grid-x grid-margin-x grid-margin-y">
+                <section class="cell medium-6">
+                    <h4>Posting jobs</h4>
+                    <p>
+                        You can post jobs for free, after you <a href="{% url 'login' %}">signin</a>.
+                        At which point you can post jobs to the <a href="{% url 'employment_part_time_map' %}">part-time</a>
+                        or <a href="{% url 'employment_full_time_map' %}">full-time</a> jobs map:
+                    </p>
+                    <ul>
+                        <li>Jobs expire after 15 days(part-time) and 30 days(full-time)</li>
+                        <li>
+                            If you need to edit or delete a job early,
+                            contact us via support@kocotutor.com or
+                            <a href="https://www.facebook.com/KocoTutor/" target="_blank">facebook</a>
+                        </li>
+                    </ul>
+                </section>
+                <section class="cell medium-6">
+                    <h4>일자리 포스팅</h4>
+                    <p>
+                        초간단<a href="{% url 'login' %}">회원가입</a>만 하면 무료로 일자리 포스팅을 할 수 있습니다. 그 다음
+                        <a href="{% url 'employment_part_time_map' %}">파트타임 일자리 맵</a>
+                        혹은 <a href="{% url 'employment_full_time_map' %}">풀타임 일자리 맵</a>을 골라주세요.
+                    </p>
+                    <ul>
+                        <li>일자리 포스팅은 15일(파트타임)/30일(풀타임) 후 자동삭제됩니다</li>
+                        <li>
+                            이미 올린 포스팅을 수정하려면 support@kocotutor.com 이나
+                            <a href="https://www.facebook.com/KocoTutor/" target="_blank">페이스북</a>으로 연락주시기 바랍니다
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+

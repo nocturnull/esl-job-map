@@ -33,6 +33,7 @@ INTERNAL_IPS = ('127.0.0.1', 'localhost')
 
 INSTALLED_APPS = [
     'django_user_agents',
+    'about',
     'account',
     'employment',
     'cloud',

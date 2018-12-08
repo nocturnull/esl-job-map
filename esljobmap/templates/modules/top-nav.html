@@ -34,7 +34,13 @@
                     <li><a href="{% map_url user 'employment_part_time_map_city' 'busan' %}" class="{% menu_class request 'employment_part_time_map_city' 'busan' %}">Busan</a></li>
                 </ul>
             </li>
-            <li><a href="#about">About</a></li>
+            <li>
+                <a href="{% url 'about' %}" class="{% menu_class request 'about' %}">About</a>
+                <ul class="submenu menu vertical" data-submenu>
+                    <li><a href="{% url 'about_applying' %}" class="{% menu_class request 'about_applying' %}">Applying for Jobs</a></li>
+                    <li><a href="{% url 'about_visa' %}" class="{% menu_class request 'about_visa' %}">Visa & Job Type</a></li>
+                </ul>
+            </li>
         </ul>
     </div>
 

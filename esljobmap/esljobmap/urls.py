@@ -20,6 +20,7 @@ from esljobmap.views import HomeView
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
     path('admin/', admin.site.urls),
+    path('about/', include('about.urls')),
     path('account/', include('account.urls')),
     path('account/', include('django.contrib.auth.urls')),
     path('employment/', include('employment.urls'))

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Applying for Jobs{% endblock %}
+
+{% block content %}
+
+    <div class="about">
+
+        <div class="grid-container">
+            <h2>Applying for Jobs</h2>
+            <div class="grid-x grid-margin-x grid-margin-y">
+                <section class="cell medium-6">
+                    <h4>How to Apply</h4>
+                    <p>
+                        Unless otherwise requested, send:
+                    </p>
+                    <ol>
+                        <li>Your ESL job targeted resume, and</li>
+                        <li>A professional photo of yourself from the shoulders up</li>
+                    </ol>
+                    <p>
+                        to the email provided in the job posting. If a phone number is provided in the job posting,
+                        you can use that to ask about more details.
+                        Otherwise, putting questions in your application email is fine.
+                    </p>
+                </section>
+                <section class="cell medium-6">
+                    <h4>Eligible Visa Types</h4>
+                    <p>
+                        We have a brief guide on which visa are required for which job types <a href="{% url 'about_visa' %}">here.</a>
+                        Please only engage in work which is legally permitted under the terms of your visa.
+                        If you are unsure you can ask the job contact, or ask the Immigration Contact Center(in English or Korean) at 1345.
+                    </p>
+                </section>
+            </div>
+            <div class="grid-x grid-margin-x grid-margin-y">
+                <section class="cell medium-6">
+                    <h4>Who posts theses jobs?</h4>
+                    <p>
+                        Primarily agencies. Schools, private tutoring schools(hagwons),
+                        and Koreans looking for one on one tutoring contact agencies of some sort
+                        to find them an English teacher. These agencies then post on job boards
+                        frequented by foreigners(Like Koco Tutor!) and get in contact with
+                        English teachers this way. Occasionally hagwons or even Koreans post their jobs on here directly.
+                    </p>
+                </section>
+                <section class="cell medium-6">
+                    <h4>Reporting Bad Job Postings</h4>
+                    <p>
+                        If you apply for a job and the job poster says the job is not available,
+                        or there you encountered some other issue after emailing the job poster,
+                        please let us know at support@kocotutor.com
+                        <br><br>
+                        While it is legal to charge candidates(a one time fee) for job placement in Korea,
+                        this does not ever happen in the English teaching industry(yey!).
+                        If someone does ask for payment you should not pay and report them to us.
+                    </p>
+                </section>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
+
