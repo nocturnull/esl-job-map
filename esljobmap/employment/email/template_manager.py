@@ -63,7 +63,7 @@ class TemplateManager:
         teacher = applicant.teacher
 
         return AUTHENTICATED_USER_BASE_SCHEME.format(
-            recruiter_contact_name=recruiter.full_name,
+            recruiter_contact_name=cls._generated_to_recruiter_intro(recruiter),
             applicant_visa_type=teacher.nice_visa_type,
             applicant_visa_conditions=cls._generate_visa_conditions(teacher),
             applicant_country=teacher.nice_country,
@@ -72,7 +72,7 @@ class TemplateManager:
             job_post_schedule=job_post.schedule,
             job_post_class_type=job_post.class_type,
             job_post_other_requirements=job_post.other_requirements,
-            applicant_full_name=applicant.full_name,
+            applicant_full_name=cls._generated_to_applicant_outro(applicant),
             applicant_contact_number=applicant.phone_number
         )
 
@@ -84,7 +84,7 @@ class TemplateManager:
         :param recruiter:
         :return:
         """
-        return ANONYMOUS_USER_BASE_SCHEME.format(recruiter_contact_name=recruiter.full_name)
+        return ANONYMOUS_USER_BASE_SCHEME.format(recruiter_contact_name=cls._generated_to_recruiter_intro(recruiter))
 
     @staticmethod
     def _generate_job_exclusive_template(job_post: JobPost) -> str:
@@ -100,6 +100,30 @@ class TemplateManager:
                 job_post_benefits=job_post.benefits
             )
         return PART_TIME_EXCLUSIVE_SCHEME.format(job_post_pay_rate=job_post.pay_rate)
+
+    @staticmethod
+    def _generated_to_recruiter_intro(recruiter: SiteUser) -> str:
+        """
+        Create the appropriate intro text.
+
+        :param recruiter:
+        :return:
+        """
+        if len(recruiter.full_name) > 0:
+            return 'Dear ' + recruiter.full_name
+        return 'To Whom it May Concern'
+
+    @staticmethod
+    def _generated_to_applicant_outro(applicant: SiteUser) -> str:
+        """
+        Create the appropriate outro text.
+
+        :param applicant:
+        :return:
+        """
+        if len(applicant.full_name) > 0:
+            return applicant.full_name
+        return 'YOUR NAME'
 
     @staticmethod
     def _generate_visa_conditions(teacher: Teacher) -> str:

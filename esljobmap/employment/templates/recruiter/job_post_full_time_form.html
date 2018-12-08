@@ -45,39 +45,6 @@
                         {{ form.class_type }}
                     </div>
                     <div>
-                        <label for="{{ form.contact_name.id_for_label }}">
-                            {{ form.contact_name.label }}
-                            <span class="errorlist">
-                                {% for error in form.contact_name.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </span>
-                        </label>
-                        {{ form.contact_name }}
-                    </div>
-                    <div>
-                        <label for="{{ form.contact_email.id_for_label }}">
-                            {{ form.contact_email.label }}
-                            <span class="errorlist">
-                                {% for error in form.contact_email.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </span>
-                        </label>
-                        {{ form.contact_email }}
-                    </div>
-                    <div>
-                        <label for="{{ form.contact_number.id_for_label }}">
-                            {{ form.contact_number.label }}
-                            <span class="errorlist">
-                                {% for error in form.contact_number.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </span>
-                        </label>
-                        {{ form.contact_number }}
-                    </div>
-                    <div>
                         <label for="{{ form.schedule.id_for_label }}">
                             {{ form.schedule.label }}
                             <span class="errorlist">
@@ -120,6 +87,39 @@
                             </span>
                         </label>
                         {{ form.benefits }}
+                    </div>
+                    <div>
+                        <label for="{{ form.contact_name.id_for_label }}">
+                            {{ form.contact_name.label }}
+                            <span class="errorlist">
+                                {% for error in form.contact_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.contact_name }}
+                    </div>
+                    <div>
+                        <label for="{{ form.contact_email.id_for_label }}">
+                            {{ form.contact_email.label }}
+                            <span class="errorlist">
+                                {% for error in form.contact_email.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.contact_email }}
+                    </div>
+                    <div>
+                        <label for="{{ form.contact_number.id_for_label }}">
+                            {{ form.contact_number.label }}
+                            <span class="errorlist">
+                                {% for error in form.contact_number.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.contact_number }}
                     </div>
                 </div>
                 <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>
