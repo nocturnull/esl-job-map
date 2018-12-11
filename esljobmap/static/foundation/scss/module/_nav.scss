@@ -8,11 +8,48 @@
     }
 }
 
-.menu {
-    a.active {
-        color: $koco-full-time;
-        font-weight: bold;
-        text-decoration: underline;
-        text-decoration-color: nth($brand-primary, 2);
+%border-bottom {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: nth($brand-primary, 2);
+    height: 3px;
+}
+
+.dropdown.menu > li:not(.logo-item) {
+    position: relative;
+    a {
+        margin: 0.7rem 1rem;
+        padding: 0 0.7rem 0 0;
+
+        &.active {
+            color: $koco-full-time;
+            font-weight: bold;
+
+            &:before {
+                @extend %border-bottom;
+                right: 0;
+            }
+        }
+
+        &:after {
+            right: -8px;
+        }
     }
+
+    a:before {
+        @extend %border-bottom;
+        transition: right 0.3s ease-out;
+        right: 100%;
+    }
+
+
+    a:hover:before {
+        right: 0;
+    }
+}
+
+.is-dropdown-submenu > li {
+    position: relative;
 }

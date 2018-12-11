@@ -4,7 +4,7 @@
 <div class="top-bar top-site-nav">
     <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
-            <li>
+            <li class="logo-item">
                 <a href="{% url 'home' %}">
                     <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
                 </a>
@@ -45,16 +45,16 @@
     </div>
 
     <div class="top-bar-right">
-        <ul class="menu" data-dropdown-menu>
+        <ul class="dropdown menu" data-dropdown-menu>
             {% if user.is_authenticated %}
                 <li>
                     <p class="mt-1">{{ user.username }}</p>
                 </li>
-                <li class="p-lr-05">
+                <li>
                     <a href="{% url 'account_profile' %}" class="{% menu_class request 'account_profile' %}">Profile</a>
                 </li>
-                <li class="p-lr-05">
-                    <p><a href="{% url 'logout' %}">Logout</a></p>
+                <li>
+                    <a href="{% url 'logout' %}">Logout</a>
                 </li>
                 {% else %}
                 <li>

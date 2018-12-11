@@ -12,13 +12,12 @@ body, html {
     height: 100%;
 }
 
+h1, h2, h3, h4, h5 {
+    font-family: $font-stack;
+}
+
 a {
     color: nth($brand-primary, 1);
-
-    &:hover {
-        text-decoration: underline;
-        text-decoration-color: nth($brand-primary, 2);
-    }
 }
 
 ul, li {
