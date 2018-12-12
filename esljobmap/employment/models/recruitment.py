@@ -1,6 +1,6 @@
 # employment/models/recruitment.py
 
-from datetime import datetime, timedelta
+from datetime import datetime
 from django.db import models
 from django.shortcuts import reverse
 
