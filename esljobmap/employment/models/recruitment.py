@@ -165,9 +165,13 @@ class JobPost(models.Model):
             elif not has_applied:
                 content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
                            '" class="job-apply-link action-link">Apply</a>'
-                content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
-                           '" class="job-not-interested-link" onclick="return updateMapMarker(event, this, ' +\
-                           str(self.id) + ', 1);">Not Interested</a>'
+                if user.is_authenticated:
+                    content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
+                               '" class="job-not-interested-link" onclick="return updateMapMarker(event, this, ' +\
+                               str(self.id) + ', 1);">Not Interested</a>'
+                else:
+                    content += '<a href="#" class="job-not-interested-link" ' \
+                               'data-open="noticeModal">Not Interested</a>'
             else:
                 content += '<span class="bold-text">Applied</span>'
             content += '</div><br>'
