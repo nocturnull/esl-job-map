@@ -82,13 +82,16 @@ class ListFiler {
      */
     constructor() {
         this.$searchFilters = $('#searchFilters');
+        this.$secondarySearchFilters = $('#secondarySearchFilters');
         this.$resetFiltersButton = $('#resetFiltersButton');
         this.$cards = $('.flow-card');
         this.$filterCardsParent = $('#filterCardsParent');
         this.flowCardList = [];
         this.listFilterResults = null;
         this.buttonList = [];
+        this.secondaryButtonList = [];
         this.buttonStateMap = {};
+        this.secondaryButtonStateMap = {};
     }
 
     /**
@@ -105,10 +108,25 @@ class ListFiler {
      */
     init() {
         if (this.isValid()) {
+            // Update results tracker.
             this.listFilterResults = $('#listFilterResults');
+
+            // Track filter buttons.
             this.buttonList = this.$searchFilters.find('button');
-            this.attachFilterListeners();
-            this.organizeData();
+
+            // Track secondary filter options if they exist.
+            if (this.$secondarySearchFilters.length > 0) {
+                this.secondaryButtonList = this.$secondarySearchFilters.find('button');
+            }
+
+            // Attach listeners to filter buttons.
+            this.attachPrimaryFilterListeners();
+            this.attachSecondaryFilterListeners();
+
+            // Organize to be filtered items.
+            this.prepareFlowCards();
+
+            // Reset all filters button.
             this.$resetFiltersButton.on('click', () => {
                 this.resetAllFilters();
             });
@@ -116,29 +134,48 @@ class ListFiler {
     }
 
     /**
-     * Attach button listeners to apply filters.
+     * Go through the primary filters and attach their action callbacks.
      */
-    attachFilterListeners() {
-        for (let i = 0; i < this.buttonList.length; i++) {
-            let $button = $(this.buttonList[i]),
+    attachPrimaryFilterListeners() {
+        this.attachFilterListeners(this.buttonList, this.buttonStateMap);
+    }
+
+    /**
+     * Go through the secondary filters and attach their action callbacks.
+     */
+    attachSecondaryFilterListeners() {
+        if (this.secondaryButtonList.length > 0) {
+            this.attachFilterListeners(this.secondaryButtonList, this.secondaryButtonStateMap);
+        }
+    }
+
+    /**
+     * Attach button listeners to apply filters.
+     *
+     * @param filterButtonList
+     * @param filterStateMap
+     */
+    attachFilterListeners(filterButtonList, filterStateMap) {
+        for (let i = 0; i < filterButtonList.length; i++) {
+            let $button = $(filterButtonList[i]),
                 tag = $button.data('filtertag');
 
             // Track states and set default values.
-            this.buttonStateMap[tag] = true;
+            filterStateMap[tag] = true;
 
             // Attach listener
             $button.on('click', () => {
                 let ctag = $button.data('filtertag');
 
                 // Update active state and button styling.
-                if (this.buttonStateMap[ctag]) {
+                if (filterStateMap[ctag]) {
                     $button.attr('class', 'disabled-button');
-                    this.buttonStateMap[ctag] = false;
-                    this.removeFilter(ctag);
+                    filterStateMap[ctag] = false;
+                    this.removeFilter(ctag, filterStateMap);
                 } else {
                     $button.attr('class', 'secondary-selected-button-1');
-                    this.buttonStateMap[ctag] = true;
-                    this.applyFilter(ctag);
+                    filterStateMap[ctag] = true;
+                    this.applyFilter(ctag, filterStateMap);
                 }
             });
         }
@@ -146,18 +183,21 @@ class ListFiler {
 
     /**
      * Applies the filter and shows the relevant items.
+     *
+     * @param tag
+     * @param filterStateMap
      */
-    applyFilter(tag) {
+    applyFilter(tag, filterStateMap) {
         // Go through each flow card and check the filter.
         for (let k = 0; k < this.flowCardList.length; k++) {
             let fc = this.flowCardList[k];
 
-            if (fc.hasTag(tag)) {
-                // Attach if we have the tag and is currently hidden.
+            // Attach if we have the tag, is currently hidden, and is not being filtered across all filter sets.
+            if (fc.hasTag(tag) && !this.isCardFilteredOut(fc)) {
                 if (fc.isDetached) {
                     fc.attach();
                 }
-            } else if (!fc.hasTag(tag) && !fc.hasAnActiveTag(this.buttonStateMap)) {
+            } else if (!fc.hasTag(tag) && !fc.hasAnActiveTag(filterStateMap)) {
                 // Detach if we dont have the tag, is currently showing, and the card has no active filter.
                 if (!fc.isDetached) {
                     fc.detach();
@@ -171,17 +211,20 @@ class ListFiler {
 
     /**
      * Removes the filter and hides the relevant items.
+     *
+     * @param tag
+     * @param filterStateMap
      */
-    removeFilter(tag) {
+    removeFilter(tag, filterStateMap) {
         // Go through each flow card and check the filter.
         for (let k = 0; k < this.flowCardList.length; k++) {
             let fc = this.flowCardList[k];
 
             // Attach if we have the tag, is currently hidden, and has an active filter.
-            if (!fc.hasTag(tag) && fc.isDetached && fc.hasAnActiveTag(this.buttonStateMap)) {
+            if (!fc.hasTag(tag) && fc.isDetached && fc.hasAnActiveTag(filterStateMap)) {
                 fc.attach();
             } else if (fc.hasTag(tag)) {
-                if (!fc.isDetached && !fc.hasAnActiveTag(this.buttonStateMap)) {
+                if (!fc.isDetached && !fc.hasAnActiveTag(filterStateMap)) {
                     fc.detach();
                 }
             }
@@ -192,17 +235,29 @@ class ListFiler {
     }
 
     /**
+     * Check all the filter maps to see if the supplied flow card is being filtered out.
+     *
+     * @param flowCard
+     * @returns {boolean}
+     */
+    isCardFilteredOut(flowCard) {
+        if (this.secondaryButtonStateMap.length > 0) {
+            return !flowCard.hasAnActiveTag(this.buttonStateMap) &&
+                !flowCard.hasAnActiveTag(this.secondaryButtonStateMap);
+        }
+
+        return !flowCard.hasAnActiveTag(this.buttonStateMap);
+    }
+
+    /**
      * Adjust all buttons and cards to default values.
      */
     resetAllFilters() {
-        // Reset buttons
-        for (let i = 0; i < this.buttonList.length; i++) {
-            let $button = $(this.buttonList[i]),
-                tag = $button.data('filtertag');
+        // Reset primary filters.
+        this.resetFilters(this.buttonList, this.buttonStateMap);
 
-            this.buttonStateMap[tag] = true;
-            $button.attr('class', 'secondary-selected-button-1');
-        }
+        // Reset secondary filters if need be.
+        this.resetFilters(this.secondaryButtonList, this.secondaryButtonStateMap);
 
         // Reset cards.
         for (let k = 0; k < this.flowCardList.length; k++) {
@@ -216,9 +271,27 @@ class ListFiler {
     }
 
     /**
-     * Prepare items to make filtering easier.
+     * Reset filters from the supplied list of buttons.
+     *
+     * @param filterButtonList
+     * @param filterStateMap
      */
-    organizeData() {
+    resetFilters(filterButtonList, filterStateMap) {
+        if (filterButtonList.length > 0) {
+            for (let i = 0; i < filterButtonList.length; i++) {
+                let $button = $(filterButtonList[i]),
+                    tag = $button.data('filtertag');
+
+                filterStateMap[tag] = true;
+                $button.attr('class', 'secondary-selected-button-1');
+            }
+        }
+    }
+
+    /**
+     * Prepare flow card items to make filtering easier.
+     */
+    prepareFlowCards() {
         for (let j = 0; j < this.$cards.length; j++) {
             let d = this.$cards[j];
             this.flowCardList.push(new FlowCard($(d).data('filtertaglist'), d, this.$filterCardsParent));
