@@ -9,7 +9,7 @@ from django.db.models import F
 from ..models import JobPost
 from ..decorators import recruiter_required
 from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm,\
-    EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm, ArchiveJobForm
+    EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm, ArchiveJobForm, RepostJobForm
 
 
 @method_decorator(recruiter_required, name='dispatch')
@@ -128,6 +128,14 @@ class TakeDownJobPost(LoginRequiredMixin, UpdateView):
     model = JobPost
     form_class = TakeDownJobForm
     template_name = 'recruiter/job_post_confirm_takedown.html'
+    success_url = reverse_lazy('employment_my_job_posts')
+
+
+@method_decorator(recruiter_required, name='dispatch')
+class RepostJob(LoginRequiredMixin, UpdateView):
+    model = JobPost
+    form_class = RepostJobForm
+    template_name = 'recruiter/job_post_repost_form.html'
     success_url = reverse_lazy('employment_my_job_posts')
 
 

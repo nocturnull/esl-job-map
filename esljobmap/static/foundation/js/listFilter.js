@@ -16,6 +16,7 @@ class FlowCard {
         this.$parent = parent;
         this.isDetached = false;
         this.detachedCase = null;
+        this.bindRepostHoverEvent();
     }
 
     /**
@@ -69,6 +70,18 @@ class FlowCard {
     attach() {
         this.$parent.append(this.detachedCase);
         this.isDetached = false;
+    }
+
+    bindRepostHoverEvent() {
+        let takenDown = this.$dom.find('.taken-down');
+        if (takenDown.length > 0) {
+            takenDown.on('mouseover', () => {
+                takenDown.html('Repost');
+            })
+            takenDown.on('mouseleave', () => {
+                takenDown.html('Taken down');
+            })
+        }
     }
 }
 

@@ -31,12 +31,16 @@
     }
 
     .flow-card-content {
-        height: 10rem;
+        height: 11rem;
         padding: 0.5rem;
     }
 
     .flow-card-footer {
         padding: 0.5rem;
+    }
+
+    .taken-down {
+        width: 9rem;
     }
 
     @include breakpoint(medium down) {

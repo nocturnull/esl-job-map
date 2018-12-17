@@ -1,8 +1,5 @@
 {% extends 'base.html' %}
 
-{% load job_post %}
-{% load format %}
-
 {% block title %}My Jobs{% endblock %}
 
 {% block content %}
@@ -39,51 +36,7 @@
             {% for job_post in object_list %}
 
                 <div class="cell large-4">
-                    <div class="flow-card {{ job_post.card_class }}" data-filtertaglist="{{ job_post.tags }}">
-                        <h5>
-                            <img src="{% resolve_koco_image job_post %}" alt="kocoman">
-                            {{ job_post.title|trunc|safe }}
-                        </h5>
-                        <div class="flow-card-content">
-                            <div><span class="bold-text">Class Type:</span> {{ job_post.class_type|trunc|safe }}</div>
-                            <div><span class="bold-text">Schedule:</span> {{ job_post.schedule|trunc|safe }}</div>
-                            {% if job_post.is_full_time %}
-                                <div><span class="bold-text">Salary:</span> {{ job_post.salary|trunc|safe }}</div>
-                                <div><span class="bold-text">Benefits:</span> {{ job_post.benefits|trunc|safe }}</div>
-                            {% else %}
-                                <div><span class="bold-text">Pay Rate:</span> {{ job_post.pay_rate|trunc|safe }}</div>
-                            {% endif %}
-                            <div><span class="bold-text">Other Requirements:</span> {{ job_post.other_requirements|trunc|safe }}</div>
-                            <div>{{ job_post.pretty_days_till_expired|safe }}</div>
-                            {% if not job_post.is_visible %}
-                                <div>Taken down.</div>
-                            {% endif %}
-                        </div>
-                        <div class="flow-card-footer">
-                            <div class="mtb-2">
-                                {% if job_post.is_visible %}
-                                    {% if not job_post.is_expired %}
-                                        <a href="{{ job_post.edit_link }}" class="primary-button-1">Edit</a>
-                                        <a href="{% url 'employment_takedown_job_post' job_post.id %}" class="primary-button-1">Take down</a>
-                                    {% endif %}
-                                {% endif %}
-                                {% if job_post.is_expired or not job_post.is_visible %}
-                                    {% if not job_post.is_archived %}
-                                        <a href="{% url 'employment_archive_job_post' job_post.id %}" class="primary-button-1">Archive</a>
-                                    {% endif %}
-                                {% endif %}
-                            </div>
-                            {% with applicants=job_post.applicants.count %}
-                                <div class="cell medium-1">
-                                    {% if applicants > 0 %}
-                                        <a href="{% url 'employment_job_applicants' job_post.id %}">Applicants: {{ applicants }}</a>
-                                    {% else %}
-                                        No applicants
-                                    {% endif %}
-                                </div>
-                            {% endwith %}
-                        </div>
-                    </div>
+                    {% include 'recruiter/module/job_post_flow_card.html' with job_post=job_post %}
                 </div>
 
             {% empty %}
