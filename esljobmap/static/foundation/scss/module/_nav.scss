@@ -50,6 +50,10 @@
     }
 }
 
+.dropdown.menu > li.logo-item > a {
+    padding: 0;
+}
+
 .is-dropdown-submenu > li {
     position: relative;
 }
