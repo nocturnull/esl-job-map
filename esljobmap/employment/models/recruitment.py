@@ -151,7 +151,10 @@ class JobPost(models.Model):
 
         content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
         can_apply = self.can_apply(user)
-        has_applied = self.has_applicant_applied(user)
+        has_applied, application = self.has_applicant_applied(user)
+
+        if has_applied:
+            content += '<span class="bold-text">Applied: </span>' + application.nice_created_at + '<br>'
 
         content += '</div>'
         content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
@@ -162,7 +165,7 @@ class JobPost(models.Model):
             if not_interested:
                 content += '<a href="#" class="job-apply-link disabled">Apply</a>'
                 content += '<a href="' + reverse('employment_remove_job_disinterest', args=(self.id,)) + \
-                           '" class="bold-text float-right" onclick="return updateMapMarker(event, this, ' +\
+                           '" class="action-link" onclick="return updateMapMarker(event, this, ' +\
                            str(self.id) + ', 0);">Interested</a>'
             elif not has_applied:
                 content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
@@ -174,30 +177,34 @@ class JobPost(models.Model):
                 else:
                     content += '<a href="#" class="job-not-interested-link" ' \
                                'data-open="noticeModal">Not Interested</a>'
-            else:
-                content += '<span class="bold-text">Applied</span>'
             content += '</div><br>'
 
         content += '</div>'
         return content
 
-    def has_applicant_applied(self, user) -> bool:
+    def has_applicant_applied(self, user) -> tuple:
         """
         Determine if the supplied applicant has already applied to this Job Post.
 
         :param user:
-        :return: bool
+        :return: tuple
         """
+        applied = False
+        application = None
+
         if user.is_authenticated:
             # Only check applicants.
             if not user.is_recruiter:
                 if len(self._applicants) == 0:
                     self._applicants = self.applicants.all()
 
-                if len(self._applicants) > 0:
-                    applicants = map(lambda j: j.site_user, self._applicants)
-                    return user in applicants
-        return False
+                for a in self._applicants:
+                    if user == a.site_user:
+                        applied = True
+                        application = a
+                        break
+
+        return applied, application
 
     def is_job_poster(self, user) -> bool:
         """

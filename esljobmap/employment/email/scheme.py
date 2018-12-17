@@ -14,6 +14,7 @@ Please find attached my photo and resume. Thank you for considering my applicati
 Regards,
 
 {applicant_full_name}
+{applicant_email}
 {applicant_contact_number}"""
 ANONYMOUS_USER_BASE_SCHEME = "Dear {recruiter_contact_name},"
 

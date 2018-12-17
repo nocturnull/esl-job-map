@@ -31,6 +31,10 @@ class JobApplication(models.Model):
 
         return tags
 
+    @property
+    def nice_created_at(self) -> str:
+        return self.created_at.strftime('%x')
+
     @classmethod
     def create_application(cls, job_post, contact_email, resume, site_user=None):
         return cls.objects.create(job_post=job_post,
