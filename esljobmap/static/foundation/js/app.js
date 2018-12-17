@@ -35,5 +35,10 @@ function updateMapMarker(event, anchor, id, isDisinterested) {
     return false;
 }
 
+function closeInfoWindow() {
+    window.jobMapHandle.closeMapInfoWindow();
+}
+
 window.initMap = initMap;
 window.updateMapMarker = updateMapMarker;
+window.closeInfoWindow = closeInfoWindow;

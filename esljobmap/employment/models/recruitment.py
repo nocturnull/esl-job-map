@@ -136,7 +136,7 @@ class JobPost(models.Model):
         if not_interested:
             container_class = 'job-not-interested'
 
-        content = '<div class="job-post">'
+        content = '<div class="job-post" id="jobPostCard" onmouseleave="closeInfoWindow();">'
         content += '<div class="job-description ' + container_class + '">'
         content += '<span class="bold-text">' + self.title + '</span><br>'
         if self.is_full_time:
@@ -154,8 +154,10 @@ class JobPost(models.Model):
         has_applied = self.has_applicant_applied(user)
 
         content += '</div>'
+        content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
+
         if can_apply:
-            content += '<div>'
+            content += '<div class="action-links">'
 
             if not_interested:
                 content += '<a href="#" class="job-apply-link disabled">Apply</a>'
@@ -176,7 +178,6 @@ class JobPost(models.Model):
                 content += '<span class="bold-text">Applied</span>'
             content += '</div><br>'
 
-        content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
         content += '</div>'
         return content
 

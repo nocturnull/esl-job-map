@@ -80,3 +80,20 @@ input[type="text"], input[type="password"], input[type="email"] {
 .off-canvas {
     background: white;
 }
+
+// ==========================================================================
+// Google Maps Overrides
+// Need to use important because the styles are created inline by Google's JS library
+// ==========================================================================
+button.gm-ui-hover-effect {
+    display: none !important;
+}
+.gm-style-iw {
+    > div {
+        overflow: visible !important;
+
+        > div {
+            width: 103%;
+        }
+    }
+}

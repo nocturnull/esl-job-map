@@ -338,6 +338,13 @@ class JobMapSetup {
             }
         });
     }
+
+    /**
+     * Wrapper function to close the window from an external invoker.
+     */
+    closeMapInfoWindow() {
+        this.infoWindow.close();
+    }
 }
 
 export default JobMapSetup;
