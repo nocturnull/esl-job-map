@@ -20,7 +20,7 @@
                     {% for applicant in object.applicants.all %}
                         {% with user=applicant.site_user %}
                             <tr>
-                                <td>{{ user.full_name }}</td>
+                                <td>{{ user.full_name|default:'Guest' }}</td>
                                 <td>{{ user.teacher.visa_type }} </td>
                                 <td><a href="{{ applicant.resume.cdn_url }}" target="_blank">View</a></td>
                             </tr>
