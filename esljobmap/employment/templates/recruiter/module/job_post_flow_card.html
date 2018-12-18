@@ -20,7 +20,7 @@
         <div>{{ job_post.pretty_days_till_expired|safe }}</div>
     </div>
     <div class="flow-card-footer">
-        <div class="mtb-2">
+        <div>
             {% if job_post.is_visible %}
                 {% if not job_post.is_expired %}
                     <button class="primary-button-1" onclick="window.location='{{ job_post.edit_link }}'">Edit</button>

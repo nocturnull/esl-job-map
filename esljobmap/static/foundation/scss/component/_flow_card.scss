@@ -3,7 +3,7 @@
 // ==========================================================================
 
 .flow-card {
-    width: 80%;
+    width: 20rem;
     min-height: 20rem;
     margin: 1rem 0;
     min-width: 230px;
@@ -11,12 +11,18 @@
     border: 1px solid #b6b6b6;
     box-shadow: 0.1px 0.1px 0.1px 0.1px black;
 
+    img {
+        position: absolute;
+        left: 0;
+        top: 0.3rem;
+    }
+
     h5 {
         background-color: nth($brand-disabled, 2);
         border-bottom: 1px solid #b6b6b6;
         border-radius: 5px 5px 0 0;
         position: relative;
-        padding: 0.5rem 0;
+        padding: 0.6rem 0;
         font-weight: bold;
         text-align: center;
         color: white;
@@ -31,7 +37,7 @@
     }
 
     .flow-card-content {
-        height: 11rem;
+        height: 14rem;
         padding: 0.5rem;
     }
 

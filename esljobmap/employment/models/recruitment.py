@@ -80,10 +80,8 @@ class JobPost(models.Model):
 
         :return:
         """
-        days_left = self.expires_in
-        if days_left > 0:
-            return '<span class="bold-text">Expires in:</span> {0} day(s)'.format(days_left)
-        return 'Expired'
+        days_left = max(self.expires_in, 0)
+        return '<span class="bold-text">Expires in:</span> {0} day(s)'.format(days_left)
 
     @property
     def pretty_closes_in(self) -> str:
