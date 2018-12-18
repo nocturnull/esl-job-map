@@ -28,6 +28,10 @@ input[type="text"], input[type="password"], input[type="email"] {
     border-radius: 10px;
 }
 
+input[type="file"] {
+    width: initial;
+}
+
 // ==========================================================================
 // Pre-Sequenced Modules
 // ==========================================================================

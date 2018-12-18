@@ -68,6 +68,14 @@ class ApplyToJobPost(TemplateView):
                 new_resume = Resume.create_resume(filename=resume.name)
                 file_manager.upload_file(new_resume.storage_path, resume)
                 kwargs['resume'] = new_resume
+            elif resume is None and not request.user.is_authenticated:
+                return render(request,
+                              self.template_name,
+                              {
+                                  'job_post': job_post,
+                                  'job_form': job_form,
+                                  'resume_error': True
+                              })
 
             application = JobApplication.create_application(**kwargs)
 
