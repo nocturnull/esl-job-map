@@ -16,7 +16,7 @@ Regards,
 {applicant_full_name}
 {applicant_email}
 {applicant_contact_number}"""
-ANONYMOUS_USER_BASE_SCHEME = "Dear {recruiter_contact_name},"
+ANONYMOUS_USER_BASE_SCHEME = "{recruiter_contact_name},"
 
 FULL_TIME_EXCLUSIVE_SCHEME = """Salary: {job_post_salary}
 Benefits: {job_post_benefits}"""
