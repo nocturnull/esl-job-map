@@ -18,7 +18,7 @@
                     </ul>
                 </li>
             {% elif user.is_teacher %}
-                <li><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
+                <li class="ex-margin"><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
             {% endif %}
             <li>
                 <a href="{% map_url user 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">Full-Time Map</a>
@@ -47,17 +47,17 @@
     <div class="top-bar-right">
         <ul class="dropdown menu" data-dropdown-menu>
             {% if user.is_authenticated %}
-                <li>
+                <li class="ex-margin">
                     <p class="mt-1">{{ user.username }}</p>
                 </li>
-                <li>
+                <li class="ex-margin">
                     <a href="{% url 'account_profile' %}" class="{% menu_class request 'account_profile' %}">Profile</a>
                 </li>
-                <li>
+                <li class="ex-margin">
                     <a href="{% url 'logout' %}">Logout</a>
                 </li>
                 {% else %}
-                <li>
+                <li class="ex-margin">
                     <a href="{% url 'login' %}">Login</a>
                 </li>
             {% endif %}

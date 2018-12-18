@@ -21,7 +21,8 @@ def resolve_koco_image(job_post) -> str:
 
 @register.simple_tag
 def has_applied(job_post, user) -> int:
-    return 1 if job_post.has_applicant_applied(user) else 0
+    applied, application = job_post.has_applicant_applied(user)
+    return 1 if applied else 0
 
 
 @register.simple_tag

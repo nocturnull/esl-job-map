@@ -28,7 +28,8 @@ class ApplyToJobPost(TemplateView):
         })
         request.session['referring_map_url'] = request.META['HTTP_REFERER']
 
-        if job_post.has_applicant_applied(request.user):
+        applied, application = job_post.has_applicant_applied(request.user)
+        if applied:
             template = 'teacher/application_applied.html'
 
         return render(request,

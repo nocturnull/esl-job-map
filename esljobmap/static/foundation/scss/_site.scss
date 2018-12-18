@@ -79,6 +79,10 @@ input[type="text"], input[type="password"], input[type="email"] {
 
 .off-canvas {
     background: white;
+
+    .menu > li a {
+        padding: 0 0.7rem 0.5rem 0;
+    }
 }
 
 // ==========================================================================

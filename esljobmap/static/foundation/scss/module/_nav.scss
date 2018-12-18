@@ -17,9 +17,9 @@
     height: 3px;
 }
 
-.dropdown.menu > li:not(.logo-item) {
-    position: relative;
+.menu > li:not(.logo-item) {
     a {
+        position: relative;
         margin: 0.7rem 1rem;
         padding: 0 0.7rem 0 0;
 
@@ -47,6 +47,15 @@
 
     a:hover:before {
         right: 0;
+    }
+}
+
+// Non dropdown elements need to be tweaked to look the same.
+.dropdown.menu > li.ex-margin {
+    margin: 0.7rem 0 0 1rem;
+    a {
+        margin: 0;
+        padding: 0;
     }
 }
 
