@@ -24,4 +24,5 @@ class MessageApi(object):
             'subject': subject,
             'text': body
         }
-        requests.post(self._endpoint, data=payload, auth=('api', self._api_key))
+        # Temp: Disabled for testing
+        # requests.post(self._endpoint, data=payload, auth=('api', self._api_key))
