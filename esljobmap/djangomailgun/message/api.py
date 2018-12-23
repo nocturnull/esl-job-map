@@ -1,4 +1,5 @@
 # djangomailgun/message/api.py
+
 import requests
 
 from .. import settings
@@ -13,16 +14,32 @@ class MessageApi(object):
     """
 
     def __init__(self):
+        """Constructor"""
         self._endpoint = 'https://api.mailgun.net/v3/{}/messages'.format(settings.MAILGUN_DOMAIN)
         self._api_key = settings.MAILGUN_PRIVATE_API_KEY
 
-    def send(self, applicant, recipient, subject, body):
+    def send(self, recipient, subject, body, cc=None, reply_to=None):
+        """
+        Send an email through the Mailgun API.
+
+        :param recipient:
+        :param subject:
+        :param body:
+        :param cc:
+        :param reply_to:
+        :return:
+        """
         payload = {
             'from': settings.NO_REPLY_EMAIL,
             'to': recipient,
-            'cc': applicant,
             'subject': subject,
             'text': body
         }
+        if cc is not None:
+            payload['cc'] = cc
+
+        if reply_to is not None:
+            payload['h:Reply-To'] = reply_to
+
         # Temp: Disabled for testing
         # requests.post(self._endpoint, data=payload, auth=('api', self._api_key))

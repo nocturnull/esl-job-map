@@ -79,12 +79,12 @@ class ApplyToJobPost(TemplateView):
 
             application = JobApplication.create_application(**kwargs)
 
-            message_api.send(applicant=applicant_email,
-                             recipient=job_post.contact_email,
+            message_api.send(recipient=job_post.contact_email,
                              subject=EmailTemplateManager.generate_email_subject(job_post),
                              body=EmailTemplateManager.append_resume_to_body(
                                  job_form.cleaned_data['email_body'], application
-                             ))
+                             ),
+                             cc=applicant_email)
 
             return render(request,
                           'teacher/application_success.html',

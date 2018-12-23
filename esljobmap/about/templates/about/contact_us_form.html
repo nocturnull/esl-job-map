@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+
+        <h2>{% block heading %}Contact Us{% endblock %}</h2>
+
+        <p>If you experience any issues, please reach out to us and we will get back to you by the next business day (Korea time).</p>
+
+        <div class="grid-x grid-margin-x">
+            <div class="medium-10 cell">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="primary-button-2">Submit</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
