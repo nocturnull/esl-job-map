@@ -4,7 +4,7 @@ from django.urls import path
 
 from .views.map import FullTimeMap, PartTimeMap
 from .views.job_seeking import ApplyToJobPost, ListApplications
-from .views.recruitment import CreateFullTimeJobPost, CreatePartTimeJobPost, ListJobPost, ListArchivedJobPost,\
+from .views.recruitment import JobPostIndex, CreateFullTimeJobPost, CreatePartTimeJobPost, ListJobPost, ListArchivedJobPost,\
     EditFullTimeJobPost, EditPartTimeJobPost, ListJobApplicants, TakeDownJobPost, RepostJob, ArchiveJobPost
 from .views.job_metadata import DisinterestedJobPostCreate, DisinterestedJobPostDelete
 
@@ -16,6 +16,7 @@ urlpatterns = [
     path('part-time/', PartTimeMap.as_view(), name='employment_part_time_map'),
     path('part-time/<str:city>', PartTimeMap.as_view(), name='employment_part_time_map_city'),
     # Recruiter only pages
+    path('recruiter/job/post', JobPostIndex.as_view(), name='employment_job_post_index'),
     path('recruiter/job/post/full-time', CreateFullTimeJobPost.as_view(), name='employment_create_full_time_job'),
     path('recruiter/job/post/part-time', CreatePartTimeJobPost.as_view(), name='employment_create_part_time_job'),
     path('recruiter/job/my-jobs', ListJobPost.as_view(), name='employment_my_job_posts'),

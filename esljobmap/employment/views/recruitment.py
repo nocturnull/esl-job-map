@@ -1,6 +1,6 @@
 # employment/views/recruitment.py
 
-from django.views.generic import DetailView, ListView, CreateView, UpdateView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
 from django.urls import reverse_lazy
@@ -10,6 +10,11 @@ from ..models import JobPost
 from ..decorators import recruiter_required
 from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm,\
     EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm, ArchiveJobForm, RepostJobForm
+
+
+@method_decorator(recruiter_required, name='dispatch')
+class JobPostIndex(LoginRequiredMixin, TemplateView):
+    template_name = 'recruiter/job_post_index.html'
 
 
 @method_decorator(recruiter_required, name='dispatch')

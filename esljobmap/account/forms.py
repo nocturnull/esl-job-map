@@ -14,6 +14,12 @@ class SiteUserCreationForm(UserCreationForm):
 
 
 class SiteUserTeacherCreationForm(UserCreationForm):
+    password1 = forms.CharField(
+        label="Password",
+        strip=False,
+        widget=forms.PasswordInput,
+        help_text='Must be at least 8 characters',
+    )
 
     class Meta(UserCreationForm.Meta):
         model = SiteUser
@@ -30,6 +36,12 @@ class SiteUserTeacherCreationForm(UserCreationForm):
 
 
 class SiteUserRecruiterCreationForm(UserCreationForm):
+    password1 = forms.CharField(
+        label="Password",
+        strip=False,
+        widget=forms.PasswordInput,
+        help_text='Must be at least 8 characters',
+    )
 
     class Meta(UserCreationForm.Meta):
         model = SiteUser

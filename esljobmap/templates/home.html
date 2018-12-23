@@ -23,6 +23,18 @@
                 </a>
                 <h5>Jobs expire in {{ part_timejob_days_valid }} days</h5>
             </div>
+            <div class="map-info">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'employment_job_post_index' %}" class="primary-button-1">
+                        <span>Post a Job</span>
+                    </a>
+                {% else %}
+                    <a href="{% url 'recruiter_signup' %}" class="primary-button-1">
+                        <span>Post a Job</span>
+                    </a>
+                {% endif %}
+                <h5>For recruiters</h5>
+            </div>
         </div>
 
     </div>

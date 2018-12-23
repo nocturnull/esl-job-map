@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+
+    <div class="grid-container">
+
+        <h2>Sign up</h2>
+
+        <div class="grid-x grid-margin-x mt-1">
+            <div class="medium-10 cell">
+                <a href="{% url 'employment_create_full_time_job' %}" class="primary-button-1">Post Full-Time</a>
+                <a href="{% url 'employment_create_part_time_job' %}" class="primary-button-1">Post Part-Time</a>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}
