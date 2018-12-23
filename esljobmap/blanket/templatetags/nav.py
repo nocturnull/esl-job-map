@@ -36,3 +36,17 @@ def map_url(user, uri, location=''):
         url += '#postAnchor'
 
     return url
+
+
+@register.simple_tag
+def full_time_label(user):
+    if user.is_authenticated and user.is_recruiter:
+        return 'Post Full-Time'
+    return 'Full-Time Map'
+
+
+@register.simple_tag
+def part_time_label(user):
+    if user.is_authenticated and user.is_recruiter:
+        return 'Post Part-Time'
+    return 'Part-Time Map'

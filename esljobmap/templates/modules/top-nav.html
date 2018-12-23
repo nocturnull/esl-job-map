@@ -21,14 +21,18 @@
                 <li class="ex-margin"><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
             {% endif %}
             <li>
-                <a href="{% map_url user 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">Full-Time Map</a>
+                <a href="{% map_url user 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">
+                    {% full_time_label request.user %}
+                </a>
                 <ul class="submenu menu vertical" data-submenu>
                     <li><a href="{% map_url user 'employment_full_time_map_city' 'seoul' %}" class="{% menu_class request 'employment_full_time_map_city' 'seoul' %}">Seoul</a></li>
                     <li><a href="{% map_url user 'employment_full_time_map_city' 'busan' %}" class="{% menu_class request 'employment_full_time_map_city' 'busan' %}">Busan</a></li>
                 </ul>
             </li>
             <li>
-                <a href="{% map_url user 'employment_part_time_map' %}" class="{% menu_class request 'employment_part_time_map' %}">Part-Time Map</a>
+                <a href="{% map_url user 'employment_part_time_map' %}" class="{% menu_class request 'employment_part_time_map' %}">
+                    {% part_time_label request.user %}
+                </a>
                 <ul class="submenu menu vertical" data-submenu>
                     <li><a href="{% map_url user 'employment_part_time_map_city' 'seoul' %}" class="{% menu_class request 'employment_part_time_map_city' 'seoul' %}">Seoul</a></li>
                     <li><a href="{% map_url user 'employment_part_time_map_city' 'busan' %}" class="{% menu_class request 'employment_part_time_map_city' 'busan' %}">Busan</a></li>
