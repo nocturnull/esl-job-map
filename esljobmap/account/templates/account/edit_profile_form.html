@@ -9,8 +9,19 @@
     <div class="grid-container">
         <h3>Edit Profile</h3>
 
+        <p>{{ notice }}</p>
+
         <div class="grid-x grid-margin-x mb-1">
             <div class="medium-10 cell">
+                {% if messages %}
+                    <div class="callout success">
+                        {% for message in messages %}
+                            {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                                <p>{{ message }}</p>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
                 <form method="post" enctype="multipart/form-data" novalidate="novalidate">
                     {% csrf_token %}
                     {{ user_form }}

@@ -1,9 +1,10 @@
 # account/views/profile.py
 
+from django.views.generic import TemplateView, DeleteView, RedirectView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView, DeleteView
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
+from django.contrib import messages
 
 from cloud.file_manager import FileManager
 from ..models import SiteUser
@@ -11,23 +12,16 @@ from ..models import Resume
 from ..forms import UserUpdateForm, TeacherUpdateForm
 
 
-class ViewProfile(LoginRequiredMixin, TemplateView):
-    template_name = 'account/profile.html'
-
-    def get_context_data(self, **kwargs):
-        kwargs['teacher'] = None
-        kwargs['edit_url'] = reverse_lazy('recruiter_profile_edit')
-
-        if self.request.user.is_teacher:
-            kwargs['teacher'] = self.request.user.teacher
-            kwargs['edit_url'] = reverse_lazy('teacher_profile_edit')
-
-        return kwargs
+class ResolveProfile(LoginRequiredMixin, RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.is_recruiter:
+            return reverse_lazy('recruiter_profile_edit')
+        return reverse_lazy('applicant_profile_edit')
 
 
 class EditTeacherProfile(LoginRequiredMixin, TemplateView):
     template_name = 'account/edit_profile_form.html'
-    success_url = reverse_lazy('account_profile')
+    success_url = reverse_lazy('applicant_profile_edit')
 
     def get(self, request, **kwargs):
         user_form = UserUpdateForm(instance=request.user)
@@ -38,7 +32,8 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
             self.template_name,
             {
                 'user_form': user_form,
-                'teacher_form': teacher_form
+                'teacher_form': teacher_form,
+                'notice': 'This information will be used to automatically fill in your cover letters'
             }
         )
 
@@ -60,6 +55,7 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
                 teacher.resume = new_resume
                 teacher.save()
 
+            messages.success(request, 'Changes saved!')
             return redirect(self.success_url)
         else:
             return render(
@@ -74,7 +70,7 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
 
 class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
     template_name = 'account/edit_profile_form.html'
-    success_url = reverse_lazy('account_profile')
+    success_url = reverse_lazy('recruiter_profile_edit')
 
     def get(self, request, **kwargs):
         user_form = UserUpdateForm(instance=request.user)
@@ -82,7 +78,10 @@ class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
         return render(
             request,
             self.template_name,
-            {'user_form': user_form}
+            {
+                'user_form': user_form,
+                'notice': 'This information will be used to automatically fill in your job fields'
+            }
         )
 
     def post(self, request, **kwargs):
@@ -91,6 +90,7 @@ class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
         if user_form.is_valid():
             user_form.save()
 
+            messages.success(request, 'Changes saved!')
             return redirect(self.success_url)
         else:
             return render(
