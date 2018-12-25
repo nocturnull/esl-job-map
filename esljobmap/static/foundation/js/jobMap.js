@@ -266,7 +266,7 @@ class JobMapSetup {
                 this.currentMarker = new google.maps.Marker({
                     map: this.map,
                     position: loc,
-                    icon: window.jobMap.iconImage,
+                    icon: this.makeComplexIcon(this.activeIconImage),
                     animation: google.maps.Animation.DROP
                 });
 
@@ -282,6 +282,9 @@ class JobMapSetup {
 
                 // Open up the window and display the address.
                 this.infoWindow.open(this.map, this.currentMarker);
+
+                // Shift the position to the top of the screen.
+                $(window).scrollTop(0);
             } else {
                 this.$addressError.removeClass('no-show');
             }
