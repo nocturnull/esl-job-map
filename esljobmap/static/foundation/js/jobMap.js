@@ -15,6 +15,8 @@ class JobMapSetup {
     constructor() {
         this.map = null;
         this.currentMarker = null;
+        this.highlightedMarker = null;
+        this.highlightedMarkerOriginalIcon = null;
         this.infoWindow = null;
         this.geocoder = null;
         this.latitude = 0;
@@ -28,6 +30,9 @@ class JobMapSetup {
         this.$generalJobFields = null;
         this.googleMarkerMap = {};
         this.googleMarkerMapListeners = {};
+        this.disinterestedIconImage = this.cdnImg('koco-man/koco-grey-40x40.png');
+        this.appliedIconImage = this.cdnImg('koco-man/koco-black-40x40.png');
+        this.activeIconImage = this.cdnImg('koco-man/koco-red-40x40.png');
     }
 
     /**
@@ -87,6 +92,17 @@ class JobMapSetup {
     }
 
     /**
+     * Create the CDN url for the supplied file path.
+     *
+     * @param path
+     * @returns {string}
+     */
+    cdnImg(path)
+    {
+        return '/static/images/' + path
+    }
+
+    /**
      * Load all uploaded job posts into the map.
      */
     addExistingJobMarkers() {
@@ -106,6 +122,11 @@ class JobMapSetup {
                 // Open up the window and display the job info.
                 this.infoWindow.setContent(markerData.content);
                 this.infoWindow.open(this.map, marker);
+
+                // Update the icon of the marker.
+                marker.setIcon(this.makeComplexIcon(this.activeIconImage));
+                this.highlightedMarker = marker;
+                this.highlightedMarkerOriginalIcon = iconImageUrl;
             });
 
             this.googleMarkerMap[markerData.id] = marker;
@@ -125,13 +146,13 @@ class JobMapSetup {
         if (window.jobMap.isRecruiter) {
             // When the job post does not belong to the recruiter, gray it out.
             if (markerData.isJobPoster === 0) {
-                iconImageUrl = window.jobMap.disinterestedIconImage;
+                iconImageUrl = this.disinterestedIconImage;
             }
         } else {
             if (markerData.hasApplied === 1) {
-                iconImageUrl = window.jobMap.appliedIconImage;
+                iconImageUrl = this.appliedIconImage;
             } else if (markerData.isDisinterested === 1) {
-                iconImageUrl = window.jobMap.disinterestedIconImage;
+                iconImageUrl = this.disinterestedIconImage;
             }
         }
 
@@ -147,7 +168,7 @@ class JobMapSetup {
      */
     updateExistingJobMarker(id, content, isDisinterested) {
         let marker = this.googleMarkerMap[id],
-            iconImage = isDisinterested === 1 ? window.jobMap.disinterestedIconImage : window.jobMap.iconImage;
+            iconImage = isDisinterested === 1 ? this.disinterestedIconImage : window.jobMap.iconImage;
 
         marker.setIcon(this.makeComplexIcon(iconImage));
 
@@ -181,7 +202,7 @@ class JobMapSetup {
         this.currentMarker = new google.maps.Marker({
             position: latLng,
             map: this.map,
-            icon: this.makeComplexIcon(window.jobMap.iconImage),
+            icon: this.makeComplexIcon(this.activeIconImage),
             animation: google.maps.Animation.DROP,
             draggable: true
         });
@@ -343,7 +364,9 @@ class JobMapSetup {
      * Wrapper function to close the window from an external invoker.
      */
     closeMapInfoWindow() {
+        // Clsoe the InfoWindow.
         this.infoWindow.close();
+        this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
     }
 }
 
