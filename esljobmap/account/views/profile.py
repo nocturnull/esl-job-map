@@ -29,6 +29,7 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
 
         return render(
             request,
+
             self.template_name,
             {
                 'user_form': user_form,

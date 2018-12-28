@@ -49,26 +49,27 @@ class ApplyToJobPost(TemplateView):
 
         if job_form.is_valid():
             applicant_email = job_form.cleaned_data['contact_email']
-            use_existing_resume = job_form.cleaned_data['use_existing_resume']
+            resume = job_form.cleaned_data.get('resume', None)
 
             kwargs = {
                 'job_post': job_post,
                 'contact_email': applicant_email
             }
 
-            # Attempt to use an existing resume if opted in.
+            # Attempt to use an existing resume if possible.
             if request.user.is_authenticated:
                 kwargs['site_user'] = request.user
-                if use_existing_resume and request.user.teacher.has_resume:
+                if request.user.teacher.has_resume and resume is None:
                     kwargs['resume'] = request.user.teacher.resume
 
             # Make a new resume that is for this application only if needed.
-            resume = job_form.cleaned_data.get('resume', None)
-            if resume is not None and not use_existing_resume:
+            if resume is not None:
                 new_resume = Resume.create_resume(filename=resume.name)
                 file_manager.upload_file(new_resume.storage_path, resume)
                 kwargs['resume'] = new_resume
-            elif resume is None and not request.user.is_authenticated:
+
+            # If the user did not upload a resume and has no resume on file, show an error.
+            if 'resume' not in kwargs:
                 return render(request,
                               self.template_name,
                               {

@@ -8,12 +8,13 @@ from cloud.storage import build_storage_url
 
 
 class Resume(models.Model):
-    filename = models.CharField(max_length=512, default='')
+    original_filename = models.CharField(max_length=512, default='')
+    unique_filename = models.CharField(max_length=512, default='')
     created_at_date = models.DateTimeField('Date Uploaded', auto_now_add=True)
 
     @property
     def storage_path(self) -> str:
-        return 'resume/{0}'.format(self.filename)
+        return 'resume/{0}'.format(self.unique_filename)
 
     @property
     def cdn_url(self) -> str:
@@ -22,8 +23,8 @@ class Resume(models.Model):
     @classmethod
     def create_resume(cls, filename):
         unique_filename = str(int(time.time())) + '-' + filename
-        new_resume = Resume.objects.create(filename=unique_filename)
+        new_resume = Resume.objects.create(original_filename=filename, unique_filename=unique_filename)
         return new_resume
 
     def __str__(self):
-        return self.filename
+        return self.original_filename

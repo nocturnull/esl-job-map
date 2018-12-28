@@ -48,6 +48,9 @@
                                 {{ teacher_form.can_work_second_job }}
                             </div>
                         </div>
+                        {% if request.user.teacher.has_resume %}
+                            <div>Existing resume: {{ request.user.teacher.resume }}</div>
+                        {% endif %}
                         <div>
                             {{ teacher_form.resume_filename.errors }}
 
