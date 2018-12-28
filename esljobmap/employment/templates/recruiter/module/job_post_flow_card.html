@@ -17,7 +17,7 @@
             <div><span class="bold-text">Pay Rate:</span> {{ job_post.pay_rate|trunc|safe }}</div>
         {% endif %}
         <div><span class="bold-text">Other Requirements:</span> {{ job_post.other_requirements|trunc|safe }}</div>
-        <div>{{ job_post.pretty_days_till_expired|safe }}</div>
+        <div>{{ job_post.html_pretty_days_till_expired|safe }}</div>
     </div>
     <div class="flow-card-footer">
         <div>

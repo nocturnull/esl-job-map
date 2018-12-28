@@ -19,7 +19,7 @@
             {% endif %}
             <div><span class="bold-text">Other Requirements:</span> {{ job_post.other_requirements|trunc|safe }}</div>
             <div><span class="bold-text">Contact Number:</span> {{ job_post.contact_number|safe }}</div>
-            <div>{{ job_post.pretty_days_till_expired|safe }}</div>
+            <div>{{ job_post.html_pretty_days_till_expired|safe }}</div>
         </div>
     </div>
 </div>

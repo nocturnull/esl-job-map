@@ -3,11 +3,6 @@
 
 <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
     <ul class="vertical menu">
-        <li>
-            <a href="{% url 'home' %}">
-                <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
-            </a>
-        </li>
         {% if user.is_authenticated and user.is_recruiter %}
             <li>
                 <a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">My Jobs</a>
@@ -42,7 +37,6 @@
         </li>
     </ul>
 
-    <br>
     <ul class="vertical dropdown menu" data-dropdown-menu>
         {% if user.is_authenticated %}
             <li>

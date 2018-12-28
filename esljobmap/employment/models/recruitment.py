@@ -74,21 +74,19 @@ class JobPost(models.Model):
         return self.expires_in < 1
 
     @property
-    def pretty_days_till_expired(self) -> str:
+    def html_pretty_days_till_expired(self) -> str:
         """
         Display the amount of days until the job expires in a neat format.
 
         :return:
         """
-        days_left = max(self.expires_in, 0)
-        return '<span class="bold-text">Expires in:</span> {0} day(s)'.format(days_left)
+        days = (datetime.today() - self.created_at).days
+        return '<span class="bold-text">Posted:</span> {0} day(s) ago'.format(days)
 
     @property
-    def pretty_closes_in(self) -> str:
-        days_left = self.expires_in
-        if days_left > 0:
-            return 'closes in: {0} days'.format(days_left)
-        return 'closed'
+    def pretty_days_elapsed(self) -> str:
+        days = (datetime.today() - self.created_at).days
+        return 'Posted: {0} day(s) ago'.format(days)
 
     @property
     def pretty_num_applicants(self) -> str:
@@ -128,8 +126,10 @@ class JobPost(models.Model):
 
         :return: str
         """
-        container_class = ''
         not_interested = self.not_interested(user)
+        can_apply = self.can_apply(user)
+        has_applied, application = self.has_applicant_applied(user)
+        container_class = ''
 
         if not_interested:
             container_class = 'job-not-interested'
@@ -148,14 +148,9 @@ class JobPost(models.Model):
             content += '<span class="bold-text">Benefits: </span>' + self.benefits + '<br>'
 
         content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
-        can_apply = self.can_apply(user)
-        has_applied, application = self.has_applicant_applied(user)
-
-        if has_applied:
-            content += '<span class="bold-text">Applied: </span>' + application.nice_created_at + '<br>'
 
         content += '</div>'
-        content += self.pretty_num_applicants + ', ' + self.pretty_closes_in + '<br>'
+        content += self.pretty_num_applicants + ', ' + self.pretty_days_elapsed + '<br>'
 
         if can_apply:
             content += '<div class="action-links">'
@@ -178,6 +173,9 @@ class JobPost(models.Model):
             content += '</div><br>'
 
         content += '</div>'
+        if has_applied:
+            content += '<span class="bold-text">Applied: </span>' + application.nice_created_at + '<br>'
+
         return content
 
     def has_applicant_applied(self, user) -> tuple:
