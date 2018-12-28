@@ -2,22 +2,22 @@
 {% load job_post %}
 {% load format %}
 
-<div class="flow-card {{ job_post.card_class }}" data-filtertaglist="{{ job_post.tags }}">
+<div class="flow-card {{ job_post.card_class|safe }}" data-filtertaglist="{{ job_post.tags }}">
     <h5>
         <img src="{% resolve_koco_image job_post %}" alt="kocoman">
-        {{ job_post.title|trunc|safe }}
+        {{ job_post.title }}
     </h5>
     <div class="flow-card-content">
-        <div><span class="bold-text">Class Type:</span> {{ job_post.class_type|trunc|safe }}</div>
-        <div><span class="bold-text">Schedule:</span> {{ job_post.schedule|trunc|safe }}</div>
+        <div><span class="bold-text">Class Type:</span> {% trunc 'Class Type:' job_post.class_type %}</div>
+        <div><span class="bold-text">Schedule:</span> {% trunc 'Schedule:' job_post.schedule %}</div>
         {% if job_post.is_full_time %}
-            <div><span class="bold-text">Salary:</span> {{ job_post.salary|trunc|safe }}</div>
-            <div><span class="bold-text">Benefits:</span> {{ job_post.benefits|trunc|safe }}</div>
+            <div><span class="bold-text">Salary:</span> {% trunc 'Salary:' job_post.salary %}</div>
+            <div><span class="bold-text">Benefits:</span> {% trunc 'Benefits:' job_post.benefits %}</div>
         {% else %}
-            <div><span class="bold-text">Pay Rate:</span> {{ job_post.pay_rate|trunc|safe }}</div>
+            <div><span class="bold-text">Pay Rate:</span> {% trunc 'Pay Rate:' job_post.pay_rate %}</div>
         {% endif %}
-        <div><span class="bold-text">Other Requirements:</span> {{ job_post.other_requirements|trunc|safe }}</div>
-        <div>{{ job_post.html_pretty_days_till_expired|safe }}</div>
+        <div><span class="bold-text">Other Requirements:</span> {% trunc 'Other Requirements:' job_post.other_requirements %}</div>
+        <div><span class="bold-text">Posted:</span> {{ job_post.partial_pretty_days_elapsed }}</div>
     </div>
     <div class="flow-card-footer">
         <div>

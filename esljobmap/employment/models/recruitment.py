@@ -73,14 +73,14 @@ class JobPost(models.Model):
         return self.expires_in < 1
 
     @property
-    def html_pretty_days_till_expired(self) -> str:
+    def partial_pretty_days_elapsed(self) -> str:
         """
         Display the amount of days until the job expires in a neat format.
 
         :return:
         """
         days = (datetime.today() - self.created_at).days
-        return '<span class="bold-text">Posted:</span> {0} day(s) ago'.format(days)
+        return '{0} day(s) ago'.format(days)
 
     @property
     def pretty_days_elapsed(self) -> str:

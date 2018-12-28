@@ -14,6 +14,9 @@ from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm,\
 
 @method_decorator(recruiter_required, name='dispatch')
 class JobPostIndex(LoginRequiredMixin, TemplateView):
+    """
+    View that shows options between full time and part time maps.
+    """
     template_name = 'recruiter/job_post_index.html'
 
 
@@ -60,7 +63,7 @@ class ListJobPost(LoginRequiredMixin, ListView):
     """
     model = JobPost
     template_name = 'recruiter/job_post_list.html'
-    extra_context = {'title': 'Active Jobs', 'show_expired': True}
+    extra_context = {'show_expired': True}
 
     def get_queryset(self):
         return self.request.user.job_posts.all().order_by(F('created_at').desc(nulls_last=True))
@@ -125,6 +128,9 @@ class TakeDownJobPost(LoginRequiredMixin, UpdateView):
 
 @method_decorator(recruiter_required, name='dispatch')
 class RepostJob(LoginRequiredMixin, UpdateView):
+    """
+    View for reposting a job after taking it down.
+    """
     model = JobPost
     form_class = RepostJobForm
     template_name = 'recruiter/job_post_repost_form.html'

@@ -21,7 +21,7 @@
 
         <div class="grid-x" id="filterCardsParent">
             {% for application in object_list %}
-                {% include 'employment/job_summary.html' with application=application job_post=application.job_post %}
+                {% include 'teacher/module/job_post_flow_card.html' with application=application job_post=application.job_post %}
             {% empty %}
                 <p>You have not applied to any jobs yet.</p>
             {% endfor %}

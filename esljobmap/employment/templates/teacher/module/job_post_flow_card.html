@@ -1,0 +1,25 @@
+
+{% load job_post %}
+{% load format %}
+
+<div class="cell large-4">
+    <div class="flow-card {{ job_post.card_class }}" data-filtertaglist="{{ application.tags }}">
+        <h5>
+            <img src="{% resolve_koco_image job_post %}" alt="kocoman">
+            {{ job_post.title }}
+        </h5>
+        <div class="flow-card-content">
+            <div><span class="bold-text">Class Type:</span> {% trunc 'Class Type:' job_post.class_type %}</div>
+            <div><span class="bold-text">Schedule:</span> {% trunc 'Schedule:' job_post.schedule %}</div>
+            {% if job_post.is_full_time %}
+                <div><span class="bold-text">Salary:</span> {% trunc 'Salary:' job_post.salary %}</div>
+            <div><span class="bold-text">Benefits:</span> {% trunc 'Benefits:' job_post.benefits %}</div>
+            {% else %}
+                <div><span class="bold-text">Pay Rate:</span> {% trunc 'Pay Rate:' job_post.pay_rate %}</div>
+            {% endif %}
+            <div><span class="bold-text">Other Requirements:</span> {% trunc 'Other Requirements:' job_post.other_requirements %}</div>
+            <div><span class="bold-text">Contact Number:</span> {{ job_post.contact_number|safe }}</div>
+            <div><span class="bold-text">Posted:</span> {{ job_post.partial_pretty_days_elapsed }}</div>
+        </div>
+    </div>
+</div>

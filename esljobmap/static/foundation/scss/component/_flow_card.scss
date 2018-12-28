@@ -26,6 +26,7 @@
         font-weight: bold;
         text-align: center;
         color: white;
+        overflow: hidden;
     }
 
     &.full-time h5 {
@@ -39,6 +40,18 @@
     .flow-card-content {
         height: 14rem;
         padding: 0.5rem;
+        > div {
+            overflow: hidden;
+            max-height: 3rem;
+            position: relative;
+        }
+
+        // Foundation override
+        .has-tip {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+        }
     }
 
     .flow-card-footer {
