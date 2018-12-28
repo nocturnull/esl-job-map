@@ -9,7 +9,7 @@ from django.db.models import F
 from ..models import JobPost
 from ..decorators import recruiter_required
 from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm,\
-    EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm, ArchiveJobForm, RepostJobForm
+    EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm, RepostJobForm
 
 
 @method_decorator(recruiter_required, name='dispatch')
@@ -63,20 +63,7 @@ class ListJobPost(LoginRequiredMixin, ListView):
     extra_context = {'title': 'Active Jobs', 'show_expired': True}
 
     def get_queryset(self):
-        return self.request.user.job_posts.filter(is_archived=False).order_by(F('created_at').desc(nulls_last=True))
-
-
-@method_decorator(recruiter_required, name='dispatch')
-class ListArchivedJobPost(LoginRequiredMixin, ListView):
-    """
-    View for recruiters to view all their archived job posts.
-    """
-    model = JobPost
-    template_name = 'recruiter/job_post_list.html'
-    extra_context = {'title': 'Archived Jobs', 'show_expired': False}
-
-    def get_queryset(self):
-        return self.request.user.job_posts.filter(is_archived=True).order_by(F('created_at').desc(nulls_last=True))
+        return self.request.user.job_posts.all().order_by(F('created_at').desc(nulls_last=True))
 
 
 @method_decorator(recruiter_required, name='dispatch')
@@ -143,13 +130,3 @@ class RepostJob(LoginRequiredMixin, UpdateView):
     template_name = 'recruiter/job_post_repost_form.html'
     success_url = reverse_lazy('employment_my_job_posts')
 
-
-@method_decorator(recruiter_required, name='dispatch')
-class ArchiveJobPost(LoginRequiredMixin, UpdateView):
-    """
-    View for archiving a job post.
-    """
-    model = JobPost
-    form_class = ArchiveJobForm
-    template_name = 'recruiter/job_post_confirm_archive.html'
-    success_url = reverse_lazy('employment_my_job_posts')

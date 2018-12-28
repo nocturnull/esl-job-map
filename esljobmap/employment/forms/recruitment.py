@@ -119,26 +119,6 @@ class RepostJobForm(forms.ModelForm):
         fields = ['is_visible']
 
 
-class ArchiveJobForm(forms.ModelForm):
-    """Form for recruiters to archive their job post."""
-    is_archived = forms.HiddenInput()
-
-    def save(self, commit=True):
-        """
-        Hook into the save to update the archive field.
-
-        :param commit:
-        :return:
-        """
-        self.instance.is_archived = True
-
-        return super(ArchiveJobForm, self).save(commit=commit)
-
-    class Meta:
-        model = JobPost
-        fields = ['is_archived']
-
-
 class ApplyToJobForm(forms.Form):
     email_body = forms.CharField(widget=forms.Textarea(attrs={'rows': '18'}))
     resume = forms.FileField(allow_empty_file=True, required=False)

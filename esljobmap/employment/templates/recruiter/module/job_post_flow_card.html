@@ -29,11 +29,6 @@
             {% else %}
                 <button class="disabled-button taken-down" onclick="window.location='{% url 'employment_repost_job_post' job_post.id %}'">Taken down</button>
             {% endif %}
-            {% if job_post.is_expired or not job_post.is_visible %}
-                {% if not job_post.is_archived %}
-                    <button class="primary-button-1" onclick="window.location='{% url 'employment_archive_job_post' job_post.id %}'">Archive</button>
-                {% endif %}
-            {% endif %}
         </div>
         {% with applicants=job_post.applicants.count %}
             <div class="cell medium-1">

@@ -6,10 +6,6 @@
         {% if user.is_authenticated and user.is_recruiter %}
             <li>
                 <a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">My Jobs</a>
-                <ul class="menu vertical nested">
-                    <li><a href="{% url 'employment_my_job_posts' %}">Active</a></li>
-                    <li><a href="{% url 'employment_my_archived_job_posts' %}">Archived</a></li>
-                </ul>
             </li>
         {% elif user.is_teacher %}
             <li><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
