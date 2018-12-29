@@ -56,6 +56,7 @@ class JobMapSetup {
             this.$addressError = $('#addressSearchError');
             this.$locationError = $('#postJobLocationError');
             this.$addressInput = $('#mapAddressInput');
+            this.$warningModal = $('#warningModal');
 
             // Add click listener to the map if a recruiter.
             if (window.jobMap.isRecruiter) {
@@ -88,6 +89,11 @@ class JobMapSetup {
 
             // Bind job field sets.
             this.$generalJobFields = $('#generalJobFields');
+
+            // Show warning modal if neccesary.
+            if (this.$warningModal.length > 0) {
+                this.$warningModal.foundation('open');
+            }
         }
     }
 

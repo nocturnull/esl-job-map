@@ -7,8 +7,9 @@ from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm
 from ..models import JobPost
 from ..managers.map_manager import MapManager
 
-from cloud.templatetags.remote import cdn_image
 from account.templatetags.profile import is_recruiter
+from blanket.session_manager import SessionManager
+from cloud.templatetags.remote import cdn_image
 
 
 class FullTimeMap(ListView):
@@ -31,6 +32,7 @@ class FullTimeMap(ListView):
         context['form'] = CreateFullTimeJobForm(self.request)
         context['post_url'] = reverse('employment_create_full_time_job')
         context['location'] = MapManager.resolve_location_data(self.request, city)
+        context['show_warning'] = SessionManager.needs_full_time_warning(self.request)
 
         return context
 
@@ -55,5 +57,6 @@ class PartTimeMap(ListView):
         context['form'] = CreatePartTimeJobForm(self.request)
         context['post_url'] = reverse('employment_create_part_time_job')
         context['location'] = MapManager.resolve_location_data(self.request, city)
+        context['show_warning'] = SessionManager.needs_part_time_warning(   self.request)
 
         return context
