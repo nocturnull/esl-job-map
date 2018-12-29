@@ -17,7 +17,7 @@
             <div><span class="bold-text">Pay Rate:</span> {% trunc 'Pay Rate:' job_post.pay_rate %}</div>
         {% endif %}
         <div><span class="bold-text">Other Requirements:</span> {% trunc 'Other Requirements:' job_post.other_requirements %}</div>
-        <div><span class="bold-text">Posted:</span> {{ job_post.partial_pretty_days_elapsed }}</div>
+        <div><span class="bold-text">Status:</span> {{ job_post.pretty_status }}</div>
     </div>
     <div class="flow-card-footer">
         <div>

@@ -19,7 +19,7 @@
             {% endif %}
             <div><span class="bold-text">Other Requirements:</span> {% trunc 'Other Requirements:' job_post.other_requirements %}</div>
             <div><span class="bold-text">Contact Number:</span> {{ job_post.contact_number|safe }}</div>
-            <div><span class="bold-text">Posted:</span> {{ job_post.partial_pretty_days_elapsed }}</div>
+            <div><span class="bold-text">Status:</span> {{ job_post.pretty_status }}</div>
         </div>
     </div>
 </div>

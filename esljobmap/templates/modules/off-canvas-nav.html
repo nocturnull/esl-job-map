@@ -36,9 +36,6 @@
     <ul class="vertical dropdown menu" data-dropdown-menu>
         {% if user.is_authenticated %}
             <li>
-                <p class="mt-1">{{ user.username }}</p>
-            </li>
-            <li>
                 <a href="{% url 'account_profile' %}" class="{% menu_class request 'account_profile' %}">Profile</a>
             </li>
             <li>
