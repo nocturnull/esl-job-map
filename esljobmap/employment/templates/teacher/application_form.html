@@ -26,18 +26,18 @@
                     {% elif request.user.is_teacher %}
                         <div>
                             {% if request.user.teacher.has_resume %}
-                                <p>Resume: {{ request.user.teacher.resume }}</p>
-                                <p>Upload different resume:</p>
+                                Existing resume: {{ request.user.teacher.resume }}
                             {% else %}
-                                <p>
-                                    Upload a resume to your
-                                    <a href="{% url 'account_profile' %}" target="_blank">Profile</a>
-                                    to select an existing resume.
-                                </p>
+                                Upload a resume to your
+                                <a href="{% url 'account_profile' %}" target="_blank">Profile</a>
+                                to select an existing resume.
                             {% endif %}
                         </div>
                     {% endif %}
                     <div id="resumeFileUploadField">
+                        {% if request.user.teacher.has_resume %}
+                            <label class="file-label" for="{{ job_form.resume.id_for_label }}">Upload different resume:</label>
+                        {% endif %}
                         <input type="file" name="{{ job_form.resume.html_name }}">
                         {% if resume_error %}
                             <span class="errorlist">A resume is required</span>

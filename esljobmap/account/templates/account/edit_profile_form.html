@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
-{% block title %}Edit Profile{% endblock %}
+{% block title %}Profile{% endblock %}
 
 {% load profile %}
 
 {% block content %}
 
     <div class="grid-container">
-        <h3>Edit Profile</h3>
+        <h3>Profile</h3>
 
         <p>{{ notice }}</p>
 
@@ -54,11 +54,10 @@
                         <div>
                             {{ teacher_form.resume_filename.errors }}
 
-                            {% if teacher_form.resume_filename.value %}
-                                <p>Existing resume: {{ teacher_form.resume_filename.value }}</p>
-                                <label for="{{ teacher_form.resume_filename.id_for_label }}">Update Resume</label>
+                            {% if request.user.teacher.has_resume %}
+                                <label class="file-label" for="{{ teacher_form.resume_filename.id_for_label }}">Upload different resume:</label>
                             {% else %}
-                                <label for="{{ teacher_form.resume_filename.id_for_label }}">Set Resume</label>
+                                <label class="file-label" for="{{ teacher_form.resume_filename.id_for_label }}">Set resume:</label>
                             {% endif %}
 
                             {{ teacher_form.resume_filename }}

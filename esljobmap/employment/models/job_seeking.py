@@ -29,7 +29,7 @@ class JobApplication(models.Model):
         if self.job_post.is_visible and not self.job_post.is_expired:
             tags += ',open'
         else:
-            tags += ',closed'
+            tags += ',expired'
 
         return tags
 

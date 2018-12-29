@@ -11,7 +11,7 @@
         {% if request.user.is_authenticated %}
             <div><a href="{% url 'employment_applications' %}">My Job Applications</a></div>
         {% else %}
-            <div><a href="{% url 'teacher_signup' %}">Sign up to track your job applications on ESL Job Map</a></div>
+            <div><a href="{% url 'applicant_signup' %}">Sign up to track your job applications on ESL Job Map</a></div>
         {% endif %}
     </div>
 
