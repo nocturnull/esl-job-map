@@ -81,7 +81,7 @@ class JobPost(models.Model):
         """
         if self.is_visible:
             days = (datetime.today() - self.created_at).days
-            return '{0} day(s) ago'.format(days)
+            return 'posted {0} day(s) ago'.format(days)
         return 'job closed'
 
     @property
@@ -107,15 +107,17 @@ class JobPost(models.Model):
 
     @property
     def tags(self) -> str:
+        tags = 'all'
+
         # Job type
         if self.is_full_time:
-            tags = 'full-time'
+            tags += ',full-time'
         else:
-            tags = 'part-time'
+            tags += ',part-time'
 
         # Status
         if self.is_expired or not self.is_visible:
-            tags += ',expired'
+            tags += ',closed'
         else:
             tags += ',active'
 

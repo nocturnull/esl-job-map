@@ -25,9 +25,11 @@ class JobApplication(models.Model):
 
     @property
     def tags(self):
-        tags = 'closed'
+        tags = 'all'
         if self.job_post.is_visible and not self.job_post.is_expired:
-            tags = 'in-consideration'
+            tags += ',open'
+        else:
+            tags += ',closed'
 
         return tags
 

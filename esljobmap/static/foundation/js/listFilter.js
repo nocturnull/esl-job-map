@@ -14,46 +14,36 @@ class FlowCard {
         this.tagList = tags.split(',');
         this.$dom = $(dom);
         this.$parent = parent;
-        this.isDetached = false;
         this.detachedCase = null;
         this.bindRepostHoverEvent();
     }
 
     /**
-     * Determine if we have a specific tag.
-     *
-     * @param tag
-     * @returns {boolean}
-     */
-    hasTag(tag) {
-        for (let i = 0; i < this.tagList.length; i++) {
-            if (this.tagList[i].trim() === tag.trim()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Determine if the current card possesses a tag that is active.
+     * Determine if we have all tags in the specified list.
      *
      * @param tagList
      * @returns {boolean}
      */
-    hasAnActiveTag(tagList) {
-        for (let tag in tagList) {
-            if (tagList.hasOwnProperty(tag)) {
-                // Check the active tags only.
-                if (tagList[tag]) {
-                    if (this.hasTag(tag)) {
-                        return true;
-                    }
+    hasTags(tagList) {
+        let containsAll = true;
+
+        for (let i = 0; i < tagList.length; i++) {
+            let tag = tagList[i].trim(),
+                contains = false;
+
+            for (let j = 0; j < this.tagList.length; j++) {
+                if (this.tagList[j].trim() === tag) {
+                    contains = true;
                 }
+            }
+
+            if (!contains) {
+                containsAll = false;
+                break;
             }
         }
 
-        return false;
+        return containsAll;
     }
 
     /**
@@ -61,7 +51,6 @@ class FlowCard {
      */
     detach() {
         this.detachedCase = this.$dom.parent().detach();
-        this.isDetached = true;
     }
 
     /**
@@ -69,18 +58,20 @@ class FlowCard {
      */
     attach() {
         this.$parent.append(this.detachedCase);
-        this.isDetached = false;
     }
 
+    /**
+     * Switch between hover events for reposting and taking down.
+     */
     bindRepostHoverEvent() {
         let takenDown = this.$dom.find('.taken-down');
         if (takenDown.length > 0) {
             takenDown.on('mouseover', () => {
                 takenDown.html('Repost');
-            })
+            });
             takenDown.on('mouseleave', () => {
                 takenDown.html('Taken down');
-            })
+            });
         }
     }
 }
@@ -88,32 +79,28 @@ class FlowCard {
 /**
  * Dynamic filterer for job posts and applications.
  */
-class ListFiler {
+class ListFilter {
 
     /**
      * Constructor.
      */
     constructor() {
-        this.$searchFilters = $('#searchFilters');
-        this.$secondarySearchFilters = $('#secondarySearchFilters');
-        this.$resetFiltersButton = $('#resetFiltersButton');
+        this.$filter1 = $('input[name="job-filter-1"]');
+        this.$filter2 = $('input[name="job-filter-2"]');
         this.$cards = $('.flow-card');
         this.$filterCardsParent = $('#filterCardsParent');
         this.flowCardList = [];
+        this.activeFilters = [];
         this.listFilterResults = null;
-        this.buttonList = [];
-        this.secondaryButtonList = [];
-        this.buttonStateMap = {};
-        this.secondaryButtonStateMap = {};
     }
 
     /**
-     * Determine if it's neceassry to manipulate any data.
+     * Determine if it's necessary to manipulate any data.
      *
      * @returns {boolean}
      */
     isValid() {
-        return this.$searchFilters.length > 0;
+        return this.$cards.length > 0;
     }
 
     /**
@@ -124,181 +111,84 @@ class ListFiler {
             // Update results tracker.
             this.listFilterResults = $('#listFilterResults');
 
-            // Track filter buttons.
-            this.buttonList = this.$searchFilters.find('button');
-
-            // Track secondary filter options if they exist.
-            if (this.$secondarySearchFilters.length > 0) {
-                this.secondaryButtonList = this.$secondarySearchFilters.find('button');
-            }
-
             // Attach listeners to filter buttons.
-            this.attachPrimaryFilterListeners();
-            this.attachSecondaryFilterListeners();
+            this.setActiveFilters();
+            this.attachPrimaryFilterListener();
+            this.attachSecondaryFilterListener();
 
             // Organize to be filtered items.
             this.prepareFlowCards();
-
-            // Reset all filters button.
-            this.$resetFiltersButton.on('click', () => {
-                this.resetAllFilters();
-            });
         }
     }
 
     /**
-     * Go through the primary filters and attach their action callbacks.
+     * Get the active filters on page load.
      */
-    attachPrimaryFilterListeners() {
-        this.attachFilterListeners(this.buttonList, this.buttonStateMap);
-    }
+    setActiveFilters() {
+        let mainFilter = $('input[name="job-filter-1"]:checked').val();
 
-    /**
-     * Go through the secondary filters and attach their action callbacks.
-     */
-    attachSecondaryFilterListeners() {
-        if (this.secondaryButtonList.length > 0) {
-            this.attachFilterListeners(this.secondaryButtonList, this.secondaryButtonStateMap);
+        if (this.$filter2.length > 0) {
+            this.activeFilters = [mainFilter, $('input[name="job-filter-2"]:checked').val()];
+        } else {
+            this.activeFilters = [mainFilter];
         }
     }
 
     /**
-     * Attach button listeners to apply filters.
-     *
-     * @param filterButtonList
-     * @param filterStateMap
+     * Attach primary filter listener.
      */
-    attachFilterListeners(filterButtonList, filterStateMap) {
-        for (let i = 0; i < filterButtonList.length; i++) {
-            let $button = $(filterButtonList[i]),
-                tag = $button.data('filtertag');
+    attachPrimaryFilterListener() {
+        this.$filter1.click((e) => {
+            let targetFilter = $(e.currentTarget).val();
 
-            // Track states and set default values.
-            filterStateMap[tag] = true;
+            // Update active filter list.
+            if (this.$filter2.length > 0) {
+                this.activeFilters = [targetFilter, $('input[name="job-filter-2"]:checked').val()];
+            } else {
+                this.activeFilters = [targetFilter];
+            }
 
-            // Attach listener
-            $button.on('click', () => {
-                let ctag = $button.data('filtertag');
+            // Apply filters.
+            this.applyFilter();
+        });
+    }
 
-                // Update active state and button styling.
-                if (filterStateMap[ctag]) {
-                    $button.attr('class', 'disabled-button');
-                    filterStateMap[ctag] = false;
-                    this.removeFilter(ctag, filterStateMap);
-                } else {
-                    $button.attr('class', 'secondary-selected-button-1');
-                    filterStateMap[ctag] = true;
-                    this.applyFilter(ctag, filterStateMap);
-                }
+    /**
+     * Attach secondary filter listener if needed.
+     */
+    attachSecondaryFilterListener() {
+        if (this.$filter2.length > 0) {
+            this.$filter2.click((e) => {
+                let targetFilter = $(e.currentTarget).val();
+
+                // Update active filter list.
+                this.activeFilters = [targetFilter, $('input[name="job-filter-1"]:checked').val()];
+
+                // Apply filters.
+                this.applyFilter();
             });
         }
     }
 
     /**
      * Applies the filter and shows the relevant items.
-     *
-     * @param tag
-     * @param filterStateMap
      */
-    applyFilter(tag, filterStateMap) {
-        // Go through each flow card and check the filter.
+    applyFilter() {
+        // Go through each flow card and check to see if it has all active filters.
         for (let k = 0; k < this.flowCardList.length; k++) {
             let fc = this.flowCardList[k];
 
-            // Attach if we have the tag, is currently hidden, and is not being filtered across all filter sets.
-            if (fc.hasTag(tag) && !this.isCardFilteredOut(fc)) {
-                if (fc.isDetached) {
-                    fc.attach();
-                }
-            } else if (!fc.hasTag(tag) && !fc.hasAnActiveTag(filterStateMap)) {
-                // Detach if we dont have the tag, is currently showing, and the card has no active filter.
-                if (!fc.isDetached) {
-                    fc.detach();
-                }
+            // Attach if match filters.
+            if (fc.hasTags(this.activeFilters)) {
+                fc.attach();
+            // Otherwise we detach it.
+            } else {
+                fc.detach();
             }
         }
 
         // Inform the user how many items are showing.
         this.updateDisplayCount();
-    }
-
-    /**
-     * Removes the filter and hides the relevant items.
-     *
-     * @param tag
-     * @param filterStateMap
-     */
-    removeFilter(tag, filterStateMap) {
-        // Go through each flow card and check the filter.
-        for (let k = 0; k < this.flowCardList.length; k++) {
-            let fc = this.flowCardList[k];
-
-            // Attach if we have the tag, is currently hidden, and has an active filter.
-            if (!fc.hasTag(tag) && fc.isDetached && fc.hasAnActiveTag(filterStateMap)) {
-                fc.attach();
-            } else if (fc.hasTag(tag)) {
-                if (!fc.isDetached && !fc.hasAnActiveTag(filterStateMap)) {
-                    fc.detach();
-                }
-            }
-        }
-
-        // Inform the user how many items are showing.
-        this.updateDisplayCount();
-    }
-
-    /**
-     * Check all the filter maps to see if the supplied flow card is being filtered out.
-     *
-     * @param flowCard
-     * @returns {boolean}
-     */
-    isCardFilteredOut(flowCard) {
-        if (this.secondaryButtonStateMap.length > 0) {
-            return !flowCard.hasAnActiveTag(this.buttonStateMap) &&
-                !flowCard.hasAnActiveTag(this.secondaryButtonStateMap);
-        }
-
-        return !flowCard.hasAnActiveTag(this.buttonStateMap);
-    }
-
-    /**
-     * Adjust all buttons and cards to default values.
-     */
-    resetAllFilters() {
-        // Reset primary filters.
-        this.resetFilters(this.buttonList, this.buttonStateMap);
-
-        // Reset secondary filters if need be.
-        this.resetFilters(this.secondaryButtonList, this.secondaryButtonStateMap);
-
-        // Reset cards.
-        for (let k = 0; k < this.flowCardList.length; k++) {
-            let fc = this.flowCardList[k];
-            if (fc.isDetached) {
-                fc.attach();
-            }
-        }
-
-        this.updateDisplayCount();
-    }
-
-    /**
-     * Reset filters from the supplied list of buttons.
-     *
-     * @param filterButtonList
-     * @param filterStateMap
-     */
-    resetFilters(filterButtonList, filterStateMap) {
-        if (filterButtonList.length > 0) {
-            for (let i = 0; i < filterButtonList.length; i++) {
-                let $button = $(filterButtonList[i]),
-                    tag = $button.data('filtertag');
-
-                filterStateMap[tag] = true;
-                $button.attr('class', 'secondary-selected-button-1');
-            }
-        }
     }
 
     /**
@@ -327,4 +217,4 @@ class ListFiler {
     }
 }
 
-export default ListFiler;
+export default ListFilter;

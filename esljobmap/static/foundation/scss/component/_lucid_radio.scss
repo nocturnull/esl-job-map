@@ -1,0 +1,53 @@
+// ==========================================================================
+// Lucid Radio
+// ==========================================================================
+
+.lucid-radio {
+    &:hover input ~ .checkmark {
+      background-color: #ccc;
+    }
+
+    display: inline-block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    user-select: none;
+    width: 7rem;
+
+    input {
+        position: absolute;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    input:checked ~ .checkmark {
+        background-color: nth($brand-primary, 1);
+
+        &:after {
+            display: block;
+        }
+    }
+
+    .checkmark {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 25px;
+        width: 25px;
+        background-color: #eee;
+        border-radius: 50%;
+
+        &:after {
+            content: "";
+            position: absolute;
+            display: none;
+            top: 9px;
+            left: 9px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+    }
+}

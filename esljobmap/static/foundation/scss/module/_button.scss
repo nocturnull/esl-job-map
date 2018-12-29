@@ -34,16 +34,6 @@
     }
 }
 
-.secondary-selected-button-1 {
-    @extend .primary-button-1;
-    background-color: nth($brand-secondary, 1);
-
-    &:hover {
-        background-color: lighten(nth($brand-secondary, 1), 15%);
-        color: white;
-    }
-}
-
 .disabled-button {
     @extend .primary-button-1;
     border: none;

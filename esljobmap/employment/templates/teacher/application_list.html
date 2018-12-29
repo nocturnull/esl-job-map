@@ -7,17 +7,27 @@
     <div class="grid-container job-list">
         <h2>My Applications</h2>
 
-        <div class="mtb-1">
-            <button id="resetFiltersButton" class="primary-button-1">All</button>
+        <div>
+            <label class="lucid-radio">
+                Open
+                <input type="radio" name="job-filter-1" value="open">
+                <span class="checkmark"></span>
+            </label>
+            <label class="lucid-radio">
+                Closed
+                <input type="radio" name="job-filter-1" value="closed">
+                <span class="checkmark"></span>
+            </label>
+            <label class="lucid-radio">
+                All
+                <input type="radio" name="job-filter-1" value="all" checked>
+                <span class="checkmark"></span>
+            </label>
         </div>
 
-        <div id="searchFilters" class="mb-1">
-            <button class="secondary-selected-button-1" data-filtertag="in-consideration">Open</button>
-            <button class="secondary-selected-button-1" data-filtertag="closed">Expired</button>
-            {% with item_count=object_list|length %}
-                <div id="listFilterResults" class="list-results">Currently displaying {{ item_count }}/{{ item_count }}</div>
-            {% endwith %}
-        </div>
+        {% with item_count=object_list|length %}
+            <div id="listFilterResults" class="list-results">Currently displaying {{ item_count }}/{{ item_count }}</div>
+        {% endwith %}
 
         <div class="grid-x" id="filterCardsParent">
             {% for application in object_list %}

@@ -63,7 +63,6 @@ class ListJobPost(LoginRequiredMixin, ListView):
     """
     model = JobPost
     template_name = 'recruiter/job_post_list.html'
-    extra_context = {'show_expired': True}
 
     def get_queryset(self):
         return self.request.user.job_posts.all().order_by(F('created_at').desc(nulls_last=True))
