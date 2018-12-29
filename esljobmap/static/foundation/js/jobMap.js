@@ -29,7 +29,8 @@ class JobMapSetup {
         this.$locationError = null;
         this.$generalJobFields = null;
         this.googleMarkerMap = {};
-        this.googleMarkerMapListeners = {};
+        this.googleMarkerMapHoverListeners = {};
+        this.googleMarkerMapClickListeners = {};
         this.disinterestedIconImage = this.cdnImg('koco-man/koco-grey-40x40.png');
         this.appliedIconImage = this.cdnImg('koco-man/koco-black-40x40.png');
         this.activeIconImage = this.cdnImg('koco-man/koco-red-40x40.png');
@@ -115,16 +116,15 @@ class JobMapSetup {
         for (let i = 0; i < window.jobMap.markers.length; i++) {
             let markerData = window.jobMap.markers[i],
                 latlng = new google.maps.LatLng(markerData.lat, markerData.lng),
-                iconImageUrl = this.resolveIconImage(markerData);
-
-            let marker = new google.maps.Marker({
-                position: latlng,
-                optimized: false,
-                icon: this.makeComplexIcon(iconImageUrl)
-            });
+                iconImageUrl = this.resolveIconImage(markerData),
+                marker = new google.maps.Marker({
+                    position: latlng,
+                    optimized: false,
+                    icon: this.makeComplexIcon(iconImageUrl)
+                });
 
             marker.setMap(this.map);
-            let listener = marker.addListener('mouseover', () => {
+            let lamb = () => {
                 // Open up the window and display the job info.
                 this.infoWindow.setContent(markerData.content);
                 this.infoWindow.open(this.map, marker);
@@ -133,10 +133,23 @@ class JobMapSetup {
                 marker.setIcon(this.makeComplexIcon(this.activeIconImage));
                 this.highlightedMarker = marker;
                 this.highlightedMarkerOriginalIcon = iconImageUrl;
-            });
 
+                // Reset icon when the close button is pressed on mobile.
+                $($('.gm-ui-hover-effect')[0]).on('click', () => {
+                    this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
+                });
+            };
+
+            // Add marker listeners to the map.
+            let hoverListener = marker.addListener('mouseover', lamb);
+            let clickListener = marker.addListener('click', lamb);
+
+            // Track marker for easy access later on.
             this.googleMarkerMap[markerData.id] = marker;
-            this.googleMarkerMapListeners[markerData.id] = listener;
+
+            // Track the listeners so that we can replace them when needed.
+            this.googleMarkerMapHoverListeners[markerData.id] = hoverListener;
+            this.googleMarkerMapClickListeners[markerData.id] = clickListener;
         }
     }
 
@@ -178,13 +191,23 @@ class JobMapSetup {
 
         marker.setIcon(this.makeComplexIcon(iconImage));
 
-        // Remove the old listener.
-        let listener = this.googleMarkerMapListeners[id];
-        google.maps.event.removeListener(listener);
-        delete this.googleMarkerMapListeners[id];
+        // Remove the old listeners.
+        let hoverListener = this.googleMarkerMapHoverListeners[id],
+            clickListener = this.googleMarkerMapClickListeners[id];
 
-        // Add a new listener with the updated data.
+        google.maps.event.removeListener(hoverListener);
+        google.maps.event.removeListener(clickListener);
+        delete this.googleMarkerMapHoverListeners[id];
+        delete this.googleMarkerMapClickListeners[id];
+
+        // Add new listeners with the updated data.
         marker.addListener('mouseover', () => {
+            // Open up the window and display the job info.
+            this.infoWindow.setContent(content);
+            this.infoWindow.open(this.map, marker);
+        });
+
+        marker.addListener('click', () => {
             // Open up the window and display the job info.
             this.infoWindow.setContent(content);
             this.infoWindow.open(this.map, marker);
@@ -373,9 +396,9 @@ class JobMapSetup {
      * Wrapper function to close the window from an external invoker.
      */
     closeMapInfoWindow() {
-        // Clsoe the InfoWindow.
-        this.infoWindow.close();
+        // Close the InfoWindow.
         this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
+        this.infoWindow.close();
     }
 }
 
