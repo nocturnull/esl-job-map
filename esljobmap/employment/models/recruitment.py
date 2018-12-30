@@ -81,8 +81,8 @@ class JobPost(models.Model):
         """
         if self.is_visible and not self.is_expired:
             days = (datetime.today() - self.created_at).days
-            return 'posted {0} day(s) ago'.format(days)
-        return 'job closed'
+            return 'Posted {0} day(s) ago'.format(days)
+        return 'Job closed'
 
     @property
     def pretty_days_elapsed(self) -> str:
