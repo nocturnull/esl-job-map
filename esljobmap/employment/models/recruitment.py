@@ -79,7 +79,7 @@ class JobPost(models.Model):
 
         :return:
         """
-        if self.is_visible:
+        if self.is_visible and not self.is_expired:
             days = (datetime.today() - self.created_at).days
             return 'posted {0} day(s) ago'.format(days)
         return 'job closed'

@@ -130,14 +130,14 @@ class JobMapSetup {
                 this.infoWindow.open(this.map, marker);
 
                 // Update the icon of the marker.
-                marker.setIcon(this.makeComplexIcon(this.activeIconImage));
-                this.highlightedMarker = marker;
-                this.highlightedMarkerOriginalIcon = iconImageUrl;
+                // marker.setIcon(this.makeComplexIcon(this.activeIconImage));
+                // this.highlightedMarker = marker;
+                // this.highlightedMarkerOriginalIcon = iconImageUrl;
 
                 // Reset icon when the close button is pressed on mobile.
-                $($('.gm-ui-hover-effect')[0]).on('click', () => {
-                    this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
-                });
+                // $($('.gm-ui-hover-effect')[0]).on('click', () => {
+                //     this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
+                // });
             };
 
             // Add marker listeners to the map.
@@ -397,7 +397,7 @@ class JobMapSetup {
      */
     closeMapInfoWindow() {
         // Close the InfoWindow.
-        this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
+        // this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
         this.infoWindow.close();
     }
 }
