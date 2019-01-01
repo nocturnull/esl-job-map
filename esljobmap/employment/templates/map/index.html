@@ -12,9 +12,9 @@
 
     {% if show_warning %}
         {% if is_full_time %}
-            {% include 'modules/modal/full.html' with mid='warningModal' mtitle='NOTICE' mcontent='You must have bachelor’s degree and citizenship from: Ireland, the UK, South Africa, USA, Canada, Australia or New Zealand, to apply for these positions. Recruiters do not consider other applicants, and other applicants are not legally eligible for English teaching jobs in Korea.' %}
+            {% include 'modules/modal/full.html' with mid='warningModal' mtitle='NOTICE' mcontent='You must have bachelor’s degree and citizenship from: Ireland, the UK, South Africa, the USA, Canada, Australia or New Zealand, to apply for these positions. Recruiters do not consider other applicants, and other applicants are not legally eligible for English teaching jobs in Korea.' %}
         {% else %}
-            {% include 'modules/modal/full.html' with mid='warningModal' mtitle='NOTICE' mcontent='You must have an E-2 visa and your visa sponsoring employer’s permission to do other teaching work, or an F-2, 4, 5 and 6 visa. If you do tutor without these qualifications you are working illegally.' %}
+            {% include 'modules/modal/full.html' with mid='warningModal' mtitle='NOTICE' mcontent='You must have an F-2, 4, 5 or 6 visa or an E-2 visa with your visa sponsoring employer’s permission, to do other teaching work in Korea. If you teach English without these qualifications, you are working illegally.' %}
         {% endif %}
     {% endif %}
 
