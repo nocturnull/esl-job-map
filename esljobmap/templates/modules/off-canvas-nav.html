@@ -11,17 +11,17 @@
             <li><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
         {% endif %}
         <li>
-            <a href="{% url 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">Full-Time Map</a>
+            <a href="{% map_url user 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">Full-Time Map</a>
             <ul class="menu vertical nested">
-                <li><a href="{% url 'employment_full_time_map_city' 'seoul' %}" class="{% menu_class request 'employment_full_time_map_city' 'seoul' %}">Seoul</a></li>
-                <li><a href="{% url 'employment_full_time_map_city' 'busan' %}" class="{% menu_class request 'employment_full_time_map_city' 'busan' %}">Busan</a></li>
+                <li><a href="{% map_url user 'employment_full_time_map_city' 'seoul' %}" class="{% menu_class request 'employment_full_time_map_city' 'seoul' %}">Seoul</a></li>
+                <li><a href="{% map_url user 'employment_full_time_map_city' 'busan' %}" class="{% menu_class request 'employment_full_time_map_city' 'busan' %}">Busan</a></li>
             </ul>
         </li>
         <li>
-            <a href="{% url 'employment_part_time_map' %}" class="{% menu_class request 'employment_part_time_map' %}">Part-Time Map</a>
+            <a href="{% map_url user 'employment_part_time_map' %}" class="{% menu_class request 'employment_part_time_map' %}">Part-Time Map</a>
             <ul class="menu vertical nested">
-                <li><a href="{% url 'employment_part_time_map_city' 'seoul' %}" class="{% menu_class request 'employment_part_time_map_city' 'seoul' %}">Seoul</a></li>
-                <li><a href="{% url 'employment_part_time_map_city' 'busan' %}" class="{% menu_class request 'employment_part_time_map_city' 'busan' %}">Busan</a></li>
+                <li><a href="{% map_url user 'employment_part_time_map_city' 'seoul' %}" class="{% menu_class request 'employment_part_time_map_city' 'seoul' %}">Seoul</a></li>
+                <li><a href="{% map_url user 'employment_part_time_map_city' 'busan' %}" class="{% menu_class request 'employment_part_time_map_city' 'busan' %}">Busan</a></li>
             </ul>
         </li>
         <li>

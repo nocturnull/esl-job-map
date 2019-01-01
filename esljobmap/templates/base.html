@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="en">
     {% load staticfiles %}
+    {% load attr %}
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -10,7 +11,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'foundation/dist/app.min.css' %}">
     </head>
-    <body>
+    <body class="{{ request.path|classify }}">
         {% if request.user_agent.is_mobile %}
             {% include 'modules/off-canvas-nav.html' %}
         {% else %}

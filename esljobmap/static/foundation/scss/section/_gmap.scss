@@ -1,0 +1,21 @@
+// ==========================================================================
+// Google Map
+// ==========================================================================
+
+.gmap {
+    .top-bar, footer, .mobile-top-nav {
+        position: fixed;
+        width: 100%;
+        z-index: 1;
+    }
+
+    .top-bar, .mobile-top-nav {
+        top: 0;
+        min-height: initial;
+    }
+
+    footer {
+        bottom: 0;
+        height: 2rem;
+    }
+}

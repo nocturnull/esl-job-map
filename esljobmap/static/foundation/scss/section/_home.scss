@@ -9,16 +9,29 @@
     padding-top: 10%;
     height: 100%;
 
+    @include breakpoint(medium down) {
+        padding-top: 40%;
+    }
+
     > img {
         width: 40%;
         margin: 2rem 0;
+
+        @include breakpoint(medium down) {
+            width: 100%;
+        }
     }
 
-    > div {
+    .action-buttons {
         text-align: center;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
 
-        a {
-            margin: 0 1rem;
+        @include breakpoint(medium up) {
+            .action {
+                margin: 0 1rem;
+            }
         }
     }
 }

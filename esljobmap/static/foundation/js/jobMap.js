@@ -47,7 +47,8 @@ class JobMapSetup {
                     mapTypeIds: ['roadmap'],
                 },
                 mapTypeControl: false,
-                streetViewControl: false
+                streetViewControl: false,
+                gestureHandling: 'greedy'
             });
             this.addExistingJobMarkers();
             this.infoWindow = new google.maps.InfoWindow;
