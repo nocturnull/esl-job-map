@@ -23,7 +23,7 @@ class TeacherSignUp(generic.CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect('account_profile')
 
 
 class RecruiterSignUp(generic.CreateView):
@@ -37,4 +37,4 @@ class RecruiterSignUp(generic.CreateView):
     def form_valid(self, form):
         user = form.save()
         login(self.request, user)
-        return redirect('home')
+        return redirect('account_profile')

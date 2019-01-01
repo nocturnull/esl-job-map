@@ -15,8 +15,6 @@ class JobMapSetup {
     constructor() {
         this.map = null;
         this.currentMarker = null;
-        this.highlightedMarker = null;
-        this.highlightedMarkerOriginalIcon = null;
         this.infoWindow = null;
         this.geocoder = null;
         this.latitude = 0;
@@ -91,6 +89,11 @@ class JobMapSetup {
             // Bind job field sets.
             this.$generalJobFields = $('#generalJobFields');
 
+            // Bind window close event.
+            this.map.addListener('click', () => {
+                this.closeMapInfoWindow();
+            });
+
             // Show warning modal if neccesary.
             if (this.$warningModal.length > 0) {
                 this.$warningModal.foundation('open');
@@ -128,16 +131,6 @@ class JobMapSetup {
                 // Open up the window and display the job info.
                 this.infoWindow.setContent(markerData.content);
                 this.infoWindow.open(this.map, marker);
-
-                // Update the icon of the marker.
-                // marker.setIcon(this.makeComplexIcon(this.activeIconImage));
-                // this.highlightedMarker = marker;
-                // this.highlightedMarkerOriginalIcon = iconImageUrl;
-
-                // Reset icon when the close button is pressed on mobile.
-                // $($('.gm-ui-hover-effect')[0]).on('click', () => {
-                //     this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
-                // });
             };
 
             // Add marker listeners to the map.
@@ -396,8 +389,6 @@ class JobMapSetup {
      * Wrapper function to close the window from an external invoker.
      */
     closeMapInfoWindow() {
-        // Close the InfoWindow.
-        // this.highlightedMarker.setIcon(this.makeComplexIcon(this.highlightedMarkerOriginalIcon));
         this.infoWindow.close();
     }
 }

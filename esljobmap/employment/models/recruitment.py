@@ -137,7 +137,7 @@ class JobPost(models.Model):
         if not_interested:
             container_class = 'job-not-interested'
 
-        content = '<div class="job-post" id="jobPostCard" onmouseleave="closeInfoWindow();">'
+        content = '<div class="job-post" id="jobPostCard">'
         content += '<div class="job-description ' + container_class + '">'
         content += '<span class="bold-text">' + self.title + '</span><br>'
         if self.is_full_time:
