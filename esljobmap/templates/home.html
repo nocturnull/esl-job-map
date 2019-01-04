@@ -1,6 +1,7 @@
 <!doctype html>
 <html class="no-js" lang="en">
     {% load staticfiles %}
+    {% load nav %}
     <head>
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
@@ -15,13 +16,13 @@
             <img src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
             <div class="action-buttons">
                 <div class="action">
-                    <a href="{% url 'employment_full_time_map' %}" class="primary-button-1">
-                        <span>Full-Time Map</span>
+                    <a href="{% map_url request.user 'employment_full_time_map' %}" class="primary-button-1">
+                        <span>Full-Time Jobs</span>
                     </a>
                 </div>
                 <div class="action">
-                    <a href="{% url 'employment_part_time_map' %}" class="primary-button-1">
-                        <span>Part-Time Map</span>
+                    <a href="{% map_url request.user 'employment_part_time_map' %}" class="primary-button-1">
+                        <span>Part-Time Jobs</span>
                     </a>
                 </div>
                 <div class="action">

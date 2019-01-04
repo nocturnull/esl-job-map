@@ -15,7 +15,10 @@ class FlowCard {
         this.$dom = $(dom);
         this.$parent = parent;
         this.detachedCase = null;
+        this.tooltips = [];
         this.bindRepostHoverEvent();
+        this.bindTooltipHideEvents();
+        this.isShowing = false;
     }
 
     /**
@@ -72,6 +75,34 @@ class FlowCard {
             takenDown.on('mouseleave', () => {
                 takenDown.html('Taken down');
             });
+        }
+    }
+
+    bindTooltipHideEvents() {
+        this.tooltips = $('.flowcard-tooltip');
+        window.tooltipIsOpen = false;
+
+        if (this.tooltips.length > 0) {
+            // Hide all tooltips on click when needed.
+            $('body').click(() => {
+                if (window.tooltipIsOpen) {
+                    window.tooltipIsOpen = false;
+                    for (let i = 0; i  < this.tooltips.length; i++) {
+                        let tip = this.tooltips[i];
+                        $(tip).foundation('hide');
+                    }
+                }
+            });
+
+            // Track when the tooltips open.
+            for (let i = 0; i  < this.tooltips.length; i++) {
+                let tip = this.tooltips[i];
+                $(tip).on('show.zf.tooltip', function() {
+                    setTimeout(() => {
+                        window.tooltipIsOpen = true;
+                    }, 1000)
+                });
+            }
         }
     }
 }

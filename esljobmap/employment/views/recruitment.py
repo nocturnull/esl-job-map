@@ -29,11 +29,11 @@ class CreateFullTimeJobPost(LoginRequiredMixin, CreateView):
     model = JobPost
     form_class = CreateFullTimeJobForm
     template_name = 'map/index.html'
-    success_url = reverse_lazy('employment_my_job_posts')
+    success_url = reverse_lazy('employment_full_time_map')
     extra_context = {'is_full_time': True}
 
     def get(self, request, *args, **kwargs):
-        return redirect('employment_full_time_map')
+        return redirect(self.success_url + "#postAnchor")
 
 
 @method_decorator(recruiter_required, name='dispatch')
@@ -44,10 +44,10 @@ class CreatePartTimeJobPost(LoginRequiredMixin, CreateView):
     model = JobPost
     form_class = CreatePartTimeJobForm
     template_name = 'map/index.html'
-    success_url = reverse_lazy('employment_my_job_posts')
+    success_url = reverse_lazy('employment_part_time_map')
 
     def get(self, request, *args, **kwargs):
-        return redirect('employment_part_time_map')
+        return redirect(self.success_url + "#postAnchor")
 
 
 @method_decorator(recruiter_required, name='dispatch')
