@@ -24,30 +24,43 @@ class JobPostIndex(LoginRequiredMixin, TemplateView):
 @method_decorator(recruiter_required, name='dispatch')
 class CreateFullTimeJobPost(LoginRequiredMixin, CreateView):
     """
-    Fake job post creation view, redirects user to login page.
+    Job Post creation view.
     """
     model = JobPost
     form_class = CreateFullTimeJobForm
     template_name = 'map/index.html'
-    success_url = reverse_lazy('employment_full_time_map')
+    success_url = reverse_lazy('employment_my_job_posts')
     extra_context = {'is_full_time': True}
 
+    def form_valid(self, form):
+        new_job_post = form.save(commit=False)
+        new_job_post.is_full_time = True
+        new_job_post.site_user = self.request.user
+        new_job_post.save()
+        return super().form_valid(form)
+
     def get(self, request, *args, **kwargs):
-        return redirect(self.success_url + "#postAnchor")
+        return redirect(reverse_lazy('employment_full_time_map') + "#postAnchor")
 
 
 @method_decorator(recruiter_required, name='dispatch')
 class CreatePartTimeJobPost(LoginRequiredMixin, CreateView):
     """
-    Fake job post creation view, redirects user to login page.
+    Job Post creation view.
     """
     model = JobPost
     form_class = CreatePartTimeJobForm
     template_name = 'map/index.html'
-    success_url = reverse_lazy('employment_part_time_map')
+    success_url = reverse_lazy('employment_my_job_posts')
+
+    def form_valid(self, form):
+        new_job_post = form.save(commit=False)
+        new_job_post.site_user = self.request.user
+        new_job_post.save()
+        return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
-        return redirect(self.success_url + "#postAnchor")
+        return redirect(reverse_lazy('employment_part_time_map') + "#postAnchor")
 
 
 @method_decorator(recruiter_required, name='dispatch')
