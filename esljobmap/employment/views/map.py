@@ -26,7 +26,8 @@ class FullTimeMap(ListView):
 
         # We don't want to show jobs that have expired.
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
-        context['icon_image'] = cdn_image('koco-man/koco-blue-40x40.png')
+        context['icon_image'] = cdn_image('koco-man/blue-60x60.png')
+        context['marker_image'] = cdn_image('marker/blue.png')
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['is_full_time'] = True
         context['form'] = CreateFullTimeJobForm(self.request)
@@ -51,7 +52,8 @@ class PartTimeMap(ListView):
 
         # We don't want to show jobs that have expired.
         context['object_list'] = [o for o in self.object_list if not o.is_expired]
-        context['icon_image'] = cdn_image('koco-man/koco-orange-40x40.png')
+        context['icon_image'] = cdn_image('koco-man/orange-30x30.png')
+        context['marker_image'] = cdn_image('marker/orange.png')
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['is_full_time'] = False
         context['form'] = CreatePartTimeJobForm(self.request)

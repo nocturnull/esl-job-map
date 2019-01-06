@@ -29,9 +29,8 @@ class JobMapSetup {
         this.googleMarkerMap = {};
         this.googleMarkerMapHoverListeners = {};
         this.googleMarkerMapClickListeners = {};
-        this.disinterestedIconImage = this.cdnImg('koco-man/koco-grey-40x40.png');
-        this.appliedIconImage = this.cdnImg('koco-man/koco-black-40x40.png');
-        this.activeIconImage = this.cdnImg('koco-man/koco-red-40x40.png');
+        this.disinterestedIconImage = this.cdnImg('koco-man/gray-30x30.png');
+        this.appliedIconImage = this.cdnImg('koco-man/black-60x60.png');
     }
 
     /**
@@ -225,11 +224,10 @@ class JobMapSetup {
         this.currentMarker = new google.maps.Marker({
             position: latLng,
             map: this.map,
-            icon: this.makeComplexIcon(this.activeIconImage),
+            icon: this.makeComplexIcon(window.jobMap.markerImage),
             animation: google.maps.Animation.DROP,
             draggable: true
         });
-        this.map.panTo(latLng);
 
         // Add drag listener.
         google.maps.event.addListener(this.currentMarker, 'dragend', (e) => {
@@ -289,7 +287,7 @@ class JobMapSetup {
                 this.currentMarker = new google.maps.Marker({
                     map: this.map,
                     position: loc,
-                    icon: this.makeComplexIcon(this.activeIconImage),
+                    icon: this.makeComplexIcon(window.jobMap.markerImage),
                     animation: google.maps.Animation.DROP
                 });
 

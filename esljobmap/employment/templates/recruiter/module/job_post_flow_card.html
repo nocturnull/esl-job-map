@@ -5,7 +5,7 @@
 <div class="flow-card {{ job_post.card_class|safe }}" data-filtertaglist="{{ job_post.tags }}">
     <h5>
         <img src="{% resolve_koco_image job_post %}" alt="kocoman">
-        {{ job_post.title }}
+        <span>{{ job_post.title }}</span>
     </h5>
     <div class="flow-card-content">
         <div><span class="bold-text">Class Type:</span> {% trunc 'Class Type:' job_post.class_type %}</div>

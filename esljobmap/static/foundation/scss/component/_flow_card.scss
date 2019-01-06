@@ -14,7 +14,9 @@
     img {
         position: absolute;
         left: 0;
-        top: 0.3rem;
+        top: 0.4rem;
+        width: 40px;
+        height: 40px;
     }
 
     h5 {
@@ -27,6 +29,12 @@
         text-align: center;
         color: white;
         overflow: hidden;
+
+        span {
+            width: 85%;
+            display: inline-block;
+            margin-left: 2rem;
+        }
     }
 
     &.full-time h5 {
