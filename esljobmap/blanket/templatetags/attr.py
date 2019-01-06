@@ -7,6 +7,8 @@ register = template.Library()
 
 @register.filter
 def classify(path):
-    if 'full-time' in path or 'part-time' in path:
+    if path == '/':
+        return 'home'
+    elif 'full-time' in path or 'part-time' in path:
         return 'gmap'
     return 'zilch'

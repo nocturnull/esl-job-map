@@ -1,43 +1,38 @@
-<!doctype html>
-<html class="no-js" lang="en">
-    {% load staticfiles %}
-    {% load nav %}
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{% block title %}Full-time English Teaching Jobs in South Korea on a Map - Koco Tutor{% endblock %}</title>
-        <link rel="shortcut icon" type="image/png" href="{% static 'esljobmap/favicon.png' %}"/>
-        <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'foundation/dist/app.min.css' %}">
-    </head>
-    <body>
-        <div class="home">
-            <img src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
-            <div class="action-buttons">
-                <div class="action">
-                    <a href="{% map_url request.user 'employment_full_time_map' %}" class="primary-button-1">
-                        <span>Full-Time Jobs</span>
-                    </a>
-                </div>
-                <div class="action">
-                    <a href="{% map_url request.user 'employment_part_time_map' %}" class="primary-button-1">
-                        <span>Part-Time Jobs</span>
-                    </a>
-                </div>
-                <div class="action">
-                    {% if request.user.is_authenticated %}
-                        <a href="{% url 'employment_job_post_index' %}" class="primary-button-1">
-                            <span>Post a Job</span>
-                        </a>
-                    {% else %}
-                        <a href="{% url 'recruiter_signup' %}" class="primary-button-1">
-                            <span>Post a Job</span>
-                        </a>
-                    {% endif %}
-                </div>
-            </div>
+{% extends 'base.html' %}
 
+{% load staticfiles %}
+{% load nav %}
+
+{% block content %}
+
+    <div class="home-container">
+        <img class="home-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
+
+        <h2 class="main-title">English teaching jobs, on a map</h2>
+
+        <div class="action-buttons">
+            <div class="action">
+                <a href="{% map_url request.user 'employment_full_time_map' %}" class="primary-button-1">
+                    <span>Full-Time Jobs</span>
+                </a>
+            </div>
+            <div class="action">
+                <a href="{% map_url request.user 'employment_part_time_map' %}" class="primary-button-1">
+                    <span>Part-Time Jobs</span>
+                </a>
+            </div>
+            <div class="action">
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'employment_job_post_index' %}" class="primary-button-1">
+                        <span>Post a Job</span>
+                    </a>
+                {% else %}
+                    <a href="{% url 'recruiter_signup' %}" class="primary-button-1">
+                        <span>Post a Job</span>
+                    </a>
+                {% endif %}
+            </div>
         </div>
-    </body>
-</html>
+    </div>
+
+{% endblock %}

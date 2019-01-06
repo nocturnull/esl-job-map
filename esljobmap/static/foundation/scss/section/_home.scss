@@ -6,16 +6,31 @@
     background: cdn-url('images/bg/busan.jpg') no-repeat center center fixed;
     background-size: cover;
     text-align: center;
-    padding-top: 10%;
     height: 100%;
 
-    @include breakpoint(medium down) {
-        padding-top: 40%;
+    .logo-item {
+        display: none;
     }
 
-    > img {
+    .content {
+        background-color: rgba(100, 100, 100, 0.2);
+    }
+
+    footer {
+        display: none;
+    }
+
+    .home-container {
+        padding-top: 10vh;
+    }
+
+    .main-title {
+        color: white;
+        margin-bottom: 2rem;
+    }
+
+    .home-logo {
         width: 40%;
-        margin: 2rem 0;
 
         @include breakpoint(medium down) {
             width: 100%;
@@ -27,10 +42,24 @@
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
+    }
 
-        @include breakpoint(medium up) {
-            .action {
-                margin: 0 1rem;
+    @include breakpoint(medium up) {
+        .action {
+            margin: 0 1rem;
+        }
+    }
+
+    @include breakpoint(medium down) {
+        .action {
+            padding: 1rem 0;
+            width: 100%;
+
+            a {
+                font-size: 1.2rem;
+                display: block;
+                margin: 0 auto;
+                width: 90%;
             }
         }
     }
