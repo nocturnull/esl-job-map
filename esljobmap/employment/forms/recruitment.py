@@ -23,7 +23,7 @@ class CreateJobForm(forms.ModelForm):
         if is_recruiter(request):
             user = request.user
             self.fields['contact_name'].initial = user.full_name
-            self.fields['contact_email'].initial = user.email
+            self.fields['contact_email'].initial = user.preferred_email
             self.fields['contact_number'].initial = user.phone_number
 
 

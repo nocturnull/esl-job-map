@@ -4,7 +4,9 @@ from django.contrib.auth import login
 from django.shortcuts import redirect
 from django.views import generic
 
-from ..forms import SiteUserCreationForm, SiteUserTeacherCreationForm, SiteUserRecruiterCreationForm
+from ..forms.user import SiteUserCreationForm
+from ..forms.applicant import ApplicantCreationForm
+from ..forms.recruiter import RecruiterCreationForm
 
 
 class SignUp(generic.CreateView):
@@ -12,9 +14,9 @@ class SignUp(generic.CreateView):
     template_name = 'registration/signup/index.html'
 
 
-class TeacherSignUp(generic.CreateView):
-    form_class = SiteUserTeacherCreationForm
-    template_name = 'registration/signup/teacher.html'
+class ApplicantSignUp(generic.CreateView):
+    form_class = ApplicantCreationForm
+    template_name = 'registration/signup/applicant.html'
 
     def get_context_data(self, **kwargs):
         kwargs['role'] = 'teacher'
@@ -27,7 +29,7 @@ class TeacherSignUp(generic.CreateView):
 
 
 class RecruiterSignUp(generic.CreateView):
-    form_class = SiteUserRecruiterCreationForm
+    form_class = RecruiterCreationForm
     template_name = 'registration/signup/recruiter.html'
 
     def get_context_data(self, **kwargs):

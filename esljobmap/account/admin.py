@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 
-from .forms import SiteUserCreationForm, SiteUserChangeForm
+from .forms.user import SiteUserCreationForm, SiteUserChangeForm
 from .models import SiteUser
 
 

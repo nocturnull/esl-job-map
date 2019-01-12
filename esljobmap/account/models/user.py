@@ -1,4 +1,5 @@
 # account/models/user.py
+
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
@@ -16,7 +17,9 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
         (3, 'teacher')
     )
     email = models.EmailField(unique=True, blank=False, max_length=255)
+    contact_email = models.EmailField(blank=True, default='', max_length=255)
     date_joined = models.DateTimeField('Date Joined', auto_now_add=True)
+    name = models.CharField(max_length=255, blank=True, verbose_name='Name', default='')
     first_name = models.CharField(max_length=255, blank=True, verbose_name='First Name', default='')
     last_name = models.CharField(max_length=255, blank=True, verbose_name='Last Name', default='')
     phone_number = models.CharField(blank=True, max_length=255, verbose_name='Contact Number')
@@ -63,7 +66,15 @@ class SiteUser(AbstractBaseUser, PermissionsMixin):
         if len(self.first_name) > 0:
             n = self.first_name + ' ' + self.last_name
             return n.strip()
+        elif len(self.name) > 0:
+            return self.name
         return ''
+
+    @property
+    def preferred_email(self) -> str:
+        if len(self.contact_email) > 0:
+            return self.contact_email
+        return self.email
 
     def __str__(self):
         return self.email

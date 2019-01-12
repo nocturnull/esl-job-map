@@ -9,7 +9,9 @@ from django.contrib import messages
 from cloud.file_manager import FileManager
 from ..models import SiteUser
 from ..models import Resume
-from ..forms import UserUpdateForm, TeacherUpdateForm
+from ..forms.user import UserUpdateForm
+from ..forms.applicant import ApplicantUpdateForm
+from ..forms.recruiter import RecruiterUpdateForm
 
 
 class ResolveProfile(LoginRequiredMixin, RedirectView):
@@ -25,11 +27,10 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
 
     def get(self, request, **kwargs):
         user_form = UserUpdateForm(instance=request.user)
-        teacher_form = TeacherUpdateForm(instance=request.user.teacher)
+        teacher_form = ApplicantUpdateForm(instance=request.user.teacher)
 
         return render(
             request,
-
             self.template_name,
             {
                 'user_form': user_form,
@@ -40,7 +41,7 @@ class EditTeacherProfile(LoginRequiredMixin, TemplateView):
 
     def post(self, request, **kwargs):
         user_form = UserUpdateForm(request.POST, instance=request.user)
-        teacher_form = TeacherUpdateForm(request.POST, request.FILES, instance=request.user.teacher)
+        teacher_form = ApplicantUpdateForm(request.POST, request.FILES, instance=request.user.teacher)
         file_manager = FileManager()
 
         if user_form.is_valid() and teacher_form.is_valid():
@@ -74,7 +75,7 @@ class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
     success_url = reverse_lazy('recruiter_profile_edit')
 
     def get(self, request, **kwargs):
-        user_form = UserUpdateForm(instance=request.user)
+        user_form = RecruiterUpdateForm(instance=request.user)
 
         return render(
             request,
@@ -86,7 +87,7 @@ class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
         )
 
     def post(self, request, **kwargs):
-        user_form = UserUpdateForm(request.POST, instance=request.user)
+        user_form = RecruiterUpdateForm(request.POST, instance=request.user)
 
         if user_form.is_valid():
             user_form.save()
