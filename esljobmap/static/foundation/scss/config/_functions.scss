@@ -2,7 +2,7 @@
 // Functions
 // ==========================================================================
 
-$cdn: '/static/';
+$cdn: 'https://cdn.esljobmap.com/static/';
 
 @function cdn-url($value) {
   @return url($cdn + $value);

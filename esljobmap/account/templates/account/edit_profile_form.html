@@ -69,7 +69,7 @@
                             {% if request.user.teacher.has_photo %}
                                 <label class="file-label" for="{{ applicant_form.photo_file.id_for_label }}">Upload different photo:</label>
                             {% else %}
-                                <label class="file-label" for="{{ applicant_form.photo_file.id_for_label }}">Set photo:</label>
+                                <label class="file-label" for="{{ applicant_form.photo_file.id_for_label }}">Set photo (Optional):</label>
                             {% endif %}
 
                             {{ applicant_form.photo_file }}

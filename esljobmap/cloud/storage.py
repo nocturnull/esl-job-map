@@ -82,8 +82,4 @@ class Client(object):
 
 
 def build_storage_url(uri: str) -> str:
-    return AWS_S3_BASE_LINK.format(
-        os.environ.get('AWS_DEFAULT_REGION'),
-        AWS_S3_BUCKET,
-        uri
-    )
+    return AWS_CDN_BASE_LINK + uri
