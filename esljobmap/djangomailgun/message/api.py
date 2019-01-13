@@ -41,5 +41,4 @@ class MessageApi(object):
         if reply_to is not None:
             payload['h:Reply-To'] = reply_to
 
-        # Temp: Disabled for testing
-        # requests.post(self._endpoint, data=payload, auth=('api', self._api_key))
+        requests.post(self._endpoint, data=payload, auth=('api', self._api_key))
