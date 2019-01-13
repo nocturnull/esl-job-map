@@ -4,6 +4,16 @@
     {% load remote %}
     {% load attr %}
     <head>
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-132397289-1"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+
+          gtag('config', 'UA-132397289-1');
+        </script>
+
         <meta charset="utf-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -31,9 +41,9 @@
         </div>
 
         {% block prejavascript %}{% endblock %}
+        <script src="{% static 'foundation/js/detectIE.js' %}"></script>
         <script src="{% static 'foundation/dist/vendor.min.js' %}"></script>
         <script src="{% static 'foundation/dist/app.min.js' %}"></script>
-        <script src="{% static 'foundation/js/detectIE.js' %}"></script>
         {% block postjavascript %}{% endblock %}
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIb-e5iuCYq2IQyKEuLC0665TrAvHE1zo&callback=initMap" async defer></script>
     </body>
