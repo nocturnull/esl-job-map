@@ -9,6 +9,7 @@
 .content {
     position: relative;
     min-height: 90vh;
+    padding-bottom: 2.5rem;
 
     @include breakpoint(medium down) {
         min-height: 100vh;

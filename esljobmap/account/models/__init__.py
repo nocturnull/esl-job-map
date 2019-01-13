@@ -1,3 +1,4 @@
 from .user import SiteUser
 from .resume import Resume
-from .role import VisaType, Country, Teacher
+from .photo import Photo
+from .applicant import VisaType, Country, Teacher

@@ -30,7 +30,8 @@ class ApplicantCreationForm(UserCreationForm):
 
 
 class ApplicantUpdateForm(forms.ModelForm):
-    resume_filename = forms.FileField(allow_empty_file=True, required=False, label='Resume')
+    resume_file = forms.FileField(allow_empty_file=True, required=False, label='Resume')
+    photo_file = forms.FileField(allow_empty_file=True, required=False, label='Photo')
 
     def __init__(self, *args, **kwargs):
         super(ApplicantUpdateForm, self).__init__(*args, **kwargs)
@@ -39,4 +40,5 @@ class ApplicantUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Teacher
-        fields = ('country', 'visa_type', 'can_transfer_visa', 'can_work_second_job', 'resume_filename')
+        fields = ('country', 'visa_type', 'can_transfer_visa',
+                  'can_work_second_job', 'resume_file', 'photo_file')

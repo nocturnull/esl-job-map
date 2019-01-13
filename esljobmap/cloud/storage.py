@@ -72,6 +72,12 @@ class Client(object):
     def _detect_content_type(cls, path):
         if 'pdf' in path:
             return 'application/pdf'
+        elif 'gif' in path:
+            return 'image/gif'
+        elif 'jpg' in path or 'jpeg' in path:
+            return 'image/jpeg'
+        elif 'png' in path:
+            return 'image/png'
         return 'application/msword'
 
 

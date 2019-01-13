@@ -2,8 +2,7 @@
 
 from django.db import models
 
-from account.models.resume import Resume
-from account.models.user import SiteUser
+from account.models import Resume, Photo, SiteUser
 
 from ..apps import EmploymentConfig
 from ..models.recruitment import JobPost
@@ -22,6 +21,7 @@ class JobApplication(models.Model):
     contact_email = models.EmailField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=False)
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, blank=True, null=True, default=None)
 
     @property
     def tags(self):
@@ -37,11 +37,16 @@ class JobApplication(models.Model):
     def nice_created_at(self) -> str:
         return self.created_at.strftime('%x')
 
+    @property
+    def has_photo(self) -> bool:
+        return self.photo is not None
+
     @classmethod
-    def create_application(cls, job_post, contact_email, resume, site_user=None):
+    def create_application(cls, job_post, contact_email, resume, photo=None, site_user=None):
         return cls.objects.create(job_post=job_post,
                                   contact_email=contact_email,
                                   resume=resume,
+                                  photo=photo,
                                   site_user=site_user)
 
     def __str__(self):

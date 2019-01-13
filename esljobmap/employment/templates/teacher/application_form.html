@@ -33,16 +33,36 @@
                                 to select an existing resume.
                             {% endif %}
                         </div>
+                        <div>
+                            {% if request.user.teacher.has_resume %}
+                                <label class="file-label" for="{{ job_form.resume.id_for_label }}">Upload different resume:</label>
+                            {% endif %}
+                            <input type="file" name="{{ job_form.resume.html_name }}">
+                            {% if resume_error %}
+                                <span class="errorlist">A resume is required</span>
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if request.user.teacher.has_photo %}
+                                Existing photo: {{ request.user.teacher.photo }}
+                            {% else %}
+                                Upload a photo to your
+                                <a href="{% url 'account_profile' %}" target="_blank">Profile</a>
+                                to select an existing photo.
+                            {% endif %}
+                        </div>
+                        <div>
+                            {% if request.user.teacher.has_photo %}
+                                <label class="file-label" for="{{ job_form.photo.id_for_label }}">Upload different photo:</label>
+                            {% endif %}
+                            <input type="file" name="{{ job_form.photo.html_name }}">
+                            <span class="errorlist">
+                                {% for error in job_form.photo.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </div>
                     {% endif %}
-                    <div id="resumeFileUploadField">
-                        {% if request.user.teacher.has_resume %}
-                            <label class="file-label" for="{{ job_form.resume.id_for_label }}">Upload different resume:</label>
-                        {% endif %}
-                        <input type="file" name="{{ job_form.resume.html_name }}">
-                        {% if resume_error %}
-                            <span class="errorlist">A resume is required</span>
-                        {% endif %}
-                    </div>
                     <div>
                         <label for="{{ job_form.contact_email.id_for_label }}">
                             {{ job_form.contact_email.label }}

@@ -122,4 +122,5 @@ class RepostJobForm(forms.ModelForm):
 class ApplyToJobForm(forms.Form):
     email_body = forms.CharField(widget=forms.Textarea(attrs={'rows': '18'}))
     resume = forms.FileField(allow_empty_file=True, required=False)
+    photo = forms.FileField(allow_empty_file=True, required=False)
     contact_email = forms.EmailField(label='Your email [You will receive a copy of this email]', max_length=255)

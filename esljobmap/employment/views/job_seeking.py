@@ -7,7 +7,8 @@ from django.shortcuts import render, reverse
 
 from djangomailgun.message.api import MessageApi
 from cloud.file_manager import FileManager
-from account.models.resume import Resume
+from account.models import Resume, Photo
+
 from ..models import JobPost, JobApplication
 from ..forms.recruitment import ApplyToJobForm
 from ..email.template_manager import TemplateManager as EmailTemplateManager
@@ -50,6 +51,7 @@ class ApplyToJobPost(TemplateView):
         if job_form.is_valid():
             applicant_email = job_form.cleaned_data['contact_email']
             resume = job_form.cleaned_data.get('resume', None)
+            photo = job_form.cleaned_data.get('photo', None)
 
             kwargs = {
                 'job_post': job_post,
@@ -77,6 +79,17 @@ class ApplyToJobPost(TemplateView):
                                   'job_form': job_form,
                                   'resume_error': True
                               })
+
+            # Attempt to use an existing photo if possible
+            if request.user.is_authenticated:
+                if request.user.teacher.has_photo and photo is None:
+                    kwargs['photo'] = request.user.teacher.photo
+
+            # Make a new photo that is for this application only if needed.
+            if photo is not None:
+                new_photo = Photo.create_photo(filename=photo.name)
+                file_manager.upload_file(new_photo.storage_path, photo)
+                kwargs['photo'] = new_photo
 
             application = JobApplication.create_application(**kwargs)
 

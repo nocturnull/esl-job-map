@@ -4,7 +4,7 @@ from .scheme import *
 from ..models.recruitment import JobPost
 from ..models.job_seeking import JobApplication
 from account.models.user import SiteUser
-from account.models.role import Teacher
+from account.models.applicant import Teacher
 
 
 class TemplateManager:

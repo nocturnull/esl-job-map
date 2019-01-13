@@ -25,42 +25,56 @@
                 <form method="post" enctype="multipart/form-data" novalidate="novalidate">
                     {% csrf_token %}
                     {{ user_form }}
-                    {% if teacher_form %}
+                    {% if applicant_form %}
                         <div>
-                            {{ teacher_form.country.errors }}
-                            {{ teacher_form.country.label_tag }}
-                            {{ teacher_form.country }}
+                            {{ applicant_form.country.errors }}
+                            {{ applicant_form.country.label_tag }}
+                            {{ applicant_form.country }}
                         </div>
                         <div>
-                            {{ teacher_form.visa_type.errors }}
-                            {{ teacher_form.visa_type.label_tag }}
-                            {{ teacher_form.visa_type }}
+                            {{ applicant_form.visa_type.errors }}
+                            {{ applicant_form.visa_type.label_tag }}
+                            {{ applicant_form.visa_type }}
                         </div>
                         <div id="visaConditions" class="{% visa_conditions_class request.user %}">
                             <div>
-                                {{ teacher_form.can_transfer_visa.errors }}
-                                {{ teacher_form.can_transfer_visa.label_tag }}
-                                {{ teacher_form.can_transfer_visa }}
+                                {{ applicant_form.can_transfer_visa.errors }}
+                                {{ applicant_form.can_transfer_visa.label_tag }}
+                                {{ applicant_form.can_transfer_visa }}
                             </div>
                             <div>
-                                {{ teacher_form.can_work_second_job.errors }}
-                                {{ teacher_form.can_work_second_job.label_tag }}
-                                {{ teacher_form.can_work_second_job }}
+                                {{ applicant_form.can_work_second_job.errors }}
+                                {{ applicant_form.can_work_second_job.label_tag }}
+                                {{ applicant_form.can_work_second_job }}
                             </div>
                         </div>
                         {% if request.user.teacher.has_resume %}
                             <div>Existing resume: {{ request.user.teacher.resume }}</div>
                         {% endif %}
                         <div>
-                            {{ teacher_form.resume_filename.errors }}
+                            {{ applicant_form.resume_file.errors }}
 
                             {% if request.user.teacher.has_resume %}
-                                <label class="file-label" for="{{ teacher_form.resume_filename.id_for_label }}">Upload different resume:</label>
+                                <label class="file-label" for="{{ applicant_form.resume_file.id_for_label }}">Upload different resume:</label>
                             {% else %}
-                                <label class="file-label" for="{{ teacher_form.resume_filename.id_for_label }}">Set resume:</label>
+                                <label class="file-label" for="{{ applicant_form.resume_file.id_for_label }}">Set resume:</label>
                             {% endif %}
 
-                            {{ teacher_form.resume_filename }}
+                            {{ applicant_form.resume_file }}
+                        </div>
+                        {% if request.user.teacher.has_photo %}
+                            <div>Existing photo: {{ request.user.teacher.photo }}</div>
+                        {% endif %}
+                        <div>
+                            {{ applicant_form.photo_file.errors }}
+
+                            {% if request.user.teacher.has_photo %}
+                                <label class="file-label" for="{{ applicant_form.photo_file.id_for_label }}">Upload different photo:</label>
+                            {% else %}
+                                <label class="file-label" for="{{ applicant_form.photo_file.id_for_label }}">Set photo:</label>
+                            {% endif %}
+
+                            {{ applicant_form.photo_file }}
                         </div>
                     {% endif %}
                     <button type="submit" class="primary-button-2">Save Changes</button>

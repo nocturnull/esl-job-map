@@ -21,9 +21,9 @@
     <div id="postAnchor" class="post-anchor"></div>
     {% if user.is_recruiter %}
         {% if is_full_time %}
-            {% include 'recruiter/job_post_full_time_form.html' with form_title='Post a Job' %}
+            {% include 'recruiter/job_post_full_time_form.html' with form_title='Post a Full-Time Job' %}
         {% else %}
-            {% include 'recruiter/job_post_part_time_form.html' with form_title='Post a Job' %}
+            {% include 'recruiter/job_post_part_time_form.html' with form_title='Post a Part-Time Job' %}
         {% endif %}
     {% endif %}
 

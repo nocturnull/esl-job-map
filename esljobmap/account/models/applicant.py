@@ -1,8 +1,9 @@
-# account/models/role.py
+# account/models/applicant.py
 
 from django.db import models
 from .user import SiteUser
 from .resume import Resume
+from .photo import Photo
 
 from ..apps import AccountConfig
 
@@ -45,11 +46,16 @@ class Teacher(models.Model):
                                 blank=True,
                                 default='',
                                 null=True)
-    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=True, null=True)
+    resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    photo = models.ForeignKey(Photo, on_delete=models.CASCADE, blank=True, null=True, default=None)
 
     @property
     def has_resume(self) -> bool:
         return self.resume is not None
+
+    @property
+    def has_photo(self) -> bool:
+        return self.photo is not None
 
     @property
     def is_e1e2_holder(self) -> bool:
