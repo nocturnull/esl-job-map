@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% block title %}Apply{% endblock %}
-
 {% block content %}
 
     <div class="grid-container">
@@ -66,6 +64,17 @@
                     <div>
                         <label for="{{ job_form.contact_email.id_for_label }}">
                             {{ job_form.contact_email.label }}
+                            <span>
+                                {% if recruiter.opted_out_of_emails %}
+                                    [You will not receive an email copy of this application, as this recruiter has opted to receive all applications through our website only]
+                                {% else %}
+                                    {% if request.user.is_authenticated and request.user.opted_out_of_emails %}
+                                        [You've opted out of emails]
+                                    {% else %}
+                                        [You will receive a copy of this email]
+                                    {% endif %}
+                                {% endif %}
+                            </span>
                             <span class="errorlist">
                                 {% for error in job_form.contact_email.errors %}
                                     {{ error }}
@@ -74,6 +83,15 @@
                         </label>
                         {{ job_form.contact_email }}
                     </div>
+                    {% if request.user.is_authenticated and not request.user.opted_out_of_emails %}
+                        <div>
+                            <label for="{{ job_form.applied_for_email_opt_out.id_for_label }}">
+                                {{ job_form.applied_for_email_opt_out.errors }}
+                                {{ job_form.applied_for_email_opt_out.label }}
+                                {{ job_form.applied_for_email_opt_out }}
+                            </label>
+                        </div>
+                    {% endif %}
                     <button type="submit" class="primary-button-2">Submit</button>
                 </form>
             </div>

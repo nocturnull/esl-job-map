@@ -5,12 +5,8 @@ from django.views.generic import ListView, TemplateView
 from django.db.models import F
 from django.shortcuts import render, reverse
 
-from djangomailgun.message.api import MessageApi
-from cloud.file_manager import FileManager
-from account.models import Resume, Photo
-
 from ..models import JobPost, JobApplication
-from ..forms.recruitment import ApplyToJobForm
+from ..forms.applicant import ApplyToJobForm
 from ..email.template_manager import TemplateManager as EmailTemplateManager
 from ..managers.apply_manager import ApplyManager
 
@@ -27,7 +23,7 @@ class ApplyToJobPost(TemplateView):
             'email_body': EmailTemplateManager.generate_email_body(request.user, job_post),
             'contact_email': contact_email
         })
-        request.session['referring_map_url'] = request.META['HTTP_REFERER']
+        ApplyManager.track_referer(request)
 
         applied, application = job_post.has_applicant_applied(request.user)
         if applied:
@@ -38,6 +34,7 @@ class ApplyToJobPost(TemplateView):
                       {
                           'referring_map_url': request.session['referring_map_url'],
                           'job_post': job_post,
+                          'recruiter': job_post.site_user,
                           'job_form': job_form
                       })
 
@@ -45,8 +42,6 @@ class ApplyToJobPost(TemplateView):
         job_post = JobPost.objects.get(pk=job_post_id)
         job_form = ApplyToJobForm(request.POST, request.FILES)
         referer = request.session.get('referring_map_url', reverse('home'))
-        message_api = MessageApi()
-        file_manager = FileManager()
 
         if job_form.is_valid():
             applicant_email = job_form.cleaned_data['contact_email']
@@ -55,20 +50,12 @@ class ApplyToJobPost(TemplateView):
 
             kwargs = {
                 'job_post': job_post,
-                'contact_email': applicant_email
+                'contact_email': applicant_email,
+                'cover_letter': job_form.cleaned_data['email_body']
             }
 
-            # Attempt to use an existing resume if possible.
-            if request.user.is_authenticated:
-                kwargs['site_user'] = request.user
-                if request.user.teacher.has_resume and resume is None:
-                    kwargs['resume'] = request.user.teacher.resume
-
-            # Make a new resume that is for this application only if needed.
-            if resume is not None:
-                new_resume = Resume.create_resume(filename=resume.name)
-                file_manager.upload_file(new_resume.storage_path, resume)
-                kwargs['resume'] = new_resume
+            # Figure out which resume to use.
+            kwargs = ApplyManager.save_resume(request.user, resume, **kwargs)
 
             # If the user did not upload a resume and has no resume on file, show an error.
             if 'resume' not in kwargs:
@@ -80,26 +67,16 @@ class ApplyToJobPost(TemplateView):
                                   'resume_error': True
                               })
 
-            # Attempt to use an existing photo if possible
-            if request.user.is_authenticated:
-                if request.user.teacher.has_photo and photo is None:
-                    kwargs['photo'] = request.user.teacher.photo
+            # Figure out which photo to use.
+            kwargs = ApplyManager.save_photo(request.user, photo, **kwargs)
 
-            # Make a new photo that is for this application only if needed.
-            if photo is not None:
-                new_photo = Photo.create_photo(filename=photo.name)
-                file_manager.upload_file(new_photo.storage_path, photo)
-                kwargs['photo'] = new_photo
-
+            # Save the application info.
             application = JobApplication.create_application(**kwargs)
 
-            message_api.send(recipient=job_post.contact_email,
-                             subject=EmailTemplateManager.generate_email_subject(job_post),
-                             body=EmailTemplateManager.append_resume_to_body(
-                                 job_form.cleaned_data['email_body'], application
-                             ),
-                             cc=applicant_email)
+            # Dispatch email.
+            ApplyManager.email_relevant_parties(job_post, job_form, application, request.user, applicant_email)
 
+            # Inform the user.
             return render(request,
                           'teacher/application_success.html',
                           {

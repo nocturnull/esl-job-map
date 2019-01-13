@@ -3,7 +3,7 @@
 from django.views.generic import ListView
 from django.urls import reverse_lazy
 
-from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm
+from ..forms.recruiter import CreateFullTimeJobForm, CreatePartTimeJobForm
 from ..models import JobPost
 from ..managers.map_manager import MapManager
 

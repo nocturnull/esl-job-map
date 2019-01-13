@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="grid-container">
+        <h3>Cover Letter: {{ object.job_post }}</h3>
+        <div class="cell medium-8">
+            <pre>{{ object.cover_letter }}</pre>
+        </div>
+    </div>
+
+{% endblock %}

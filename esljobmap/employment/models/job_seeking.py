@@ -1,5 +1,6 @@
 # employment/models/job_seeking.py
 
+from django.urls import reverse_lazy
 from django.db import models
 
 from account.models import Resume, Photo, SiteUser
@@ -22,6 +23,7 @@ class JobApplication(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     resume = models.ForeignKey(Resume, on_delete=models.CASCADE, blank=False)
     photo = models.ForeignKey(Photo, on_delete=models.CASCADE, blank=True, null=True, default=None)
+    cover_letter = models.TextField(default='')
 
     @property
     def tags(self):
@@ -41,13 +43,13 @@ class JobApplication(models.Model):
     def has_photo(self) -> bool:
         return self.photo is not None
 
+    @property
+    def view_url(self) -> str:
+        return reverse_lazy('employment_view_application', args=[self.id])
+
     @classmethod
-    def create_application(cls, job_post, contact_email, resume, photo=None, site_user=None):
-        return cls.objects.create(job_post=job_post,
-                                  contact_email=contact_email,
-                                  resume=resume,
-                                  photo=photo,
-                                  site_user=site_user)
+    def create_application(cls, **kwargs):
+        return cls.objects.create(**kwargs)
 
     def __str__(self):
         return self.job_post.__str__()

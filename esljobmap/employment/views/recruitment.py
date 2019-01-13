@@ -7,9 +7,9 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.db.models import F
 
-from ..models import JobPost
+from ..models import JobPost, JobApplication
 from ..decorators import recruiter_required
-from ..forms.recruitment import CreateFullTimeJobForm, CreatePartTimeJobForm,\
+from ..forms.recruiter import CreateFullTimeJobForm, CreatePartTimeJobForm,\
     EditFullTimeJobForm, EditPartTimeJobForm, TakeDownJobForm, RepostJobForm
 
 
@@ -142,3 +142,8 @@ class RepostJob(LoginRequiredMixin, UpdateView):
     template_name = 'recruiter/job_post_repost_form.html'
     success_url = reverse_lazy('employment_my_job_posts')
 
+
+@method_decorator(recruiter_required, name='dispatch')
+class ViewJobPostApplication(LoginRequiredMixin, DetailView):
+    model = JobApplication
+    template_name = 'recruiter/job_post_view_application.html'
