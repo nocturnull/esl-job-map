@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% load staticfiles %}
+{% load remote %}
 {% load nav %}
 
 {% block content %}
 
     <div class="home-container">
-        <img class="home-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
+        <img class="home-logo" src="{% cdn_image 'logo.png' %}" alt="ESL Job Map logo">
 
         <h2 class="main-title">English teaching jobs, on a map</h2>
 

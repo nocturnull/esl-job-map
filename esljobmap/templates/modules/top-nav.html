@@ -1,4 +1,4 @@
-{% load static %}
+{% load remote %}
 {% load nav %}
 
 <div class="top-bar top-site-nav">
@@ -6,7 +6,7 @@
         <ul class="dropdown menu" data-dropdown-menu>
             <li class="logo-item">
                 <a href="{% url 'home' %}">
-                    <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
+                    <img class="ejm-logo" src="{% cdn_image 'logo.png' %}" alt="ESL Job Map logo">
                 </a>
             </li>
             {% if user.is_authenticated and user.is_recruiter %}

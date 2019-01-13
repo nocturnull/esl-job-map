@@ -12,14 +12,29 @@ from djangomailgun.message.api import MessageApi
 
 class About(TemplateView):
     template_name = 'about/index.html'
+    extra_context = {
+        'mtitle': 'ESLJobMap.com - About - English teaching jobs, on a map',
+        'mdescription': 'ESL Job Map is a map-based English job teaching board for South Korea. '
+                        'We have both full and part-time English teaching job maps.'
+    }
 
 
 class ApplyingForJobs(TemplateView):
     template_name = 'about/applying.html'
+    extra_context = {
+        'mtitle': 'How to Apply for English Teaching Jobs in South Korea',
+        'mdescription': 'Documents and qualifications needed for applying to full-time and '
+                        'part-time English teaching jobs in South Korea.'
+    }
 
 
 class VisaJobType(TemplateView):
     template_name = 'about/visa.html'
+    extra_context = {
+        'mtitle': 'South Korea Visa Types for English Teaching and Tutoring',
+        'mdescription': 'What you need to be eligible for visa sponsorship to teach English in Korea, '
+                        'and what types of English teaching you can do based on your visa type.'
+    }
 
 
 class ContactUs(FormView):

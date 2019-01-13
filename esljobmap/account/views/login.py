@@ -6,6 +6,10 @@ from django.shortcuts import redirect
 
 class SiteUserLogin(LoginView):
     """SiteUser Login View"""
+    extra_context = {
+        'mtitle': 'ESLJobMap.com - Login Page',
+        'mdescription': 'Login to your ESL Job Map account.'
+    }
 
     def get(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:

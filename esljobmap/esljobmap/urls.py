@@ -19,9 +19,9 @@ from esljobmap.views import HomeView
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
-    path('admin/', admin.site.urls),
-    path('about/', include('about.urls')),
-    path('account/', include('account.urls')),
-    path('account/', include('django.contrib.auth.urls')),
-    path('employment/', include('employment.urls'))
+    path('korea/admin/', admin.site.urls),
+    path('korea/about/', include('about.urls')),
+    path('korea/account/', include('account.urls')),
+    path('korea/account/', include('django.contrib.auth.urls')),
+    path('korea/employment/', include('employment.urls'))
 ]

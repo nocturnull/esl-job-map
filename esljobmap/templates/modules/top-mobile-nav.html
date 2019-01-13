@@ -1,4 +1,4 @@
-{% load static %}
+{% load remote %}
 
 <div class="mobile-top-nav">
     <div>
@@ -8,7 +8,7 @@
     </div>
     <div>
         <a href="{% url 'home' %}" class="logo">
-            <img class="ejm-logo" src="{% static 'esljobmap/logo.png' %}" alt="ESL Job Map logo">
+            <img class="ejm-logo" src="{% cdn_image 'logo.png' %}" alt="ESL Job Map logo">
         </a>
     </div>
 </div>
