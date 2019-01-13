@@ -37,7 +37,8 @@
             markerImage: '{{ marker_image }}',
             zoom: {{ location.zoom }},
             lat: {{ location.lat }},
-            lng: {{ location.lng }}
+            lng: {{ location.lng }},
+            successLocation: "{% url 'employment_my_job_posts' %}"
         };
 
         {% if user.is_recruiter %}

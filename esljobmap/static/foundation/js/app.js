@@ -3,15 +3,12 @@ $(document).foundation();
 import ProfileForm from './profileForm.js';
 import JobMapSetup from './jobMap.js';
 import ListFilter from './listFilter.js';
-import DetectInternetExplorer from './detectIE.js';
 
 
 $(document).ready(function() {
     let pform = new ProfileForm(),
-        lfilter = new ListFilter(),
-        detie = new DetectInternetExplorer();
+        lfilter = new ListFilter();
 
-    detie.init();
     pform.init();
     lfilter.init();
 });

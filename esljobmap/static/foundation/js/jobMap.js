@@ -377,7 +377,7 @@ class JobMapSetup {
             let extGeneralJobFields = $(responseHtml).find('#generalJobFields');
 
             if (response.includes('jobPostListConfirm')) {
-                window.location = '/employment/recruiter/job/my-jobs';
+                window.location = window.jobMap.successLocation;
             } else {
                 this.$generalJobFields.html(extGeneralJobFields.html());
             }

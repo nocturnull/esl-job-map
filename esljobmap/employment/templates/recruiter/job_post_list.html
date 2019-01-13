@@ -62,9 +62,9 @@
 
             {% empty %}
 
-                <p>You have not created any job posts yet. Visit one of the maps to upload a job!</p>
-                <li><a href="{% url 'employment_full_time_map' %}">Full-Time Map</a></li>
-                <li><a href="{% url 'employment_part_time_map' %}">Part-Time Map</a></li>
+                <p class="cell">You have not created any job posts yet. Visit one of the maps to upload a job!</p><br/>
+                <p class="cell"><a href="{% url 'employment_full_time_map' %}">Full-Time Map</a></p><br/>
+                <p class="cell"><a href="{% url 'employment_part_time_map' %}">Part-Time Map</a></p>
 
             {% endfor %}
 
