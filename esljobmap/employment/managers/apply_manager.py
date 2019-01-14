@@ -97,11 +97,6 @@ class ApplyManager:
 
             # If the user is logged in, check if they opted out.
             if user.is_authenticated:
-                # Check opt out from form and save to settings if needed.
-                if job_form.cleaned_data['applied_for_email_opt_out']:
-                    user.opted_out_of_emails = True
-                    user.save()
-                # Next check their saved settings.
                 if user.opted_out_of_emails:
                     applicant_email = None
 
