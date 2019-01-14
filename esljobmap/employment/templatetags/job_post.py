@@ -1,5 +1,5 @@
 
-from django.utils.safestring import mark_safe
+from django.utils.html import escapejs
 from django import template
 
 from cloud.templatetags.remote import cdn_image
@@ -9,7 +9,7 @@ register = template.Library()
 
 @register.simple_tag
 def build_info_html(job_post, user) -> str:
-    return mark_safe(job_post.build_html_content(user))
+    return escapejs(job_post.build_html_content(user))
 
 
 @register.simple_tag
