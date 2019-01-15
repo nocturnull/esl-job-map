@@ -55,3 +55,11 @@ class ContactUs(FormView):
 
 class ThankYou(TemplateView):
     template_name = 'about/thank_you.html'
+
+
+class PrivacyPolicy(TemplateView):
+    template_name = 'about/privacy_policy.html'
+
+
+class TermsAndConditions(TemplateView):
+    template_name = 'about/terms_and_conditions.html'
