@@ -12,7 +12,7 @@ from account.models.user import SiteUser
 class JobPost(models.Model):
     """Model for a job post made by recruiters."""
     site_user = models.ForeignKey(SiteUser, related_name='job_posts', on_delete=models.CASCADE)
-    title = models.CharField(max_length=45)
+    title = models.CharField(max_length=50)
     class_type = models.CharField(max_length=255)
     contact_name = models.CharField(max_length=512)
     contact_email = models.EmailField(max_length=255)

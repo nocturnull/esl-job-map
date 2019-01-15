@@ -122,6 +122,14 @@
                         </label>
                         {{ form.contact_number }}
                     </div>
+                    {% if form.errors %}
+                        <span class="errorlist">Please correct the following errors to proceed.</span>
+                        <ul>
+                            {% for e in form.errors %}
+                                <li class="errorlist">{{ e }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
                 <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>
                 <button type="submit" class="primary-button-2">Submit Job</button>

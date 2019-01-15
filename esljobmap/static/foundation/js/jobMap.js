@@ -39,6 +39,10 @@ class JobMapSetup {
     init() {
         let mapContainer = document.getElementById('map');
         if (mapContainer !== null) {
+            let gestureControls = 'greedy';
+            if (window.jobMap.isRecruiter) {
+                gestureControls = 'cooperative';
+            }
             this.map = new google.maps.Map(mapContainer, {
                 zoom: window.jobMap.zoom,
                 center: {lat: window.jobMap.lat, lng: window.jobMap.lng},
@@ -47,7 +51,7 @@ class JobMapSetup {
                 },
                 mapTypeControl: false,
                 streetViewControl: false,
-                gestureHandling: 'greedy'
+                gestureHandling: gestureControls
             });
             this.addExistingJobMarkers();
             this.infoWindow = new google.maps.InfoWindow;
