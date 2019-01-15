@@ -5,6 +5,7 @@ import time
 from django.db import models
 
 from cloud.storage import build_storage_url
+from cloud.settings import AWS_S3_PARENT_DIR
 
 
 class Photo(models.Model):
@@ -14,7 +15,7 @@ class Photo(models.Model):
 
     @property
     def storage_path(self) -> str:
-        return 'photo/{0}'.format(self.unique_filename)
+        return AWS_S3_PARENT_DIR + '/photo/{0}'.format(self.unique_filename)
 
     @property
     def cdn_url(self) -> str:
