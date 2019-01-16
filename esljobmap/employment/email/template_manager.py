@@ -31,24 +31,28 @@ class TemplateManager:
         :param job_post:
         :return:
         """
-        recruiter = job_post.site_user
         if user.is_authenticated and user.is_teacher:
             return cls._generate_applicant_email_body(user, job_post)
-        return cls._generate_anonymous_email_body(recruiter)
+        return cls._generate_anonymous_email_body(job_post)
 
     @classmethod
-    def append_resume_to_body(cls, body: str, job_application: JobApplication) -> str:
+    def append_relevant_files(cls, body: str, job_application: JobApplication) -> str:
         """
-        Appends the resume to the end of the email body as a link to where the file is stored.
+        Appends any relevant files.
 
         :param body:
         :param job_application:
         :return:
         """
-        # Append a link that points to CDN file location.
+        # Append resume first.
         resume_url = job_application.resume.cdn_url
+        contents = '{0}\n\nResume: {1}'.format(body, resume_url)
 
-        return '{0}\n\nResume: {1}'.format(body, resume_url)
+        if job_application.photo is not None:
+            photo_url = job_application.photo.cdn_url
+            contents = '{0}\n\nPhoto: {1}'.format(contents, photo_url)
+
+        return contents
 
     @classmethod
     def _generate_applicant_email_body(cls, applicant: SiteUser, job_post: JobPost) -> str:
@@ -75,14 +79,16 @@ class TemplateManager:
         )
 
     @classmethod
-    def _generate_anonymous_email_body(cls, recruiter: SiteUser) -> str:
+    def _generate_anonymous_email_body(cls, job_post: JobPost) -> str:
         """
         Builds the email body for applicants that are simply 'guests' to the site.
 
         :param recruiter:
         :return:
         """
-        return ANONYMOUS_USER_BASE_SCHEME.format(recruiter_contact_name=cls._generated_to_recruiter_intro(recruiter))
+        return ANONYMOUS_USER_BASE_SCHEME.format(
+            recruiter_contact_name=cls._generated_to_recruiter_intro(job_post.contact_name)
+        )
 
     @staticmethod
     def _generate_job_exclusive_template(job_post: JobPost) -> str:

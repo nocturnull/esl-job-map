@@ -1,10 +1,11 @@
 # account/models/resume.py
 
 import time
+import os
 
 from django.db import models
 
-from cloud.storage import build_storage_url
+from cloud.storage import build_cdn_url, build_s3_url
 from cloud.settings import AWS_S3_PARENT_DIR
 
 
@@ -19,7 +20,9 @@ class Photo(models.Model):
 
     @property
     def cdn_url(self) -> str:
-        return build_storage_url(self.storage_path)
+        if os.environ.get('ESLJOBMAP_LOAD_REMOTE', None) is not None:
+            return build_cdn_url('photo/{0}'.format(self.unique_filename))
+        return build_s3_url(self.storage_path)
 
     @classmethod
     def create_photo(cls, filename):

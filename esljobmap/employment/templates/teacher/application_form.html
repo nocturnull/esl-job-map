@@ -21,6 +21,14 @@
                             Want to track which jobs you applied for, and if they are still open?<br>
                             <a href="{% url 'signup' %}">Register</a> and let us automate that for you.
                         </p>
+                        <div>
+                            <label class="file-label" for="{{ job_form.resume.id_for_label }}">Resume:</label>
+                            <input type="file" name="{{ job_form.resume.html_name }}">
+                        </div>
+                        <div>
+                            <label class="file-label" for="{{ job_form.photo.id_for_label }}">Photo (Option):</label>
+                            <input type="file" name="{{ job_form.photo.html_name }}">
+                        </div>
                     {% elif request.user.is_teacher %}
                         <div>
                             {% if request.user.teacher.has_resume %}
@@ -66,7 +74,8 @@
                             {{ job_form.contact_email.label }}
                             <span>
                                 {% if recruiter.opted_out_of_emails %}
-                                    [You will not receive an email copy of this application, as this recruiter has opted to receive all applications through our website only]
+                                    <br/>You will not receive an email copy of this application, as this recruiter has opted to receive all applications through our website only.
+                                    <br/>However they will still receive your email address so they can contact you.
                                 {% else %}
                                     {% if request.user.is_authenticated and request.user.opted_out_of_emails %}
                                         [You've opted out of emails]

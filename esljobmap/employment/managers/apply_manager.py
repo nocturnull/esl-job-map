@@ -102,7 +102,7 @@ class ApplyManager:
 
             message_api.send(recipient=job_post.contact_email,
                              subject=EmailTemplateManager.generate_email_subject(job_post),
-                             body=EmailTemplateManager.append_resume_to_body(
+                             body=EmailTemplateManager.append_relevant_files(
                                  job_form.cleaned_data['email_body'], application
                              ),
                              cc=applicant_email)

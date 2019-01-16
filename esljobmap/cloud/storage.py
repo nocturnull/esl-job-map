@@ -81,5 +81,13 @@ class Client(object):
         return 'application/msword'
 
 
-def build_storage_url(uri: str) -> str:
+def build_cdn_url(uri: str) -> str:
     return AWS_CDN_BASE_LINK + uri
+
+
+def build_s3_url(uri: str) -> str:
+    return AWS_S3_BASE_LINK.format(
+        AWS_DEFAULT_REGION,
+        AWS_S3_BUCKET,
+        uri
+    )

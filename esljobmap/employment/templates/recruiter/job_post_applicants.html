@@ -11,9 +11,10 @@
                     <tr>
                         <th>Name</th>
                         <th>Visa</th>
-                        <th>Cover Letter</th>
+                        <th>Nationality</th>
                         <th>Resume</th>
                         <th>Photo</th>
+                        <th>Cover Letter</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -22,13 +23,14 @@
                             <tr>
                                 <td>{{ user.full_name|default:'Guest' }}</td>
                                 <td>{{ user.teacher.visa_type }} </td>
-                                <td><a href="{{ application.view_url }}" target="_blank">View</a></td>
+                                <td>{{ user.teacher.country }}</td>
                                 <td><a href="{{ application.resume.cdn_url }}" target="_blank">View</a></td>
                                 <td>
                                     {% if application.has_photo %}
                                         <a href="{{ application.photo.cdn_url }}" target="_blank">View</a>
                                     {% endif %}
                                 </td>
+                                <td><a href="{{ application.view_url }}" target="_blank">View</a></td>
                             </tr>
                         {% endwith %}
                     {% endfor %}
