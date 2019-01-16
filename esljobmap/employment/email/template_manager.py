@@ -33,7 +33,7 @@ class TemplateManager:
         """
         recruiter = job_post.site_user
         if user.is_authenticated and user.is_teacher:
-            return cls._generate_applicant_email_body(recruiter, user, job_post)
+            return cls._generate_applicant_email_body(user, job_post)
         return cls._generate_anonymous_email_body(recruiter)
 
     @classmethod
@@ -51,11 +51,10 @@ class TemplateManager:
         return '{0}\n\nResume: {1}'.format(body, resume_url)
 
     @classmethod
-    def _generate_applicant_email_body(cls, recruiter: SiteUser, applicant: SiteUser, job_post: JobPost) -> str:
+    def _generate_applicant_email_body(cls, applicant: SiteUser, job_post: JobPost) -> str:
         """
         Builds the email body for applicants that have a registered account on the site.
 
-        :param recruiter:
         :param applicant:
         :param job_post:
         :return:
@@ -63,9 +62,7 @@ class TemplateManager:
         teacher = applicant.teacher
 
         return AUTHENTICATED_USER_BASE_SCHEME.format(
-            recruiter_contact_name=cls._generated_to_recruiter_intro(recruiter),
-            applicant_visa_type=teacher.nice_visa_type,
-            applicant_visa_conditions=cls._generate_visa_conditions(teacher),
+            recruiter_contact_name=cls._generated_to_recruiter_intro(job_post.contact_name),
             applicant_country=teacher.nice_country,
             job_post_title=job_post.title,
             exclusive_job_post_info=cls._generate_job_exclusive_template(job_post),
@@ -103,15 +100,15 @@ class TemplateManager:
         return PART_TIME_EXCLUSIVE_SCHEME.format(job_post_pay_rate=job_post.pay_rate)
 
     @staticmethod
-    def _generated_to_recruiter_intro(recruiter: SiteUser) -> str:
+    def _generated_to_recruiter_intro(recruiter: str) -> str:
         """
         Create the appropriate intro text.
 
         :param recruiter:
         :return:
         """
-        if len(recruiter.full_name) > 0:
-            return 'Dear ' + recruiter.full_name
+        if len(recruiter) > 0:
+            return 'Dear ' + recruiter
         return 'To Whom it May Concern'
 
     @staticmethod
@@ -125,20 +122,3 @@ class TemplateManager:
         if len(applicant.full_name) > 0:
             return applicant.full_name
         return 'YOUR NAME'
-
-    @staticmethod
-    def _generate_visa_conditions(teacher: Teacher) -> str:
-        """
-        Generate additional info when the teacher has extra visa conditions.
-
-        :param teacher:
-        :return: str
-        """
-        conditions = ''
-        if teacher.is_e1e2_holder:
-            if teacher.can_transfer_visa:
-                conditions += ' and I can transfer my visa'
-            if teacher.can_work_second_job:
-                conditions += ' and I can work a second job'
-
-        return conditions

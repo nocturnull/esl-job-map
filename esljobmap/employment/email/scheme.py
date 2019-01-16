@@ -1,7 +1,7 @@
 SUBJECT_BASE_SCHEME = """{title} via ESLJobMap.com"""
 AUTHENTICATED_USER_BASE_SCHEME = """{recruiter_contact_name},
 
-I am {applicant_visa_type}{applicant_visa_conditions}. I have {applicant_country} nationality and am applying for the below job:
+I am a national of, and have a passport from {applicant_country}. I am applying for the below job:
 
 {job_post_title}
 {exclusive_job_post_info}
