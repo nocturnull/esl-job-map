@@ -3,40 +3,259 @@
     "model": "account.VisaType",
     "pk": 1,
     "fields": {
-      "name": "E-1 and E-2 Eligible",
-      "email_text": "E-1 and E-2 eligible"
+      "name": "No Visa"
     }
   },
   {
     "model": "account.VisaType",
     "pk": 2,
     "fields": {
-      "name": "E-1 or E-2 Holder",
-      "email_text": "a E-1 or E-2 holder"
+      "name": "A-1"
     }
   },
   {
     "model": "account.VisaType",
     "pk": 3,
     "fields": {
-      "name": "F-2, 4, 5, or 6 Holder",
-      "email_text": "a F-2, 4, 5, or 6 holder"
+      "name": "A-2"
     }
   },
   {
     "model": "account.VisaType",
     "pk": 4,
     "fields": {
-      "name": "D-2 Holder",
-      "email_text": "a D-2 Holder"
+      "name": "A-3"
     }
   },
   {
     "model": "account.VisaType",
     "pk": 5,
     "fields": {
-      "name": "Other Visa Holder",
-      "email_text": "an other visa type holder"
+      "name": "B-1"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 6,
+    "fields": {
+      "name": "B-2"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 7,
+    "fields": {
+      "name": "D-1"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 8,
+    "fields": {
+      "name": "D-2"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 9,
+    "fields": {
+      "name": "D-3"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 10,
+    "fields": {
+      "name": "D-4"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 11,
+    "fields": {
+      "name": "D-5"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 12,
+    "fields": {
+      "name": "D-6"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 13,
+    "fields": {
+      "name": "D-7"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 14,
+    "fields": {
+      "name": "D-8"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 15,
+    "fields": {
+      "name": "D-9"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 16,
+    "fields": {
+      "name": "D-10"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 17,
+    "fields": {
+      "name": "E-1"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 18,
+    "fields": {
+      "name": "E-2"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 19,
+    "fields": {
+      "name": "E-3"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 20,
+    "fields": {
+      "name": "E-4"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 21,
+    "fields": {
+      "name": "E-5"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 22,
+    "fields": {
+      "name": "E-6"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 23,
+    "fields": {
+      "name": "E-7"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 24,
+    "fields": {
+      "name": "E-8"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 25,
+    "fields": {
+      "name": "E-9"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 26,
+    "fields": {
+      "name": "E-10"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 27,
+    "fields": {
+      "name": "F-1"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 28,
+    "fields": {
+      "name": "F-2"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 29,
+    "fields": {
+      "name": "F-3"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 30,
+    "fields": {
+      "name": "F-4"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 31,
+    "fields": {
+      "name": "F-5"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 32,
+    "fields": {
+      "name": "F-6"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 33,
+    "fields": {
+      "name": "G-1"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 34,
+    "fields": {
+      "name": "H-1"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 35,
+    "fields": {
+      "name": "H-2"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 36,
+    "fields": {
+      "name": "M-1"
+    }
+  },
+  {
+    "model": "account.VisaType",
+    "pk": 37,
+    "fields": {
+      "name": "T-1"
     }
   }
 ]

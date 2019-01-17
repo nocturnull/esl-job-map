@@ -34,18 +34,6 @@
                             {{ applicant_form.visa_type.label_tag }}
                             {{ applicant_form.visa_type }}
                         </div>
-                        <div id="visaConditions" class="{% visa_conditions_class request.user %}">
-                            <div>
-                                {{ applicant_form.can_transfer_visa.errors }}
-                                {{ applicant_form.can_transfer_visa.label_tag }}
-                                {{ applicant_form.can_transfer_visa }}
-                            </div>
-                            <div>
-                                {{ applicant_form.can_work_second_job.errors }}
-                                {{ applicant_form.can_work_second_job.label_tag }}
-                                {{ applicant_form.can_work_second_job }}
-                            </div>
-                        </div>
                         {% if request.user.teacher.has_resume %}
                             <div>Existing resume: {{ request.user.teacher.resume }}</div>
                         {% endif %}

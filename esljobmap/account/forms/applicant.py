@@ -33,12 +33,6 @@ class ApplicantUpdateForm(forms.ModelForm):
     resume_file = forms.FileField(allow_empty_file=True, required=False, label='Resume')
     photo_file = forms.FileField(allow_empty_file=True, required=False, label='Photo')
 
-    def __init__(self, *args, **kwargs):
-        super(ApplicantUpdateForm, self).__init__(*args, **kwargs)
-        self.fields['can_transfer_visa'].required = False
-        self.fields['can_work_second_job'].required = False
-
     class Meta:
         model = Teacher
-        fields = ('country', 'visa_type', 'can_transfer_visa',
-                  'can_work_second_job', 'resume_file', 'photo_file')
+        fields = ('country', 'visa_type', 'resume_file', 'photo_file')

@@ -1,15 +1,11 @@
 $(document).foundation();
 
-import ProfileForm from './profileForm.js';
 import JobMapSetup from './jobMap.js';
 import ListFilter from './listFilter.js';
 
 
 $(document).ready(function() {
-    let pform = new ProfileForm(),
-        lfilter = new ListFilter();
-
-    pform.init();
+    let lfilter = new ListFilter();
     lfilter.init();
 });
 

@@ -66,6 +66,7 @@ class TemplateManager:
         teacher = applicant.teacher
 
         return AUTHENTICATED_USER_BASE_SCHEME.format(
+            visa_status=cls._generate_visa_status(teacher),
             recruiter_contact_name=cls._generated_to_recruiter_intro(job_post.contact_name),
             applicant_country=teacher.nice_country,
             job_post_title=job_post.title,
@@ -77,6 +78,13 @@ class TemplateManager:
             applicant_email=applicant.email,
             applicant_contact_number=applicant.phone_number
         )
+
+    @classmethod
+    def _generate_visa_status(cls, teacher: Teacher):
+        if teacher.visa_type is not None:
+            if teacher.visa_type_id != 1:
+                return 'I am on an {0} visa and '.format(teacher.visa_type)
+        return 'I do not have a visa yet but '
 
     @classmethod
     def _generate_anonymous_email_body(cls, job_post: JobPost) -> str:
