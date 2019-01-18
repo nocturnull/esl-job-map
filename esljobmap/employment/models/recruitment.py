@@ -55,7 +55,8 @@ class JobPost(models.Model):
 
         :return:
         """
-        return local_timezone.localize(self.created_at)
+
+        return self.created_at.astimezone(local_timezone)
 
     @property
     def expires_in(self) -> int:
