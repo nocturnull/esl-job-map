@@ -71,12 +71,13 @@
                     {% endif %}
                     <div>
                         <label for="{{ job_form.contact_email.id_for_label }}">
+                            {% if recruiter.opted_out_of_emails %}
+                                You will not receive an email copy of this application, as this recruiter has opted to receive all applications through our website only. However they will still receive your email address so they can contact you.
+                                <br/>
+                            {% endif %}
                             {{ job_form.contact_email.label }}
                             <span>
-                                {% if recruiter.opted_out_of_emails %}
-                                    <br/>You will not receive an email copy of this application, as this recruiter has opted to receive all applications through our website only.
-                                    <br/>However they will still receive your email address so they can contact you.
-                                {% else %}
+                                {% if not recruiter.opted_out_of_emails %}
                                     {% if request.user.is_authenticated and request.user.opted_out_of_emails %}
                                         [You've opted out of emails]
                                     {% else %}

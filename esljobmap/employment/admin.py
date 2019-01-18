@@ -34,16 +34,14 @@ class CreateDateListFilter(admin.SimpleListFilter):
         provided in the query string and retrievable via
         `self.value()`.
         """
-        # Compare the requested value (either '80s' or '90s')
-        # to decide how to filter the queryset.
         if self.value() == 'prelaunch':
-            return queryset.filter(created_at__lt=date(2019, 1, 19))
+            return queryset.filter(created_at__lt=date(2019, 1, 19), is_visible=True)
         if self.value() == 'postlaunch':
-            return queryset.filter(created_at__gte=date(2019, 1, 19))
+            return queryset.filter(created_at__gte=date(2019, 1, 19), is_visible=True)
 
 
 class JobPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'created_at', 'contact_email', 'is_full_time']
+    list_display = ['title', 'local_created_at', 'contact_email', 'is_full_time']
     list_filter = (CreateDateListFilter, )
 
 

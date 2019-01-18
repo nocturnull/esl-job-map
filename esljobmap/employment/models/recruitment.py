@@ -1,12 +1,17 @@
 # employment/models/recruitment.py
 
+from django.shortcuts import reverse
 from datetime import datetime
 from django.db import models
-from django.shortcuts import reverse
+
+from pytz import timezone
 
 from ..apps import EmploymentConfig
 from ..settings import FULL_TIME_JOB_DAYS_VALID, PART_TIME_JOB_DAYS_VALID
+
 from account.models.user import SiteUser
+
+local_timezone = timezone('Asia/Seoul')  # Change to system env later on...
 
 
 class JobPost(models.Model):
@@ -42,6 +47,15 @@ class JobPost(models.Model):
         if self.is_full_time:
             return FULL_TIME_JOB_DAYS_VALID
         return PART_TIME_JOB_DAYS_VALID
+
+    @property
+    def local_created_at(self):
+        """
+        Converts the create date (in UTC) to a local timezone.
+
+        :return:
+        """
+        return local_timezone.localize(self.created_at)
 
     @property
     def expires_in(self) -> int:

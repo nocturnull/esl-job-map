@@ -84,7 +84,7 @@ class TemplateManager:
         if teacher.visa_type is not None:
             if teacher.visa_type_id != 1:
                 return 'I am on an {0} visa and '.format(teacher.visa_type)
-        return 'I do not have a visa yet but '
+        return 'I do not have a visa yet, but '
 
     @classmethod
     def _generate_anonymous_email_body(cls, job_post: JobPost) -> str:
