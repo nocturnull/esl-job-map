@@ -4,7 +4,7 @@ from datetime import date
 
 from django.contrib import admin
 
-from .models.recruitment import JobPost
+from .models import JobPost, JobApplication
 
 
 class CreateDateListFilter(admin.SimpleListFilter):
@@ -45,4 +45,10 @@ class JobPostAdmin(admin.ModelAdmin):
     list_filter = (CreateDateListFilter, )
 
 
+class JobApplicationAdmin(admin.ModelAdmin):
+    list_display = ['contact_email', 'job_post', 'created_at']
+    fields = ('contact_email', 'cover_letter')
+
+
 admin.site.register(JobPost, JobPostAdmin)
+admin.site.register(JobApplication, JobApplicationAdmin)

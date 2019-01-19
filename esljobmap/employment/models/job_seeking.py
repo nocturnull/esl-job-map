@@ -5,11 +5,12 @@ from django.db import models
 
 from account.models import Resume, Photo, SiteUser
 
-from ..apps import EmploymentConfig
+from ..model_attributes.localize import Localize
 from ..models.recruitment import JobPost
+from ..apps import EmploymentConfig
 
 
-class JobApplication(models.Model):
+class JobApplication(models.Model, Localize):
     """Model for job applications made by applicants."""
     job_post = models.ForeignKey(JobPost,
                                  on_delete=models.CASCADE,

@@ -4,17 +4,14 @@ from django.shortcuts import reverse
 from datetime import datetime
 from django.db import models
 
-from pytz import timezone
-
-from ..apps import EmploymentConfig
 from ..settings import FULL_TIME_JOB_DAYS_VALID, PART_TIME_JOB_DAYS_VALID
+from ..model_attributes.localize import Localize
+from ..apps import EmploymentConfig
 
 from account.models.user import SiteUser
 
-local_timezone = timezone('Asia/Seoul')  # Change to system env later on...
 
-
-class JobPost(models.Model):
+class JobPost(models.Model, Localize):
     """Model for a job post made by recruiters."""
     site_user = models.ForeignKey(SiteUser, related_name='job_posts', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
@@ -47,16 +44,6 @@ class JobPost(models.Model):
         if self.is_full_time:
             return FULL_TIME_JOB_DAYS_VALID
         return PART_TIME_JOB_DAYS_VALID
-
-    @property
-    def local_created_at(self):
-        """
-        Converts the create date (in UTC) to a local timezone.
-
-        :return:
-        """
-
-        return self.created_at.astimezone(local_timezone)
 
     @property
     def expires_in(self) -> int:

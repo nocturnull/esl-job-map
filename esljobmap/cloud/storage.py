@@ -82,7 +82,7 @@ class Client(object):
 
 
 def build_cdn_url(uri: str) -> str:
-    return AWS_CDN_BASE_LINK + uri
+    return AWS_SECURE_CDN_BASE_LINK + uri
 
 
 def build_s3_url(uri: str) -> str:
