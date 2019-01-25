@@ -20,7 +20,7 @@
         {% include 'modules/meta.html' %}
         <link rel="shortcut icon" type="image/png" href="{% cdn_image 'favicon.png' %}"/>
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'foundation/dist/app.min.css' %}">
+        <link rel="stylesheet" href="{% static 'foundation/dist/app.min.css' %}?v=1548426052">
     </head>
     <body class="{{ request.path|classify }}">
         {% if request.user_agent.is_mobile %}
@@ -28,6 +28,8 @@
         {% else %}
             {% include 'modules/top-nav.html' %}
         {% endif %}
+
+        {% include 'modules/ie-warning.html' %}
 
         <div class="content off-canvas-content" data-off-canvas-content>
             {% if request.user_agent.is_mobile %}
@@ -41,7 +43,7 @@
         </div>
 
         {% block prejavascript %}{% endblock %}
-        <script src="{% static 'foundation/dist/detectIE.js' %}"></script>
+        <script src="{% static 'foundation/dist/detectIE.js' %}?v=1548426052"></script>
         <script src="{% static 'foundation/dist/vendor.min.js' %}"></script>
         <script src="{% static 'foundation/dist/app.min.js' %}"></script>
         {% block postjavascript %}{% endblock %}

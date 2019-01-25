@@ -134,31 +134,29 @@ class JobPost(models.Model, Localize):
         not_interested = self.not_interested(user)
         can_apply = self.can_apply(user)
         has_applied, application = self.has_applicant_applied(user)
-        container_class = ''
+        container_class = 'job-not-interested' if not_interested else ''
 
-        if not_interested:
-            container_class = 'job-not-interested'
+        content = '<div class="job-post {}" id="jobPostCard">'.format(container_class)  # Open job-post
+        if not not_interested:
+            content += '<div class="job-description">'  # Open job-description
+            content += '<span class="bold-text">' + self.title + '</span><br>'
+            if self.is_full_time:
+                content += '<span class="bold-text">Salary: </span>' + self.salary + '<br>'
+            else:
+                content += '<span class="bold-text">Pay Rate: </span>' + self.pay_rate + '<br>'
+            content += '<span class="bold-text">Schedule: </span>' + self.schedule + '<br>'
+            content += '<span class="bold-text">Class Type: </span>' + self.class_type + '<br>'
 
-        content = '<div class="job-post" id="jobPostCard">'
-        content += '<div class="job-description ' + container_class + '">'
-        content += '<span class="bold-text">' + self.title + '</span><br>'
-        if self.is_full_time:
-            content += '<span class="bold-text">Salary: </span>' + self.salary + '<br>'
-        else:
-            content += '<span class="bold-text">Pay Rate: </span>' + self.pay_rate + '<br>'
-        content += '<span class="bold-text">Schedule: </span>' + self.schedule + '<br>'
-        content += '<span class="bold-text">Class Type: </span>' + self.class_type + '<br>'
+            if self.is_full_time:
+                content += '<span class="bold-text">Benefits: </span>' + self.benefits + '<br>'
 
-        if self.is_full_time:
-            content += '<span class="bold-text">Benefits: </span>' + self.benefits + '<br>'
+            content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
 
-        content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
-
-        content += '</div>'
-        content += self.pretty_num_applicants + ', ' + self.pretty_days_elapsed + '<br>'
+            content += '</div>'  # Close job-description
+            content += self.pretty_num_applicants + ', ' + self.pretty_days_elapsed + '<br>'
 
         if can_apply:
-            content += '<div class="action-links">'
+            content += '<div class="action-links">'  # Open action-links
 
             if not_interested:
                 content += '<a href="#" class="job-apply-link disabled">Apply</a>'
@@ -172,12 +170,9 @@ class JobPost(models.Model, Localize):
                     content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
                                '" class="job-not-interested-link" onclick="return updateMapMarker(event, this, ' +\
                                str(self.id) + ', 1);">Not Interested</a>'
-                else:
-                    content += '<a href="#" class="job-not-interested-link" ' \
-                               'data-open="noticeModal">Not Interested</a>'
-            content += '</div><br>'
+            content += '</div><br>'  # Close action-links
 
-        content += '</div>'
+        content += '</div>'  # Close job-post
         if has_applied:
             content += '<span class="bold-text">Applied: </span>' + application.nice_created_at + '<br>'
 

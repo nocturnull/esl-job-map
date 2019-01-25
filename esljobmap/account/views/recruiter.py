@@ -14,8 +14,8 @@ class RecruiterSignUp(CreateView):
     form_class = RecruiterCreationForm
     template_name = 'registration/signup/recruiter.html'
     extra_context = {
-        'mtitle': 'ESLJobMap.com - Recruiter Registration Page',
-        'mdescription': 'Register as a recruiter to post jobs on ESL Job Map'
+        'mtitle': 'ESLJobMap.com - Job Poster Registration Page',
+        'mdescription': 'Register as a job poster to post jobs on ESL Job Map'
                         ' and find the teacher right for you, quickly!'
     }
 

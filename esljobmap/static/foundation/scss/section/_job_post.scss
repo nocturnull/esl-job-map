@@ -3,8 +3,8 @@
 // ==========================================================================
 
 .job-post {
-    .job-not-interested {
-        text-decoration: line-through;
+    &.job-not-interested {
+        height: 1.1em;
     }
 
     .action-links {

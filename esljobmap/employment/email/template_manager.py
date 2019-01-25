@@ -91,7 +91,7 @@ class TemplateManager:
         """
         Builds the email body for applicants that are simply 'guests' to the site.
 
-        :param recruiter:
+        :param job_post:
         :return:
         """
         return ANONYMOUS_USER_BASE_SCHEME.format(

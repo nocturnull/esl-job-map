@@ -5,6 +5,7 @@ var agent = window.navigator.userAgent;
 
 if (mapContainer !== null) {
     if (agent.indexOf('MSIE ') > 0 || agent.indexOf('Trident/') > 0) {
-        alert('Internet explorer detected, in order to use the map please use a modern web browser.')
+        var message = document.getElementById('ieWarning');
+        message.setAttribute('style', '')
     }
 }
