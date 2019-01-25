@@ -15,6 +15,7 @@
                         <th>Resume</th>
                         <th>Photo</th>
                         <th>Cover Letter</th>
+                        <th>Date Applied</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +32,7 @@
                                     {% endif %}
                                 </td>
                                 <td><a href="{{ application.view_url }}" target="_blank">View</a></td>
+                                <td>{{ application.nice_created_at }}</td>
                             </tr>
                         {% endwith %}
                     {% endfor %}

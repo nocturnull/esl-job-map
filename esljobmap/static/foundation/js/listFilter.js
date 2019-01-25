@@ -18,7 +18,6 @@ class FlowCard {
         this.tooltips = [];
         this.bindRepostHoverEvent();
         this.bindTooltipHideEvents();
-        this.isShowing = false;
     }
 
     /**
