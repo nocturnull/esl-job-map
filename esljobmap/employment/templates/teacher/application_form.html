@@ -17,16 +17,14 @@
                     </div>
                     {% if request.user.is_anonymous %}
                         <p>
-                            Tired of filling in your information, attaching and writing the cover letter each time?<br>
-                            Want to track which jobs you applied for, and if they are still open?<br>
-                            <a href="{% url 'signup' %}">Register</a> and let us automate that for you.
+                            <a href="{% url 'signup' %}">Register</a> to automate your filling in your cover letter, and track jobs you have applied to.
                         </p>
                         <div>
-                            <label class="file-label" for="{{ job_form.resume.id_for_label }}">Resume:</label>
+                            <label class="file-label" for="{{ job_form.resume.id_for_label }}">Resume - .PDF files only:</label>
                             <input type="file" name="{{ job_form.resume.html_name }}">
                         </div>
                         <div>
-                            <label class="file-label" for="{{ job_form.photo.id_for_label }}">Photo (Option):</label>
+                            <label class="file-label" for="{{ job_form.photo.id_for_label }}">Photo - .jpeg files only (Optional):</label>
                             <input type="file" name="{{ job_form.photo.html_name }}">
                         </div>
                     {% elif request.user.is_teacher %}
@@ -41,7 +39,7 @@
                         </div>
                         <div>
                             {% if request.user.teacher.has_resume %}
-                                <label class="file-label" for="{{ job_form.resume.id_for_label }}">Upload different resume:</label>
+                                <label class="file-label" for="{{ job_form.resume.id_for_label }}">Upload different resume - PDF files only:</label>
                             {% endif %}
                             <input type="file" name="{{ job_form.resume.html_name }}">
                             {% if resume_error %}
@@ -59,7 +57,7 @@
                         </div>
                         <div>
                             {% if request.user.teacher.has_photo %}
-                                <label class="file-label" for="{{ job_form.photo.id_for_label }}">Upload different photo:</label>
+                                <label class="file-label" for="{{ job_form.photo.id_for_label }}">Upload different photo - .jpeg files only (Optional):</label>
                             {% endif %}
                             <input type="file" name="{{ job_form.photo.html_name }}">
                             <span class="errorlist">

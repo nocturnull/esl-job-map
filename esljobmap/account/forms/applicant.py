@@ -4,6 +4,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django import forms
 
+from esljobmap.validators import validate_pdf_extension, validate_jpeg_extension
+
 from ..models import SiteUser, Teacher
 
 
@@ -30,8 +32,8 @@ class ApplicantCreationForm(UserCreationForm):
 
 
 class ApplicantUpdateForm(forms.ModelForm):
-    resume_file = forms.FileField(allow_empty_file=True, required=False, label='Resume')
-    photo_file = forms.FileField(allow_empty_file=True, required=False, label='Photo')
+    resume_file = forms.FileField(allow_empty_file=True, required=False, label='Resume', validators=[validate_pdf_extension])
+    photo_file = forms.FileField(allow_empty_file=True, required=False, label='Photo', validators=[validate_jpeg_extension])
 
     class Meta:
         model = Teacher

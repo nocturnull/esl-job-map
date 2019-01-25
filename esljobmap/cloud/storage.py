@@ -70,6 +70,7 @@ class Client(object):
 
     @classmethod
     def _detect_content_type(cls, path):
+        path = path.lower()
         if 'pdf' in path:
             return 'application/pdf'
         elif 'gif' in path:
@@ -78,7 +79,7 @@ class Client(object):
             return 'image/jpeg'
         elif 'png' in path:
             return 'image/png'
-        return 'application/msword'
+        return 'application/octet-stream'
 
 
 def build_cdn_url(uri: str) -> str:
