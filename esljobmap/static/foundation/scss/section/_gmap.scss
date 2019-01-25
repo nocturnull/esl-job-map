@@ -18,8 +18,11 @@
     }
 
     .job-description {
-        max-height: 10rem;
-        overflow-y: scroll;
+        max-height: 11rem;
+
+        &.mobile {
+            overflow-y: scroll;
+        }
     }
 
     footer {

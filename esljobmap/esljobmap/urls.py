@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from esljobmap.views import HomeView
+from esljobmap.views import HomeView, Custom404
 
 urlpatterns = [
     path('', HomeView.as_view(), name='home'),
@@ -25,3 +25,5 @@ urlpatterns = [
     path('korea/account/', include('django.contrib.auth.urls')),
     path('korea/employment/', include('employment.urls'))
 ]
+
+handler404 = Custom404.as_view()

@@ -13,7 +13,7 @@ from djangomailgun.message.api import MessageApi
 class About(TemplateView):
     template_name = 'about/index.html'
     extra_context = {
-        'mtitle': 'ESLJobMap.com - About - English teaching jobs, on a map',
+        'mtitle': 'Learn About ESL Job Map',
         'mdescription': 'ESL Job Map is a map-based English job teaching board for South Korea. '
                         'We have both full and part-time English teaching job maps.'
     }

@@ -50,7 +50,7 @@
                 id: {{ job_post.id }},
                 lat: {{ job_post.latitude }},
                 lng: {{ job_post.longitude }},
-                content: '{% build_info_html job_post user %}',
+                content: '{% build_info_html job_post user request %}',
                 hasApplied: {% has_applied job_post user %},
                 isJobPoster: {% is_job_poster job_post user %},
                 isDisinterested: {% is_disinterested job_post user %}

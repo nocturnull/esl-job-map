@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 class SiteUserLogin(LoginView):
     """SiteUser Login View"""
     extra_context = {
-        'mtitle': 'ESLJobMap.com - Login Page',
+        'mtitle': 'Login to ESL Job Map',
         'mdescription': 'Login to your ESL Job Map account.'
     }
 

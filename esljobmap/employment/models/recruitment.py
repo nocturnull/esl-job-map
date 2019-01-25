@@ -125,20 +125,23 @@ class JobPost(models.Model, Localize):
 
         return tags
 
-    def build_html_content(self, user) -> str:
+    def build_html_content(self, user, request) -> str:
         """
         Build the map HTML content for ths Job Post.
 
-        :return: str
+        :param user:
+        :param request:
+        :return:
         """
         not_interested = self.not_interested(user)
         can_apply = self.can_apply(user)
         has_applied, application = self.has_applicant_applied(user)
         container_class = 'job-not-interested' if not_interested else ''
+        desc_class = 'mobile' if request.user_agent.is_mobile else ''
 
         content = '<div class="job-post {}" id="jobPostCard">'.format(container_class)  # Open job-post
         if not not_interested:
-            content += '<div class="job-description">'  # Open job-description
+            content += '<div class="job-description {}">'.format(desc_class)  # Open job-description
             content += '<span class="bold-text">' + self.title + '</span><br>'
             if self.is_full_time:
                 content += '<span class="bold-text">Salary: </span>' + self.salary + '<br>'
@@ -153,7 +156,7 @@ class JobPost(models.Model, Localize):
             content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
 
             content += '</div>'  # Close job-description
-            content += self.pretty_num_applicants + ', ' + self.pretty_days_elapsed + '<br>'
+            content += '<div>' + self.pretty_num_applicants + ', ' + self.pretty_days_elapsed + '</div>'
 
         if can_apply:
             content += '<div class="action-links">'  # Open action-links

@@ -17,7 +17,7 @@ class ApplicantSignUp(CreateView):
     form_class = ApplicantCreationForm
     template_name = 'registration/signup/applicant.html'
     extra_context = {
-        'mtitle': 'ESLJobMap.com - Teacher Registration Page',
+        'mtitle': 'Register as a Teacher on ESL Job Map',
         'mdescription': 'Creating an account will allow you to automatically attach your resume, '
                         'fill in information on your cover letter and track jobs you have applied to.'
     }

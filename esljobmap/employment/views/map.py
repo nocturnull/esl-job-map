@@ -18,7 +18,7 @@ class FullTimeMap(ListView):
     queryset = JobPost.objects.filter(is_full_time=True, is_visible=True)
     extra_context = {
         'is_full_time': True,
-        'mtitle': 'ESLJobMap.com - Full-Time Korea Job Map',
+        'mtitle': 'Full-Time Korean Jobs Map',
         'mdescription': 'The latest full-time English teaching jobs in Korea, on a map. '
                         'Quickly view work schedule, salary and benefits.',
         'icon_image': cdn_image('koco-man/blue-60x60.png'),
@@ -49,7 +49,7 @@ class PartTimeMap(ListView):
     queryset = JobPost.objects.filter(is_full_time=False, is_visible=True)
     extra_context = {
         'is_full_time': False,
-        'mtitle': 'ESLJobMap.com - Part-Time Korea Job Map',
+        'mtitle': 'Part-Time Korean Jobs Map',
         'mdescription': 'The latest part-time English teaching and tutoring jobs in Korea, on a map. '
                         'Quickly view days, hours and pay rate.',
         'icon_image': cdn_image('koco-man/orange-60x60.png'),

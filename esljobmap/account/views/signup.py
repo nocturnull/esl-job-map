@@ -9,7 +9,7 @@ class SignUp(CreateView):
     form_class = SiteUserCreationForm
     template_name = 'registration/signup/index.html'
     extra_context = {
-        'mtitle': 'ESLJobMap.com - Registration Page',
+        'mtitle': 'Register as a Teacher or Recruiter on ESL Job Map',
         'mdescription': 'Register as a teacher to automatically fill in and track your applications, '
                         'or register as a recruiter to post jobs on our site.'
     }

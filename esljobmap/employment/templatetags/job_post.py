@@ -8,8 +8,8 @@ register = template.Library()
 
 
 @register.simple_tag
-def build_info_html(job_post, user) -> str:
-    return escapejs(job_post.build_html_content(user))
+def build_info_html(job_post, user, request) -> str:
+    return escapejs(job_post.build_html_content(user, request))
 
 
 @register.simple_tag

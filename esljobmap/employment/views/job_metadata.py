@@ -13,7 +13,7 @@ class DisinterestedJobPostCreate(LoginRequiredMixin, View):
         job_post = JobPost.objects.get(pk=pk)
         user = request.user
         DisinterestedJobPost.objects.create(site_user=user, job_post=job_post)
-        return HttpResponse(job_post.build_html_content(user))
+        return HttpResponse(job_post.build_html_content(user, request))
 
 
 class DisinterestedJobPostDelete(LoginRequiredMixin, View):
@@ -22,4 +22,4 @@ class DisinterestedJobPostDelete(LoginRequiredMixin, View):
         job_post = JobPost.objects.get(pk=pk)
         user = request.user
         DisinterestedJobPost.objects.filter(site_user=user, job_post=job_post).delete()
-        return HttpResponse(job_post.build_html_content(user))
+        return HttpResponse(job_post.build_html_content(user, request))
