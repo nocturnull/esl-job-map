@@ -41,8 +41,9 @@ class CreateDateListFilter(admin.SimpleListFilter):
 
 
 class JobPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'local_created_at', 'contact_email', 'is_full_time']
+    list_display = ['title', 'local_created_at', 'site_user_email', 'is_full_time']
     list_filter = (CreateDateListFilter, )
+    ordering = ['-created_at']
 
 
 class JobApplicationAdmin(admin.ModelAdmin):

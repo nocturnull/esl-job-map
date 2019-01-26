@@ -5,7 +5,8 @@ from django.db import models
 
 from account.models import Resume, Photo, SiteUser
 
-from ..model_attributes.localize import Localize
+from esljobmap.model_attributes.localize import Localize
+
 from ..models.recruitment import JobPost
 from ..apps import EmploymentConfig
 

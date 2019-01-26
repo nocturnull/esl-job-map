@@ -16,3 +16,12 @@ class Localize:
         """
 
         return self.created_at.astimezone(local_timezone)
+
+    @property
+    def local_date_joined(self):
+        """
+        Converts the date joined (in UTC) to a local timezone.
+
+        :return:
+        """
+        return self.date_joined.astimezone(local_timezone)

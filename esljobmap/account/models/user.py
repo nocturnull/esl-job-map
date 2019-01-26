@@ -3,11 +3,13 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
+from esljobmap.model_attributes.localize import Localize
+
 from ..managers import SiteUserManager
 from ..apps import AccountConfig
 
 
-class SiteUser(AbstractBaseUser, PermissionsMixin):
+class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     """
     Extension of the default user.
     """

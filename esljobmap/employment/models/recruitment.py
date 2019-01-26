@@ -4,8 +4,9 @@ from django.shortcuts import reverse
 from datetime import datetime
 from django.db import models
 
+from esljobmap.model_attributes.localize import Localize
+
 from ..settings import FULL_TIME_JOB_DAYS_VALID, PART_TIME_JOB_DAYS_VALID
-from ..model_attributes.localize import Localize
 from ..apps import EmploymentConfig
 
 from account.models.user import SiteUser
@@ -33,6 +34,15 @@ class JobPost(models.Model, Localize):
     address = models.CharField(max_length=1024, default='')
 
     _applicants = []
+
+    @property
+    def site_user_email(self) -> str:
+        """
+        Gets the users email.
+
+        :return:
+        """
+        return self.site_user.email
 
     @property
     def days_valid(self) -> int:
