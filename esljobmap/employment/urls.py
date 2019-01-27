@@ -3,7 +3,7 @@
 from django.urls import path
 
 from .views.map import FullTimeMap, PartTimeMap
-from .views.job_seeking import ApplyToJobPost, ListApplications
+from .views.job_seeking import ApplyToJobPost, RegistrationAfterApplying, ListApplications
 from .views.recruitment import JobPostIndex, CreateFullTimeJobPost, CreatePartTimeJobPost, ListJobPost,\
     EditFullTimeJobPost, EditPartTimeJobPost, ListJobApplicants, TakeDownJobPost, RepostJob, ViewJobPostApplication
 from .views.job_metadata import DisinterestedJobPostCreate, DisinterestedJobPostDelete
@@ -30,5 +30,6 @@ urlpatterns = [
     path('teacher/apply/<int:job_post_id>', ApplyToJobPost.as_view(), name='employment_apply_to_job'),
     path('teacher/applications', ListApplications.as_view(), name='employment_applications'),
     path('teacher/job/not-interested/<int:pk>', DisinterestedJobPostCreate.as_view(), name='employment_track_job_disinterest'),
-    path('teacher/job/interested/<int:pk>', DisinterestedJobPostDelete.as_view(), name='employment_remove_job_disinterest')
+    path('teacher/job/interested/<int:pk>', DisinterestedJobPostDelete.as_view(), name='employment_remove_job_disinterest'),
+    path('teacher/applied/signup', RegistrationAfterApplying.as_view(), name='employment_applied_signup')
 ]

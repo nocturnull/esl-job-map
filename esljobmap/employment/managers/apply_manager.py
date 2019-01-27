@@ -27,6 +27,30 @@ class ApplyManager:
             pass
 
     @staticmethod
+    def track_application_info(request, application: JobApplication):
+        """
+        Track application to be used in the signup form.
+
+        :param request:
+        :param application:
+        :return:
+        """
+        request.session['recent_application'] = application
+
+    @staticmethod
+    def untrack_application_info(request):
+        """
+        Remove application once used.
+
+        :param request:
+        :return:
+        """
+        try:
+            del request.session['recent_application']
+        except KeyError:
+            pass
+
+    @staticmethod
     def save_resume(user, resume, **kwargs) -> dict:
         """
         Use an existing resume for logged in users or grab one from the form.
