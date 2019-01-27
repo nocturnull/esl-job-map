@@ -1,6 +1,6 @@
 # employment/models/recruitment.py
 
-from django.shortcuts import reverse
+from django.urls import reverse_lazy
 from datetime import datetime
 from django.db import models
 
@@ -108,8 +108,12 @@ class JobPost(models.Model, Localize):
     @property
     def edit_link(self):
         if self.is_full_time:
-            return reverse('employment_edit_full_time_job_post', args=[self.id])
-        return reverse('employment_edit_part_time_job_post', args=[self.id])
+            return reverse_lazy('employment_edit_full_time_job_post', args=[self.id])
+        return reverse_lazy('employment_edit_part_time_job_post', args=[self.id])
+
+    @property
+    def take_down_link(self):
+        return reverse_lazy('employment_takedown_job_post', args=[self.id])
 
     @property
     def card_class(self) -> str :
@@ -173,17 +177,22 @@ class JobPost(models.Model, Localize):
 
             if not_interested:
                 content += '<a href="#" class="job-apply-link disabled">Apply</a>'
-                content += '<a href="' + reverse('employment_remove_job_disinterest', args=(self.id,)) + \
+                content += '<a href="' + reverse_lazy('employment_remove_job_disinterest', args=(self.id,)) + \
                            '" class="action-link" onclick="return updateMapMarker(event, this, ' +\
                            str(self.id) + ', 0);">Interested</a>'
             elif not has_applied:
-                content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
+                content += '<a href="' + reverse_lazy('employment_apply_to_job', args=(self.id,)) + \
                            '" class="job-apply-link action-link">Apply</a>'
                 if user.is_authenticated:
-                    content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
+                    content += '<a href="' + reverse_lazy('employment_track_job_disinterest', args=(self.id,)) + \
                                '" class="job-not-interested-link" onclick="return updateMapMarker(event, this, ' +\
                                str(self.id) + ', 1);">Not Interested</a>'
             content += '</div><br>'  # Close action-links
+        elif user.is_recruiter:
+            content += '<div class="action-links">'  # Open action-links
+            content += '<a href="{}" class="job-apply-link action-link">Edit job</a>'.format(self.edit_link)
+            content += '<a href="{}" class="job-not-interested-link">Take down</a>'.format(self.take_down_link)
+            content += '</div>'  # Close action-links
 
         content += '</div>'  # Close job-post
         if has_applied:
