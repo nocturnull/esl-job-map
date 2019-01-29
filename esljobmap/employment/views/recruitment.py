@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.db.models import F
 
+from ..mixins.recruiter import IsJobPosterMixin
 from ..models import JobPost, JobApplication
 from ..decorators import recruiter_required
 from ..forms.recruiter import CreateFullTimeJobForm, CreatePartTimeJobForm,\
@@ -76,7 +77,7 @@ class ListJobPost(LoginRequiredMixin, ListView):
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class ListJobApplicants(LoginRequiredMixin, DetailView):
+class ListJobApplicants(LoginRequiredMixin, IsJobPosterMixin, DetailView):
     """
     View for recruiters to view applicants for their own job posts.
     """
@@ -85,7 +86,7 @@ class ListJobApplicants(LoginRequiredMixin, DetailView):
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class EditFullTimeJobPost(LoginRequiredMixin, UpdateView):
+class EditFullTimeJobPost(LoginRequiredMixin, IsJobPosterMixin, UpdateView):
     """
     View for editing existing full time job posts.
 
@@ -104,7 +105,7 @@ class EditFullTimeJobPost(LoginRequiredMixin, UpdateView):
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class EditPartTimeJobPost(LoginRequiredMixin, UpdateView):
+class EditPartTimeJobPost(LoginRequiredMixin, IsJobPosterMixin, UpdateView):
     """
     View for editing existing part time job posts.
 
@@ -122,7 +123,7 @@ class EditPartTimeJobPost(LoginRequiredMixin, UpdateView):
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class TakeDownJobPost(LoginRequiredMixin, UpdateView):
+class TakeDownJobPost(LoginRequiredMixin, IsJobPosterMixin, UpdateView):
     """
     View for taking down a job post.
     """
@@ -133,7 +134,7 @@ class TakeDownJobPost(LoginRequiredMixin, UpdateView):
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class RepostJob(LoginRequiredMixin, UpdateView):
+class RepostJob(LoginRequiredMixin, IsJobPosterMixin, UpdateView):
     """
     View for reposting a job after taking it down.
     """
