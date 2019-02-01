@@ -187,7 +187,7 @@ class JobPost(models.Model, Localize):
                     content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
                                '" class="job-not-interested-link" onclick="return updateMapMarker(event, this, ' +\
                                str(self.id) + ', 1);">Not Interested</a>'
-            content += '</div><br>'  # Close action-links
+            content += '</div>'  # Close action-links
         elif user.is_recruiter and self.is_job_poster(user):
             content += '<div class="action-links">'  # Open action-links
             content += '<a href="{}" class="job-apply-link action-link">Edit job</a>'.format(self.edit_link)
