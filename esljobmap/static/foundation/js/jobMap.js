@@ -29,7 +29,7 @@ class JobMapSetup {
         this.googleMarkerMap = {};
         this.googleMarkerMapHoverListeners = {};
         this.googleMarkerMapClickListeners = {};
-        this.disinterestedIconImage = this.cdnImg('koco-man/gray-60x60.png');
+        this.disinterestedIconImage = this.cdnImg('koco-man/gray-60x60.png') + '?v=1549075351';
         this.appliedIconImage = this.cdnImg('koco-man/black-60x60.png');
     }
 

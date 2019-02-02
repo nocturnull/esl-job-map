@@ -21,7 +21,7 @@ class FullTimeMap(ListView):
         'mtitle': 'Full-Time Korean Jobs Map',
         'mdescription': 'The latest full-time English teaching jobs in Korea, on a map. '
                         'Quickly view work schedule, salary and benefits.',
-        'icon_image': cdn_image('koco-man/blue-60x60.png'),
+        'icon_image': cdn_image('koco-man/blue-60x60.png') + '?v=1549075351',
         'marker_image': cdn_image('marker/full-time-60x60.png'),
         'post_url': reverse_lazy('employment_create_full_time_job')
     }
