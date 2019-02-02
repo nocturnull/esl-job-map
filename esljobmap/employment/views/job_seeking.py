@@ -1,9 +1,12 @@
 # employment/views/job_seeking.py
 
+from django.views.generic import ListView, TemplateView, CreateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import ListView, TemplateView
+from django.shortcuts import render, reverse, redirect
+from django.contrib.auth import login
 from django.db.models import F
-from django.shortcuts import render, reverse
+
+from account.forms.applicant import ApplicantCreationForm
 
 from ..models import JobPost, JobApplication
 from ..forms.applicant import ApplyToJobForm
@@ -77,12 +80,16 @@ class ApplyToJobPost(TemplateView):
             ApplyManager.email_relevant_parties(job_post, job_form, application, request.user, applicant_email)
 
             # Inform the user.
-            return render(request,
-                          'teacher/application_success.html',
-                          {
-                              'referring_map_url': referer,
-                              'success_text': ApplyManager.resolve_success_text(referer),
-                          })
+            if self.request.user.is_authenticated:
+                return render(request,
+                              'teacher/application_success.html',
+                              {
+                                  'referring_map_url': referer,
+                                  'success_text': ApplyManager.resolve_success_text(referer),
+                              })
+            else:
+                ApplyManager.track_application_info(request, application)
+                return redirect(reverse('employment_applied_signup'))
         else:
             return render(request,
                           self.template_name,
@@ -90,6 +97,51 @@ class ApplyToJobPost(TemplateView):
                               'job_post': job_post,
                               'job_form': job_form
                           })
+
+
+class RegistrationAfterApplying(TemplateView):
+    template_name = 'registration/signup/application_submitted.html'
+    extra_context = {
+        'mtitle': 'Register as a Teacher on ESL Job Map',
+        'mdescription': 'Creating an account will allow you to automatically attach your resume, '
+                        'fill in information on your cover letter and track jobs you have applied to.',
+        'role': 'teacher'
+    }
+
+    def get(self, request, *args, **kwargs):
+        application = request.session.get('recent_application')
+        email = None
+        if application is not None:
+            email = application.contact_email
+
+        # Set default email for the signup form.
+        form = ApplicantCreationForm()
+        form.fields['email'].initial = email
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = ApplicantCreationForm(request.POST)
+
+        if form.is_valid():
+            user = form.save()
+
+            # Link the users new account to their recent application.
+            application = request.session.get('recent_application')
+            if application is not None:
+                application.site_user = user
+                application.save()
+
+                # Link the applications resume and photo to the users account.
+                user.teacher.resume = application.resume
+                if application.photo:
+                    user.teacher.photo = application.photo
+                user.teacher.save()
+                ApplyManager.untrack_application_info(request)
+
+            # Log them in and redirect to their applications.
+            login(self.request, user)
+            return redirect('employment_applications')
+        return render(request, self.template_name, {'form': form})
 
 
 class ListApplications(LoginRequiredMixin, ListView):
