@@ -50,6 +50,12 @@
             window.jobMap.isRecruiter = false;
         {% endif %}
 
+        {% if request.user_agent.is_mobile %}
+            window.jobMap.isMobile = true;
+        {% else %}
+            window.jobMap.isMobile = false;
+        {% endif %}
+
         {% for job_post in object_list %}
             window.jobMap.markers.push({
                 id: {{ job_post.id }},

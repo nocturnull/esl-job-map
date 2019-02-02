@@ -49,6 +49,7 @@ class JobPostAdmin(admin.ModelAdmin):
 class JobApplicationAdmin(admin.ModelAdmin):
     list_display = ['contact_email', 'job_post', 'local_created_at']
     fields = ('contact_email', 'cover_letter')
+    ordering = ['-created_at']
 
 
 admin.site.register(JobPost, JobPostAdmin)

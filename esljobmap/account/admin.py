@@ -12,7 +12,7 @@ class SiteUserAdmin(UserAdmin):
     form = SiteUserChangeForm
     model = SiteUser
     list_display = ['email', 'full_name', 'role', 'local_date_joined']
-    ordering = ('email',)
+    ordering = ('-date_joined',)
     search_fields = ('email',)
     exclude = ('username',)
     fieldsets = (

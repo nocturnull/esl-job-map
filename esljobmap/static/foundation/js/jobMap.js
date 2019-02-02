@@ -32,6 +32,11 @@ class JobMapSetup {
         this.disinterestedIconImage = this.cdnImg('koco-man/gray-60x60.png') + '?v=1549075351';
         this.appliedIconImage = this.cdnImg('koco-man/black-60x60.png');
         this.interestedUri = '/korea/employment/teacher/job/interested/';
+        if (window.jobMap.isMobile) {
+            this.jobInterestClickEventType = 'dblclick';
+        } else {
+            this.jobInterestClickEventType = 'click';
+        }
     }
 
     /**
@@ -148,7 +153,7 @@ class JobMapSetup {
                 this.googleMarkerMapHoverListeners[markerData.id] = hoverListener;
             } else {
                 // No hover events but when the user clicks, they can mark the job as interested again.
-                clickListener = marker.addListener('click', (e) => {
+                clickListener = marker.addListener(this.jobInterestClickEventType, (e) => {
                     // Mark the job as interested.
                     let a = document.createElement('a');
                     a.setAttribute('href', this.interestedUri + markerData.id);
@@ -213,7 +218,7 @@ class JobMapSetup {
 
         // Add new listeners with the updated data.
         if (isDisinterested === 1) {
-            clickListener = marker.addListener('click', (e) => {
+            clickListener = marker.addListener(this.jobInterestClickEventType, (e) => {
                 // Mark the job as interested.
                 let a = document.createElement('a');
                 a.setAttribute('href', this.interestedUri + id);
