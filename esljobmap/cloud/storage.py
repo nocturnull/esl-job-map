@@ -2,6 +2,7 @@
 
 import boto3
 
+from requests.utils import requote_uri
 from .settings import *
 
 
@@ -83,12 +84,12 @@ class Client(object):
 
 
 def build_cdn_url(uri: str) -> str:
-    return AWS_SECURE_CDN_BASE_LINK + uri
+    return requote_uri(AWS_SECURE_CDN_BASE_LINK + uri)
 
 
 def build_s3_url(uri: str) -> str:
-    return AWS_S3_BASE_LINK.format(
+    return requote_uri(AWS_S3_BASE_LINK.format(
         AWS_DEFAULT_REGION,
         AWS_S3_BUCKET,
         uri
-    )
+    ))
