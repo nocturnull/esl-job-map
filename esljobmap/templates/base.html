@@ -29,8 +29,6 @@
             {% include 'modules/top-nav.html' %}
         {% endif %}
 
-        {% include 'modules/ie-warning.html' %}
-
         <div class="content off-canvas-content" data-off-canvas-content>
             {% if request.user_agent.is_mobile %}
                 {% include 'modules/top-mobile-nav.html' %}

@@ -1,7 +1,5 @@
 # cloud/templatetags.py
 
-import os
-
 from django import template
 
 from ..settings import *

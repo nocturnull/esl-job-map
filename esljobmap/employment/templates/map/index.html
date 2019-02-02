@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load job_post %}
+{% load agent %}
 
 {% block content %}
 
@@ -23,6 +24,11 @@
         {% else %}
             {% include 'recruiter/job_post_part_time_form.html' with form_title='Post a Part-Time Job' %}
         {% endif %}
+    {% endif %}
+
+
+    {% if request|is_ie %}
+        {% include 'modules/ie-warning.html' %}
     {% endif %}
 
 {% endblock %}
