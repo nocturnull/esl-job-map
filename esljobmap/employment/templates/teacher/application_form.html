@@ -22,6 +22,9 @@
                         <div>
                             <label class="file-label" for="{{ job_form.resume.id_for_label }}">Resume - .PDF files only:</label>
                             <input type="file" name="{{ job_form.resume.html_name }}">
+                            {% if resume_error %}
+                                <span class="errorlist">A resume is required</span>
+                            {% endif %}
                         </div>
                         <div>
                             <label class="file-label" for="{{ job_form.photo.id_for_label }}">Photo - .jpeg files only (Optional):</label>
