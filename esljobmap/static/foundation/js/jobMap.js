@@ -31,6 +31,7 @@ class JobMapSetup {
         this.googleMarkerMapClickListeners = {};
         this.disinterestedIconImage = this.cdnImg('koco-man/gray-60x60.png') + '?v=1549075351';
         this.appliedIconImage = this.cdnImg('koco-man/black-60x60.png');
+        this.interestedUri = '/korea/employment/teacher/job/interested/';
     }
 
     /**
@@ -131,21 +132,34 @@ class JobMapSetup {
                 });
 
             marker.setMap(this.map);
-            let lamb = () => {
-                // Open up the window and display the job info.
-                this.infoWindow.setContent(markerData.content);
-                this.infoWindow.open(this.map, marker);
-            };
+            let clickListener = null;
 
-            // Add marker listeners to the map.
-            let hoverListener = marker.addListener('mouseover', lamb);
-            let clickListener = marker.addListener('click', lamb);
+            // Display job info on hover if they are interested.
+            if (markerData.isDisinterested === 0) {
+                let lamb = () => {
+                    // Open up the window and display the job info.
+                    this.infoWindow.setContent(markerData.content);
+                    this.infoWindow.open(this.map, marker);
+                };
+
+                // Add marker listeners to the map.
+                let hoverListener = marker.addListener('mouseover', lamb);
+                clickListener = marker.addListener('click', lamb);
+                this.googleMarkerMapHoverListeners[markerData.id] = hoverListener;
+            } else {
+                // No hover events but when the user clicks, they can mark the job as interested again.
+                clickListener = marker.addListener('click', (e) => {
+                    // Mark the job as interested.
+                    let a = document.createElement('a');
+                    a.setAttribute('href', this.interestedUri + markerData.id);
+                    updateMapMarker(e.wa, a, markerData.id, 0);
+                });
+            }
 
             // Track marker for easy access later on.
             this.googleMarkerMap[markerData.id] = marker;
 
             // Track the listeners so that we can replace them when needed.
-            this.googleMarkerMapHoverListeners[markerData.id] = hoverListener;
             this.googleMarkerMapClickListeners[markerData.id] = clickListener;
         }
     }
@@ -198,18 +212,30 @@ class JobMapSetup {
         delete this.googleMarkerMapClickListeners[id];
 
         // Add new listeners with the updated data.
-        marker.addListener('mouseover', () => {
-            // Open up the window and display the job info.
-            this.infoWindow.setContent(content);
-            this.infoWindow.open(this.map, marker);
-        });
+        if (isDisinterested === 1) {
+            clickListener = marker.addListener('click', (e) => {
+                // Mark the job as interested.
+                let a = document.createElement('a');
+                a.setAttribute('href', this.interestedUri + id);
+                updateMapMarker(e.wa, a, id, 0);
+            });
+        } else {
+            hoverListener = marker.addListener('mouseover', () => {
+                // Open up the window and display the job info.
+                this.infoWindow.setContent(content);
+                this.infoWindow.open(this.map, marker);
+            });
 
-        marker.addListener('click', () => {
-            // Open up the window and display the job info.
-            this.infoWindow.setContent(content);
-            this.infoWindow.open(this.map, marker);
-        });
+            clickListener = marker.addListener('click', () => {
+                // Open up the window and display the job info.
+                this.infoWindow.setContent(content);
+                this.infoWindow.open(this.map, marker);
+            });
+        }
 
+        // Keep track of listeners so that we can remove them later.
+        this.googleMarkerMapHoverListeners[id] = hoverListener;
+        this.googleMarkerMapClickListeners[id] = clickListener;
         this.infoWindow.close();
     }
 

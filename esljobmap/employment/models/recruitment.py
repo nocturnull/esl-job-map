@@ -175,19 +175,15 @@ class JobPost(models.Model, Localize):
         if can_apply:
             content += '<div class="action-links">'  # Open action-links
 
-            if not_interested:
-                content += '<a href="#" class="job-apply-link disabled">Apply</a>'
-                content += '<a href="' + reverse('employment_remove_job_disinterest', args=(self.id,)) + \
-                           '" class="action-link" onclick="return updateMapMarker(event, this, ' +\
-                           str(self.id) + ', 0);">Interested</a>'
-            elif not has_applied:
+            if not not_interested and not has_applied:
                 content += '<a href="' + reverse('employment_apply_to_job', args=(self.id,)) + \
                            '" class="job-apply-link action-link">Apply</a>'
                 if user.is_authenticated:
                     content += '<a href="' + reverse('employment_track_job_disinterest', args=(self.id,)) + \
                                '" class="job-not-interested-link" onclick="return updateMapMarker(event, this, ' +\
-                               str(self.id) + ', 1);">Not Interested</a>'
+                               str(self.id) + ', 1);">Hide Info</a>'
             content += '</div>'  # Close action-links
+
         elif user.is_recruiter and self.is_job_poster(user):
             content += '<div class="action-links">'  # Open action-links
             content += '<a href="{}" class="job-apply-link action-link">Edit job</a>'.format(self.edit_link)

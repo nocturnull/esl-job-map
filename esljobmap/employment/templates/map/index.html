@@ -7,7 +7,7 @@
 
     <div id="map" class="google-map {{ map_class }}"></div>
 
-    {% include 'modules/modal/minimal.html' with mid='noticeModal' mtitle='You need to be logged in, in order to mark jobs as<br> "Not Interested"' %}
+    {% include 'modules/modal/minimal.html' with mid='noticeModal' mtitle='You need to be logged in, in order to hide jobs' %}
 
     {% if show_warning %}
         {% if is_full_time %}
@@ -25,7 +25,6 @@
             {% include 'recruiter/job_post_part_time_form.html' with form_title='Post a Part-Time Job' %}
         {% endif %}
     {% endif %}
-
 
     {% if request|is_ie %}
         {% include 'modules/ie-warning.html' %}
