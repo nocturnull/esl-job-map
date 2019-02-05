@@ -8,6 +8,7 @@ from django.urls import reverse_lazy
 from django.db.models import F
 
 from ..mixins.recruiter import IsJobPosterMixin
+from ..managers.post_manager import PostManager
 from ..models import JobPost, JobApplication
 from ..decorators import recruiter_required
 from ..forms.recruiter import CreateFullTimeJobForm, CreatePartTimeJobForm,\
@@ -36,8 +37,14 @@ class CreateFullTimeJobPost(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         new_job_post = form.save(commit=False)
         new_job_post.is_full_time = True
+
+        # Fix location if needed.
+        if PostManager.has_existing_location(new_job_post):
+            PostManager.offset_location(new_job_post)
+
         new_job_post.site_user = self.request.user
         new_job_post.save()
+
         return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):
@@ -56,8 +63,14 @@ class CreatePartTimeJobPost(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         new_job_post = form.save(commit=False)
+
+        # Fix location if needed.
+        if PostManager.has_existing_location(new_job_post):
+            PostManager.offset_location(new_job_post)
+
         new_job_post.site_user = self.request.user
         new_job_post.save()
+
         return super().form_valid(form)
 
     def get(self, request, *args, **kwargs):

@@ -50,7 +50,7 @@ function siteJs() {
 }
 
 function watch() {
-  gulp.watch("scss/*.scss", sass);
+    gulp.watch("scss/*.scss", sass);
 }
 
 gulp.task('sass', sass);
