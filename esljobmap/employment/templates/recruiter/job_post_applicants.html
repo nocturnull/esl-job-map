@@ -21,19 +21,21 @@
                 <tbody>
                     {% for application in applicants %}
                         {% with user=application.site_user %}
-                            <tr>
-                                <td>{{ user.full_name|default:'Guest' }}</td>
-                                <td>{{ user.teacher.visa_type }} </td>
-                                <td>{{ user.teacher.country }}</td>
-                                <td><a href="{{ application.resume.cdn_url }}" target="_blank">View</a></td>
-                                <td>
-                                    {% if application.has_photo %}
-                                        <a href="{{ application.photo.cdn_url }}" target="_blank">View</a>
-                                    {% endif %}
-                                </td>
-                                <td><a href="{{ application.view_url }}" target="_blank">View</a></td>
-                                <td>{{ application.nice_created_at }}</td>
-                            </tr>
+                            {% if not user.is_banned %}
+                                <tr>
+                                    <td>{{ user.full_name|default:'Guest' }}</td>
+                                    <td>{{ user.teacher.visa_type }} </td>
+                                    <td>{{ user.teacher.country }}</td>
+                                    <td><a href="{{ application.resume.cdn_url }}" target="_blank">View</a></td>
+                                    <td>
+                                        {% if application.has_photo %}
+                                            <a href="{{ application.photo.cdn_url }}" target="_blank">View</a>
+                                        {% endif %}
+                                    </td>
+                                    <td><a href="{{ application.view_url }}" target="_blank">View</a></td>
+                                    <td>{{ application.nice_created_at }}</td>
+                                </tr>
+                            {% endif %}
                         {% endwith %}
                     {% endfor %}
                 </tbody>

@@ -102,10 +102,6 @@ class JobPost(models.Model, Localize):
         return 'Posted: {0} day(s) ago'.format(days)
 
     @property
-    def pretty_num_applicants(self) -> str:
-        return str(self.applicants.count()) + ' applicant(s)'
-
-    @property
     def edit_link(self):
         if self.is_full_time:
             return reverse('employment_edit_full_time_job_post', args=[self.id])
@@ -139,6 +135,34 @@ class JobPost(models.Model, Localize):
 
         return tags
 
+    def num_applicants(self, user) -> int:
+        """
+        Filter out any banned users from the count if needed.
+
+        :param user:
+        :return:
+        """
+        if user.is_authenticated and user.is_banned:
+            count = self.applicants.count()
+        else:
+            count = 0
+            for a in self.applicants.all():
+                if a.site_user is not None:
+                    if not a.site_user.is_banned:
+                        count += 1
+                else:
+                    count += 1
+        return count
+
+    def pretty_num_applicants(self, user) -> str:
+        """
+        Prettify number of applicants.
+
+        :param user:
+        :return:
+        """
+        return str(self.num_applicants(user)) + ' applicant(s)'
+
     def build_html_content(self, user, request) -> str:
         """
         Build the map HTML content for ths Job Post.
@@ -170,7 +194,7 @@ class JobPost(models.Model, Localize):
             content += '<span class="bold-text">Other Requirements: </span>' + self.other_requirements + '<br>'
 
             content += '</div>'  # Close job-description
-            content += '<div>' + self.pretty_num_applicants + ', ' + self.pretty_days_elapsed + '</div>'
+            content += '<div>' + self.pretty_num_applicants(user) + ', ' + self.pretty_days_elapsed + '</div>'
 
         if can_apply:
             content += '<div class="action-links">'  # Open action-links

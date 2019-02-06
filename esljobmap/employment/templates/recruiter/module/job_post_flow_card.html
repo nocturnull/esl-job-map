@@ -31,7 +31,7 @@
                 <button class="disabled-button taken-down" onclick="window.location='{% url 'employment_repost_job_post' job_post.id %}'">Taken down</button>
             {% endif %}
         </div>
-        {% with applicants=job_post.applicants.count %}
+        {% with applicants=job_post|applicant_count:request.user %}
             <div class="cell medium-1">
                 {% if applicants > 0 %}
                     <a href="{% url 'employment_job_applicants' job_post.id %}">Applicants: {{ applicants }}</a>

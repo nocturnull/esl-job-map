@@ -27,6 +27,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     phone_number = models.CharField(blank=True, max_length=255, verbose_name='Contact Number')
     role = models.PositiveSmallIntegerField(choices=USER_ROLES, default=1)
     opted_out_of_emails = models.BooleanField('Don’t receive an email copy of applications', default=False, blank=True)
+    is_banned = models.BooleanField(default=False, blank=True)
 
     is_staff = models.BooleanField(
         'Staff Status',
