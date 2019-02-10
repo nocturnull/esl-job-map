@@ -57,15 +57,17 @@
         {% endif %}
 
         {% for job_post in object_list %}
-            window.jobMap.markers.push({
-                id: {{ job_post.id }},
-                lat: {{ job_post.latitude }},
-                lng: {{ job_post.longitude }},
-                content: '{% build_info_html job_post user request %}',
-                hasApplied: {% has_applied job_post user %},
-                isJobPoster: {% is_job_poster job_post user %},
-                isDisinterested: {% is_disinterested job_post user %}
-            });
+            {% if not job_post.site_user.is_banned or job_post.site_user == request.user %}
+                window.jobMap.markers.push({
+                    id: {{ job_post.id }},
+                    lat: {{ job_post.latitude }},
+                    lng: {{ job_post.longitude }},
+                    content: '{% build_info_html job_post user request %}',
+                    hasApplied: {% has_applied job_post user %},
+                    isJobPoster: {% is_job_poster job_post user %},
+                    isDisinterested: {% is_disinterested job_post user %}
+                });
+            {% endif %}
         {% endfor %}
     </script>
 {% endblock %}
