@@ -35,7 +35,8 @@ class ApplyManager:
         :param application:
         :return:
         """
-        request.session['recent_application'] = application
+        request.session['recent_application'] = application.id
+        request.session['recent_applicant_email'] = application.contact_email
 
     @staticmethod
     def untrack_application_info(request):
@@ -47,6 +48,7 @@ class ApplyManager:
         """
         try:
             del request.session['recent_application']
+            del request.session['recent_applicant_email']
         except KeyError:
             pass
 

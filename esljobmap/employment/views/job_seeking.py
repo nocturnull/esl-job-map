@@ -109,14 +109,11 @@ class RegistrationAfterApplying(TemplateView):
     }
 
     def get(self, request, *args, **kwargs):
-        application = request.session.get('recent_application')
-        email = None
-        if application is not None:
-            email = application.contact_email
+        applicant_email = request.session.get('recent_applicant_email')
 
         # Set default email for the signup form.
         form = ApplicantCreationForm()
-        form.fields['email'].initial = email
+        form.fields['email'].initial = applicant_email
         return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
@@ -126,21 +123,25 @@ class RegistrationAfterApplying(TemplateView):
             user = form.save()
 
             # Link the users new account to their recent application.
-            application = request.session.get('recent_application')
-            if application is not None:
-                application.site_user = user
-                application.save()
+            application_id = request.session.get('recent_application')
+            if application_id is not None:
+                try:
+                    application = JobApplication.objects.get(id=application_id)
+                    application.site_user = user
+                    application.save()
 
-                # Link the applications resume and photo to the users account.
-                user.teacher.resume = application.resume
-                if application.photo:
-                    user.teacher.photo = application.photo
-                user.teacher.save()
-                ApplyManager.untrack_application_info(request)
+                    # Link the applications resume and photo to the users account.
+                    user.teacher.resume = application.resume
+                    if application.photo:
+                        user.teacher.photo = application.photo
+                    user.teacher.save()
+                    ApplyManager.untrack_application_info(request)
+                except JobApplication.DoesNotExist:
+                    pass
 
-            # Log them in and redirect to their applications.
-            login(self.request, user)
-            return redirect('employment_applications')
+                # Log them in and redirect to their applications.
+                login(self.request, user)
+                return redirect('employment_applications')
         return render(request, self.template_name, {'form': form})
 
 
