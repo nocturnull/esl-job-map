@@ -10,11 +10,8 @@ def is_ie(request) -> bool:
     browser = request.user_agent.browser.family
     print(browser)
     try:
-        return browser.index('MSIE ') > 0
+        return browser.index('IE') >= 0
     except ValueError:
-        try:
-            browser.index('Trident/') > 0
-        except ValueError:
-            pass
+        pass
 
     return False
