@@ -117,7 +117,11 @@ class ApplyManager:
         recruiter = job_post.site_user
 
         # Check if recruiter allowed emails and or if the user is banned.
-        if not recruiter.opted_out_of_emails and not user.is_banned:
+        send_email = True
+        if user.is_authenticated:
+            send_email = not user.is_banned
+
+        if not recruiter.opted_out_of_emails and send_email:
             message_api = MessageApi()
             applicant_email = email
 
