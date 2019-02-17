@@ -55,7 +55,7 @@
             {% for job_post in object_list %}
 
                 <div class="cell large-4">
-                    {% include 'recruiter/module/job_post_flow_card.html' with job_post=job_post %}
+                    {% include 'job_post/module/flow_card.html' with job_post=job_post %}
                 </div>
 
             {% empty %}

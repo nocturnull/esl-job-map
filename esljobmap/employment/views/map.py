@@ -3,7 +3,7 @@
 from django.views.generic import ListView
 from django.urls import reverse_lazy
 
-from ..forms.recruiter import CreateFullTimeJobForm, CreatePartTimeJobForm
+from ..forms.job_post.create import CreateFullTimeJobForm, CreatePartTimeJobForm
 from ..models import JobPost
 from ..managers.map_manager import MapManager
 
@@ -69,6 +69,6 @@ class PartTimeMap(ListView):
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['form'] = CreatePartTimeJobForm(self.request)
         context['location'] = MapManager.resolve_location_data(self.request, city)
-        context['show_warning'] = SessionManager.needs_part_time_warning(   self.request)
+        context['show_warning'] = SessionManager.needs_part_time_warning(self.request)
 
         return context

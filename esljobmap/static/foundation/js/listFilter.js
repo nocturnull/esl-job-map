@@ -63,16 +63,16 @@ class FlowCard {
     }
 
     /**
-     * Switch between hover events for reposting and taking down.
+     * Switch between hover events for closing and restoring.
      */
     bindRepostHoverEvent() {
         let takenDown = this.$dom.find('.taken-down');
         if (takenDown.length > 0) {
             takenDown.on('mouseover', () => {
-                takenDown.html('Repost');
+                takenDown.html('Restore');
             });
             takenDown.on('mouseleave', () => {
-                takenDown.html('Taken down');
+                takenDown.html('Closed');
             });
         }
     }

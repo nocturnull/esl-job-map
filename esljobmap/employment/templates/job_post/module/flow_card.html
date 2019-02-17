@@ -25,10 +25,12 @@
             {% if job_post.is_visible %}
                 {% if not job_post.is_expired %}
                     <button class="primary-button-1" onclick="window.location='{{ job_post.edit_link }}'">Edit</button>
-                    <button class="primary-button-1" onclick="window.location='{{ job_post.take_down_link }}'">Take down</button>
+                    <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close</button>
+                {% else %}
+                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost ({{ job_post.days_valid_after_repost }} days)</button>
                 {% endif %}
             {% else %}
-                <button class="disabled-button taken-down" onclick="window.location='{% url 'employment_repost_job_post' job_post.id %}'">Taken down</button>
+                <button class="disabled-button taken-down" onclick="window.location='{{ job_post.restore_link }}'">Closed</button>
             {% endif %}
         </div>
         {% with applicants=job_post|applicant_count:request.user %}

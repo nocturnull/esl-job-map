@@ -4,13 +4,13 @@
 
     <div class="grid-container">
 
-        <h3>Confirm Job Post Takedown</h3>
+        <h3>Confirm Closing Job Post</h3>
         <form method="post">
             {% csrf_token %}
             {% for field in form %}
                 <input type="hidden" name="{{ field.html_name }}" value="1">
             {% endfor %}
-            <p>Are you sure you want to take down {{ object }}?</p>
+            <p>Are you sure you want to close {{ object }}?</p>
             <input type="submit" value="Confirm" class="primary-button-2" />
         </form>
 

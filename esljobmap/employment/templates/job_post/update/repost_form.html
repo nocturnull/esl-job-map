@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="grid-container">
+
+        <h3>Confirm Job Repost</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <input type="hidden" name="{{ field.html_name }}" value="1">
+                {{ field.errors }}
+            {% endfor %}
+            <p>Are you sure you want to repost {{ job_post }}? It will only be up for {{ job_post.days_valid_after_repost }} days.</p>
+            <input type="submit" value="Confirm" class="primary-button-2" />
+        </form>
+
+    </div>
+
+{% endblock %}

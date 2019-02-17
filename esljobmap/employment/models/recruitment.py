@@ -6,8 +6,8 @@ from django.db import models
 
 from esljobmap.model_attributes.localize import Localize
 
-from ..settings import FULL_TIME_JOB_DAYS_VALID, PART_TIME_JOB_DAYS_VALID
 from ..apps import EmploymentConfig
+from ..settings import *
 
 from account.models.user import SiteUser
 
@@ -29,6 +29,7 @@ class JobPost(models.Model, Localize):
     is_visible = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    reposted_at = models.DateTimeField(blank=True, default=None, null=True)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
     address = models.CharField(max_length=1024, default='')
@@ -56,13 +57,27 @@ class JobPost(models.Model, Localize):
         return PART_TIME_JOB_DAYS_VALID
 
     @property
+    def days_valid_after_repost(self) -> int:
+        """
+        The amount of days the job is valid for changes when the job is reposted.
+
+        :return:
+        """
+        if self.is_full_time:
+            return REPOSTED_FULL_TIME_JOB_DAYS_VALID
+        return REPOSTED_PART_TIME_JOB_DAYS_VALID
+
+    @property
     def expires_in(self) -> int:
         """
         Determine how many days are left until the job expires.
 
         :return:
         """
-        return self.days_valid - (datetime.now() - self.created_at).days
+        if self.reposted_at is None:
+            return self.days_valid - (datetime.now() - self.created_at).days
+        else:
+            return self.days_valid_after_repost - (datetime.now() - self.reposted_at).days
 
     @property
     def pretty_employment_type(self) -> str:
@@ -92,14 +107,18 @@ class JobPost(models.Model, Localize):
         :return:
         """
         if self.is_visible and not self.is_expired:
-            days = (datetime.today() - self.created_at).days
+            days = (datetime.today() - self.reference_date).days
             return 'Posted {0} day(s) ago'.format(days)
         return 'Job closed'
 
     @property
     def pretty_days_elapsed(self) -> str:
-        days = (datetime.today() - self.created_at).days
+        days = (datetime.today() - self.reference_date).days
         return 'Posted: {0} day(s) ago'.format(days)
+
+    @property
+    def reference_date(self) -> datetime:
+        return self.created_at if self.reposted_at is None else self.reposted_at
 
     @property
     def edit_link(self):
@@ -108,8 +127,16 @@ class JobPost(models.Model, Localize):
         return reverse('employment_edit_part_time_job_post', args=[self.id])
 
     @property
-    def take_down_link(self):
-        return reverse('employment_takedown_job_post', args=[self.id])
+    def close_link(self):
+        return reverse('employment_close_job_post', args=[self.id])
+
+    @property
+    def restore_link(self):
+        return reverse('employment_restore_post', args=[self.id])
+
+    @property
+    def repost_link(self):
+        return reverse('employment_repost_job_post', args=[self.id])
 
     @property
     def card_class(self) -> str :
@@ -211,7 +238,7 @@ class JobPost(models.Model, Localize):
         elif user.is_recruiter and self.is_job_poster(user):
             content += '<div class="action-links">'  # Open action-links
             content += '<a href="{}" class="job-apply-link action-link">Edit job</a>'.format(self.edit_link)
-            content += '<a href="{}" class="job-not-interested-link">Take down</a>'.format(self.take_down_link)
+            content += '<a href="{}" class="job-not-interested-link">Close</a>'.format(self.close_link)
             content += '</div>'  # Close action-links
 
         content += '</div>'  # Close job-post

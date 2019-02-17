@@ -1,7 +1,9 @@
-# employment/forms/recruiter.py
+# employment/forms/job_post/create.py
 
 from django import forms
-from ..models.recruitment import JobPost
+
+from employment.models.recruitment import JobPost
+
 from account.templatetags.profile import is_recruiter
 
 
@@ -51,71 +53,3 @@ class CreatePartTimeJobForm(CreateJobForm):
         fields = ['title', 'class_type', 'contact_name', 'contact_email',
                   'contact_number', 'schedule', 'other_requirements', 'is_full_time',
                   'pay_rate', 'latitude', 'longitude', 'address']
-
-
-class EditFullTimeJobForm(CreateJobForm):
-    salary = forms.CharField(label='Salary',
-                             widget=forms.TextInput(attrs={'placeholder': 'Ex) Negotiable'}),
-                             required=True)
-    benefits = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex) Accommodation provided'}),
-                               required=False,
-                               empty_value='')
-
-    class Meta:
-        model = JobPost
-        fields = ['title', 'class_type', 'contact_name', 'contact_email',
-                  'contact_number', 'schedule', 'other_requirements', 'salary', 'benefits']
-
-
-class EditPartTimeJobForm(CreateJobForm):
-    pay_rate = forms.CharField(label='Pay Rate',
-                               widget=forms.TextInput(attrs={'placeholder': 'Ex) 45,000 per hour'}))
-
-    class Meta:
-        model = JobPost
-        fields = ['title', 'class_type', 'contact_name', 'contact_email',
-                  'contact_number', 'schedule', 'other_requirements', 'pay_rate']
-
-
-class TakeDownJobForm(forms.ModelForm):
-    """Form for recruiters to hide their job post from the public."""
-    is_visible = forms.HiddenInput()
-
-    def save(self, commit=True):
-        """
-        Hook into the save to update the visibility field.
-
-        :param commit:
-        :return:
-        """
-
-        self.instance.is_visible = False
-
-        return super(TakeDownJobForm, self).save(commit=commit)
-
-    class Meta:
-        model = JobPost
-        fields = ['is_visible']
-
-
-class RepostJobForm(forms.ModelForm):
-    """Form for recruiters to repost their job post for the public to see."""
-    is_visible = forms.HiddenInput()
-
-    def save(self, commit=True):
-        """
-        Hook into the save to update the visibility field.
-
-        :param commit:
-        :return:
-        """
-
-        self.instance.is_visible = True
-
-        return super(RepostJobForm, self).save(commit=commit)
-
-    class Meta:
-        model = JobPost
-        fields = ['is_visible']
-
-
