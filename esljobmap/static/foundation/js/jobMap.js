@@ -153,11 +153,11 @@ class JobMapSetup {
                 this.googleMarkerMapHoverListeners[markerData.id] = hoverListener;
             } else {
                 // No hover events but when the user clicks, they can mark the job as interested again.
-                clickListener = marker.addListener(this.jobInterestClickEventType, (e) => {
+                clickListener = marker.addListener(this.jobInterestClickEventType, () => {
                     // Mark the job as interested.
                     let a = document.createElement('a');
                     a.setAttribute('href', this.interestedUri + markerData.id);
-                    updateMapMarker(e.wa, a, markerData.id, 0);
+                    updateMapMarker(null, a, markerData.id, 0);
                 });
             }
 
@@ -218,11 +218,11 @@ class JobMapSetup {
 
         // Add new listeners with the updated data.
         if (isDisinterested === 1) {
-            clickListener = marker.addListener(this.jobInterestClickEventType, (e) => {
+            clickListener = marker.addListener(this.jobInterestClickEventType, () => {
                 // Mark the job as interested.
                 let a = document.createElement('a');
                 a.setAttribute('href', this.interestedUri + id);
-                updateMapMarker(e.wa, a, id, 0);
+                updateMapMarker(null, a, id, 0);
             });
         } else {
             hoverListener = marker.addListener('mouseover', () => {

@@ -17,7 +17,9 @@ function initMap() {
 }
 
 function updateMapMarker(event, anchor, id, isDisinterested) {
-    event.preventDefault();
+    if (event !== null) {
+        event.preventDefault();
+    }
     $.ajax({
         type: 'GET',
         url: $(anchor).attr('href')
