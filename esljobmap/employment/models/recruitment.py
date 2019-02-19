@@ -1,5 +1,6 @@
 # employment/models/recruitment.py
 
+from django.utils.html import escape
 from django.urls import reverse
 from datetime import datetime
 from django.db import models
@@ -207,7 +208,7 @@ class JobPost(models.Model, Localize):
         content = '<div class="job-post {}" id="jobPostCard">'.format(container_class)  # Open job-post
         if not not_interested:
             content += '<div class="job-description {}">'.format(desc_class)  # Open job-description
-            content += '<span class="bold-text">' + self.title + '</span><br>'
+            content += '<span class="bold-text">' + escape(self.title) + '</span><br>'
             if self.is_full_time:
                 content += '<span class="bold-text">Salary: </span>' + self.salary + '<br>'
             else:
