@@ -28,6 +28,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     role = models.PositiveSmallIntegerField(choices=USER_ROLES, default=1)
     opted_out_of_emails = models.BooleanField('Don’t receive an email copy of applications', default=False, blank=True)
     is_banned = models.BooleanField(default=False, blank=True)
+    _disinterested_jobs = None
 
     is_staff = models.BooleanField(
         'Staff Status',
@@ -79,6 +80,12 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         if len(self.contact_email) > 0:
             return self.contact_email
         return self.email
+
+    @property
+    def disinterested_jobs(self):
+        if self._disinterested_jobs is None:
+            self._disinterested_jobs = self.disinterested_job_posts.all()
+        return self._disinterested_jobs
 
     def __str__(self):
         return self.email

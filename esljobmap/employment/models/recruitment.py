@@ -297,15 +297,15 @@ class JobPost(models.Model, Localize):
 
     def not_interested(self, user) -> bool:
         """
-        Determine if the user marked the current job post is not interesting.
+        Determine if the user marked the current job post as not interesting.
 
         :param user:
         :return:
         """
         if user.is_authenticated:
             # Recruiters cannot mark a job post is not interesting.
-            if not user.is_recruiter:
-                for disinterested_job_post in user.disinterested_job_posts.all():
+            if not user.is_recruiter and user.disinterested_jobs is not None:
+                for disinterested_job_post in user.disinterested_jobs:
                     if self == disinterested_job_post.job_post:
                         return True
         return False
