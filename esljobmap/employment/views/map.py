@@ -15,7 +15,6 @@ from cloud.templatetags.remote import cdn_image
 class FullTimeMap(ListView):
     model = JobPost
     template_name = 'map/index.html'
-    queryset = JobPost.objects.filter(is_full_time=True, is_visible=True)
     extra_context = {
         'is_full_time': True,
         'mtitle': 'Full-Time Korean Jobs Map',
@@ -26,7 +25,21 @@ class FullTimeMap(ListView):
         'post_url': reverse_lazy('employment_create_full_time_job')
     }
 
+    def get_queryset(self):
+        """
+        Get the queryset for the list view.
+
+        :return:
+        """
+        return JobPost.objects.filter(is_full_time=True, is_visible=True).prefetch_related('site_user')
+
     def get_context_data(self, **kwargs):
+        """
+        Add extra context data for the template.
+
+        :param kwargs:
+        :return:
+        """
         context = super().get_context_data(**kwargs)
         try:
             city = self.kwargs['city']
@@ -34,7 +47,7 @@ class FullTimeMap(ListView):
             city = ''
 
         # We don't want to show jobs that have expired.
-        context['object_list'] = [o for o in self.object_list if not o.is_expired]
+        context['object_list'] = self.build_object_list()
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['form'] = CreateFullTimeJobForm(self.request)
         context['location'] = MapManager.resolve_location_data(self.request, city)
@@ -42,11 +55,23 @@ class FullTimeMap(ListView):
 
         return context
 
+    def build_object_list(self) -> list:
+        """
+        Build a list of items that is visible or this user only.
+
+        :return:
+        """
+        objs = list()
+        user = self.request.user
+        for o in self.object_list:
+            if not o.is_expired and (not o.site_user.is_banned or o.site_user == user):
+                objs.append(o)
+        return objs
+
 
 class PartTimeMap(ListView):
     model = JobPost
     template_name = 'map/index.html'
-    queryset = JobPost.objects.filter(is_full_time=False, is_visible=True)
     extra_context = {
         'is_full_time': False,
         'mtitle': 'Part-Time Korean Jobs Map',
@@ -57,7 +82,21 @@ class PartTimeMap(ListView):
         'post_url': reverse_lazy('employment_create_part_time_job')
     }
 
+    def get_queryset(self):
+        """
+        Get the queryset for the list view.
+
+        :return:
+        """
+        return JobPost.objects.filter(is_full_time=False, is_visible=True).prefetch_related('site_user')
+
     def get_context_data(self, **kwargs):
+        """
+        Add extra context data for the template.
+
+        :param kwargs:
+        :return:
+        """
         context = super().get_context_data(**kwargs)
         try:
             city = self.kwargs['city']
@@ -65,10 +104,23 @@ class PartTimeMap(ListView):
             city = ''
 
         # We don't want to show jobs that have expired.
-        context['object_list'] = [o for o in self.object_list if not o.is_expired]
+        context['object_list'] = self.build_object_list()
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
         context['form'] = CreatePartTimeJobForm(self.request)
         context['location'] = MapManager.resolve_location_data(self.request, city)
         context['show_warning'] = SessionManager.needs_part_time_warning(self.request)
 
         return context
+
+    def build_object_list(self) -> list:
+        """
+        Build a list of items that is visible or this user only.
+
+        :return:
+        """
+        objs = list()
+        user = self.request.user
+        for o in self.object_list:
+            if not o.is_expired and (not o.site_user.is_banned or o.site_user == user):
+                objs.append(o)
+        return objs
