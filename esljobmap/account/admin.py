@@ -11,7 +11,7 @@ class SiteUserAdmin(UserAdmin):
     add_form = SiteUserCreationForm
     form = SiteUserChangeForm
     model = SiteUser
-    list_display = ['email', 'full_name', 'role', 'local_date_joined']
+    list_display = ['email', 'local_date_joined', 'full_name', 'role']
     ordering = ('-date_joined',)
     search_fields = ('email',)
     exclude = ('username',)

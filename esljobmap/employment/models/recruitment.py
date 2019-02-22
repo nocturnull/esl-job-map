@@ -163,6 +163,15 @@ class JobPost(models.Model, Localize):
 
         return tags
 
+    @property
+    def true_applicant_count(self) -> int:
+        """
+        Ignores banned users.
+
+        :return:
+        """
+        return self.applicants.count()
+
     def num_applicants(self, user) -> int:
         """
         Filter out any banned users from the count if needed.
