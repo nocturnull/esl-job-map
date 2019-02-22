@@ -74,6 +74,7 @@ class TemplateManager:
             job_post_schedule=job_post.schedule,
             job_post_class_type=job_post.class_type,
             job_post_other_requirements=job_post.other_requirements,
+            job_post_address=job_post.address,
             applicant_full_name=cls._generated_to_applicant_outro(applicant),
             applicant_email=applicant.email,
             applicant_contact_number=applicant.phone_number

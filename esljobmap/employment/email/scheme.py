@@ -8,6 +8,7 @@ AUTHENTICATED_USER_BASE_SCHEME = """{recruiter_contact_name},
 Schedule: {job_post_schedule}
 Class Type: {job_post_class_type}
 Other Requirements: {job_post_other_requirements}
+Address: {job_post_address}
 
 Please find attached my photo and resume. Thank you for considering my application.
 
