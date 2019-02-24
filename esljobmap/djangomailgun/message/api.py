@@ -18,7 +18,7 @@ class MessageApi(object):
         self._endpoint = 'https://api.mailgun.net/v3/{}/messages'.format(settings.MAILGUN_DOMAIN)
         self._api_key = settings.MAILGUN_PRIVATE_API_KEY
 
-    def send(self, recipient, subject, body, cc=None, reply_to=None):
+    def send(self, recipient, subject, body, cc=None, reply_to=None, html=None):
         """
         Send an email through the Mailgun API.
 
@@ -27,6 +27,7 @@ class MessageApi(object):
         :param body:
         :param cc:
         :param reply_to:
+        :param html:
         :return:
         """
         payload = {
@@ -40,5 +41,8 @@ class MessageApi(object):
 
         if reply_to is not None:
             payload['h:Reply-To'] = reply_to
+
+        if html is not None:
+            payload['html'] = html
 
         requests.post(self._endpoint, data=payload, auth=('api', self._api_key))

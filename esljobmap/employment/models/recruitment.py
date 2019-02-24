@@ -34,6 +34,7 @@ class JobPost(models.Model, Localize):
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
     address = models.CharField(max_length=1024, default='')
+    expiry_notice_sent = models.BooleanField(default=False, blank=True)
 
     _applicants = []
 
@@ -138,6 +139,16 @@ class JobPost(models.Model, Localize):
     @property
     def repost_link(self):
         return reverse('employment_repost_job_post', args=[self.id])
+
+    @property
+    def applicants_link(self):
+        return reverse('employment_job_applicants', args=[self.id])
+
+    @property
+    def recruiter_create_job_link(self):
+        if self.is_full_time:
+            return reverse('employment_full_time_map') + '#postAnchor'
+        return reverse('employment_part_time_map') + '#postAnchor'
 
     @property
     def card_class(self) -> str :

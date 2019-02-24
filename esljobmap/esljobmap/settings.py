@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'employment',
     'cloud',
     'blanket',
+    'task',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

@@ -1,0 +1,12 @@
+# task/urls.py
+
+from django.urls import path
+
+from .views.job_post import DispatchExpiryNotifications
+from .views.token import GenerateToken
+
+
+urlpatterns = [
+    path('auth/grant', GenerateToken.as_view(), name='task_auth_grant'),
+    path('job-post/notify-expired', DispatchExpiryNotifications.as_view(), name='task_job_expired_notice')
+]

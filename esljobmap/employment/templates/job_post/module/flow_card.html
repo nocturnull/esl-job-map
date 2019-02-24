@@ -36,7 +36,7 @@
         {% with applicants=job_post|applicant_count:request.user %}
             <div class="cell medium-1">
                 {% if applicants > 0 %}
-                    <a href="{% url 'employment_job_applicants' job_post.id %}">Applicants: {{ applicants }}</a>
+                    <a href="{{ job_post.applicants_link }}">Applicants: {{ applicants }}</a>
                 {% else %}
                     No applicants
                 {% endif %}

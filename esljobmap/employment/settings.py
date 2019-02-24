@@ -1,3 +1,4 @@
+# employment/settings.py
 
 # Google maps data
 CITY_SEOUL = 'seoul'

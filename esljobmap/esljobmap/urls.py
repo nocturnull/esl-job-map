@@ -23,7 +23,8 @@ urlpatterns = [
     path('korea/about/', include('about.urls')),
     path('korea/account/', include('account.urls')),
     path('korea/account/', include('django.contrib.auth.urls')),
-    path('korea/employment/', include('employment.urls'))
+    path('korea/employment/', include('employment.urls')),
+    path('api/', include('task.urls'))
 ]
 
 handler404 = Custom404.as_view()
