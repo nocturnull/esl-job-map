@@ -15,5 +15,5 @@ class DispatchExpiryNotifications(ApiView):
 
         :return:
         """
-        emails_sent = JobPostManager.send_expiry_emails()
+        emails_sent = JobPostManager.send_expiry_emails(request)
         return HttpResponse('{}\n'.format(emails_sent))

@@ -19,15 +19,16 @@ class TemplateManager:
         return SUBJECT_BASE_SCHEME.format(title=job_post.title)
 
     @classmethod
-    def generate_email_body(cls, job_post: JobPost) -> str:
+    def generate_email_body(cls, job_post: JobPost, request) -> str:
         """
         The main API that creates the email body using a template and the users submitted info.
 
         :param job_post:
+        :param request:
         :return:
         """
         exclusive_info_section = cls._generate_exclusive_info_section(job_post)
-        applicants_notice_section = cls._generate_applicants_section(job_post)
+        applicants_notice_section = cls._generate_applicants_section(job_post, request)
 
         return BODY_BASE_SCHEME.format(
             contact_name=job_post.contact_name,
@@ -56,22 +57,23 @@ class TemplateManager:
         return PART_TIME_EXCLUSIVE_SCHEME.format(pay_rate=job_post.pay_rate)
 
     @classmethod
-    def _generate_applicants_section(cls, job_post: JobPost) -> str:
+    def _generate_applicants_section(cls, job_post: JobPost, request) -> str:
         """
         Generate a part of the template that depends on the number of applicants and job type.
 
         :param job_post:
+        :param request:
         :return:
         """
         applicant_count = job_post.num_applicants(job_post.site_user)
 
         if applicant_count > 0:
             return HAS_APPLICANTS_SCHEME.format(
-                applicants_job_post_url=job_post.applicants_link,
+                applicants_job_post_url=request.build_absolute_uri(job_post.applicants_link),
                 num_applicants=applicant_count,
-                repost_job_post_url=job_post.repost_link
+                repost_job_post_url=request.build_absolute_uri(job_post.repost_link)
             )
         return NO_APPLICANTS_SCHEME.format(
-            repost_job_post_url=job_post.repost_link,
-            create_job_post_url=job_post.recruiter_create_job_link
+            repost_job_post_url=request.build_absolute_uri(job_post.repost_link),
+            create_job_post_url=request.build_absolute_uri(job_post.recruiter_create_job_link)
         )
