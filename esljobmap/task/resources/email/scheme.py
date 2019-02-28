@@ -16,6 +16,11 @@ The following job has expired:<br/>
 <br/>
 {applicants_notice_section}
 <br/>
+<div>
+If you no longer wish to receive job expired reminder emails, <a href="{email_opt_out_link}" target="_blank">click here</a><br/>
+포스팅 만료 안내 메일을 그만 받고 싶으시면 <a href="{email_opt_out_link}" target="_blank">여기를 클릭</a> 하세요.
+</div>
+<br/>
 Regards,
 <br/>
 ESL Job Map"""

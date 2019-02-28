@@ -18,7 +18,8 @@ class JobPostScavenger:
         """
         exp_date = datetime.now() - timedelta(days=FULL_TIME_JOB_DAYS_VALID)
         queryset = JobPost.objects\
-            .filter(is_full_time=True, expiry_notice_sent=False, created_at__lte=exp_date)\
+            .filter(is_full_time=True, expiry_notice_sent=False,
+                    created_at__lte=exp_date, site_user__opted_out_of_expired_job_emails=False)\
             .prefetch_related('site_user')
 
         return cls._filter_reposted_jobs(queryset)
@@ -32,7 +33,8 @@ class JobPostScavenger:
         """
         exp_date = datetime.now() - timedelta(days=PART_TIME_JOB_DAYS_VALID)
         queryset = JobPost.objects\
-            .filter(is_full_time=False, expiry_notice_sent=False, created_at__lte=exp_date)\
+            .filter(is_full_time=False, expiry_notice_sent=False,
+                    created_at__lte=exp_date, site_user__opted_out_of_expired_job_emails=False)\
             .prefetch_related('site_user')
 
         return cls._filter_reposted_jobs(queryset)

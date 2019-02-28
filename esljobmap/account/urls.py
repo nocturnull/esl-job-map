@@ -3,13 +3,11 @@
 from django.views.generic import RedirectView
 from django.urls import path, reverse_lazy
 
-from .views.signup import SignUp
-from .views.login import SiteUserLogin
-from .views.applicant import ApplicantSignUp
-from .views.recruiter import RecruiterSignUp
+from .views.recruiter import RecruiterSignUp, EditRecruiterProfile, OptOutExpiredPostNotifications
+from .views.applicant import ApplicantSignUp, EditApplicantProfile
 from .views.profile import ResolveProfile, DeleteProfile
-from .views.applicant import EditApplicantProfile
-from .views.recruiter import EditRecruiterProfile
+from .views.login import SiteUserLogin
+from .views.signup import SignUp
 
 urlpatterns = [
     path('login/', SiteUserLogin.as_view(), name='login'),
@@ -20,5 +18,6 @@ urlpatterns = [
     path('profile', ResolveProfile.as_view(), name='account_profile'),
     path('profile/applicant', EditApplicantProfile.as_view(), name='applicant_profile_edit'),
     path('profile/recruiter', EditRecruiterProfile.as_view(), name='recruiter_profile_edit'),
+    path('profile/recruiter/opt-out-expired-notification', OptOutExpiredPostNotifications.as_view(), name='recruiter_opt_out_expired_notif'),
     path('profile/delete', DeleteProfile.as_view(), name='account_profile_delete')
 ]

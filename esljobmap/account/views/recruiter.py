@@ -8,6 +8,9 @@ from django.urls import reverse_lazy
 from django.contrib import messages
 
 from ..forms.recruiter import RecruiterCreationForm, RecruiterUpdateForm
+from ..helpers.recruiter import RecruiterHelper
+
+from task.lib.security import JwtAuthentication
 
 
 class RecruiterSignUp(CreateView):
@@ -59,3 +62,20 @@ class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
                 self.template_name,
                 {'forms': [user_form]}
             )
+
+
+class OptOutExpiredPostNotifications(TemplateView):
+    template_name = 'account/expired_post_email_opt_out_notice.html'
+
+    def get(self, request, *args, **kwargs):
+        token = request.GET.get('tok', '')
+        payload = JwtAuthentication.decode(token)
+        status = RecruiterHelper.opt_out_of_expired_post_emails(payload)
+
+        return render(
+            request,
+            self.template_name,
+            {
+                'status': status
+            }
+        )

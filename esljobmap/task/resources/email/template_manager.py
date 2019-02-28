@@ -1,7 +1,10 @@
 # task/resources/email/template_manager.py
 
+from django.shortcuts import reverse
+
 from employment.models import JobPost
 
+from task.lib.security import JwtAuthentication
 from .scheme import *
 
 
@@ -29,6 +32,7 @@ class TemplateManager:
         """
         exclusive_info_section = cls._generate_exclusive_info_section(job_post)
         applicants_notice_section = cls._generate_applicants_section(job_post, request)
+        opt_out_link = cls._generate_opt_out_email_link(job_post.contact_email, request)
 
         return BODY_BASE_SCHEME.format(
             contact_name=job_post.contact_name,
@@ -38,7 +42,8 @@ class TemplateManager:
             class_type=job_post.class_type,
             other_requirements=job_post.other_requirements,
             address=job_post.address,
-            applicants_notice_section=applicants_notice_section
+            applicants_notice_section=applicants_notice_section,
+            email_opt_out_link=opt_out_link
         )
 
     @classmethod
@@ -76,4 +81,18 @@ class TemplateManager:
         return NO_APPLICANTS_SCHEME.format(
             repost_job_post_url=request.build_absolute_uri(job_post.repost_link),
             create_job_post_url=request.build_absolute_uri(job_post.recruiter_create_job_link)
+        )
+
+    @classmethod
+    def _generate_opt_out_email_link(cls, email: str, request) -> str:
+        """
+        Generate the expired job notification opt out email link.
+
+        :param email:
+        :param request:
+        :return:
+        """
+        return '{url}?tok={token}'.format(
+            url=request.build_absolute_uri(reverse('recruiter_opt_out_expired_notif')),
+            token=JwtAuthentication.encode(email, True).decode('utf-8')
         )
