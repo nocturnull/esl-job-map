@@ -60,7 +60,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
         :return:
         """
-        return self.role == 1 or self.role == 2
+        return self.role == 2
 
     @property
     def full_name(self) -> str:

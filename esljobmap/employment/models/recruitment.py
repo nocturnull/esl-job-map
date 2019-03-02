@@ -31,6 +31,7 @@ class JobPost(models.Model, Localize):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     reposted_at = models.DateTimeField(blank=True, default=None, null=True)
+    created_at_override = models.DateTimeField(blank=True, default=None, null=True)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
     address = models.CharField(max_length=1024, default='')

@@ -5,6 +5,7 @@ from datetime import date
 from django.contrib import admin
 
 from .models import JobPost, JobApplication
+from .forms.job_post.update import AdminEditJobForm
 
 
 class CreateDateListFilter(admin.SimpleListFilter):
@@ -44,6 +45,15 @@ class JobPostAdmin(admin.ModelAdmin):
     list_display = ['title', 'local_created_at', 'site_user_email', 'is_full_time', 'true_applicant_count']
     list_filter = (CreateDateListFilter, )
     ordering = ['-created_at']
+    form = AdminEditJobForm
+    readonly_fields = ('created_at',)
+
+    def save_model(self, request, obj, form, change):
+        created_override = form.cleaned_data['created_at_override']
+        if created_override:
+            print(created_override)
+            obj.created_at = created_override
+        super().save_model(request, obj, form, change)
 
 
 class JobApplicationAdmin(admin.ModelAdmin):
