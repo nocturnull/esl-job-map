@@ -42,7 +42,7 @@ class CreateDateListFilter(admin.SimpleListFilter):
 
 
 class JobPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'local_created_at', 'site_user_email', 'is_full_time', 'true_applicant_count']
+    list_display = ['title', 'local_created_at', 'site_user_email', 'job_type', 'is_taken_down', 'is_expired', 'was_reposted', 'applicant_count']
     list_filter = (CreateDateListFilter, )
     ordering = ['-created_at']
     form = AdminEditJobForm

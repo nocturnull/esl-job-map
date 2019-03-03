@@ -102,6 +102,33 @@ class JobPost(models.Model, Localize):
         return self.expires_in < 1
 
     @property
+    def is_taken_down(self) -> bool:
+        """
+        Determine if the jobs was taken down.
+
+        :return:
+        """
+        return not self.is_visible
+
+    @property
+    def job_type(self) -> str:
+        """
+        Nice job type display.
+
+        :return:
+        """
+        return 'Full' if self.is_full_time else 'Part'
+
+    @property
+    def was_reposted(self) -> bool:
+        """
+        Determine if the job was reposted.
+
+        :return:
+        """
+        return True if self.reposted_at is not None else False
+
+    @property
     def pretty_status(self) -> str:
         """
         Display the amount of days until the job expires in a neat format.
@@ -175,7 +202,7 @@ class JobPost(models.Model, Localize):
         return tags
 
     @property
-    def true_applicant_count(self) -> int:
+    def applicant_count(self) -> int:
         """
         Ignores banned users.
 

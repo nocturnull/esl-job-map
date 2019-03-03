@@ -1,7 +1,8 @@
 # account/admin.py
 
-from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.utils.safestring import mark_safe
+from django.contrib import admin
 
 from .forms.user import SiteUserCreationForm, SiteUserChangeForm
 from .models import SiteUser, Teacher
@@ -28,8 +29,20 @@ class SiteUserAdmin(UserAdmin):
     )
 
 
+def resume_link(obj):
+    if obj.has_resume:
+        return mark_safe('<a href={} target="_blank">View</a>'.format(obj.resume.cdn_url))
+    return ''
+
+
+def photo_link(obj):
+    if obj.has_photo:
+        return mark_safe('<a href={} target="_blank">View</a>'.format(obj.photo.cdn_url))
+    return ''
+
+
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ['user', 'visa_type', 'country', 'resume', 'photo']
+    list_display = ['user', 'visa_type', 'country', resume_link, photo_link]
 
 
 admin.site.site_header = 'ESL Job Map Admin Site'
