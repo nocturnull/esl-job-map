@@ -32,7 +32,7 @@ class TemplateManager:
         """
         exclusive_info_section = cls._generate_exclusive_info_section(job_post)
         applicants_notice_section = cls._generate_applicants_section(job_post, request)
-        opt_out_link = cls._generate_opt_out_email_link(job_post.contact_email, request)
+        opt_out_link = cls._generate_opt_out_email_link(job_post.site_user_email, request)
 
         return BODY_BASE_SCHEME.format(
             contact_name=job_post.contact_name,

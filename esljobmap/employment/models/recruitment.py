@@ -19,7 +19,6 @@ class JobPost(models.Model, Localize):
     title = models.CharField(max_length=50)
     class_type = models.CharField(max_length=255)
     contact_name = models.CharField(max_length=512)
-    contact_email = models.EmailField(max_length=255)
     contact_number = models.CharField(max_length=255)
     schedule = models.CharField(max_length=512)
     other_requirements = models.CharField(max_length=1024, blank=True, default='')

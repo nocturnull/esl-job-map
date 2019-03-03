@@ -16,7 +16,7 @@ class SiteUserAdmin(UserAdmin):
     search_fields = ('email',)
     exclude = ('username',)
     fieldsets = (
-        ('Personal info', {'fields': ('email', 'password', 'name', 'first_name', 'last_name', 'contact_email', 'phone_number')}),
+        ('Personal info', {'fields': ('email', 'password', 'name', 'first_name', 'last_name', 'phone_number')}),
         ('Preferences', {'fields': ('opted_out_of_emails',)}),
         ('Permissions', {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions', 'is_banned')}),
     )

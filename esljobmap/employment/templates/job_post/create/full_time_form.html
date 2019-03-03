@@ -101,17 +101,6 @@
                         {{ form.contact_name }}
                     </div>
                     <div>
-                        <label for="{{ form.contact_email.id_for_label }}">
-                            {{ form.contact_email.label }}
-                            <span class="errorlist">
-                                {% for error in form.contact_email.errors %}
-                                    {{ error }}
-                                {% endfor %}
-                            </span>
-                        </label>
-                        {{ form.contact_email }}
-                    </div>
-                    <div>
                         <label for="{{ form.contact_number.id_for_label }}">
                             {{ form.contact_number.label }}
                             <span class="errorlist">

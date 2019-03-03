@@ -130,7 +130,7 @@ class ApplyManager:
                 if user.opted_out_of_emails:
                     applicant_email = None
 
-            message_api.send(recipient=job_post.contact_email,
+            message_api.send(recipient=recruiter.email,
                              subject=EmailTemplateManager.generate_email_subject(job_post),
                              body=EmailTemplateManager.append_relevant_files(
                                  job_form.cleaned_data['email_body'], application

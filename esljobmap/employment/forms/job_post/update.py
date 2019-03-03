@@ -17,8 +17,8 @@ class EditFullTimeJobForm(CreateJobForm):
 
     class Meta:
         model = JobPost
-        fields = ['title', 'class_type', 'contact_name', 'contact_email',
-                  'contact_number', 'schedule', 'other_requirements', 'salary', 'benefits']
+        fields = ['title', 'class_type', 'contact_name', 'contact_number',
+                  'schedule', 'other_requirements', 'salary', 'benefits']
 
 
 class EditPartTimeJobForm(CreateJobForm):
@@ -27,17 +27,18 @@ class EditPartTimeJobForm(CreateJobForm):
 
     class Meta:
         model = JobPost
-        fields = ['title', 'class_type', 'contact_name', 'contact_email',
-                  'contact_number', 'schedule', 'other_requirements', 'pay_rate']
+        fields = ['title', 'class_type', 'contact_name', 'contact_number',
+                  'schedule', 'other_requirements', 'pay_rate']
 
 
 class AdminEditJobForm(forms.ModelForm):
 
     class Meta:
         model = JobPost
-        fields = ['title', 'class_type', 'contact_name', 'contact_email', 'contact_number', 'schedule',
-                  'other_requirements', 'salary', 'benefits', 'pay_rate', 'is_visible', 'is_full_time',
-                  'created_at_override', 'reposted_at', 'expiry_notice_sent']
+        fields = ['title', 'class_type', 'contact_name', 'contact_number', 'schedule',
+                  'other_requirements', 'salary', 'benefits', 'pay_rate',
+                  'is_visible', 'is_full_time', 'created_at_override',
+                  'reposted_at', 'expiry_notice_sent']
 
 
 class CloseJobForm(forms.ModelForm):

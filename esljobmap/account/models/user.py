@@ -19,7 +19,6 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         (3, 'teacher')
     )
     email = models.EmailField(unique=True, blank=False, max_length=255)
-    contact_email = models.EmailField(blank=True, default='', max_length=255)
     date_joined = models.DateTimeField('Date Joined', auto_now_add=True)
     name = models.CharField(max_length=255, blank=True, verbose_name='Name', default='')
     first_name = models.CharField(max_length=255, blank=True, verbose_name='First Name', default='')
@@ -28,7 +27,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     role = models.PositiveSmallIntegerField(choices=USER_ROLES, default=1)
     opted_out_of_emails = models.BooleanField('Don’t receive an email copy of applications', default=False, blank=True)
     is_banned = models.BooleanField(default=False, blank=True)
-    opted_out_of_expired_job_emails = models.BooleanField('Don’t receive an expiry notice email', default=False, blank=True)
+    opted_out_of_expired_job_emails = models.BooleanField('Don’t receive a job expiry notice email', default=False, blank=True)
     _disinterested_jobs = None
 
     is_staff = models.BooleanField(
@@ -60,7 +59,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
         :return:
         """
-        return self.role == 2
+        return self.role == 1 or self.role == 2
 
     @property
     def full_name(self) -> str:
@@ -75,12 +74,6 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         elif len(self.name) > 0:
             return self.name
         return ''
-
-    @property
-    def preferred_email(self) -> str:
-        if len(self.contact_email) > 0:
-            return self.contact_email
-        return self.email
 
     @property
     def disinterested_jobs(self):

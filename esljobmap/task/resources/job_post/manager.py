@@ -34,7 +34,7 @@ class JobPostManager:
         message_api = MessageApi()
         for job_post in jobs:
             html_body = EmailTemplateManager.generate_email_body(job_post, request)
-            message_api.send(recipient=job_post.contact_email,
+            message_api.send(recipient=job_post.site_user_email,
                              subject=EmailTemplateManager.generate_email_subject(job_post),
                              body=html_body,
                              html=html_body)

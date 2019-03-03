@@ -390,7 +390,6 @@ class JobMapSetup {
             'title': $('#id_title').val(),
             'class_type': $('#id_class_type').val(),
             'contact_name': $('#id_contact_name').val(),
-            'contact_email': $('#id_contact_email').val(),
             'contact_number': $('#id_contact_number').val(),
             'schedule': $('#id_schedule').val(),
             'other_requirements': $('#id_other_requirements').val(),
