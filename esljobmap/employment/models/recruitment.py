@@ -120,6 +120,15 @@ class JobPost(models.Model, Localize):
         return self.site_user.is_banned
 
     @property
+    def isvisible(self) -> bool:
+        """
+        Combination of different factors that can make a job hidden.
+
+        :return:
+        """
+        return self.is_visible or not self.is_expired or not self.is_recruiter_banned
+
+    @property
     def job_type(self) -> str:
         """
         Nice job type display.
