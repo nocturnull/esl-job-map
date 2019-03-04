@@ -30,4 +30,4 @@ class RecruiterUpdateForm(forms.ModelForm):
 
     class Meta:
         model = SiteUser
-        fields = ('name', 'phone_number', 'opted_out_of_emails', 'opted_out_of_expired_job_emails')
+        fields = ('name', 'phone_number', 'opted_out_of_expired_job_emails', 'opted_out_of_emails')
