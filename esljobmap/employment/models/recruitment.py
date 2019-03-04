@@ -111,6 +111,15 @@ class JobPost(models.Model, Localize):
         return not self.is_visible
 
     @property
+    def is_recruiter_banned(self) -> bool:
+        """
+        Determine if the related recruiter is banned.
+
+        :return:
+        """
+        return self.site_user.is_banned
+
+    @property
     def job_type(self) -> str:
         """
         Nice job type display.

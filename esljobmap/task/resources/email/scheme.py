@@ -34,7 +34,7 @@ PART_TIME_EXCLUSIVE_SCHEME = """<strong>Pay Rate</strong>: {pay_rate}<br/>"""
 HAS_APPLICANTS_SCHEME = """
 <div>
 Looks like you got <a href="{applicants_job_post_url}" target="_blank">{num_applicants} applicants.</a> If you are still looking for applicants, please <a href="{repost_job_post_url}" target="_blank">repost the job here</a>.<br/>
-포스팅 기간 동안 총 <a href="{applicants_job_post_url}" target="_blank">{num_applicants} 명의</a> 지원자를 받으신 걸로 집계됩니다. 아직 지원자를 찾고 계시다면 <a href="{repost_job_post_url}" target="_blank">여기를 클릭하여 Repost</a> 해주시기 바랍니다.<br/>
+포스팅 기간 동안 총 <a href="{applicants_job_post_url}" target="_blank">{num_applicants} 명의 지원자</a>를 받으신 걸로 집계됩니다. 아직 지원자를 찾고 계시다면 <a href="{repost_job_post_url}" target="_blank">여기를 클릭하여 Repost</a> 해주시기 바랍니다.<br/>
 </div>
 """
 
