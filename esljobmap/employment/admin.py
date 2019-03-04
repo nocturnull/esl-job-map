@@ -36,9 +36,9 @@ class CreateDateListFilter(admin.SimpleListFilter):
         `self.value()`.
         """
         if self.value() == 'prelaunch':
-            return queryset.filter(created_at__lt=date(2019, 1, 19), is_visible=True)
+            return queryset.filter(created_at__lt=date(2019, 1, 19))
         if self.value() == 'postlaunch':
-            return queryset.filter(created_at__gte=date(2019, 1, 19), is_visible=True)
+            return queryset.filter(created_at__gte=date(2019, 1, 19))
 
 
 class JobPostAdmin(admin.ModelAdmin):
@@ -48,13 +48,6 @@ class JobPostAdmin(admin.ModelAdmin):
     ordering = ['-created_at']
     form = AdminEditJobForm
     readonly_fields = ('created_at',)
-
-    def save_model(self, request, obj, form, change):
-        created_override = form.cleaned_data['created_at_override']
-        if created_override:
-            print(created_override)
-            obj.created_at = created_override
-        super().save_model(request, obj, form, change)
 
 
 class JobApplicationAdmin(admin.ModelAdmin):

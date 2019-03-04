@@ -126,7 +126,7 @@ class JobPost(models.Model, Localize):
 
         :return:
         """
-        return self.is_visible or not self.is_expired or not self.is_recruiter_banned
+        return self.is_visible and not self.is_expired and not self.is_recruiter_banned
 
     @property
     def job_type(self) -> str:
