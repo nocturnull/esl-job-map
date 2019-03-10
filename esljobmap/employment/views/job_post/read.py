@@ -3,7 +3,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView, ListView
 from django.utils.decorators import method_decorator
-from django.db.models import F
+from django.shortcuts import render
 
 from employment.mixins.recruiter import IsJobPosterMixin
 from employment.models import JobPost, JobApplication
@@ -19,7 +19,11 @@ class ListJobPost(LoginRequiredMixin, ListView):
     template_name = 'job_post/read/list.html'
 
     def get_queryset(self):
-        return self.request.user.job_posts.all().order_by(F('created_at').desc(nulls_last=True))
+        return self.request.user.job_posts.all()
+
+    def get(self, request, *args, **kwargs):
+        jobs = sorted(self.get_queryset(), key=lambda j: j.reference_date, reverse=True)
+        return render(request, self.template_name, {'object_list': jobs})
 
 
 @method_decorator(recruiter_required, name='dispatch')
