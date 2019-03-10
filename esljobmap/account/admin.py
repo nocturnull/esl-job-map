@@ -42,7 +42,12 @@ def photo_link(obj):
 
 
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ['user', 'visa_type', 'country', resume_link, photo_link]
+    list_display = ['user', 'join_date', 'visa_type', 'country', resume_link, photo_link]
+
+    def join_date(self, obj):
+        return obj.user.local_date_joined
+
+    join_date.admin_order_field = 'user__date_joined'
 
 
 admin.site.site_header = 'ESL Job Map Admin Site'
