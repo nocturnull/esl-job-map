@@ -23,7 +23,7 @@
                         {% with user=application.site_user %}
                             {% if not user.is_banned %}
                                 <tr>
-                                    <td>{{ user.full_name|default:'Guest' }}</td>
+                                    <td>{{ user.name|default:'Guest' }}</td>
                                     <td>{{ user.teacher.visa_type }} </td>
                                     <td>{{ user.teacher.country }}</td>
                                     <td><a href="{{ application.resume.cdn_url }}" target="_blank">View</a></td>

@@ -134,6 +134,6 @@ class TemplateManager:
         :param applicant:
         :return:
         """
-        if len(applicant.full_name) > 0:
-            return applicant.full_name
+        if len(applicant.name) > 0:
+            return applicant.name
         return 'YOUR NAME'

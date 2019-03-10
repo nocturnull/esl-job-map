@@ -24,4 +24,4 @@ class UserUpdateForm(forms.ModelForm):
 
     class Meta:
         model = SiteUser
-        fields = ('first_name', 'last_name', 'phone_number', 'opted_out_of_emails')
+        fields = ('name', 'phone_number', 'opted_out_of_emails')

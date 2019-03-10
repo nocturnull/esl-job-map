@@ -21,8 +21,6 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     email = models.EmailField(unique=True, blank=False, max_length=255)
     date_joined = models.DateTimeField('Date Joined', auto_now_add=True)
     name = models.CharField(max_length=255, blank=True, verbose_name='Name', default='')
-    first_name = models.CharField(max_length=255, blank=True, verbose_name='First Name', default='')
-    last_name = models.CharField(max_length=255, blank=True, verbose_name='Last Name', default='')
     phone_number = models.CharField(blank=True, max_length=255, verbose_name='Contact Number')
     role = models.PositiveSmallIntegerField(choices=USER_ROLES, default=1)
     opted_out_of_emails = models.BooleanField('Don’t receive an email copy of applications', default=False, blank=True)
@@ -60,20 +58,6 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         :return:
         """
         return self.role == 1 or self.role == 2
-
-    @property
-    def full_name(self) -> str:
-        """
-        The full name of the site user, formatted.
-
-        :return:
-        """
-        if len(self.first_name) > 0:
-            n = self.first_name + ' ' + self.last_name
-            return n.strip()
-        elif len(self.name) > 0:
-            return self.name
-        return ''
 
     @property
     def disinterested_jobs(self):
