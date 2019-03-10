@@ -67,7 +67,7 @@ class TemplateManager:
 
         return AUTHENTICATED_USER_BASE_SCHEME.format(
             visa_status=cls._generate_visa_status(teacher),
-            recruiter_contact_name=cls._generated_to_recruiter_intro(job_post.contact_name),
+            recruiter_name=cls._generated_to_recruiter_intro(job_post.recruiter_name),
             applicant_country=teacher.nice_country,
             job_post_title=job_post.title,
             exclusive_job_post_info=cls._generate_job_exclusive_template(job_post),
@@ -96,7 +96,7 @@ class TemplateManager:
         :return:
         """
         return ANONYMOUS_USER_BASE_SCHEME.format(
-            recruiter_contact_name=cls._generated_to_recruiter_intro(job_post.contact_name)
+            recruiter_name=cls._generated_to_recruiter_intro(job_post.recruiter_name)
         )
 
     @staticmethod

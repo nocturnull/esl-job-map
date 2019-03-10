@@ -49,7 +49,7 @@ class FullTimeMap(ListView):
         # We don't want to show jobs that have expired.
         context['object_list'] = self.build_object_list()
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
-        context['form'] = CreateFullTimeJobForm(self.request)
+        context['form'] = CreateFullTimeJobForm()
         context['location'] = MapManager.resolve_location_data(self.request, city)
         context['show_warning'] = SessionManager.needs_full_time_warning(self.request)
 
@@ -106,7 +106,7 @@ class PartTimeMap(ListView):
         # We don't want to show jobs that have expired.
         context['object_list'] = self.build_object_list()
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
-        context['form'] = CreatePartTimeJobForm(self.request)
+        context['form'] = CreatePartTimeJobForm(    )
         context['location'] = MapManager.resolve_location_data(self.request, city)
         context['show_warning'] = SessionManager.needs_part_time_warning(self.request)
 

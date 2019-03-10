@@ -18,8 +18,6 @@ class JobPost(models.Model, Localize):
     site_user = models.ForeignKey(SiteUser, related_name='job_posts', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     class_type = models.CharField(max_length=255)
-    contact_name = models.CharField(max_length=512)
-    contact_number = models.CharField(max_length=255)
     schedule = models.CharField(max_length=512)
     other_requirements = models.CharField(max_length=1024, blank=True, default='')
     is_full_time = models.BooleanField('Job type', default=False)
@@ -46,6 +44,24 @@ class JobPost(models.Model, Localize):
         :return:
         """
         return self.site_user.email
+
+    @property
+    def recruiter_name(self) -> str:
+        """
+        Gets the users name.
+
+        :return:
+        """
+        return self.site_user.name
+
+    @property
+    def recruiter_phone_number(self) -> str:
+        """
+        Gets the users phone number.
+
+        :return:
+        """
+        return self.site_user.phone_number
 
     @property
     def days_valid(self) -> int:

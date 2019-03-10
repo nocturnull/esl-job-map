@@ -35,7 +35,7 @@ class TemplateManager:
         opt_out_link = cls._generate_opt_out_email_link(job_post.site_user_email, request)
 
         return BODY_BASE_SCHEME.format(
-            contact_name=job_post.contact_name,
+            recruiter_name=job_post.recruiter_name,
             title=job_post.title,
             exclusive_info_section=exclusive_info_section,
             schedule=job_post.schedule,

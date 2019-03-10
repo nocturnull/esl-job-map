@@ -17,8 +17,7 @@ class EditFullTimeJobForm(CreateJobForm):
 
     class Meta:
         model = JobPost
-        fields = ['title', 'class_type', 'contact_name', 'contact_number',
-                  'schedule', 'other_requirements', 'salary', 'benefits']
+        fields = ['title', 'class_type', 'schedule', 'other_requirements', 'salary', 'benefits']
 
 
 class EditPartTimeJobForm(CreateJobForm):
@@ -27,19 +26,16 @@ class EditPartTimeJobForm(CreateJobForm):
 
     class Meta:
         model = JobPost
-        fields = ['title', 'class_type', 'contact_name', 'contact_number',
-                  'schedule', 'other_requirements', 'pay_rate']
+        fields = ['title', 'class_type', 'schedule', 'other_requirements', 'pay_rate']
 
 
 class AdminEditJobForm(forms.ModelForm):
-    contact_number = forms.CharField(label='Contact Number', required=False)
 
     class Meta:
         model = JobPost
-        fields = ['title', 'class_type', 'contact_name', 'contact_number', 'schedule',
-                  'other_requirements', 'salary', 'benefits', 'pay_rate',
-                  'is_visible', 'is_full_time', 'expiry_notice_sent',
-                  'latitude', 'longitude', 'address']
+        fields = ['title', 'class_type', 'schedule', 'other_requirements',
+                  'salary', 'benefits', 'pay_rate', 'is_visible',
+                  'is_full_time', 'expiry_notice_sent', 'latitude', 'longitude', 'address']
 
 
 class CloseJobForm(forms.ModelForm):

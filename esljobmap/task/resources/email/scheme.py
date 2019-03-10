@@ -1,5 +1,5 @@
 SUBJECT_BASE_SCHEME = """Job: {title} has expired"""
-BODY_BASE_SCHEME = """<h2>Hello {contact_name},</h2>
+BODY_BASE_SCHEME = """<h2>Hello {recruiter_name},</h2>
 <h4>
 The following job has expired:<br/>
 아래 포스팅 기간이 만료되었습니다:

@@ -32,11 +32,6 @@ class JobMapSetup {
         this.disinterestedIconImage = this.cdnImg('koco-man/gray-60x60.png') + '?v=1549075351';
         this.appliedIconImage = this.cdnImg('koco-man/black-60x60.png');
         this.interestedUri = '/korea/employment/teacher/job/interested/';
-        if (window.jobMap.isMobile) {
-            this.jobInterestClickEventType = 'dblclick';
-        } else {
-            this.jobInterestClickEventType = 'click';
-        }
     }
 
     /**
@@ -48,6 +43,11 @@ class JobMapSetup {
             let gestureControls = 'greedy';
             if (window.jobMap.isRecruiter) {
                 gestureControls = 'cooperative';
+            }
+            if (window.jobMap.isMobile) {
+                this.jobInterestClickEventType = 'dblclick';
+            } else {
+                this.jobInterestClickEventType = 'click';
             }
             this.map = new google.maps.Map(mapContainer, {
                 zoom: window.jobMap.zoom,
@@ -389,8 +389,6 @@ class JobMapSetup {
             'csrfmiddlewaretoken': $('input[name="csrfmiddlewaretoken"]').val(),
             'title': $('#id_title').val(),
             'class_type': $('#id_class_type').val(),
-            'contact_name': $('#id_contact_name').val(),
-            'contact_number': $('#id_contact_number').val(),
             'schedule': $('#id_schedule').val(),
             'other_requirements': $('#id_other_requirements').val(),
             'is_full_time': $('input[name="is_full_time"]:checked').val(),
