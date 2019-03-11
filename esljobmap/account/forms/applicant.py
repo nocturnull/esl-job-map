@@ -7,6 +7,7 @@ from django import forms
 from esljobmap.validators import validate_pdf_extension, validate_jpeg_extension
 
 from ..models import SiteUser, Teacher
+from ..settings import *
 
 
 class ApplicantCreationForm(UserCreationForm):
@@ -38,3 +39,14 @@ class ApplicantUpdateForm(forms.ModelForm):
     class Meta:
         model = Teacher
         fields = ('country', 'visa_type', 'resume_file', 'photo_file')
+
+    @transaction.atomic
+    def save(self, commit=True):
+        applicant = super().save(commit=False)
+        if applicant.visa_type_id not in ACCEPTED_VISAS and \
+                applicant.country_id not in ACCEPTED_COUNTRIES:
+            applicant.user.is_banned = True
+        else:
+            applicant.user.is_banned = False
+        applicant.user.save()
+        return applicant.save()

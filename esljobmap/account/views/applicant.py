@@ -74,5 +74,5 @@ class EditApplicantProfile(LoginRequiredMixin, TemplateView):
                 {
                     'user_form': user_form,
                     'applicant_form': applicant_form
-                 }
+                }
             )
