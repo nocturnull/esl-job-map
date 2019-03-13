@@ -49,4 +49,5 @@ class ApplicantUpdateForm(forms.ModelForm):
         else:
             applicant.user.is_banned = False
         applicant.user.save()
-        return applicant.save()
+        applicant.save()
+        return applicant
