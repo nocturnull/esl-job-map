@@ -61,3 +61,7 @@ class Teacher(models.Model):
         if self.country is None:
             return 'YOUR COUNTRY'
         return self.country.__str__()
+
+    @property
+    def status(self) -> str:
+        return 'Banned' if self.user.is_banned else '-'
