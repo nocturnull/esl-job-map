@@ -29,7 +29,7 @@ class ApplyManager:
     @staticmethod
     def track_application_info(request, application: JobApplication):
         """
-        Track application to be used in the signup form.
+        Track application to be used in the register form.
 
         :param request:
         :param application:

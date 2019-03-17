@@ -89,7 +89,7 @@ class ApplyToJobPost(TemplateView):
                               })
             else:
                 ApplyManager.track_application_info(request, application)
-                return redirect(reverse('employment_applied_signup'))
+                return redirect(reverse('employment_applied_register'))
         else:
             return render(request,
                           self.template_name,
@@ -100,7 +100,7 @@ class ApplyToJobPost(TemplateView):
 
 
 class RegistrationAfterApplying(TemplateView):
-    template_name = 'registration/signup/application_submitted.html'
+    template_name = 'registration/register/application_submitted.html'
     extra_context = {
         'mtitle': 'Register as a Teacher on ESL Job Map',
         'mdescription': 'Creating an account will allow you to automatically attach your resume, '
@@ -111,7 +111,7 @@ class RegistrationAfterApplying(TemplateView):
     def get(self, request, *args, **kwargs):
         applicant_email = request.session.get('recent_applicant_email')
 
-        # Set default email for the signup form.
+        # Set default email for the register form.
         form = ApplicantCreationForm()
         form.fields['email'].initial = applicant_email
         return render(request, self.template_name, {'form': form})

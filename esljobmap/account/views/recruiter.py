@@ -13,9 +13,9 @@ from ..helpers.recruiter import RecruiterHelper
 from task.lib.security import JwtAuthentication
 
 
-class RecruiterSignUp(CreateView):
+class RecruiterRegister(CreateView):
     form_class = RecruiterCreationForm
-    template_name = 'registration/signup/recruiter.html'
+    template_name = 'registration/register/recruiter.html'
     extra_context = {
         'mtitle': 'Register as a Recruiter on ESL Job Map',
         'mdescription': 'Register as a job poster to post jobs on ESL Job Map'

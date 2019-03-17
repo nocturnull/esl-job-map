@@ -37,5 +37,5 @@ urlpatterns = [
     path('teacher/applications', ListApplications.as_view(), name='employment_applications'),
     path('teacher/job/not-interested/<int:pk>', DisinterestedJobPostCreate.as_view(), name='employment_track_job_disinterest'),
     path('teacher/job/interested/<int:pk>', DisinterestedJobPostDelete.as_view(), name='employment_remove_job_disinterest'),
-    path('teacher/applied/signup', RegistrationAfterApplying.as_view(), name='employment_applied_signup')
+    path('teacher/applied/register', RegistrationAfterApplying.as_view(), name='employment_applied_register')
 ]

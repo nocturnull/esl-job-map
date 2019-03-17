@@ -13,9 +13,9 @@ from ..helpers.applicant import ProfileHelper
 from ..forms.user import UserUpdateForm
 
 
-class ApplicantSignUp(CreateView):
+class ApplicantRegister(CreateView):
     form_class = ApplicantCreationForm
-    template_name = 'registration/signup/applicant.html'
+    template_name = 'registration/register/applicant.html'
     extra_context = {
         'mtitle': 'Register as a Teacher on ESL Job Map',
         'mdescription': 'Creating an account will allow you to automatically attach your resume, '

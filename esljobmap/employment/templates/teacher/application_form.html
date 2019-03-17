@@ -17,7 +17,7 @@
                     </div>
                     {% if request.user.is_anonymous %}
                         <p>
-                            <a href="{% url 'signup' %}">Register</a> to automate your filling in your cover letter, and track jobs you have applied to.
+                            <a href="{% url 'register' %}">Register</a> to automate your filling in your cover letter, and track jobs you have applied to.
                         </p>
                         <div>
                             <label class="file-label" for="{{ job_form.resume.id_for_label }}">Resume - .PDF files only:</label>
