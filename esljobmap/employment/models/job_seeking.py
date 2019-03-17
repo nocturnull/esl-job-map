@@ -49,6 +49,18 @@ class JobApplication(models.Model, Localize):
     def view_url(self) -> str:
         return reverse_lazy('employment_view_application', args=[self.id])
 
+    @property
+    def visa(self) -> str:
+        if self.site_user is not None:
+            return str(self.site_user.teacher.visa_type)
+        return '-'
+
+    @property
+    def nation(self) -> str:
+        if self.site_user is not None:
+            return str(self.site_user.teacher.country)
+        return '-'
+
     @classmethod
     def create_application(cls, **kwargs):
         return cls.objects.create(**kwargs)

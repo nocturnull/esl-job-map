@@ -937,17 +937,9 @@
   },
   {
     "model": "account.Country",
-    "pk": 118,
-    "fields": {
-      "name": "Korea, Democratic People's Republic of",
-      "code": "KP"
-    }
-  },
-  {
-    "model": "account.Country",
     "pk": 119,
     "fields": {
-      "name": "Korea, Republic of",
+      "name": "Korea",
       "code": "KR"
     }
   },

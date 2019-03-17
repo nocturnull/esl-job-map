@@ -41,6 +41,23 @@ class CreateDateListFilter(admin.SimpleListFilter):
             return queryset.filter(created_at__gte=date(2019, 1, 19))
 
 
+class ApplicantsFilter(admin.SimpleListFilter):
+    title = 'Applicant Status'
+    parameter_name = 'site_user'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('regular', 'Regular Applications'),
+            ('filtered', 'Filtered Applications')
+        )
+
+    def queryset(self, request, queryset):
+        if self.value() == 'regular':
+            return queryset.filter(site_user__is_banned=False)
+        if self.value() == 'filtered':
+            return queryset.filter(site_user__is_banned=True)
+
+
 class JobPostAdmin(admin.ModelAdmin):
     list_display = ['title', 'local_created_at', 'site_user_email', 'job_type', 'isvisible',
                     'was_reposted', 'applicant_count']
@@ -51,7 +68,8 @@ class JobPostAdmin(admin.ModelAdmin):
 
 
 class JobApplicationAdmin(admin.ModelAdmin):
-    list_display = ['contact_email', 'local_created_at', 'job_post']
+    list_display = ['contact_email', 'local_created_at', 'job_post', 'visa', 'nation']
+    list_filter = (ApplicantsFilter, )
     fields = ('contact_email', 'cover_letter')
     ordering = ['-created_at']
 
