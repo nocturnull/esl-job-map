@@ -74,6 +74,6 @@
 {% block prejavascript %}
     <script>
         window.listFilter = {};
-        window.listFilter.itemCount = {{ object_list.count }};
+        window.listFilter.itemCount = {{ object_list|length }};
     </script>
 {% endblock %}

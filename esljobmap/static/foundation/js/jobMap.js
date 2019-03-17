@@ -32,6 +32,7 @@ class JobMapSetup {
         this.disinterestedIconImage = this.cdnImg('koco-man/gray-60x60.png') + '?v=1549075351';
         this.appliedIconImage = this.cdnImg('koco-man/black-60x60.png');
         this.interestedUri = '/korea/employment/teacher/job/interested/';
+        this.isProcessing = false;
     }
 
     /**
@@ -399,21 +400,25 @@ class JobMapSetup {
             'longitude': this.longitude,
             'address': this.address
         };
+        if (!this.isProcessing) {
+            this.isProcessing = true;
 
-        $.ajax({
-            type: 'POST',
-            url: action,
-            data: formData
-        }).done((response) => {
-            let responseHtml = $.parseHTML(response);
-            let extGeneralJobFields = $(responseHtml).find('#generalJobFields');
+            $.ajax({
+                type: 'POST',
+                url: action,
+                data: formData
+            }).done((response) => {
+                let responseHtml = $.parseHTML(response);
+                let extGeneralJobFields = $(responseHtml).find('#generalJobFields');
 
-            if (response.includes('jobPostListConfirm')) {
-                window.location = window.jobMap.successLocation;
-            } else {
-                this.$generalJobFields.html(extGeneralJobFields.html());
-            }
-        });
+                if (response.includes('jobPostListConfirm')) {
+                    window.location = window.jobMap.successLocation;
+                } else {
+                    this.$generalJobFields.html(extGeneralJobFields.html());
+                    this.isProcessing = false;
+                }
+            });
+        }
     }
 
     /**
