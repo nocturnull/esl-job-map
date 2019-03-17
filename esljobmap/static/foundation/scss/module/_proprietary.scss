@@ -14,6 +14,10 @@
     @include breakpoint(medium down) {
         min-height: 100vh;
     }
+
+    @include breakpoint(large up) {
+        min-height: 93vh;
+    }
 }
 
 .bold-text {
