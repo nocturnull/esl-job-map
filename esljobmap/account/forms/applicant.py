@@ -43,11 +43,16 @@ class ApplicantUpdateForm(forms.ModelForm):
     @transaction.atomic
     def save(self, commit=True):
         applicant = super().save(commit=False)
-        if applicant.visa_type_id not in ACCEPTED_VISAS and \
-                applicant.country_id not in ACCEPTED_COUNTRIES:
-            applicant.user.is_banned = True
-        else:
-            applicant.user.is_banned = False
+        visa_type = applicant.visa_type_id
+        country = applicant.country_id
+        is_banned = applicant.user.is_banned
+        if not is_banned:
+            if visa_type is not None and country is not None:
+                if visa_type not in ACCEPTED_VISAS and \
+                        country not in ACCEPTED_COUNTRIES:
+                    applicant.user.is_banned = True
+                else:
+                    applicant.user.is_banned = False
         applicant.user.save()
         applicant.save()
         return applicant

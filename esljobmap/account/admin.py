@@ -42,7 +42,7 @@ def photo_link(obj):
 
 
 class TeacherAdmin(admin.ModelAdmin):
-    list_display = ['user', 'join_date', 'visa_type', 'country', resume_link, photo_link]
+    list_display = ['user', 'join_date', 'visa_type', 'country', 'status', resume_link, photo_link]
 
     def join_date(self, obj):
         return obj.user.local_date_joined
