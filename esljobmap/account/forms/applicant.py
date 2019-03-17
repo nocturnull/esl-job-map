@@ -6,7 +6,7 @@ from django import forms
 
 from esljobmap.validators import validate_pdf_extension, validate_jpeg_extension
 
-from ..models import SiteUser, Teacher
+from ..models import SiteUser, Teacher, Country
 from ..settings import *
 
 
@@ -35,6 +35,17 @@ class ApplicantCreationForm(UserCreationForm):
 class ApplicantUpdateForm(forms.ModelForm):
     resume_file = forms.FileField(allow_empty_file=True, required=False, label='Resume', validators=[validate_pdf_extension])
     photo_file = forms.FileField(allow_empty_file=True, required=False, label='Photo', validators=[validate_jpeg_extension])
+    country = forms.ModelChoiceField(queryset=None)
+
+    def __init__(self, *args, **kwargs):
+        """
+        Constructor
+
+        :param args:
+        :param kwargs:
+        """
+        super().__init__(*args, **kwargs)
+        self.fields['country'].queryset = Country.objects.order_by('id').all()
 
     class Meta:
         model = Teacher
@@ -42,6 +53,12 @@ class ApplicantUpdateForm(forms.ModelForm):
 
     @transaction.atomic
     def save(self, commit=True):
+        """
+        Save this form's self.instance object, ban the user if necessary.
+
+        :param commit:
+        :return:
+        """
         applicant = super().save(commit=False)
         visa_type = applicant.visa_type_id
         country = applicant.country_id
