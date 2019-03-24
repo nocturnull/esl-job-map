@@ -29,7 +29,9 @@
                         <a href="{% url 'about_terms_and_conditions' %}" target="_blank">Terms and Conditions</a> and
                         <a href="{% url 'about_privacy_policy' %}" target="_blank">Privacy Policy</a>.
                     </p>
-                    <button type="submit" class="primary-button-2">Register</button>
+                    {% block submit %}
+                        <button type="submit" class="primary-button-2">Register</button>
+                    {% endblock %}
                 </form>
             </div>
         </div>
