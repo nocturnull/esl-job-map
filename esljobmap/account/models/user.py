@@ -25,7 +25,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     last_name = models.CharField(max_length=255, blank=True, verbose_name='Last Name', default='')
     phone_number = models.CharField(blank=True, max_length=255, verbose_name='Contact Number')
     role = models.PositiveSmallIntegerField(choices=USER_ROLES, default=1)
-    opted_out_of_emails = models.BooleanField('Don’t receive an email copy of applications', default=False, blank=True)
+    opted_out_of_emails = models.BooleanField('Don’t receive copy of application emails', default=False, blank=True)
     is_banned = models.BooleanField(default=False, blank=True)
     opted_out_of_expired_job_emails = models.BooleanField('Don’t receive job expire notification emails', default=False, blank=True)
     _disinterested_jobs = None
