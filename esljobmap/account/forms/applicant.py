@@ -35,7 +35,7 @@ class ApplicantCreationForm(UserCreationForm):
 class ApplicantUpdateForm(forms.ModelForm):
     resume_file = forms.FileField(allow_empty_file=True, required=False, label='Resume', validators=[validate_pdf_extension])
     photo_file = forms.FileField(allow_empty_file=True, required=False, label='Photo', validators=[validate_jpeg_extension])
-    country = forms.ModelChoiceField(queryset=None)
+    country = forms.ModelChoiceField(queryset=None, label='Nationality')
 
     def __init__(self, *args, **kwargs):
         """
