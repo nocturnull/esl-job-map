@@ -68,7 +68,7 @@ class JobPostAdmin(admin.ModelAdmin):
 
 
 class JobApplicationAdmin(admin.ModelAdmin):
-    list_display = ['contact_email', 'local_created_at', 'job_post', 'visa', 'nation']
+    list_display = ['contact_email', 'local_created_at', 'visa', 'nation', 'job_post']
     list_filter = (ApplicantsFilter, )
     fields = ('contact_email', 'cover_letter')
     ordering = ['-created_at']

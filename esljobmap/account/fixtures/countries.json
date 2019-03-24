@@ -1043,7 +1043,7 @@
     "model": "account.Country",
     "pk": 132,
     "fields": {
-      "name": "Macedonia, the Former Yugoslav Republic of",
+      "name": "Macedonia",
       "code": "MK"
     }
   },
@@ -1923,7 +1923,7 @@
     "model": "account.Country",
     "pk": 242,
     "fields": {
-      "name": "Viet Nam",
+      "name": "Vietnam",
       "code": "VN"
     }
   },
