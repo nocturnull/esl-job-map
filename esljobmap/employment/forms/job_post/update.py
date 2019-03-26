@@ -35,7 +35,8 @@ class AdminEditJobForm(forms.ModelForm):
         model = JobPost
         fields = ['title', 'class_type', 'schedule', 'other_requirements',
                   'salary', 'benefits', 'pay_rate', 'is_visible',
-                  'is_full_time', 'expiry_notice_sent', 'latitude', 'longitude', 'address']
+                  'is_full_time', 'created_at_override', 'expiry_notice_sent',
+                  'latitude', 'longitude', 'address']
 
 
 class CloseJobForm(forms.ModelForm):

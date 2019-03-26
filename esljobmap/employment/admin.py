@@ -66,6 +66,13 @@ class JobPostAdmin(admin.ModelAdmin):
     form = AdminEditJobForm
     readonly_fields = ('created_at',)
 
+    def save_model(self, request, obj, form, change):
+        created_override = form.cleaned_data['created_at_override']
+        if created_override:
+            obj.created_at = created_override
+            obj.created_at_override = None
+        super().save_model(request, obj, form, change)
+
 
 class JobApplicationAdmin(admin.ModelAdmin):
     list_display = ['contact_email', 'local_created_at', 'visa', 'nation', 'job_post']
