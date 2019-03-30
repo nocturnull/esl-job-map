@@ -148,6 +148,9 @@ class ListFilter {
 
             // Organize to be filtered items.
             this.prepareFlowCards();
+
+            // Apply filters on load.
+            this.applyFilter();
         }
     }
 
