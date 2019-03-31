@@ -10,6 +10,15 @@ class JobPostScavenger:
     """Job Post database scavenger"""
 
     @classmethod
+    def all(cls):
+        """
+        Get all the job posts.
+
+        :return:
+        """
+        return JobPost.objects.all()
+
+    @classmethod
     def get_expired_full_time(cls):
         """
         Search for all expired full time jobs.

@@ -93,6 +93,7 @@ class RepostJob(LoginRequiredMixin, IsJobPosterMixin, DetailView):
         form = RepostJobForm(request.POST)
         if form.is_valid():
             job_post.reposted_at = datetime.now()
+            job_post.posted_at = job_post.reposted_at
             job_post.expiry_notice_sent = False
             job_post.save()
             return redirect(self.success_url)

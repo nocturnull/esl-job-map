@@ -23,6 +23,26 @@ class JobPostManager:
         return emails_sent
 
     @classmethod
+    def update_posted_dates(cls) -> int:
+        """
+        Manually update existing data posted at dates.
+
+        :return:
+        """
+        jobs = JobPostScavenger.all()
+        amount = 0
+
+        for j in jobs:
+            if j.reposted_at is None:
+                pat = j.created_at
+            else:
+                pat = j.reposted_at
+            j.posted_at = pat
+            j.save()
+            amount += 1
+        return amount
+
+    @classmethod
     def _send_emails_and_tag_jobs(cls, jobs: list, request) -> int:
         """
         Sends emails and marks the jobs as 'email sent' at the same time.

@@ -11,6 +11,8 @@ from employment.managers.post_manager import PostManager
 from employment.decorators import recruiter_required
 from employment.models import JobPost
 
+from datetime import datetime
+
 
 @method_decorator(recruiter_required, name='dispatch')
 class JobPostIndex(LoginRequiredMixin, TemplateView):
@@ -40,6 +42,7 @@ class CreateFullTimeJobPost(LoginRequiredMixin, CreateView):
             PostManager.offset_location(new_job_post)
 
         new_job_post.site_user = self.request.user
+        new_job_post.posted_at = datetime.now()
         new_job_post.save()
 
         return super().form_valid(form)
@@ -66,6 +69,7 @@ class CreatePartTimeJobPost(LoginRequiredMixin, CreateView):
             PostManager.offset_location(new_job_post)
 
         new_job_post.site_user = self.request.user
+        new_job_post.posted_at = datetime.now()
         new_job_post.save()
 
         return super().form_valid(form)

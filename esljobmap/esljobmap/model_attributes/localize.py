@@ -25,3 +25,12 @@ class Localize:
         :return:
         """
         return self.date_joined.astimezone(local_timezone)
+
+    @property
+    def last_posted_date(self):
+        """
+        Converts the last update date (in UTC) to a local timezone.
+
+        :return:
+        """
+        return self.posted_at.astimezone(local_timezone)

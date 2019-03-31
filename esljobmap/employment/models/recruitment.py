@@ -26,7 +26,7 @@ class JobPost(models.Model, Localize):
     benefits = models.CharField(max_length=1024, blank=True, default='')
     is_visible = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    posted_at = models.DateTimeField(blank=True, default=None, null=True)
     reposted_at = models.DateTimeField(blank=True, default=None, null=True)
     created_at_override = models.DateTimeField(blank=True, default=None, null=True)
     latitude = models.FloatField(default=0)

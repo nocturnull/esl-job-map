@@ -17,3 +17,19 @@ class DispatchExpiryNotifications(ApiView):
         """
         emails_sent = JobPostManager.send_expiry_emails(request)
         return HttpResponse('{}\n'.format(emails_sent))
+
+
+class UpdatePostedAt(ApiView):
+    """View for updating posted at dates."""
+
+    def get(self, request, *args, **kwargs):
+        """
+        curl -i -H 'Authorization: {username} {token}' http://{path}/task/job-post/update-posted-at
+
+        :param request:
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        updated_jobs = JobPostManager.update_posted_dates()
+        return HttpResponse('{}\n'.format(updated_jobs))
