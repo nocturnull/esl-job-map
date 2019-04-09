@@ -28,6 +28,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     opted_out_of_emails = models.BooleanField('Don’t receive copy of application emails', default=False, blank=True)
     is_banned = models.BooleanField(default=False, blank=True)
     opted_out_of_expired_job_emails = models.BooleanField('Don’t receive job expire notification emails', default=False, blank=True)
+    job_credits = models.FloatField(blank=True, default=0)
     _disinterested_jobs = None
 
     is_staff = models.BooleanField(
