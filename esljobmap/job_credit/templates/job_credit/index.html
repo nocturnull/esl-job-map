@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="grid-container">
+
+        <h3>Job Credits</h3>
+        <ul class="tabs" data-tabs id="job-credit-tabs">
+            <li class="tabs-title is-active">
+                <a href="#purchasePanel" aria-selected="true">Purchase</a>
+            </li>
+            <li class="tabs-title">
+                <a href="#historyPanel">History</a>
+            </li>
+        </ul>
+
+        <div class="tabs-content" data-tabs-content="job-credit-tabs">
+            <div class="tabs-panel is-active" id="purchasePanel">
+                {% include 'job_credit/section/purchase.html' %}
+            </div>
+            <div class="tabs-panel" id="historyPanel">
+                {% include 'job_credit/section/history.html' %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -24,6 +24,7 @@ urlpatterns = [
     path('korea/account/', include('account.urls')),
     path('korea/account/', include('django.contrib.auth.urls')),
     path('korea/employment/', include('employment.urls')),
+    path('korea/job-credit/', include('job_credit.urls')),
     path('api/', include('task.urls'))
 ]
 
