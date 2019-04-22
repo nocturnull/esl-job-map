@@ -41,11 +41,7 @@
                     <li><a href="{% url 'about_visa' %}" class="{% menu_class request 'about_visa' %}">Visa & Job Type</a></li>
                 </ul>
             </li>
-            {% if user.is_authenticated and user.is_recruiter %}
-                <li>
-                    <a href="{% url 'job_credit_index' %}">Job Credits <span class="bold-text">({{ request.user.job_credits }})</span></a>
-                </li>
-            {% endif %}
+            {% include 'modules/job-credit-nav.html' %}
         </ul>
     </div>
 

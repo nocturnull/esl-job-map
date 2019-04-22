@@ -1,0 +1,16 @@
+{% if user.is_authenticated and user.is_recruiter %}
+    <li>
+        <a href="{% url 'job_credit_index' %}">
+            Job Credits
+            {% if request.user.has_credits %}
+                <span class="bold-text koco-tooltip">
+                    ({{ request.user.credits }})
+                </span>
+            {% else %}
+                <span class="bold-text koco-error koco-tooltip" data-tooltip title="You need to purchase Job Credits to post jobs">
+                    ({{ request.user.credits }})
+                </span>
+            {% endif %}
+        </a>
+    </li>
+{% endif %}

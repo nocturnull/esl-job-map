@@ -64,9 +64,36 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
     @property
     def disinterested_jobs(self):
+        """
+        Cache disinterested jobs in a local variable to prevent multiple db hits.
+
+        :return:
+        """
         if self._disinterested_jobs is None:
             self._disinterested_jobs = self.disinterested_job_posts.all()
         return self._disinterested_jobs
+
+    @property
+    def credits(self):
+        """
+        Format job credits when needed.
+
+        :return:
+        """
+        if self.job_credits > 0:
+            return self.job_credits
+        return int(self.job_credits)
+
+    @property
+    def has_credits(self):
+        """
+        Determine if the user has credits.
+
+        :return:
+        """
+        if self.job_credits > 0:
+            return True
+        return False
 
     def __str__(self):
         return self.email
