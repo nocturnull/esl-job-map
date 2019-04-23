@@ -20,6 +20,35 @@ class Record(models.Model):
     amount = models.FloatField(default=0)
     balance = models.FloatField(default=0)
 
+    @property
+    def is_purchase(self) -> bool:
+        """
+        Determine if the record is a purchase.
+
+        :return:
+        """
+        return self.action == self.ACTION_PURCHASE
+
+    @property
+    def pretty_date(self) -> str:
+        """
+        Get a neatly formatted date.
+
+        :return:
+        """
+        return self.created_at.strftime('%Y/%m/%d')
+
+    @property
+    def pretty_delta(self) -> str:
+        """
+        Get a neatly formatted delta factor.
+
+        :return:
+        """
+        if self.is_purchase:
+            return '+{}'.format(self.amount)
+        return '-{}'.format(self.amount)
+
     def generate_description(self):
         """
         TODO
