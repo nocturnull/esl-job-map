@@ -49,12 +49,5 @@ class Record(models.Model):
             return '+{}'.format(self.amount)
         return '-{}'.format(self.amount)
 
-    def generate_description(self):
-        """
-        TODO
-        :return:
-        """
-        self.description = ''
-
     def __str__(self):
         return 'site_user={}, action={}, amount={}'.format(self.site_user, self.action, self.amount)
