@@ -39,7 +39,7 @@ class JobPostCreateMixin:
                     # Deduct credits from the users account.
                     user_regulator.consume_post_credits()
                     # Track the changes
-                    RecordOriginator.create_post_record(user, is_consumption=True, is_full_time=is_full_time)
+                    RecordOriginator.create_or_update_post_record(user, is_full_time=is_full_time)
 
                 return redirect(self.success_url)
             else:

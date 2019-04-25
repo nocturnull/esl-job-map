@@ -17,7 +17,7 @@ class Record(models.Model):
     description = models.CharField(max_length=1024, default='', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     action = models.CharField(max_length=128, choices=ACTION_CHOICES, default=ACTION_CONSUME)
-    amount = models.FloatField(default=0)
+    amount = models.IntegerField(default=0)
     balance = models.FloatField(default=0)
 
     @property
