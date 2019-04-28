@@ -6,19 +6,19 @@
 
         <h3>Job Credits</h3>
         <ul class="tabs" data-tabs id="job-credit-tabs">
-            <li class="tabs-title is-active">
-                <a href="#purchasePanel" aria-selected="true">Purchase</a>
+            <li class="tabs-title {% if tab == 1 %} is-active {% endif %}">
+                <a href="#purchasePanel" {% if tab == 1 %} aria-selected="true" {% endif %}>Purchase</a>
             </li>
-            <li class="tabs-title">
-                <a href="#historyPanel">History</a>
+            <li class="tabs-title {% if tab == 2 %} is-active {% endif %}">
+                <a href="#historyPanel" {% if tab == 2 %} aria-selected="true" {% endif %}>History</a>
             </li>
         </ul>
 
         <div class="tabs-content" data-tabs-content="job-credit-tabs">
-            <div class="tabs-panel is-active" id="purchasePanel">
+            <div class="tabs-panel {% if tab == 1 %} is-active {% endif %}" id="purchasePanel">
                 {% include 'job_credit/section/purchase.html' %}
             </div>
-            <div class="tabs-panel" id="historyPanel">
+            <div class="tabs-panel {% if tab == 2 %} is-active {% endif %}" id="historyPanel">
                 {% include 'job_credit/section/history.html' %}
             </div>
         </div>

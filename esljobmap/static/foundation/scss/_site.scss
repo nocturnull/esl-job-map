@@ -100,6 +100,14 @@ label {
     }
 }
 
+.tabs-title>a:focus, .tabs-title > a {
+    background: nth($brand-disabled, 2);
+}
+
+.tabs-title>a:focus, .tabs-title>a[aria-selected='true'] {
+    background: white;
+}
+
 // ==========================================================================
 // Google Maps Overrides
 // Need to use important because the styles are created inline by Google's JS library

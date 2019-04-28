@@ -6,5 +6,5 @@ from .views.index import Index
 
 
 urlpatterns = [
-    path('', Index.as_view(), name='job_credit_index')
+    path('', Index.as_view(), name='job_credit')
 ]
