@@ -19,10 +19,18 @@ class IsJobPosterMixin:
         return HttpResponseForbidden()
 
 
-class JobPostCreateMixin:
+class JobPostWriteMixin:
     """Mixin for creating a job post."""
 
     def create_response(self, request, form, is_full_time):
+        """
+        Generate a post create response.
+
+        :param request:
+        :param form:
+        :param is_full_time:
+        :return:
+        """
         user = request.user
         user_regulator = UserTransformer(user)
         context = {'form': form, 'is_full_time': is_full_time}
@@ -39,7 +47,39 @@ class JobPostCreateMixin:
                     # Deduct credits from the users account.
                     user_regulator.consume_post_credits()
                     # Track the changes
-                    RecordOriginator.create_or_update_post_record(user, is_full_time=is_full_time)
+                    RecordOriginator.create_or_update_post_record(user, is_full_time=arrayed_job.is_full_time)
+
+                return redirect(self.success_url)
+            else:
+                context['additional_error'] = 'Error: Insufficient job credits'
+        return render(request, self.template_name, context=context)
+
+    def repost_response(self, request, form, instance):
+        """
+        Generate a job repost response.
+
+        :param request:
+        :param form:
+        :param instance:
+        :return:
+        """
+        user = request.user
+        user_regulator = UserTransformer(user)
+        context = {'form': form, 'job_post': instance}
+
+        if form.is_valid():
+            if user_regulator.can_afford_post():
+                arrayed_job = ArrayedJobPost(instance)
+                arrayed_job.normalize_location()
+
+                # Relevant job post, credits, and log need to be updated atomically.
+                with transaction.atomic():
+                    # Save job post.
+                    arrayed_job.repost()
+                    # Deduct credits from the users account.
+                    user_regulator.consume_post_credits()
+                    # Track the changes
+                    RecordOriginator.create_or_update_post_record(user, is_full_time=arrayed_job.is_full_time)
 
                 return redirect(self.success_url)
             else:

@@ -3,7 +3,7 @@
 from django.urls import path
 
 from .views.job_post.update import EditFullTimeJobPost, EditPartTimeJobPost, \
-    CloseJobPost, RestoreJob, RepostJob
+    CloseJobPost, RepostJob
 from .views.job_post.create import JobPostIndex, CreateFullTimeJobPost, CreatePartTimeJobPost
 from .views.job_post.read import ListJobPost, ListJobApplicants, ViewJobPostApplication
 from .views.job_seeking import ApplyToJobPost, RegistrationAfterApplying, ListApplications
@@ -30,7 +30,6 @@ urlpatterns = [
     path('recruiter/job/edit/full-time/<int:pk>', EditFullTimeJobPost.as_view(), name='employment_edit_full_time_job_post'),
     path('recruiter/job/edit/part-time/<int:pk>', EditPartTimeJobPost.as_view(), name='employment_edit_part_time_job_post'),
     path('recruiter/job/close/<int:pk>', CloseJobPost.as_view(), name='employment_close_job_post'),
-    path('recruiter/job/restore/<int:pk>', RestoreJob.as_view(), name='employment_restore_post'),
     path('recruiter/job/repost/<int:pk>', RepostJob.as_view(), name='employment_repost_job_post'),
     # Teacher only pages
     path('teacher/apply/<int:job_post_id>', ApplyToJobPost.as_view(), name='employment_apply_to_job'),

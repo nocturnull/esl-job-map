@@ -9,9 +9,6 @@ from ..models.history import Record
 
 from typing import Optional
 from datetime import datetime
-from pytz import timezone
-
-local_timezone = timezone('Asia/Seoul')  # Change to system env later on...
 
 
 class RecordOriginator:
@@ -30,13 +27,11 @@ class RecordOriginator:
         action = Record.ACTION_CONSUME
         existing_record = cls._get_existing_daily_record(user, action)
         if existing_record is None:
-            print('making new record')
             description = cls._generate_new_description(is_full_time)
             Record.objects.create(
                 site_user=user, description=description, action=action,
                 amount=JOB_CREDIT_POST_EXPENSE, balance=user.job_credits)
         else:
-            print('updating existing record')
             existing_record.amount += 1
             existing_record.description = cls._regenerate_description(existing_record)
             existing_record.balance = user.job_credits

@@ -11,7 +11,12 @@
                 <input type="hidden" name="{{ field.html_name }}" value="1">
                 {{ field.errors }}
             {% endfor %}
-            <p>Are you sure you want to repost {{ job_post }}? It will only be up for {{ job_post.days_valid_after_repost }} days.</p>
+            <p>Are you sure you want to repost {{ job_post }}? It will be up for {{ job_post.days_valid }} days.</p>
+            {% if additional_error %}
+                <div>
+                    <span class="errorlist">{{ additional_error }}</span>
+                </div>
+            {% endif %}
             <input type="submit" value="Confirm" class="primary-button-2" />
         </form>
 

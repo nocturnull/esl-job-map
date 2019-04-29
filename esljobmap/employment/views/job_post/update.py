@@ -9,8 +9,8 @@ from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
 from employment.forms.job_post.update import EditFullTimeJobForm, EditPartTimeJobForm, \
-    CloseJobForm, RestoreJobForm, RepostJobForm
-from employment.mixins.recruiter import IsJobPosterMixin
+    CloseJobForm, RepostJobForm
+from employment.mixins.recruiter import IsJobPosterMixin, JobPostWriteMixin
 from employment.decorators import recruiter_required
 from employment.models import JobPost
 
@@ -64,20 +64,9 @@ class CloseJobPost(LoginRequiredMixin, IsJobPosterMixin, UpdateView):
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class RestoreJob(LoginRequiredMixin, IsJobPosterMixin, UpdateView):
+class RepostJob(LoginRequiredMixin, IsJobPosterMixin, JobPostWriteMixin, DetailView):
     """
-    View for reposting a job after taking it down.
-    """
-    model = JobPost
-    form_class = RestoreJobForm
-    template_name = 'job_post/update/restore_form.html'
-    success_url = reverse_lazy('employment_my_job_posts')
-
-
-@method_decorator(recruiter_required, name='dispatch')
-class RepostJob(LoginRequiredMixin, IsJobPosterMixin, DetailView):
-    """
-    View for reposting a job after taking it down.
+    View for reposting a job after it has expired.
     """
     model = JobPost
     template_name = 'job_post/update/repost_form.html'
@@ -91,10 +80,4 @@ class RepostJob(LoginRequiredMixin, IsJobPosterMixin, DetailView):
     def post(self, request, pk):
         job_post = JobPost.objects.get(id=pk)
         form = RepostJobForm(request.POST)
-        if form.is_valid():
-            job_post.reposted_at = datetime.now()
-            job_post.posted_at = job_post.reposted_at
-            job_post.expiry_notice_sent = False
-            job_post.save()
-            return redirect(self.success_url)
-        return render(request, self.template_name, {'form': form})
+        return self.repost_response(request, form, job_post)

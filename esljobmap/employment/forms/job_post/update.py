@@ -60,29 +60,8 @@ class CloseJobForm(forms.ModelForm):
         fields = ['is_visible']
 
 
-class RestoreJobForm(forms.ModelForm):
-    """Form for recruiters to restore their job post for the public to see."""
-    is_visible = forms.HiddenInput()
-
-    def save(self, commit=True):
-        """
-        Hook into the save to update the visibility field.
-
-        :param commit:
-        :return:
-        """
-
-        self.instance.is_visible = True
-
-        return super(RestoreJobForm, self).save(commit=commit)
-
-    class Meta:
-        model = JobPost
-        fields = ['is_visible']
-
-
 class RepostJobForm(forms.Form):
-    """Form for recruiters to repost their job post for the public to see."""
+    """Form for recruiters to repost their job."""
     confirm = forms.HiddenInput()
 
     class Meta:

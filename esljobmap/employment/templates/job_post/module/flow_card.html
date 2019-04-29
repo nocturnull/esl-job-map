@@ -27,10 +27,10 @@
                     <button class="primary-button-1" onclick="window.location='{{ job_post.edit_link }}'">Edit</button>
                     <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close</button>
                 {% else %}
-                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost ({{ job_post.days_valid_after_repost }} days)</button>
+                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
                 {% endif %}
             {% else %}
-                <button class="disabled-button taken-down" onclick="window.location='{{ job_post.restore_link }}'">Closed</button>
+                <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
             {% endif %}
         </div>
         {% with applicants=job_post|applicant_count:request.user %}

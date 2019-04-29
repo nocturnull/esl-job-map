@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from employment.forms.job_post.create import CreateFullTimeJobForm, CreatePartTimeJobForm
-from employment.mixins.recruiter import JobPostCreateMixin
+from employment.mixins.recruiter import JobPostWriteMixin
 from employment.decorators import recruiter_required
 
 
@@ -20,7 +20,7 @@ class JobPostIndex(LoginRequiredMixin, TemplateView):
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class CreateFullTimeJobPost(LoginRequiredMixin, JobPostCreateMixin, TemplateView):
+class CreateFullTimeJobPost(LoginRequiredMixin, JobPostWriteMixin, TemplateView):
     """
     Job Post creation view.
     """
@@ -51,7 +51,7 @@ class CreateFullTimeJobPost(LoginRequiredMixin, JobPostCreateMixin, TemplateView
 
 
 @method_decorator(recruiter_required, name='dispatch')
-class CreatePartTimeJobPost(LoginRequiredMixin, JobPostCreateMixin, TemplateView):
+class CreatePartTimeJobPost(LoginRequiredMixin, JobPostWriteMixin, TemplateView):
     """
     Job Post creation view.
     """

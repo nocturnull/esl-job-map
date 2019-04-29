@@ -100,13 +100,24 @@ label {
     }
 }
 
-.tabs-title>a:focus, .tabs-title > a {
-    background: nth($brand-disabled, 2);
+.tabs {
+    border-top: none;
+    border-right: none;
 }
 
-.tabs-title>a:focus, .tabs-title>a[aria-selected='true'] {
-    background: white;
+.tabs-title {
+    border-top: 1px solid #e6e6e6;
+    border-right: 1px solid #e6e6e6;
+
+    & > a {
+        background: nth($brand-disabled, 2);
+    }
+
+    & > a:focus, a[aria-selected='true'] {
+        background: white;
+    }
 }
+
 
 // ==========================================================================
 // Google Maps Overrides

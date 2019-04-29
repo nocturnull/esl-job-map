@@ -75,17 +75,6 @@ class JobPost(models.Model, Localize):
         return PART_TIME_JOB_DAYS_VALID
 
     @property
-    def days_valid_after_repost(self) -> int:
-        """
-        The amount of days the job is valid for changes when the job is reposted.
-
-        :return:
-        """
-        if self.is_full_time:
-            return REPOSTED_FULL_TIME_JOB_DAYS_VALID
-        return REPOSTED_PART_TIME_JOB_DAYS_VALID
-
-    @property
     def expires_in(self) -> int:
         """
         Determine how many days are left until the job expires.
@@ -95,7 +84,7 @@ class JobPost(models.Model, Localize):
         if self.reposted_at is None:
             return self.days_valid - (datetime.now() - self.created_at).days
         else:
-            return self.days_valid_after_repost - (datetime.now() - self.reposted_at).days
+            return self.days_valid - (datetime.now() - self.reposted_at).days
 
     @property
     def pretty_employment_type(self) -> str:
@@ -192,10 +181,6 @@ class JobPost(models.Model, Localize):
     @property
     def close_link(self):
         return reverse('employment_close_job_post', args=[self.id])
-
-    @property
-    def restore_link(self):
-        return reverse('employment_restore_post', args=[self.id])
 
     @property
     def repost_link(self):
