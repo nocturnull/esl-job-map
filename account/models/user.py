@@ -1,6 +1,7 @@
 # account/models/user.py
 
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
 from esljobmap.model_attributes.localize import Localize
@@ -13,6 +14,10 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     """
     Extension of the default user.
     """
+    ROLE_NIL = 1
+    ROLE_RECRUITER = 2
+    ROLE_TEACHER = 3
+
     USER_ROLES = (
         (1, 'nil'),
         (2, 'recruiter'),
@@ -28,7 +33,8 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     opted_out_of_emails = models.BooleanField('Don’t receive copy of application emails', default=False, blank=True)
     is_banned = models.BooleanField(default=False, blank=True)
     opted_out_of_expired_job_emails = models.BooleanField('Don’t receive job expire notification emails', default=False, blank=True)
-    job_credits = models.FloatField(blank=True, default=0)
+
+    _credit_bank = None
     _disinterested_jobs = None
 
     is_staff = models.BooleanField(
@@ -51,7 +57,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
         :return:
         """
-        return self.role == 3
+        return self.role == self.ROLE_TEACHER
 
     @property
     def is_recruiter(self) -> bool:
@@ -60,7 +66,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
         :return:
         """
-        return self.role == 1 or self.role == 2
+        return self.role == self.ROLE_NIL or self.role == self.ROLE_RECRUITER
 
     @property
     def disinterested_jobs(self):
@@ -80,9 +86,15 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
         :return:
         """
-        if self.job_credits > 0:
-            return self.job_credits
-        return int(self.job_credits)
+        try:
+            if self.credit_bank.balance > 0:
+                return self.credit_bank.balance
+            return int(self.credit_bank.balance)
+        except ObjectDoesNotExist:
+            if self.is_recruiter:
+                from job_credit.models.credit_bank import Bank
+                Bank.objects.create(site_user=self)
+            return 0
 
     @property
     def has_credits(self):
@@ -91,7 +103,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
         :return:
         """
-        if self.job_credits > 0:
+        if self.is_recruiter and self.credits > 0:
             return True
         return False
 

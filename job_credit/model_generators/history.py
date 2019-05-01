@@ -30,11 +30,11 @@ class RecordOriginator:
             description = cls._generate_new_description(is_full_time)
             Record.objects.create(
                 site_user=user, description=description, action=action,
-                amount=JOB_CREDIT_POST_EXPENSE, balance=user.job_credits)
+                amount=JOB_CREDIT_POST_EXPENSE, balance=user.credits)
         else:
             existing_record.amount += 1
             existing_record.description = cls._regenerate_description(existing_record)
-            existing_record.balance = user.job_credits
+            existing_record.balance = user.credits
             existing_record.save()
 
     @classmethod

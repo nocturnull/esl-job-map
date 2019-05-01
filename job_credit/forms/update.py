@@ -23,11 +23,11 @@ class CreditRecordCreationForm(forms.ModelForm):
         amount = self.instance.amount
 
         if act == Record.ACTION_CONSUME:
-            user.job_credits -= amount
+            user.credit_bank.balance -= amount
         else:
-            user.job_credits += amount
+            user.credit_bank.balance += amount
 
-        user.save()
-        self.instance.balance = user.job_credits
+        user.credit_bank.save()
+        self.instance.balance = user.credits
 
         return super(CreditRecordCreationForm, self).save(commit=commit)

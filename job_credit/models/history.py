@@ -16,7 +16,7 @@ class Record(models.Model):
     site_user = models.ForeignKey(SiteUser, on_delete=models.CASCADE, related_name='credit_history')
     description = models.CharField(max_length=1024, default='', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
-    action = models.CharField(max_length=128, choices=ACTION_CHOICES, default=ACTION_CONSUME)
+    action = models.CharField(max_length=128, choices=ACTION_CHOICES, default=ACTION_PURCHASE)
     amount = models.IntegerField(default=0)
     balance = models.FloatField(default=0)
 

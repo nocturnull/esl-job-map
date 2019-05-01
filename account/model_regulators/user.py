@@ -16,8 +16,12 @@ class UserTransformer:
         self.instance = user
 
     def can_afford_post(self) -> bool:
-        """Determine if the user is allowed to post"""
-        return self.instance.job_credits >= JOB_CREDIT_POST_EXPENSE
+        """
+        Determine if the user is allowed to post
+
+        :return:
+        """
+        return self.instance.credits >= JOB_CREDIT_POST_EXPENSE
 
     def consume_post_credits(self):
         """
@@ -25,5 +29,5 @@ class UserTransformer:
 
         :return:
         """
-        self.instance.job_credits -= JOB_CREDIT_POST_EXPENSE
-        self.instance.save()
+        self.instance.credit_bank.balance -= JOB_CREDIT_POST_EXPENSE
+        self.instance.credit_bank.save()
