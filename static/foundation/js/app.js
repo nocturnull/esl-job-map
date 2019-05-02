@@ -2,11 +2,15 @@ $(document).foundation();
 
 import JobMapSetup from './jobMap.js';
 import ListFilter from './listFilter.js';
+import StripeClient from './stripe.js';
 
 
 $(document).ready(function() {
-    let lfilter = new ListFilter();
+    let lfilter = new ListFilter(),
+        stripe = new StripeClient();
+
     lfilter.init();
+    stripe.init();
 });
 
 function initMap() {

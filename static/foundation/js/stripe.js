@@ -1,0 +1,114 @@
+/**
+ * Stripe.js API wrapper
+ *
+ * Relevant documentation
+ * @link https://stripe.com/docs/stripe-js
+ */
+class StripeClient {
+
+    /**
+     * Constructor.
+     */
+    constructor() {
+        this.displayError = document.getElementById('card-errors');
+        this.form = document.getElementById('payment-form');
+        this.cardElementId = '#card-element';
+    }
+
+    /**
+     * Determine if it's necessary to manipulate any data.
+     *
+     * @returns {boolean}
+     */
+    isValid() {
+        return this.form.length > 0;
+    }
+
+    /**
+     * Initialize the API.
+     */
+    init() {
+        if (this.isValid()) {
+            this.stripe = Stripe('pk_test_36YQBZswfmKeguRO3sfdkoq800KormGnyj');
+            this.elements = this.stripe.elements();
+            this.card = this.elements.create('card', {style: StripeClient.getCardStyles()});
+            this.card.mount(this.cardElementId);
+            this.card.addEventListener('change', (event) => {this.handleError(event);});
+            this.form.addEventListener('submit', (event) => {this.handleSubmit(event);});
+        }
+    }
+
+    /**
+     * Handle real-time validation errors from the card Element.
+     *
+     * @param event
+     */
+    handleError(event) {
+        if (event.error) {
+            this.displayError.textContent = event.error.message;
+        } else {
+            this.displayError.textContent = '';
+        }
+    }
+
+    /**
+     * Handle form submission.
+     *
+     * @param event
+     */
+    handleSubmit(event) {
+        event.preventDefault();
+
+        this.stripe.createToken(this.card).then((result) => {
+            if (result.error) {
+              // Inform the user if there was an error.
+              this.displayError.textContent = result.error.message;
+            } else {
+              // Send the token to your server.
+              this.stripeTokenHandler(result.token);
+            }
+          });
+    }
+
+    /**
+     * Submit the form with the token ID.
+     *
+     * @param token
+     */
+    stripeTokenHandler(token) {
+        // Insert the token ID into the form so it gets submitted to the server
+        let hiddenInput = document.createElement('input');
+        hiddenInput.setAttribute('type', 'hidden');
+        hiddenInput.setAttribute('name', 'stripeToken');
+        hiddenInput.setAttribute('value', token.id);
+        this.form.appendChild(hiddenInput);
+
+        // Submit the form
+        this.form.submit();
+    }
+
+    /**
+     * Custom styling of stripe card element.
+     *
+     * @returns {{invalid: {color: string, iconColor: string}, base: {fontFamily: string, color: string, "::placeholder": {color: string}, fontSize: string, fontSmoothing: string}}}
+     */
+    static getCardStyles() {
+        return {
+            base: {
+                color: '#32325d',
+                fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+                fontSmoothing: 'antialiased',
+                fontSize: '16px',
+                '::placeholder': {
+                    color: '#aab7c4'
+                }
+            },
+            invalid: {
+                color: '#fa755a',
+                iconColor: '#fa755a'
+            }
+        };
+    }
+}
+
+export default StripeClient;

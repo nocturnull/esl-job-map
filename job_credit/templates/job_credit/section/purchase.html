@@ -9,3 +9,32 @@
     한글로<br/>
     <a href="#">youngeun@esljobmap.com</a>
 </p>
+<br/><br/>
+<h4>Checkout</h4>
+
+<form action="{% url 'job_credit' %}" method="post" id="payment-form">
+    {% csrf_token %}
+    <div class="grid-x">
+        {{ form.as_p }}
+    </div>
+
+    <div class="grid-x">
+        <div class="medium-5 cell">
+            <label for="card-element">
+                Credit or debit card
+            </label>
+            <div id="card-element">
+                <!-- A Stripe Element will be inserted here. -->
+            </div>
+
+            <!-- Used to display form errors. -->
+            <div id="card-errors" class="errorlist"></div>
+        </div>
+    </div>
+
+    <div class="grid-x mt-1">
+        <div class="medium-5 cell">
+            <input type="submit" value="Submit Payment" class="primary-button-2" />
+        </div>
+    </div>
+</form>
