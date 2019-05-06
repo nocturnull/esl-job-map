@@ -1,6 +1,6 @@
 # employment/mixins/recruiter.py
 
-from job_credit.model_generators.history import RecordOriginator
+from job_credit.model_generators.history import RecordGenerator
 from employment.model_decorators.job_post import ArrayedJobPost
 from account.model_regulators.user import UserTransformer
 
@@ -47,7 +47,7 @@ class JobPostWriteMixin:
                     # Deduct credits from the users account.
                     user_regulator.consume_post_credits()
                     # Track the changes
-                    RecordOriginator.create_or_update_post_record(user, is_full_time=arrayed_job.is_full_time)
+                    RecordGenerator.create_or_update_post_record(user, is_full_time=arrayed_job.is_full_time)
 
                 return redirect(self.success_url)
             else:
@@ -79,7 +79,7 @@ class JobPostWriteMixin:
                     # Deduct credits from the users account.
                     user_regulator.consume_post_credits()
                     # Track the changes
-                    RecordOriginator.create_or_update_post_record(user, is_full_time=arrayed_job.is_full_time)
+                    RecordGenerator.create_or_update_post_record(user, is_full_time=arrayed_job.is_full_time)
 
                 return redirect(self.success_url)
             else:

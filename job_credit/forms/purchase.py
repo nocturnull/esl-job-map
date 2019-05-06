@@ -4,4 +4,6 @@ from django import forms
 
 
 class CreditPurchaseForm(forms.Form):
-    credits = forms.IntegerField(label='Credits', min_value=1, max_value=1000, initial=1)
+    single_credit = forms.IntegerField(label='1 Credit', min_value=0, max_value=1000, initial=0)
+    ten_credits = forms.IntegerField(label='10 Credits', min_value=0, max_value=1000, initial=1)
+    one_hundred_credits = forms.IntegerField(label='100 Credits', min_value=0, max_value=1000, initial=0)

@@ -11,7 +11,7 @@ from typing import Optional
 from datetime import datetime
 
 
-class RecordOriginator:
+class RecordGenerator:
     """Job Credit Record generator"""
 
     @classmethod
@@ -36,6 +36,20 @@ class RecordOriginator:
             existing_record.description = cls._regenerate_description(existing_record)
             existing_record.balance = user.credits
             existing_record.save()
+
+    @classmethod
+    def create_purchase_record(cls, user: SiteUser, job_credits: int):
+        """
+        Create a new record for purchasing.
+
+        :param user:
+        :param job_credits:
+        :return:
+        """
+        d = 'Purchased {} credit(s)'.format(job_credits)
+        Record.objects.create(
+            site_user=user, description=d, action=Record.ACTION_PURCHASE,
+            amount=job_credits, balance=user.credits)
 
     @classmethod
     def _get_existing_daily_record(cls, user: SiteUser, action: str) -> Optional[Record]:

@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'blanket',
     'task',
     'job_credit',
+    'payment',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

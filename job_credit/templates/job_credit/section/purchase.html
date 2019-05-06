@@ -15,10 +15,54 @@
 <form action="{% url 'job_credit' %}" method="post" id="payment-form">
     {% csrf_token %}
     <div class="grid-x">
-        {{ form.as_p }}
+        <div class="numeric-field cell">
+            {{ form.single_credit }}
+        </div>
+        <div class="numeric-label medium-3 cell">
+            <label for="{{ form.single_credit.id_for_label }}">
+                {{ form.single_credit.label }}
+                <span class="errorlist">
+                    {% for error in form.single_credit.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+            </label>
+        </div>
     </div>
 
     <div class="grid-x">
+        <div class="numeric-field cell">
+            {{ form.ten_credits }}
+        </div>
+        <div class="numeric-label medium-3 cell">
+            <label for="{{ form.ten_credits.id_for_label }}">
+                {{ form.ten_credits.label }}
+                <span class="errorlist">
+                    {% for error in form.ten_credits.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="grid-x">
+        <div class="numeric-field cell">
+            {{ form.one_hundred_credits }}
+        </div>
+        <div class="numeric-label medium-3 cell">
+            <label for="{{ form.one_hundred_credits.id_for_label }}">
+                {{ form.one_hundred_credits.label }}
+                <span class="errorlist">
+                    {% for error in form.one_hundred_credits.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="grid-x grid-padding-y">
         <div class="medium-5 cell">
             <label for="card-element">
                 Credit or debit card
@@ -32,9 +76,16 @@
         </div>
     </div>
 
+    {% if error_message %}
+        <div class="grid-x grid-padding-y">
+            <div class="errorlist">{{ error_message }}</div>
+        </div>
+    {% endif %}
+
     <div class="grid-x mt-1">
         <div class="medium-5 cell">
             <input type="submit" value="Submit Payment" class="primary-button-2" />
         </div>
     </div>
+
 </form>
