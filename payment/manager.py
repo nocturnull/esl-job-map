@@ -26,13 +26,18 @@ class PaymentManager:
         :param stripe_token:
         :return:
         """
-        d = '{} credit(s) purchase for {}'.format(job_credits, user.email)
+        email = user.email
+        d = '{} credit(s) purchase for {}'.format(job_credits, email)
         # Authorize and place purchase.
         charge = stripe.Charge.create(
             amount=total_price,
             currency='usd',
             source=stripe_token,
-            description=d
+            description=d,
+            receipt_email=email,
+            metadata={
+                'email': email
+            }
         )
 
         with transaction.atomic():

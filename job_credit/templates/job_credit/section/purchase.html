@@ -14,6 +14,7 @@
 
 <form action="{% url 'job_credit' %}" method="post" id="payment-form">
     {% csrf_token %}
+    <p>Quantity</p>
     <div class="grid-x">
         <div class="numeric-field cell">
             {{ form.single_credit }}
@@ -59,6 +60,12 @@
                     {% endfor %}
                 </span>
             </label>
+        </div>
+    </div>
+
+    <div class="grid-x">
+        <div class="medium-5 cell">
+            <span>Total: </span><span id="priceDisplay"></span>
         </div>
     </div>
 

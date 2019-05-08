@@ -10,9 +10,16 @@ class StripeClient {
      * Constructor.
      */
     constructor() {
+        this.cardElementId = '#card-element';
         this.displayError = document.getElementById('card-errors');
         this.form = document.getElementById('payment-form');
-        this.cardElementId = '#card-element';
+        this.singleCredit = document.getElementById('id_single_credit');
+        this.tenCredits = document.getElementById('id_ten_credits');
+        this.oneHundredCredits = document.getElementById('id_one_hundred_credits');
+        this.priceDisplay = document.getElementById('priceDisplay');
+        this.singleCreditPrice = 20;
+        this.tenCreditsPrice = 150;
+        this.oneHundredCreditsPrice = 1000;
     }
 
     /**
@@ -33,8 +40,15 @@ class StripeClient {
             this.elements = this.stripe.elements();
             this.card = this.elements.create('card', {style: StripeClient.getCardStyles()});
             this.card.mount(this.cardElementId);
-            this.card.addEventListener('change', (event) => {this.handleError(event);});
-            this.form.addEventListener('submit', (event) => {this.handleSubmit(event);});
+            // Payment info events.
+            this.card.addEventListener('change', (event) => this.handleError(event));
+            this.form.addEventListener('submit', (event) => this.handleSubmit(event));
+            // Pricing events.
+            this.singleCredit.addEventListener('change', () => this.handleQuantityChange());
+            this.tenCredits.addEventListener('change', () => this.handleQuantityChange());
+            this.oneHundredCredits.addEventListener('change', () => this.handleQuantityChange());
+            // Update display on page load.
+            this.handleQuantityChange();
         }
     }
 
@@ -68,6 +82,22 @@ class StripeClient {
               this.stripeTokenHandler(result.token);
             }
           });
+    }
+
+    /**
+     * Update price display as the user toggles the quantities.
+     */
+    handleQuantityChange() {
+        let singleCredits = parseInt(this.singleCredit.value),
+            tenCredits = parseInt(this.tenCredits.value),
+            oneHundrenCredits = parseInt(this.oneHundredCredits.value);
+
+        let totalCredits = singleCredits + 10 * tenCredits + 100 * oneHundrenCredits;
+        let totalPrice = singleCredits * this.singleCreditPrice +
+            tenCredits * this.tenCreditsPrice +
+            oneHundrenCredits * this.oneHundredCreditsPrice;
+
+        this.priceDisplay.textContent = totalCredits + ' credits for $' + totalPrice;
     }
 
     /**
