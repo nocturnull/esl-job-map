@@ -5,5 +5,5 @@ from django import forms
 
 class CreditPurchaseForm(forms.Form):
     single_credit = forms.IntegerField(label='1 Credit - $20', min_value=0, max_value=1000, initial=0)
-    ten_credits = forms.IntegerField(label='10 Credits - $150', min_value=0, max_value=1000, initial=1)
+    ten_credits = forms.IntegerField(label='10 Credits - $150', min_value=0, max_value=1000, initial=0)
     one_hundred_credits = forms.IntegerField(label='100 Credits - $1000', min_value=0, max_value=1000, initial=0)
