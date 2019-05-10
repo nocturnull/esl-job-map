@@ -1,7 +1,7 @@
 # job_credit/views/index.py
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import TemplateView
+from django.views.generic import ListView
 from django.shortcuts import render
 
 from ..forms.purchase import CreditPurchaseForm
@@ -10,15 +10,18 @@ from ..form_helpers.purchase import PurchaseHelper
 from payment.manager import PaymentManager
 
 
-class Index(LoginRequiredMixin, TemplateView):
+class Index(LoginRequiredMixin, ListView):
     template_name = 'job_credit/index.html'
+
+    def get_queryset(self):
+        return self.request.user.credit_history.order_by('-created_at').all()
 
     def get(self, request, *args, **kwargs):
         tab = request.GET.get('tab', 1)
         return render(request, self.template_name, {
             'tab': int(tab),
             'form': CreditPurchaseForm,
-            'history': request.user.credit_history.all()
+            'history': self.get_queryset()
         })
 
     def post(self, request, *args, **kwargs):
@@ -42,6 +45,6 @@ class Index(LoginRequiredMixin, TemplateView):
         return render(request, self.template_name, {
             'tab': 1,
             'form': form,
-            'history': request.user.credit_history.all(),
+            'history': self.get_queryset(),
             'error_message': error_message
         })

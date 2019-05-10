@@ -25,7 +25,7 @@
             {% if job_post.is_visible %}
                 {% if not job_post.is_expired %}
                     <button class="primary-button-1" onclick="window.location='{{ job_post.edit_link }}'">Edit</button>
-                    <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close</button>
+                    <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close (+{{ job_post.calculate_refund }} credits)</button>
                 {% else %}
                     <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
                 {% endif %}

@@ -1,7 +1,9 @@
 # employment/forms/recruiter.py
 
+from django.db import transaction
 from django import forms
 
+from job_credit.model_generators.history import RecordGenerator
 from employment.models.recruitment import JobPost
 
 from .create import CreateJobForm
@@ -50,7 +52,14 @@ class CloseJobForm(forms.ModelForm):
         :param commit:
         :return:
         """
+        # Update credits and create record.
+        with transaction.atomic():
+            refund_credits = self.instance.calculate_refund()
+            self.instance.site_user.credit_bank.balance += refund_credits
+            self.instance.site_user.credit_bank.save()
+            RecordGenerator.create_refund_record(self.instance.site_user, job_credits=refund_credits)
 
+        # Update job post.
         self.instance.is_visible = False
 
         return super(CloseJobForm, self).save(commit=commit)

@@ -52,6 +52,21 @@ class RecordGenerator:
             amount=job_credits, balance=user.credits)
 
     @classmethod
+    def create_refund_record(cls, user: SiteUser, job_credits: float):
+        """
+        Create a new record for refunds.
+
+        :param user:
+        :param job_credits:
+        :return:
+        """
+        d = 'Refunded {} credit(s)'.format(job_credits)
+        Record.objects.create(
+            site_user=user, description=d, action=Record.ACTION_REFUND,
+            amount=job_credits, balance=user.credits
+        )
+
+    @classmethod
     def _get_existing_daily_record(cls, user: SiteUser, action: str) -> Optional[Record]:
         """
         Search for an existing record for the current day.

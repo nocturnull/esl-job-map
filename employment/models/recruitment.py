@@ -376,6 +376,21 @@ class JobPost(models.Model, Localize):
                         return True
         return False
 
+    def calculate_refund(self):
+        """
+        Determine how much of a refund the recruiter is eligible for.
+
+        :return:
+        """
+        age = (datetime.now() - self.reference_date).total_seconds()
+        # Check to see if they are closing within an hour of posting.
+        if age < 3600:
+            return 1.0
+        else:
+            # Convert to seconds.
+            expiry_period = self.days_valid * 86400
+            return max(round(0.9 - (age / expiry_period), 1), 0)
+
     def __str__(self):
         return '%s %s' % (self.title, self.pretty_employment_type)
 
