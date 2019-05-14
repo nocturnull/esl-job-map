@@ -1,11 +1,9 @@
 # employment/views/recruiter/job_update.py
 
-from datetime import datetime
-
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import UpdateView, DetailView
 from django.utils.decorators import method_decorator
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from django.urls import reverse_lazy
 
 from employment.forms.job_post.update import EditFullTimeJobForm, EditPartTimeJobForm, \
