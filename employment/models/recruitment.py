@@ -183,6 +183,10 @@ class JobPost(models.Model, Localize):
         return reverse('employment_close_job_post', args=[self.id])
 
     @property
+    def delete_link(self):
+        return reverse('employment_delete_job_post', args=[self.id])
+
+    @property
     def repost_link(self):
         return reverse('employment_repost_job_post', args=[self.id])
 
@@ -360,6 +364,14 @@ class JobPost(models.Model, Localize):
             # Recruiters cannot apply to job posts.
             return not user.is_recruiter
         return True
+
+    def can_delete(self) -> bool:
+        """
+        Determine if the recruiter can delete his job post.
+
+        :return:
+        """
+        return self.calculate_refund() == 1.0
 
     def not_interested(self, user) -> bool:
         """

@@ -6,6 +6,7 @@ from .views.job_post.update import EditFullTimeJobPost, EditPartTimeJobPost, \
     CloseJobPost, RepostJob
 from .views.job_post.create import JobPostIndex, CreateFullTimeJobPost, CreatePartTimeJobPost
 from .views.job_post.read import ListJobPost, ListJobApplicants, ViewJobPostApplication
+from .views.job_post.delete import DeleteJobPost
 from .views.job_seeking import ApplyToJobPost, RegistrationAfterApplying, ListApplications
 from .views.job_metadata import DisinterestedJobPostCreate, DisinterestedJobPostDelete
 from .views.map import FullTimeMap, PartTimeMap
@@ -31,6 +32,8 @@ urlpatterns = [
     path('recruiter/job/edit/part-time/<int:pk>', EditPartTimeJobPost.as_view(), name='employment_edit_part_time_job_post'),
     path('recruiter/job/close/<int:pk>', CloseJobPost.as_view(), name='employment_close_job_post'),
     path('recruiter/job/repost/<int:pk>', RepostJob.as_view(), name='employment_repost_job_post'),
+    # Delete
+    path('recruiter/job/delete/<int:pk>', DeleteJobPost.as_view(), name='employment_delete_job_post'),
     # Teacher only pages
     path('teacher/apply/<int:job_post_id>', ApplyToJobPost.as_view(), name='employment_apply_to_job'),
     path('teacher/applications', ListApplications.as_view(), name='employment_applications'),

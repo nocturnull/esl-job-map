@@ -17,8 +17,8 @@ class StripeClient {
         this.tenCredits = document.getElementById('id_ten_credits');
         this.oneHundredCredits = document.getElementById('id_one_hundred_credits');
         this.priceDisplay = document.getElementById('priceDisplay');
-        this.singleCreditPrice = 20;
-        this.tenCreditsPrice = 150;
+        this.singleCreditPrice = 10;
+        this.tenCreditsPrice = 100;
         this.oneHundredCreditsPrice = 1000;
     }
 
