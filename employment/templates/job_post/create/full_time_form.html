@@ -97,8 +97,11 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
-                    {% if additional_error %}
-                        <span class="errorlist">{{ additional_error }}</span>
+                    {% if credits_error %}
+                        <span class="errorlist">{{ credits_error }}</span>
+                        <div>
+                            Proceed to the <a href="{% url 'job_credit' %}?tab=1" class="{% if tab == 1 %} active {% endif %}">purchase page.</a>
+                        </div>
                     {% endif %}
                 </div>
                 <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>

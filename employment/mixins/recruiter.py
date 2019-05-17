@@ -51,7 +51,7 @@ class JobPostWriteMixin:
 
                 return redirect(self.success_url)
             else:
-                context['additional_error'] = 'Error: Insufficient job credits'
+                context['credits_error'] = 'Error: Insufficient job credits'
         return render(request, self.template_name, context=context)
 
     def repost_response(self, request, form, instance):
@@ -83,5 +83,5 @@ class JobPostWriteMixin:
 
                 return redirect(self.success_url)
             else:
-                context['additional_error'] = 'Error: Insufficient job credits'
+                context['credits_error'] = 'Error: Insufficient job credits'
         return render(request, self.template_name, context=context)

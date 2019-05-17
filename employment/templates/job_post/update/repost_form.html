@@ -12,9 +12,12 @@
                 {{ field.errors }}
             {% endfor %}
             <p>Are you sure you want to repost {{ job_post }}? It will be up for {{ job_post.days_valid }} days.</p>
-            {% if additional_error %}
+            {% if credits_error %}
                 <div>
-                    <span class="errorlist">{{ additional_error }}</span>
+                    <span class="errorlist">{{ credits_error }}</span>
+                </div>
+                <div>
+                    Proceed to the <a href="{% url 'job_credit' %}?tab=1" class="{% if tab == 1 %} active {% endif %}">purchase page.</a>
                 </div>
             {% endif %}
             <button type="submit" class="primary-button-2">Confirm</button>
