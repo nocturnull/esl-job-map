@@ -91,6 +91,15 @@ class StripeClient {
         let singleCredits = parseInt(this.singleCredit.value),
             tenCredits = parseInt(this.tenCredits.value),
             oneHundrenCredits = parseInt(this.oneHundredCredits.value);
+        if (Number.isNaN(singleCredits)) {
+            singleCredits = 0;
+        }
+        if (Number.isNaN(tenCredits)) {
+            tenCredits = 0;
+        }
+        if (Number.isNaN(oneHundrenCredits)) {
+            oneHundrenCredits = 0;
+        }
 
         let totalCredits = singleCredits + 10 * tenCredits + 100 * oneHundrenCredits;
         let totalPrice = singleCredits * this.singleCreditPrice +

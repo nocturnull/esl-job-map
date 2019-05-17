@@ -113,6 +113,7 @@ label {
 
     & > a {
         background: nth($brand-disabled, 2);
+        font-size: 1em;
     }
 
     & > a:focus, a[aria-selected='true'] {
