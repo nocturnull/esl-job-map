@@ -86,6 +86,9 @@
                             {% endfor %}
                         </ul>
                     {% endif %}
+                    {% if additional_error %}
+                        <span class="errorlist">{{ additional_error }}</span>
+                    {% endif %}
                 </div>
                 <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>
                 <button type="submit" class="primary-button-2">Post (-1 credit)</button>
