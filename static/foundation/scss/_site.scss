@@ -117,6 +117,7 @@ label {
     }
 
     & > a:focus, a[aria-selected='true'] {
+        font-weight: bold;
         background: white;
     }
 }

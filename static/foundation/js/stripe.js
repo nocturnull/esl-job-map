@@ -17,6 +17,10 @@ class StripeClient {
         this.tenCredits = document.getElementById('id_ten_credits');
         this.oneHundredCredits = document.getElementById('id_one_hundred_credits');
         this.priceDisplay = document.getElementById('priceDisplay');
+        this.finalPriceDisplay = document.getElementById('finalPriceDisplay');
+        this.confirmPurchaseButton = document.getElementById('confirmPurchaseButton');
+        this.$purchaseConfirmModal = $('#purchaseConfirmModal');
+        this.stripeToken = null;
         this.singleCreditPrice = 10;
         this.tenCreditsPrice = 100;
         this.oneHundredCreditsPrice = 1000;
@@ -49,6 +53,8 @@ class StripeClient {
             this.oneHundredCredits.addEventListener('change', () => this.handleQuantityChange());
             // Update display on page load.
             this.handleQuantityChange();
+            // Confirm events.
+            this.confirmPurchaseButton.addEventListener('click', () => this.stripeTokenHandler());
         }
     }
 
@@ -75,11 +81,11 @@ class StripeClient {
 
         this.stripe.createToken(this.card).then((result) => {
             if (result.error) {
-              // Inform the user if there was an error.
-              this.displayError.textContent = result.error.message;
+                // Inform the user if there was an error.
+                this.displayError.textContent = result.error.message;
             } else {
-              // Send the token to your server.
-              this.stripeTokenHandler(result.token);
+                this.stripeToken = result.token;
+                this.showConfirmationPopup();
             }
           });
     }
@@ -106,20 +112,27 @@ class StripeClient {
             tenCredits * this.tenCreditsPrice +
             oneHundrenCredits * this.oneHundredCreditsPrice;
 
-        this.priceDisplay.textContent = totalCredits + ' credits for $' + totalPrice;
+        let priceText = totalCredits + ' credits for $' + totalPrice;
+        this.priceDisplay.textContent = priceText;
+        this.finalPriceDisplay.textContent = 'Purchase ' + priceText + '?'
+    }
+
+    /**
+     * Show the final price in a modal.
+     */
+    showConfirmationPopup() {
+        this.$purchaseConfirmModal.foundation('open');
     }
 
     /**
      * Submit the form with the token ID.
-     *
-     * @param token
      */
-    stripeTokenHandler(token) {
+    stripeTokenHandler() {
         // Insert the token ID into the form so it gets submitted to the server
         let hiddenInput = document.createElement('input');
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'stripeToken');
-        hiddenInput.setAttribute('value', token.id);
+        hiddenInput.setAttribute('value', this.stripeToken.id);
         this.form.appendChild(hiddenInput);
 
         // Submit the form
