@@ -57,7 +57,7 @@ class CloseJobForm(forms.ModelForm):
             refund_credits = self.instance.calculate_refund()
             self.instance.site_user.credit_bank.balance += refund_credits
             self.instance.site_user.credit_bank.save()
-            RecordGenerator.create_refund_record(self.instance.site_user, job_credits=refund_credits)
+            RecordGenerator.track_refund_record(self.instance.site_user, job_credits=refund_credits)
 
         # Update job post.
         self.instance.is_visible = False

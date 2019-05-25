@@ -29,6 +29,6 @@ class DeleteJobPost(LoginRequiredMixin, IsJobPosterMixin, DeleteView):
             refund_credits = job_post.calculate_refund()
             request.user.credit_bank.balance += refund_credits
             request.user.credit_bank.save()
-            RecordGenerator.create_refund_record(request.user, job_credits=refund_credits)
+            RecordGenerator.track_refund_record(request.user, job_credits=refund_credits)
 
         return super(DeleteJobPost, self).delete(request, *args, **kwargs)

@@ -49,4 +49,4 @@ class PaymentManager:
             ChargeGenerator.create(user, charge.id)
 
             # Create credit history purchase record.
-            RecordGenerator.create_purchase_record(user, job_credits)
+            RecordGenerator.track_purchase_record(user, job_credits)

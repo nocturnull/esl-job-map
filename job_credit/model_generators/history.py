@@ -15,7 +15,7 @@ class RecordGenerator:
     """Job Credit Record generator"""
 
     @classmethod
-    def create_or_update_post_record(cls, user: SiteUser, is_full_time: bool):
+    def track_post_record(cls, user: SiteUser, is_full_time: bool):
         """
         Create a new record for a job credits transaction.
         If one exists for today already then update that instead.
@@ -38,7 +38,7 @@ class RecordGenerator:
             existing_record.save()
 
     @classmethod
-    def create_purchase_record(cls, user: SiteUser, job_credits: int):
+    def track_purchase_record(cls, user: SiteUser, job_credits: int):
         """
         Create a new record for purchasing.
 
@@ -46,25 +46,39 @@ class RecordGenerator:
         :param job_credits:
         :return:
         """
-        d = 'Purchased {} credit(s)'.format(job_credits)
-        Record.objects.create(
-            site_user=user, description=d, action=Record.ACTION_PURCHASE,
-            amount=job_credits, balance=user.credits)
+        action = Record.ACTION_PURCHASE
+        existing_record = cls._get_existing_daily_record(user, action)
+        if existing_record is None:
+            Record.objects.create(
+                site_user=user, description='Purchased {} credit(s)'.format(job_credits), action=action,
+                amount=job_credits, balance=user.credits)
+        else:
+            existing_record.amount += job_credits
+            existing_record.balance = user.credits
+            existing_record.description = 'Purchased {} credit(s)'.format(existing_record.amount)
+            existing_record.save()
 
     @classmethod
-    def create_refund_record(cls, user: SiteUser, job_credits: float):
+    def track_refund_record(cls, user: SiteUser, job_credits: float):
         """
-        Create a new record for refunds.
+        Create a or updated a record for refunds.
 
         :param user:
         :param job_credits:
         :return:
         """
-        d = 'Refunded {} credit(s)'.format(job_credits)
-        Record.objects.create(
-            site_user=user, description=d, action=Record.ACTION_REFUND,
-            amount=job_credits, balance=user.credits
-        )
+        action = Record.ACTION_REFUND
+        existing_record = cls._get_existing_daily_record(user, action)
+        if existing_record is None:
+            Record.objects.create(
+                site_user=user, description='Refunded {} credit(s)'.format(job_credits), action=action,
+                amount=job_credits, balance=user.credits
+            )
+        else:
+            existing_record.amount += job_credits
+            existing_record.balance = user.credits
+            existing_record.description = 'Refunded {} credit(s)'.format(existing_record.amount)
+            existing_record.save()
 
     @classmethod
     def _get_existing_daily_record(cls, user: SiteUser, action: str) -> Optional[Record]:

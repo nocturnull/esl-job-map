@@ -21,4 +21,10 @@
     .numeric-label-discount {
         text-decoration: line-through;
     }
+    .positive-delta {
+        color: $brand-safe;
+    }
+    .negative-delta {
+        color: $brand-danger;
+    }
 }

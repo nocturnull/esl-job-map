@@ -13,7 +13,7 @@
                 <tr>
                     <td>{{ record.pretty_date }}</td>
                     <td>{{ record.description }}</td>
-                    <td>{{ record.pretty_delta }}</td>
+                    <td class="{{ record.delta_class }}">{{ record.pretty_delta }}</td>
                     <td>{{ record.balance }}</td>
                 </tr>
             {% endfor %}

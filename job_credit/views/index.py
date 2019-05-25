@@ -14,7 +14,7 @@ class Index(LoginRequiredMixin, ListView):
     template_name = 'job_credit/index.html'
 
     def get_queryset(self):
-        return self.request.user.credit_history.order_by('-created_at').all()
+        return self.request.user.credit_history.order_by('-updated_at').all()
 
     def get(self, request, *args, **kwargs):
         tab = request.GET.get('tab', 1)

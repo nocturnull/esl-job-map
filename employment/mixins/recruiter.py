@@ -47,7 +47,7 @@ class JobPostWriteMixin:
                     # Deduct credits from the users account.
                     user_regulator.consume_post_credits()
                     # Track the changes
-                    RecordGenerator.create_or_update_post_record(user, is_full_time=arrayed_job.is_full_time)
+                    RecordGenerator.track_post_record(user, is_full_time=arrayed_job.is_full_time)
 
                 return redirect(self.success_url)
             else:
@@ -79,7 +79,7 @@ class JobPostWriteMixin:
                     # Deduct credits from the users account.
                     user_regulator.consume_post_credits()
                     # Track the changes
-                    RecordGenerator.create_or_update_post_record(user, is_full_time=arrayed_job.is_full_time)
+                    RecordGenerator.track_post_record(user, is_full_time=arrayed_job.is_full_time)
 
                 return redirect(self.success_url)
             else:
