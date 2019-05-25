@@ -53,11 +53,12 @@ class CloseJobForm(forms.ModelForm):
         :return:
         """
         # Update credits and create record.
-        with transaction.atomic():
-            refund_credits = self.instance.calculate_refund()
-            self.instance.site_user.credit_bank.balance += refund_credits
-            self.instance.site_user.credit_bank.save()
-            RecordGenerator.track_refund_record(self.instance.site_user, job_credits=refund_credits)
+        # TODO: Uncomment on June 8th
+        # with transaction.atomic():
+        #     refund_credits = self.instance.calculate_refund()
+        #     self.instance.site_user.credit_bank.balance += refund_credits
+        #     self.instance.site_user.credit_bank.save()
+        #     RecordGenerator.track_refund_record(self.instance.site_user, job_credits=refund_credits)
 
         # Update job post.
         self.instance.is_visible = False

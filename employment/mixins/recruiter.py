@@ -45,9 +45,10 @@ class JobPostWriteMixin:
                     # Save new job post.
                     arrayed_job.create(is_full_time=is_full_time, user=request.user)
                     # Deduct credits from the users account.
-                    user_regulator.consume_post_credits()
+                    # TODO: Uncomment on June 8th
+                    # user_regulator.consume_post_credits()
                     # Track the changes
-                    RecordGenerator.track_post_record(user, is_full_time=arrayed_job.is_full_time)
+                    # RecordGenerator.track_post_record(user, is_full_time=arrayed_job.is_full_time)
 
                 return redirect(self.success_url)
             else:
