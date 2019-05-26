@@ -1,0 +1,53 @@
+
+{% load job_post %}
+{% load format %}
+
+<div class="flow-card {{ job_post.card_class|safe }}" data-filtertaglist="{{ job_post.tags }}">
+    <h5>
+        <img src="{% resolve_koco_image job_post %}" alt="kocoman">
+        <span>{{ job_post.title }}</span>
+    </h5>
+    <div class="flow-card-content">
+        <div><span class="bold-text">Class Type:</span> {% trunc 'Class Type:' job_post.class_type %}</div>
+        <div><span class="bold-text">Schedule:</span> {% trunc 'Schedule:' job_post.schedule %}</div>
+        {% if job_post.is_full_time %}
+            <div><span class="bold-text">Salary:</span> {% trunc 'Salary:' job_post.salary %}</div>
+            <div><span class="bold-text">Benefits:</span> {% trunc 'Benefits:' job_post.benefits %}</div>
+        {% else %}
+            <div><span class="bold-text">Pay Rate:</span> {% trunc 'Pay Rate:' job_post.pay_rate %}</div>
+        {% endif %}
+        <div><span class="bold-text">Other Requirements:</span> {% trunc 'Other Requirements:' job_post.other_requirements %}</div>
+        <div><span class="bold-text">Address:</span> {% trunc 'Address:' job_post.address %}</div>
+        <div><span class="bold-text">Status:</span> {{ job_post.pretty_status }}</div>
+    </div>
+    <div class="flow-card-footer">
+        <div>
+            {% if job_post.is_visible %}
+                {% if not job_post.is_expired %}
+                    <button class="primary-button-1" onclick="window.location='{{ job_post.edit_link }}'">Edit</button>
+{#                    {% if job_post.can_delete %}#}
+{#                        <button class="primary-button-1" onclick="window.location='{{ job_post.delete_link }}'">Delete (+{{ job_post.calculate_refund }} credits)</button>#}
+{#                    {% else %}#}
+{#                        <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close (+{{ job_post.calculate_refund }} credits)</button>#}
+                        <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close</button>
+{#                    {% endif %}#}
+                {% else %}
+{#                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>#}
+                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost</button>
+                {% endif %}
+            {% else %}
+{#                <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>#}
+                <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost</button>
+            {% endif %}
+        </div>
+        {% with applicants=job_post|applicant_count:request.user %}
+            <div class="cell medium-1">
+                {% if applicants > 0 %}
+                    <a href="{{ job_post.applicants_link }}">Applicants: {{ applicants }}</a>
+                {% else %}
+                    No applicants
+                {% endif %}
+            </div>
+        {% endwith %}
+    </div>
+</div>

@@ -1,0 +1,70 @@
+{% load remote %}
+{% load nav %}
+
+<div class="top-bar top-site-nav">
+    <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+            <li class="logo-item">
+                <a href="{% url 'home' %}">
+                    <img class="ejm-logo" src="{% cdn_image 'logo.png' %}" alt="ESL Job Map logo">
+                </a>
+            </li>
+            {% if user.is_authenticated and user.is_recruiter %}
+                <li>
+                    <a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">My Jobs</a>
+                </li>
+            {% elif user.is_teacher %}
+                <li><a href="{% url 'employment_applications' %}" class="{% menu_class request 'employment_applications' %}">My Applications</a></li>
+            {% endif %}
+            <li>
+                <a href="{% map_url user 'employment_full_time_map' %}" class="{% menu_class request 'employment_full_time_map' %}">
+                    {% full_time_label request.user %}
+                </a>
+                <ul class="submenu menu vertical" data-submenu>
+                    <li><a href="{% map_url user 'employment_full_time_map_city' 'seoul' %}" class="{% menu_class request 'employment_full_time_map_city' 'seoul' %}">Seoul</a></li>
+                    <li><a href="{% map_url user 'employment_full_time_map_city' 'busan' %}" class="{% menu_class request 'employment_full_time_map_city' 'busan' %}">Busan</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% map_url user 'employment_part_time_map' %}" class="{% menu_class request 'employment_part_time_map' %}">
+                    {% part_time_label request.user %}
+                </a>
+                <ul class="submenu menu vertical" data-submenu>
+                    <li><a href="{% map_url user 'employment_part_time_map_city' 'seoul' %}" class="{% menu_class request 'employment_part_time_map_city' 'seoul' %}">Seoul</a></li>
+                    <li><a href="{% map_url user 'employment_part_time_map_city' 'busan' %}" class="{% menu_class request 'employment_part_time_map_city' 'busan' %}">Busan</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="{% url 'about' %}" class="{% menu_class request 'about' %}">About</a>
+                <ul class="submenu menu vertical" data-submenu>
+                    <li><a href="{% url 'about_applying' %}" class="{% menu_class request 'about_applying' %}">Applying for Jobs</a></li>
+                    <li><a href="{% url 'about_visa' %}" class="{% menu_class request 'about_visa' %}">Visa & Job Type</a></li>
+                </ul>
+            </li>
+            {% include 'modules/job-credit-nav.html' %}
+        </ul>
+    </div>
+
+    <div class="top-bar-right">
+        <ul class="dropdown menu" data-dropdown-menu>
+            {% if user.is_authenticated %}
+                <li>
+                    <p class="mt-1">{{ user.username }}</p>
+                </li>
+                <li>
+                    <a href="{% url 'account_profile' %}" class="{% menu_class request 'account_profile' %}">Profile</a>
+                </li>
+                <li>
+                    <a href="{% url 'logout' %}">Logout</a>
+                </li>
+            {% else %}
+                <li>
+                    <a href="{% url 'login' %}">Login</a>
+                </li>
+                <li>
+                    <a href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+</div>

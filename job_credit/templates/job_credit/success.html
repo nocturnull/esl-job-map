@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="grid-container">
+        <h3>Job Credits Purchase Successfully Placed</h3>
+        <div>Thank you for your order! Your purchase of {{ job_credits }} job credits has been added to your account.</div>
+        <div>An invoice receipt for your purchase has been sent to your email.</div>
+        <div>To see your job credit history click <a href="{% url 'job_credit' %}?tab=2">here.</a></div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+# employment/settings.py
+
+# Google maps data
+CITY_SEOUL = 'seoul'
+CITY_BUSAN = 'busan'
+
+# Job Post data
+FULL_TIME_JOB_DAYS_VALID = 30
+PART_TIME_JOB_DAYS_VALID = 15
+
+LAT_OFFSET = 0.0002638037529531327
+LNG_OFFSET = 0.0002771615982055664

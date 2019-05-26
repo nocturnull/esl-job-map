@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="grid-container">
+
+        <h3>Confirm Job Repost</h3>
+        <form method="post">
+            {% csrf_token %}
+            {% for field in form %}
+                <input type="hidden" name="{{ field.html_name }}" value="1">
+                {{ field.errors }}
+            {% endfor %}
+            <p>Are you sure you want to repost {{ job_post }}? It will be up for {{ job_post.days_valid }} days.</p>
+            {% if credits_error %}
+                <div>
+                    <span class="errorlist">{{ credits_error }}</span>
+                </div>
+                <div>
+                    Proceed to the <a href="{% url 'job_credit' %}?tab=1" class="{% if tab == 1 %} active {% endif %}">purchase page.</a>
+                </div>
+            {% endif %}
+            <button type="submit" class="primary-button-2">Confirm</button>
+        </form>
+
+    </div>
+
+{% endblock %}

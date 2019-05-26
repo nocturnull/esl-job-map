@@ -1,0 +1,121 @@
+<p>
+    Starting June 8th, 2019, ESL Job Map will require Job Posting Credits to post jobs. Each job posted from that day forward will cost 1 job posting credit to post.
+    Full-time jobs will stay up for 30 days and part-time jobs will stay up for 15 days. If you close a job early, you will get a partial credit refund on that job of 0.1-0.9 credits.
+    <br/>
+    <br/>
+    2019년 6월 8일부터, ESL Job Map 포스팅을 하실 때 잡포스팅 크레딧이 필요합니다. 포스팅 당 1 크레딧이 소요됩니다. 6월 8일까지 할인된 가격으로 크레딧을 구매해보세요.
+    풀타임 일자리는 30일 동안 게시되고 파트타임 일자리는 15일 동안 게시됩니다. 만료 기간 전에 포스팅을 내리면 기간에 따라 0.1-0.9 크레딧을 환불 받으실 수 있습니다.
+</p>
+<br/>
+<h4 class="checkout-title">Checkout</h4>
+
+<form action="{% url 'job_credit' %}" method="post" id="payment-form">
+    {% csrf_token %}
+    <p>Quantity</p>
+    <div class="grid-x">
+        <div class="numeric-field cell">
+            {{ form.single_credit }}
+        </div>
+        <div class="numeric-label medium-5 cell">
+            <label for="{{ form.single_credit.id_for_label }}">
+                {{ form.single_credit.label }}
+                <span>-</span>
+                <span class="numeric-label-discount">$20</span>
+                <span>$10 (until June 8th)</span>
+                <span class="errorlist">
+                    {% for error in form.single_credit.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="grid-x">
+        <div class="numeric-field cell">
+            {{ form.ten_credits }}
+        </div>
+        <div class="numeric-label medium-5 cell">
+            <label for="{{ form.ten_credits.id_for_label }}">
+                {{ form.ten_credits.label }}
+                <span>-</span>
+                <span class="numeric-label-discount">$160</span>
+                <span>$100 (until June 8th)</span>
+                <span class="errorlist">
+                    {% for error in form.ten_credits.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="grid-x">
+        <div class="numeric-field cell">
+            {{ form.one_hundred_credits }}
+        </div>
+        <div class="numeric-label medium-5 cell">
+            <label for="{{ form.one_hundred_credits.id_for_label }}">
+                {{ form.one_hundred_credits.label }}
+                <span>-</span>
+                <span class="numeric-label-discount">$1200</span>
+                <span>$1000 (until June 8th)</span>
+                <span class="errorlist">
+                    {% for error in form.one_hundred_credits.errors %}
+                        {{ error }}
+                    {% endfor %}
+                </span>
+            </label>
+        </div>
+    </div>
+
+    <div class="grid-x">
+        <p>
+            If you have any questions or concerns, please send us an email at <a href="#">steven@esljobmap.com</a>
+            <br/>
+            문의사항이 있으시면 <a href="#">youngeun@esljobmap.com</a> 로 이메일 주시기 바랍니다.
+        </p>
+    </div>
+
+    <div class="grid-x">
+        <div class="medium-10 cell price-info">
+            <span>Total: </span><span id="priceDisplay"></span>
+        </div>
+    </div>
+
+    <div class="grid-x grid-padding-y">
+        <div class="medium-5 cell">
+            <label for="card-element">
+                Credit or debit card
+            </label>
+            <div id="card-element">
+                <!-- A Stripe Element will be inserted here. -->
+            </div>
+
+            <!-- Used to display form errors. -->
+            <div id="card-errors" class="errorlist"></div>
+        </div>
+    </div>
+
+    {% if error_message %}
+        <div class="grid-x grid-padding-y">
+            <div class="errorlist">{{ error_message }}</div>
+        </div>
+    {% endif %}
+
+    <div class="grid-x mt-1">
+        <p>
+            By clicking "Purchase" you agree to abide by our
+            <a href="{% url 'about_terms_and_conditions' %}" target="_blank">Terms and Conditions </a> and
+            <a href="{% url 'about_privacy_policy' %}" target="_blank">Privacy Policy</a>.
+        </p>
+    </div>
+
+    <div class="grid-x mt-1">
+        <div class="medium-5 cell">
+            <button type="submit" class="primary-button-2">Purchase</button>
+        </div>
+    </div>
+
+    {% include 'job_credit/module/confirmation.html' %}
+</form>
