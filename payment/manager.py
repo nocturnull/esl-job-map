@@ -8,8 +8,9 @@ from account.models.user import SiteUser
 from .model_generators.charge import ChargeGenerator
 
 import stripe
+from .settings import STRIPE_SECRET_KEY
 
-stripe.api_key = 'sk_test_TzT4TCtBdG3u6yhx7tbCUpFZ00NQFlq0re'
+stripe.api_key = STRIPE_SECRET_KEY
 
 
 class PaymentManager:

@@ -27,5 +27,6 @@
 {% endblock %}
 
 {% block prejavascript %}
+    <script>window.stripePublishableKey = '{{ publishable_key }}';</script>
     <script src="https://js.stripe.com/v3/"></script>
 {% endblock %}

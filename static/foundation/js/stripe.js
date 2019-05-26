@@ -40,7 +40,7 @@ class StripeClient {
      */
     init() {
         if (this.isValid()) {
-            this.stripe = Stripe('pk_test_36YQBZswfmKeguRO3sfdkoq800KormGnyj');
+            this.stripe = Stripe(window.stripePublishableKey);
             this.elements = this.stripe.elements();
             this.card = this.elements.create('card', {style: StripeClient.getCardStyles()});
             this.card.mount(this.cardElementId);

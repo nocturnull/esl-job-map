@@ -8,6 +8,7 @@ from ..forms.purchase import CreditPurchaseForm
 from ..form_helpers.purchase import PurchaseHelper
 
 from payment.manager import PaymentManager
+from payment.settings import STRIPE_PUBLISHABLE_KEY
 
 
 class Index(LoginRequiredMixin, ListView):
@@ -19,6 +20,7 @@ class Index(LoginRequiredMixin, ListView):
     def get(self, request, *args, **kwargs):
         tab = request.GET.get('tab', 1)
         return render(request, self.template_name, {
+            'publishable_key': STRIPE_PUBLISHABLE_KEY,
             'tab': int(tab),
             'form': CreditPurchaseForm,
             'history': self.get_queryset()
@@ -43,6 +45,7 @@ class Index(LoginRequiredMixin, ListView):
                 error_message = 'Please specify a desired quantity.'
 
         return render(request, self.template_name, {
+            'publishable_key': STRIPE_PUBLISHABLE_KEY,
             'tab': 1,
             'form': form,
             'history': self.get_queryset(),
