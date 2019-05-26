@@ -1,0 +1,113 @@
+<div class="grid-container">
+
+    <h4>{{ form_title }}</h4>
+
+    <div class="grid-x grid-margin-x mt-1">
+        <div class="medium-10 cell">
+            {% if not is_edit %}
+                <form action="#" id="addressSearchForm">
+                    <label>
+                        Job location: Click on the map or type a location below
+                        <input type="text" name="address" id="mapAddressInput" placeholder="Type a Location and click Search">
+                    </label>
+                    <div id="addressSearchError" class="no-show callout alert">Invalid address.</div>
+                    <button type="submit" class="primary-button-2">Search</button>
+                </form>
+            {% endif %}
+
+            {% if is_edit %}
+                <a href="{% url 'employment_my_job_posts' %}">Back</a>
+            {% endif %}
+
+            <form method="post" novalidate id="jobPostForm" action="{{ post_url }}" class="submit-job-form">
+                {% csrf_token %}
+                <div id="generalJobFields">
+                    {{ form.non_field_errors }}
+                    <div>
+                        <label for="{{ form.title.id_for_label }}">
+                            {{ form.title.label }}
+                            <span class="errorlist">
+                                {% for error in form.title.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.title }}
+                    </div>
+                    <div>
+                        <label for="{{ form.class_type.id_for_label }}">
+                            {{ form.class_type.label }}
+                            <span class="errorlist">
+                                {% for error in form.class_type.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.class_type }}
+                    </div>
+                    <div>
+                        <label for="{{ form.schedule.id_for_label }}">
+                            {{ form.schedule.label }}
+                            <span class="errorlist">
+                                {% for error in form.schedule.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.schedule }}
+                    </div>
+                    <div>
+                        <label for="{{ form.other_requirements.id_for_label }}">
+                            {{ form.other_requirements.label }}
+                            <span class="errorlist">
+                                {% for error in form.other_requirements.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.other_requirements }}
+                    </div>
+                    <div>
+                        <label for="{{ form.salary.id_for_label }}">
+                            {{ form.salary.label }}
+                            <span class="errorlist">
+                                {% for error in form.salary.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.salary }}
+                    </div>
+                    <div>
+                        <label for="{{ form.benefits.id_for_label }}">
+                            {{ form.benefits.label }}
+                            <span class="errorlist">
+                                {% for error in form.benefits.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </span>
+                        </label>
+                        {{ form.benefits }}
+                    </div>
+                    {% if form.errors %}
+                        <span class="errorlist">Please correct the following errors to proceed.</span>
+                        <ul>
+                            {% for e in form.errors %}
+                                <li class="errorlist">{{ e }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                    {% if credits_error %}
+                        <span class="errorlist">{{ credits_error }}</span>
+                        <div>
+                            Proceed to the <a href="{% url 'job_credit' %}?tab=1" class="{% if tab == 1 %} active {% endif %}">purchase page.</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div id="postJobLocationError" class="no-show callout alert">Please select a location on the map.</div>
+{#                <button type="submit" class="primary-button-2">Post (-1 credit)</button>#}
+                <button type="submit" class="primary-button-2">Post</button>
+            </form>
+        </div>
+    </div>
+</div>

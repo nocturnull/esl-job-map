@@ -1,0 +1,30 @@
+// ==========================================================================
+// Purchase
+// ==========================================================================
+
+.purchase {
+    .checkout-title {
+        font-weight: bold;
+        font-size: 2.5em;
+    }
+    .price-info {
+        font-weight: bold;
+        font-size: 2.5em;
+    }
+    .numeric-field {
+        width: 4em;
+        margin-right: 0.5em;
+    }
+    .numeric-label {
+        padding-top: 5px;
+    }
+    .numeric-label-discount {
+        text-decoration: line-through;
+    }
+    .positive-delta {
+        color: $brand-safe;
+    }
+    .negative-delta {
+        color: $brand-danger;
+    }
+}
