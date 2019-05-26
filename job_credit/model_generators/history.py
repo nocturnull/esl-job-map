@@ -71,13 +71,13 @@ class RecordGenerator:
         existing_record = cls._get_existing_daily_record(user, action)
         if existing_record is None:
             Record.objects.create(
-                site_user=user, description='Refunded {} credit(s)'.format(job_credits), action=action,
+                site_user=user, description='Refunded {:.1f} credit(s)'.format(job_credits), action=action,
                 amount=job_credits, balance=user.credits
             )
         else:
             existing_record.amount += job_credits
             existing_record.balance = user.credits
-            existing_record.description = 'Refunded {} credit(s)'.format(existing_record.amount)
+            existing_record.description = 'Refunded {:.1f} credit(s)'.format(existing_record.amount)
             existing_record.save()
 
     @classmethod
