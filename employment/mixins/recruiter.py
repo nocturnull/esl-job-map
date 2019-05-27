@@ -78,9 +78,9 @@ class JobPostWriteMixin:
                     # Save job post.
                     arrayed_job.repost()
                     # Deduct credits from the users account.
-                    user_regulator.consume_post_credits()
+                    # user_regulator.consume_post_credits()
                     # Track the changes
-                    RecordGenerator.track_post_record(user, is_full_time=arrayed_job.is_full_time)
+                    # RecordGenerator.track_post_record(user, is_full_time=arrayed_job.is_full_time)
 
                 return redirect(self.success_url)
             else:
