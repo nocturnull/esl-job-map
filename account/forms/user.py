@@ -25,3 +25,10 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = SiteUser
         fields = ('name', 'phone_number', 'opted_out_of_emails')
+
+
+class AdminLoginForm(forms.Form):
+    email = forms.EmailField(label='Account Email')
+
+    class Meta:
+        fields = ('email',)
