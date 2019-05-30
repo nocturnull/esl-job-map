@@ -6,12 +6,13 @@ from django.urls import path, reverse_lazy
 from .views.recruiter import RecruiterRegister, EditRecruiterProfile, OptOutExpiredPostNotifications
 from .views.applicant import ApplicantRegister, EditApplicantProfile
 from .views.profile import ResolveProfile, DeleteProfile
+from .views.login import SiteUserLogin, AdminUserLogin
 from .views.password import ChangePassword
-from .views.login import SiteUserLogin
 from .views.register import Register
 
 urlpatterns = [
     path('login/', SiteUserLogin.as_view(), name='login'),
+    path('soomda/', AdminUserLogin.as_view(), name='soomda'),
 
     path('register/', Register.as_view(), name='register'),
     # /signup redirect to /register
