@@ -15,4 +15,4 @@ def cdn_image(path, secure=True):
             host = AWS_SECURE_CDN_BASE_LINK
         else:
             host = AWS_STANDARD_CDN_BASE_LINK
-    return host + 'static/images/' + path
+    return host + 'assets/images/' + path

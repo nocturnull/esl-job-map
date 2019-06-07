@@ -9,3 +9,4 @@ __pycache__
 !.elasticbeanstalk/*.global.yml
 requests.md
 *.sql
+assets/*

@@ -118,6 +118,7 @@ python manage.py runserver
 ```bash
 cd ~/WebApps/esl-job-map/esljobmap/static/foundation
 foundation watch
+python manage.py collectstatic --clear -i foundation/js/* -i foundation/scss/* -i foundation/node_modules/* --noinput
 ```
 
 ## Coding Style Guide
@@ -140,7 +141,7 @@ TODO
 
 ## Authors
 * Steven Wilson - CEO
-* Marcos Daniel Arroyo - Software Developer and Architect
+* Marcos Daniel Arroyo - CTO
 
 ## License
 Copyright (C) ESL Job Map - All Rights Reserved Unauthorized copying of this file, via any medium is strictly prohibited Proprietary and confidential

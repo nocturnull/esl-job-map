@@ -120,7 +120,7 @@ class JobMapSetup {
      */
     cdnImg(path)
     {
-        return '/static/images/' + path
+        return '/assets/images/' + path
     }
 
     /**

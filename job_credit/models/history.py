@@ -4,8 +4,10 @@ from django.db import models
 
 from account.models import SiteUser
 
+from esljobmap.model_attributes.localize import Localize
 
-class Record(models.Model):
+
+class Record(models.Model, Localize):
     ACTION_PURCHASE = 'purchase'
     ACTION_CONSUME = 'consume'
     ACTION_REFUND = 'refund'
