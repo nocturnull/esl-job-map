@@ -21,9 +21,7 @@ class UserTransformer:
 
         :return:
         """
-        # TODO: Uncomment on June 8th
-        # return self.instance.credits >= JOB_CREDIT_POST_EXPENSE
-        return True
+        return self.instance.credits >= JOB_CREDIT_POST_EXPENSE
 
     def consume_post_credits(self):
         """
