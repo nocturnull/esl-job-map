@@ -9,7 +9,7 @@ from account.models.user import SiteUser
 
 
 class CreditRecordAdmin(admin.ModelAdmin):
-    list_display = ['site_user', 'created_at', 'action', 'amount', 'description']
+    list_display = ['site_user', 'local_created_at', 'action', 'amount', 'description']
     form = CreditRecordCreationForm
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
