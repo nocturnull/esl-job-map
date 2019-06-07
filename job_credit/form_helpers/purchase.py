@@ -57,7 +57,7 @@ class PurchaseHelper:
 
         :return:
         """
-        price_1 = HALF_PRICE * self.single_credits
-        price_10 = HALF_PRICE * self.ten_credits
-        price_100 = HALF_PRICE * self.one_hundred_credits
+        price_1 = STANDARD_PRICE * self.single_credits
+        price_10 = DISCOUNTED_PRICE_1 * self.ten_credits
+        price_100 = DISCOUNTED_PRICE_2 * self.one_hundred_credits
         return 100 * (price_1 + price_10 + price_100)
