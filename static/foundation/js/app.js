@@ -3,14 +3,18 @@ $(document).foundation();
 import JobMapSetup from './jobMap.js';
 import ListFilter from './listFilter.js';
 import StripeClient from './stripe.js';
+import Applicant from './applicant.js';
+
 
 
 $(document).ready(function() {
     let lfilter = new ListFilter(),
-        stripe = new StripeClient();
+        stripe = new StripeClient(),
+        applicant = new Applicant();
 
     lfilter.init();
     stripe.init();
+    applicant.init();
 });
 
 function initMap() {
