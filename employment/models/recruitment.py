@@ -152,6 +152,22 @@ class JobPost(models.Model, Localize):
         return True if self.reposted_at is not None else False
 
     @property
+    def repost_state(self) -> str:
+        if self.was_reposted:
+            return 'Reposted'
+        return '-'
+
+    @property
+    def status(self) -> str:
+        if not self.is_visible:
+            return 'Taken down'
+        if self.is_expired:
+            return 'Expired'
+        if self.is_recruiter_banned:
+            return 'Recruiter banned'
+        return '-'
+
+    @property
     def pretty_status(self) -> str:
         """
         Display the amount of days until the job expires in a neat format.

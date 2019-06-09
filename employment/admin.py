@@ -59,8 +59,8 @@ class ApplicantsFilter(admin.SimpleListFilter):
 
 
 class JobPostAdmin(admin.ModelAdmin):
-    list_display = ['title', 'last_posted_date', 'site_user_email', 'job_type', 'isvisible',
-                    'was_reposted', 'applicant_count']
+    list_display = ['title', 'last_posted_date', 'site_user_email', 'job_type', 'status',
+                    'repost_state', 'applicant_count']
     list_filter = (CreateDateListFilter, )
     ordering = ['-posted_at']
     form = AdminEditJobForm
