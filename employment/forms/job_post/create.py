@@ -17,7 +17,7 @@ class CreateJobForm(forms.ModelForm):
 
 class CreateFullTimeJobForm(CreateJobForm):
     salary = forms.CharField(label='Salary',
-                             widget=forms.TextInput(attrs={'placeholder': 'Ex) Negotiable'}))
+                             widget=forms.TextInput(attrs={'placeholder': 'Ex) 2.5~2.8 million won'}))
     benefits = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'Ex) Accommodation provided'}),
                                required=False,
                                empty_value='')
