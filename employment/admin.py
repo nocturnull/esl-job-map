@@ -2,6 +2,7 @@
 
 from datetime import date
 
+from django.db.models import Q
 from django.contrib import admin
 
 from .models import JobPost, JobApplication
@@ -53,7 +54,7 @@ class ApplicantsFilter(admin.SimpleListFilter):
 
     def queryset(self, request, queryset):
         if self.value() == 'regular':
-            return queryset.filter(site_user__is_banned=False)
+            return queryset.filter(Q(site_user__is_banned=False) | Q(site_user__isnull=True))
         if self.value() == 'filtered':
             return queryset.filter(site_user__is_banned=True)
 
