@@ -32,7 +32,7 @@ class StripeClient {
      * @returns {boolean}
      */
     isValid() {
-        return this.form.length > 0;
+        return this.form != null;
     }
 
     /**

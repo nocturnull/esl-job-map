@@ -11,7 +11,7 @@
         {% include 'modules/meta.html' %}
         <link rel="shortcut icon" type="image/png" href="{% cdn_image 'favicon.png' %}"/>
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-        <link rel="stylesheet" href="{% static 'foundation/dist/app.min.css' %}?v=1558839016">
+        <link rel="stylesheet" href="{% static 'foundation/dist/app.min.css' %}?v=1560058638">
     </head>
     <body class="{{ request.path|classify }}">
         {% if request.user_agent.is_mobile %}
@@ -34,7 +34,7 @@
         {% block prejavascript %}{% endblock %}
         <script src="{% static 'foundation/dist/detectIE.js' %}?v=1548426052"></script>
         <script src="{% static 'foundation/dist/vendor.min.js' %}"></script>
-        <script src="{% static 'foundation/dist/app.min.js' %}?v=1559922680"></script>
+        <script src="{% static 'foundation/dist/app.min.js' %}?v=1560058638"></script>
         {% block postjavascript %}{% endblock %}
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIb-e5iuCYq2IQyKEuLC0665TrAvHE1zo&callback=initMap" async defer></script>
     </body>
