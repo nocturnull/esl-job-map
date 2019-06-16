@@ -31,10 +31,18 @@
                         <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close (+{{ job_post.calculate_refund }} credits)</button>
                     {% endif %}
                 {% else %}
-                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
+                    {% if job_post.was_reposted %}
+                        <span class="text-disabled">Reposted</span>
+                    {% else %}
+                        <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
+                    {% endif %}
                 {% endif %}
             {% else %}
-                <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
+                {% if job_post.was_reposted %}
+                    <span class="text-disabled">Reposted</span>
+                {% else %}
+                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
+                {% endif %}
             {% endif %}
         </div>
         {% with applicants=job_post|applicant_count:request.user %}
