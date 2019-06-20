@@ -31,15 +31,15 @@
                         <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close (+{{ job_post.calculate_refund }} credits)</button>
                     {% endif %}
                 {% else %}
-                    {% if job_post.was_reposted %}
-                        <span class="text-disabled">Reposted</span>
+                    {% if job_post.was_cloned %}
+                        <button class="disabled-button">Reposted</button>
                     {% else %}
                         <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
                     {% endif %}
                 {% endif %}
             {% else %}
-                {% if job_post.was_reposted %}
-                    <span class="text-disabled">Reposted</span>
+                {% if job_post.was_cloned %}
+                    <button class="disabled-button">Reposted</button>
                 {% else %}
                     <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
                 {% endif %}

@@ -187,7 +187,10 @@ class JobPost(models.Model, Localize):
     @property
     def pretty_days_elapsed(self) -> str:
         days = (datetime.today() - self.reference_date).days
-        return 'Posted: {0} day(s) ago'.format(days)
+        if self.was_reposted:
+            return 'Reposted: {0} day(s) ago'.format(days)
+        else:
+            return 'Posted: {0} day(s) ago'.format(days)
 
     @property
     def reference_date(self) -> datetime:

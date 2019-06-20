@@ -41,6 +41,7 @@
     background-color: nth($brand-disabled, 1);
 
     &:hover {
-        background-color: darken(nth($brand-disabled, 1), 15%);
+        background-color: nth($brand-disabled, 1);
+        color: nth($brand-disabled, 2);
     }
 }
