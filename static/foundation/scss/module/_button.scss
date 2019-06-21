@@ -37,11 +37,12 @@
 .disabled-button {
     @extend .primary-button-1;
     border: none;
-    color: nth($brand-disabled, 2);
+    color: white;
     background-color: nth($brand-disabled, 1);
 
     &:hover {
-        background-color: nth($brand-disabled, 1);
-        color: nth($brand-disabled, 2);
+        background-color: nth($brand-disabled, 2);
+        color: nth($brand-disabled, 3);
+        cursor: not-allowed;
     }
 }
