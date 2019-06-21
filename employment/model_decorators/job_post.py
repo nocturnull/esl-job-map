@@ -72,6 +72,12 @@ class ArrayedJobPost:
 
         :return:
         """
+        # Update current job
+        self.instance.was_cloned = True
+        self.instance.save()
+
+        # Make clone of job that acts as repost
+        self.instance.pk = None
         self.instance.reposted_at = datetime.now()
         self.instance.posted_at = self.instance.reposted_at
         self.instance.expiry_notice_sent = False

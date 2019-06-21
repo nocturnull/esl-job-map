@@ -13,3 +13,7 @@
 .koco-error {
     color: red;
 }
+
+.text-disabled {
+    color: nth($brand-disabled, 1);
+}

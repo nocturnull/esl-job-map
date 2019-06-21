@@ -28,6 +28,7 @@ class JobPost(models.Model, Localize):
     created_at = models.DateTimeField(auto_now_add=True)
     posted_at = models.DateTimeField(blank=True, default=None, null=True)
     reposted_at = models.DateTimeField(blank=True, default=None, null=True)
+    was_cloned = models.BooleanField(blank=True, default=False)
     created_at_override = models.DateTimeField(blank=True, default=None, null=True)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
@@ -176,13 +177,20 @@ class JobPost(models.Model, Localize):
         """
         if self.is_visible and not self.is_expired:
             days = (datetime.today() - self.reference_date).days
-            return 'Posted {0} day(s) ago'.format(days)
+            if self.was_reposted:
+                return 'Reposted {0} day(s) ago'.format(days)
+            else:
+                return 'Posted {0} day(s) ago'.format(days)
+
         return 'Job closed'
 
     @property
     def pretty_days_elapsed(self) -> str:
         days = (datetime.today() - self.reference_date).days
-        return 'Posted: {0} day(s) ago'.format(days)
+        if self.was_reposted:
+            return 'Reposted: {0} day(s) ago'.format(days)
+        else:
+            return 'Posted: {0} day(s) ago'.format(days)
 
     @property
     def reference_date(self) -> datetime:
