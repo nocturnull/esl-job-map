@@ -3,7 +3,7 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 
-from ..models import SiteUser
+from ..models import SiteUser, AutofillOptions
 
 
 class RecruiterCreationForm(UserCreationForm):
@@ -31,3 +31,10 @@ class RecruiterUpdateForm(forms.ModelForm):
     class Meta:
         model = SiteUser
         fields = ('name', 'phone_number', 'opted_out_of_expired_job_emails', 'opted_out_of_emails')
+
+
+class AutofillOptionsForm(forms.ModelForm):
+
+    class Meta:
+        model = AutofillOptions
+        fields = ('class_type', 'schedule', 'other_requirements', 'pay_rate', 'salary', 'benefits')

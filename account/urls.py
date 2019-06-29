@@ -3,7 +3,8 @@
 from django.views.generic import RedirectView
 from django.urls import path, reverse_lazy
 
-from .views.recruiter import RecruiterRegister, EditRecruiterProfile, OptOutExpiredPostNotifications
+from .views.recruiter import RecruiterRegister, RecruiterProfile, \
+    EditRecruiterProfile, OptOutExpiredPostNotifications, EditAutofillOptions
 from .views.applicant import ApplicantRegister, EditApplicantProfile
 from .views.profile import ResolveProfile, DeleteProfile
 from .views.login import SiteUserLogin, AdminUserLogin
@@ -30,7 +31,9 @@ urlpatterns = [
 
     path('profile', ResolveProfile.as_view(), name='account_profile'),
     path('profile/applicant', EditApplicantProfile.as_view(), name='applicant_profile_edit'),
-    path('profile/recruiter', EditRecruiterProfile.as_view(), name='recruiter_profile_edit'),
+    path('profile/recruiter', RecruiterProfile.as_view(), name='recruiter_profile'),
+    path('profile/recruiter/edit', EditRecruiterProfile.as_view(), name='recruiter_profile_edit'),
+    path('profile/recruiter/autofill-options', EditAutofillOptions.as_view(), name='recruiter_autofill_options'),
     path('profile/recruiter/opt-out-expired-notification', OptOutExpiredPostNotifications.as_view(), name='recruiter_opt_out_expired_notif'),
     path('profile/delete', DeleteProfile.as_view(), name='account_profile_delete'),
     path('profile/change-password', ChangePassword.as_view(), name='account_change_password')
