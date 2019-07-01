@@ -15,15 +15,15 @@ class StripeClient {
         this.form = document.getElementById('payment-form');
         this.singleCredit = document.getElementById('id_single_credit');
         this.tenCredits = document.getElementById('id_ten_credits');
-        this.oneHundredCredits = document.getElementById('id_one_hundred_credits');
+        this.fiftyCredits = document.getElementById('id_fifty_credits');
         this.priceDisplay = document.getElementById('priceDisplay');
         this.finalPriceDisplay = document.getElementById('finalPriceDisplay');
         this.confirmPurchaseButton = document.getElementById('confirmPurchaseButton');
         this.$purchaseConfirmModal = $('#purchaseConfirmModal');
         this.stripeToken = null;
-        this.singleCreditPrice = 20;
-        this.tenCreditsPrice = 160;
-        this.oneHundredCreditsPrice = 1200;
+        this.singleCreditPrice = 10;
+        this.tenCreditsPrice = 70;
+        this.fiftyCreditsPrice = 250;
     }
 
     /**
@@ -50,7 +50,7 @@ class StripeClient {
             // Pricing events.
             this.singleCredit.addEventListener('change', () => this.handleQuantityChange());
             this.tenCredits.addEventListener('change', () => this.handleQuantityChange());
-            this.oneHundredCredits.addEventListener('change', () => this.handleQuantityChange());
+            this.fiftyCredits.addEventListener('change', () => this.handleQuantityChange());
             // Update display on page load.
             this.handleQuantityChange();
             // Confirm events.
@@ -96,21 +96,21 @@ class StripeClient {
     handleQuantityChange() {
         let singleCredits = parseInt(this.singleCredit.value),
             tenCredits = parseInt(this.tenCredits.value),
-            oneHundrenCredits = parseInt(this.oneHundredCredits.value);
+            fiftyCredits = parseInt(this.fiftyCredits.value);
         if (Number.isNaN(singleCredits)) {
             singleCredits = 0;
         }
         if (Number.isNaN(tenCredits)) {
             tenCredits = 0;
         }
-        if (Number.isNaN(oneHundrenCredits)) {
-            oneHundrenCredits = 0;
+        if (Number.isNaN(fiftyCredits)) {
+            fiftyCredits = 0;
         }
 
-        let totalCredits = singleCredits + 10 * tenCredits + 100 * oneHundrenCredits;
+        let totalCredits = singleCredits + 10 * tenCredits + 50 * fiftyCredits;
         let totalPrice = singleCredits * this.singleCreditPrice +
             tenCredits * this.tenCreditsPrice +
-            oneHundrenCredits * this.oneHundredCreditsPrice;
+            fiftyCredits * this.fiftyCreditsPrice;
 
         let priceText = totalCredits + ' credits for $' + totalPrice;
         this.priceDisplay.textContent = priceText;
