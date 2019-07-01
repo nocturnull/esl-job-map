@@ -427,6 +427,17 @@ class JobPost(models.Model, Localize):
             expiry_period = self.days_valid * 86400
             return max(round(0.9 - (age / expiry_period), 1), 0)
 
+    def pretty_refund(self) -> str:
+        """
+        Show a neatly formatted refund amount.
+
+        :return:
+        """
+        refund = self.calculate_refund()
+        if refund > 0:
+            return '(+{0} credits)'.format(refund)
+        return ''
+
     def __str__(self):
         return '%s %s' % (self.title, self.pretty_employment_type)
 

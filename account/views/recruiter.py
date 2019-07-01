@@ -7,7 +7,7 @@ from django.contrib.auth import login
 from django.urls import reverse_lazy
 from django.contrib import messages
 
-from ..forms.recruiter import RecruiterCreationForm, RecruiterUpdateForm
+from ..forms.recruiter import RecruiterCreationForm, RecruiterUpdateForm, AutofillOptionsForm
 from ..helpers.recruiter import RecruiterHelper
 
 from task.lib.security import JwtAuthentication
@@ -32,36 +32,71 @@ class RecruiterRegister(CreateView):
         return redirect('account_profile')
 
 
-class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
-    template_name = 'account/edit_profile_form.html'
-    success_url = reverse_lazy('recruiter_profile_edit')
+class RecruiterProfile(LoginRequiredMixin, TemplateView):
+    template_name = 'profile/index.html'
 
     def get(self, request, **kwargs):
-        user_form = RecruiterUpdateForm(instance=request.user)
+        return render(
+            request,
+            self.template_name,
+            {
+                'user_form': RecruiterUpdateForm(instance=request.user),
+                'autofill_form': AutofillOptionsForm(instance=request.user.autofill),
+                'profile_url': reverse_lazy('recruiter_profile_edit'),
+                'autofill_url': reverse_lazy('recruiter_autofill_options'),
+                'notice': 'This information will be used to automatically fill in your job fields'
+            }
+        )
+
+
+class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
+    template_name = 'profile/index.html'
+    success_url = reverse_lazy('recruiter_profile')
+
+    def post(self, request, **kwargs):
+        form = RecruiterUpdateForm(request.POST, instance=request.user)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Changes saved!')
 
         return render(
             request,
             self.template_name,
             {
-                'user_form': user_form,
+                'user_form': form,
+                'autofill_form': AutofillOptionsForm(instance=request.user.autofill),
+                'profile_url': reverse_lazy('recruiter_profile_edit'),
+                'autofill_url': reverse_lazy('recruiter_autofill_options'),
                 'notice': 'This information will be used to automatically fill in your job fields'
             }
         )
 
+
+class EditAutofillOptions(LoginRequiredMixin, TemplateView):
+    template_name = 'profile/index.html'
+    success_url = reverse_lazy('recruiter_profile')
+
     def post(self, request, **kwargs):
-        user_form = RecruiterUpdateForm(request.POST, instance=request.user)
+        form = AutofillOptionsForm(request.POST, instance=request.user.autofill)
 
-        if user_form.is_valid():
-            user_form.save()
-
+        if form.is_valid():
+            options = form.save(False)
+            options.site_user = request.user
+            options.save()
             messages.success(request, 'Changes saved!')
-            return redirect(self.success_url)
-        else:
-            return render(
-                request,
-                self.template_name,
-                {'forms': [user_form]}
-            )
+
+        return render(
+            request,
+            self.template_name,
+            {
+                'user_form': RecruiterUpdateForm(request.POST, instance=request.user),
+                'autofill_form': form,
+                'profile_url': reverse_lazy('recruiter_profile_edit'),
+                'autofill_url': reverse_lazy('recruiter_autofill_options'),
+                'notice': 'This information will be used to automatically fill in your job fields'
+            }
+        )
 
 
 class OptOutExpiredPostNotifications(TemplateView):

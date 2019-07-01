@@ -35,13 +35,13 @@ class PurchaseHelper:
         return 10 * self.purchase_form.cleaned_data.get('ten_credits')
 
     @property
-    def one_hundred_credits(self):
+    def fifty_credits(self):
         """
         100 credits bundle count.
 
         :return:
         """
-        return 100 * self.purchase_form.cleaned_data.get('one_hundred_credits')
+        return 50 * self.purchase_form.cleaned_data.get('fifty_credits')
 
     def get_credits(self) -> int:
         """
@@ -49,7 +49,7 @@ class PurchaseHelper:
 
         :return:
         """
-        return self.single_credits + self.ten_credits + self.one_hundred_credits
+        return self.single_credits + self.ten_credits + self.fifty_credits
 
     def calculate_total(self) -> int:
         """
@@ -59,5 +59,5 @@ class PurchaseHelper:
         """
         price_1 = STANDARD_PRICE * self.single_credits
         price_10 = DISCOUNTED_PRICE_1 * self.ten_credits
-        price_100 = DISCOUNTED_PRICE_2 * self.one_hundred_credits
-        return 100 * (price_1 + price_10 + price_100)
+        price_50 = DISCOUNTED_PRICE_2 * self.fifty_credits
+        return 100 * (price_1 + price_10 + price_50)

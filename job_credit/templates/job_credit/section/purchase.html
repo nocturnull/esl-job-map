@@ -18,7 +18,7 @@
             <label for="{{ form.single_credit.id_for_label }}">
                 {{ form.single_credit.label }}
                 <span>-</span>
-                <span>$20</span>
+                <span>$10 ($20 value)</span>
                 <span class="errorlist">
                     {% for error in form.single_credit.errors %}
                         {{ error }}
@@ -36,7 +36,7 @@
             <label for="{{ form.ten_credits.id_for_label }}">
                 {{ form.ten_credits.label }}
                 <span>-</span>
-                <span>$160</span>
+                <span>$70 ($200 value)</span>
                 <span class="errorlist">
                     {% for error in form.ten_credits.errors %}
                         {{ error }}
@@ -48,15 +48,15 @@
 
     <div class="grid-x">
         <div class="numeric-field cell">
-            {{ form.one_hundred_credits }}
+            {{ form.fifty_credits }}
         </div>
         <div class="numeric-label medium-5 cell">
-            <label for="{{ form.one_hundred_credits.id_for_label }}">
-                {{ form.one_hundred_credits.label }}
+            <label for="{{ form.fifty_credits.id_for_label }}">
+                {{ form.fifty_credits.label }}
                 <span>-</span>
-                <span>$1200</span>
+                <span>$250 ($1,000 value)</span>
                 <span class="errorlist">
-                    {% for error in form.one_hundred_credits.errors %}
+                    {% for error in form.fifty_credits.errors %}
                         {{ error }}
                     {% endfor %}
                 </span>

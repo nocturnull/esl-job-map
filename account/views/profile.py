@@ -10,7 +10,7 @@ from ..models import SiteUser
 class ResolveProfile(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_recruiter:
-            return reverse_lazy('recruiter_profile_edit')
+            return reverse_lazy('recruiter_profile')
         return reverse_lazy('applicant_profile_edit')
 
 

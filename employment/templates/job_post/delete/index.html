@@ -11,7 +11,7 @@
                 <input type="hidden" name="{{ field.html_name }}" value="1">
             {% endfor %}
             <p>Are you sure you want to delete {{ object }}?</p>
-            <button type="submit" class="primary-button-2">Delete (+{{ object.calculate_refund }} credits)</button>
+            <button type="submit" class="primary-button-2">Delete {{ object.pretty_refund }}</button>
         </form>
 
     </div>

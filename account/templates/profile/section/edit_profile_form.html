@@ -1,0 +1,63 @@
+<p>{{ notice }}</p>
+<p>
+    If you wish to change your password <a href="{% url 'account_change_password' %}">click here</a>.
+</p>
+
+<div class="grid-x grid-margin-x mb-1">
+    <div class="medium-10 cell">
+        {% if messages %}
+            <div class="callout success">
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        <p>{{ message }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+        <form method="post" action="{{ profile_url }}" enctype="multipart/form-data" novalidate="novalidate">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {% if applicant_form %}
+                <div>
+                    {{ applicant_form.country.errors }}
+                    {{ applicant_form.country.label_tag }}
+                    {{ applicant_form.country }}
+                </div>
+                <div>
+                    {{ applicant_form.visa_type.errors }}
+                    {{ applicant_form.visa_type.label_tag }}
+                    {{ applicant_form.visa_type }}
+                </div>
+                {% if request.user.teacher.has_resume %}
+                    <div>Existing resume: {{ request.user.teacher.resume }}</div>
+                {% endif %}
+                <div>
+                    {{ applicant_form.resume_file.errors }}
+
+                    {% if request.user.teacher.has_resume %}
+                        <label class="file-label" for="{{ applicant_form.resume_file.id_for_label }}">Upload different resume - PDF files only:</label>
+                    {% else %}
+                        <label class="file-label" for="{{ applicant_form.resume_file.id_for_label }}">Set resume - .PDF files only:</label>
+                    {% endif %}
+
+                    {{ applicant_form.resume_file }}
+                </div>
+                {% if request.user.teacher.has_photo %}
+                    <div>Existing photo: {{ request.user.teacher.photo }}</div>
+                {% endif %}
+                <div>
+                    {{ applicant_form.photo_file.errors }}
+
+                    {% if request.user.teacher.has_photo %}
+                        <label class="file-label" for="{{ applicant_form.photo_file.id_for_label }}">Upload different photo - .jpeg files only:</label>
+                    {% else %}
+                        <label class="file-label" for="{{ applicant_form.photo_file.id_for_label }}">Set photo - .jpeg files only (Optional):</label>
+                    {% endif %}
+
+                    {{ applicant_form.photo_file }}
+                </div>
+            {% endif %}
+            <button type="submit" class="primary-button-2">Save Changes</button>
+        </form>
+    </div>
+</div>

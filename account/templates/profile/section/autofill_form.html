@@ -1,0 +1,45 @@
+<div class="grid-x grid-margin-x mb-1">
+    <div class="medium-10 cell">
+        <form method="post" action="{{ autofill_url }}" novalidate="novalidate">
+            {% csrf_token %}
+            <p class="bold-text">Full-time</p>
+            <div>
+                {{ autofill_form.ft_other_requirements.errors }}
+                {{ autofill_form.ft_other_requirements.label_tag }}
+                {{ autofill_form.ft_other_requirements }}
+            </div>
+            <div>
+                {{ autofill_form.ft_salary.errors }}
+                {{ autofill_form.ft_salary.label_tag }}
+                {{ autofill_form.ft_salary }}
+            </div>
+            <div>
+                {{ autofill_form.ft_benefits.errors }}
+                {{ autofill_form.ft_benefits.label_tag }}
+                {{ autofill_form.ft_benefits }}
+            </div>
+            <p class="bold-text">Part-time</p>
+            <div>
+                {{ autofill_form.pt_class_type.errors }}
+                {{ autofill_form.pt_class_type.label_tag }}
+                {{ autofill_form.pt_class_type }}
+            </div>
+            <div>
+                {{ autofill_form.pt_schedule.errors }}
+                {{ autofill_form.pt_schedule.label_tag }}
+                {{ autofill_form.pt_schedule }}
+            </div>
+            <div>
+                {{ autofill_form.pt_other_requirements.errors }}
+                {{ autofill_form.pt_other_requirements.label_tag }}
+                {{ autofill_form.pt_other_requirements }}
+            </div>
+            <div>
+                {{ autofill_form.pt_pay_rate.errors }}
+                {{ autofill_form.pt_pay_rate.label_tag }}
+                {{ autofill_form.pt_pay_rate }}
+            </div>
+            <button type="submit" class="primary-button-2">Save Changes</button>
+        </form>
+    </div>
+</div>

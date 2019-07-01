@@ -79,7 +79,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         return self._disinterested_jobs
 
     @property
-    def credits(self):
+    def credits(self) -> int:
         """
         Format job credits when needed.
 
@@ -96,7 +96,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
             return 0
 
     @property
-    def has_credits(self):
+    def has_credits(self) -> bool:
         """
         Determine if the user has credits.
 
@@ -105,6 +105,19 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         if self.is_recruiter and self.credits > 0:
             return True
         return False
+
+    @property
+    def autofill(self):
+        """
+        Safely get autofill options.
+
+        :return:
+        """
+        try:
+            return self.autofill_options
+        except:
+            from ..models.recruiter import AutofillOptions
+            return AutofillOptions()
 
     def __str__(self):
         return self.email

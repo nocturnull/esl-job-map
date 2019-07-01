@@ -3,9 +3,9 @@
 from django.views.generic import ListView
 from django.urls import reverse_lazy
 
-from ..forms.job_post.create import CreateFullTimeJobForm, CreatePartTimeJobForm
-from ..models import JobPost
+from ..managers.job_form_manager import JobFormManager
 from ..managers.map_manager import MapManager
+from ..models import JobPost
 
 from account.templatetags.profile import is_recruiter
 from blanket.session_manager import SessionManager
@@ -49,7 +49,7 @@ class FullTimeMap(ListView):
         # We don't want to show jobs that have expired.
         context['object_list'] = self.build_object_list()
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
-        context['form'] = CreateFullTimeJobForm()
+        context['form'] = JobFormManager.filled_full_time_form(self.request.user)
         context['location'] = MapManager.resolve_location_data(self.request, city)
         context['show_warning'] = SessionManager.needs_full_time_warning(self.request)
 
@@ -106,7 +106,7 @@ class PartTimeMap(ListView):
         # We don't want to show jobs that have expired.
         context['object_list'] = self.build_object_list()
         context['map_class'] = 'recruiter' if is_recruiter(self.request) else ''
-        context['form'] = CreatePartTimeJobForm()
+        context['form'] = JobFormManager.filled_part_time_form(self.request.user)
         context['location'] = MapManager.resolve_location_data(self.request, city)
         context['show_warning'] = SessionManager.needs_part_time_warning(self.request)
 

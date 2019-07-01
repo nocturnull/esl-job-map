@@ -26,9 +26,9 @@
                 {% if not job_post.is_expired %}
                     <button class="primary-button-1" onclick="window.location='{{ job_post.edit_link }}'">Edit</button>
                     {% if job_post.can_delete %}
-                        <button class="primary-button-1" onclick="window.location='{{ job_post.delete_link }}'">Delete (+{{ job_post.calculate_refund }} credits)</button>
+                        <button class="primary-button-1" onclick="window.location='{{ job_post.delete_link }}'">Delete {{ job_post.pretty_refund }}</button>
                     {% else %}
-                        <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close (+{{ job_post.calculate_refund }} credits)</button>
+                        <button class="primary-button-1" onclick="window.location='{{ job_post.close_link }}'">Close {{ job_post.pretty_refund }}</button>
                     {% endif %}
                 {% else %}
                     {% if job_post.was_cloned %}
