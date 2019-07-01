@@ -37,4 +37,5 @@ class AutofillOptionsForm(forms.ModelForm):
 
     class Meta:
         model = AutofillOptions
-        fields = ('class_type', 'schedule', 'other_requirements', 'pay_rate', 'salary', 'benefits')
+        fields = ('ft_other_requirements', 'ft_salary', 'ft_benefits',
+                  'pt_class_type', 'pt_schedule', 'pt_pay_rate', 'pt_other_requirements')

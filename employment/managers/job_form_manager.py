@@ -17,11 +17,9 @@ class JobFormManager:
         """
         autofill = user.autofill
         return CreateFullTimeJobForm(initial={
-            'class_type': autofill.class_type,
-            'schedule': autofill.schedule,
-            'other_requirements': autofill.other_requirements,
-            'salary': autofill.salary,
-            'benefits': autofill.benefits
+            'other_requirements': autofill.ft_other_requirements,
+            'salary': autofill.ft_salary,
+            'benefits': autofill.ft_benefits
         })
 
     @staticmethod
@@ -34,8 +32,8 @@ class JobFormManager:
         """
         autofill = user.autofill
         return CreatePartTimeJobForm(initial={
-            'class_type': autofill.class_type,
-            'schedule': autofill.schedule,
-            'other_requirements': autofill.other_requirements,
-            'pay_rate': autofill.pay_rate
+            'class_type': autofill.pt_class_type,
+            'schedule': autofill.pt_schedule,
+            'other_requirements': autofill.pt_other_requirements,
+            'pay_rate': autofill.pt_pay_rate
         })
