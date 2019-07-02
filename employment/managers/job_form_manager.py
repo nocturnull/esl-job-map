@@ -1,7 +1,7 @@
 
 from ..forms.job_post.create import CreateFullTimeJobForm, CreatePartTimeJobForm
 
-from account.models import SiteUser
+from account.models import SiteUser, AutofillOptions
 
 
 class JobFormManager:
@@ -15,7 +15,11 @@ class JobFormManager:
         :param user:
         :return:
         """
-        autofill = user.autofill
+        try:
+            autofill = user.autofill
+        except AttributeError:
+            autofill = AutofillOptions()
+
         return CreateFullTimeJobForm(initial={
             'other_requirements': autofill.ft_other_requirements,
             'salary': autofill.ft_salary,
@@ -30,7 +34,11 @@ class JobFormManager:
         :param user:
         :return:
         """
-        autofill = user.autofill
+        try:
+            autofill = user.autofill
+        except AttributeError:
+            autofill = AutofillOptions()
+
         return CreatePartTimeJobForm(initial={
             'class_type': autofill.pt_class_type,
             'schedule': autofill.pt_schedule,

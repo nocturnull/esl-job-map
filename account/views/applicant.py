@@ -33,7 +33,7 @@ class ApplicantRegister(CreateView):
 
 
 class EditApplicantProfile(LoginRequiredMixin, TemplateView):
-    template_name = 'account/edit_profile_form.html'
+    template_name = 'profile/applicant/edit_profile_form.html'
     success_url = reverse_lazy('applicant_profile_edit')
 
     def get(self, request, **kwargs):

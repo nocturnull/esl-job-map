@@ -33,7 +33,7 @@ class RecruiterRegister(CreateView):
 
 
 class RecruiterProfile(LoginRequiredMixin, TemplateView):
-    template_name = 'profile/index.html'
+    template_name = 'profile/recruiter/index.html'
 
     def get(self, request, **kwargs):
         return render(
@@ -50,7 +50,7 @@ class RecruiterProfile(LoginRequiredMixin, TemplateView):
 
 
 class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
-    template_name = 'profile/index.html'
+    template_name = 'profile/recruiter/index.html'
     success_url = reverse_lazy('recruiter_profile')
 
     def post(self, request, **kwargs):
@@ -74,7 +74,7 @@ class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
 
 
 class EditAutofillOptions(LoginRequiredMixin, TemplateView):
-    template_name = 'profile/index.html'
+    template_name = 'profile/recruiter/index.html'
     success_url = reverse_lazy('recruiter_profile')
 
     def post(self, request, **kwargs):
