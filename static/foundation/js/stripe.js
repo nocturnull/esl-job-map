@@ -21,9 +21,9 @@ class StripeClient {
         this.confirmPurchaseButton = document.getElementById('confirmPurchaseButton');
         this.$purchaseConfirmModal = $('#purchaseConfirmModal');
         this.stripeToken = null;
-        this.singleCreditPrice = 10;
-        this.tenCreditsPrice = 70;
-        this.fiftyCreditsPrice = 250;
+        this.singleCreditPrice = 7;
+        this.tenCreditsPrice = 50;
+        this.fiftyCreditsPrice = 200;
     }
 
     /**
