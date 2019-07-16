@@ -71,9 +71,7 @@ class JobPost(models.Model, Localize):
 
         :return: int
         """
-        if self.is_full_time:
-            return FULL_TIME_JOB_DAYS_VALID
-        return PART_TIME_JOB_DAYS_VALID
+        return JOB_DAYS_VALID
 
     @property
     def expires_in(self) -> int:

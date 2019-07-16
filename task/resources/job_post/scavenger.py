@@ -25,7 +25,7 @@ class JobPostScavenger:
 
         :return:
         """
-        exp_date = datetime.now() - timedelta(days=FULL_TIME_JOB_DAYS_VALID)
+        exp_date = datetime.now() - timedelta(days=JOB_DAYS_VALID)
         queryset = JobPost.objects\
             .filter(is_full_time=True, expiry_notice_sent=False,
                     created_at__lte=exp_date, site_user__opted_out_of_expired_job_emails=False)\
@@ -40,7 +40,7 @@ class JobPostScavenger:
 
         :return:
         """
-        exp_date = datetime.now() - timedelta(days=PART_TIME_JOB_DAYS_VALID)
+        exp_date = datetime.now() - timedelta(days=JOB_DAYS_VALID)
         queryset = JobPost.objects\
             .filter(is_full_time=False, expiry_notice_sent=False,
                     created_at__lte=exp_date, site_user__opted_out_of_expired_job_emails=False)\
