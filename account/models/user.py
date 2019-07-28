@@ -79,7 +79,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         return self._disinterested_jobs
 
     @property
-    def credits(self) -> int:
+    def credits(self) -> float:
         """
         Format job credits when needed.
 
