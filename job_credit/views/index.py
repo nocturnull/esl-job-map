@@ -30,19 +30,23 @@ class Index(LoginRequiredMixin, ListView):
         form = CreditPurchaseForm(request.POST)
         error_message = None
 
-        if form.is_valid():
-            purchase_helper = PurchaseHelper(form)
-            num_credits = purchase_helper.get_credits()
-            if num_credits > 0:
-                PaymentManager.charge(
-                    job_credits=num_credits,
-                    total_price=purchase_helper.calculate_total(),
-                    user=request.user,
-                    stripe_token=request.POST.get('stripeToken')
-                )
-                return render(request, 'job_credit/success.html', {'job_credits': num_credits})
-            else:
-                error_message = 'Please specify a desired quantity.'
+        try:
+            if form.is_valid():
+                purchase_helper = PurchaseHelper(form)
+                num_credits = purchase_helper.get_credits()
+                if num_credits > 0:
+                    PaymentManager.charge(
+                        job_credits=num_credits,
+                        total_price=purchase_helper.calculate_total(),
+                        user=request.user,
+                        stripe_token=request.POST.get('stripeToken')
+                    )
+                    return render(request, 'job_credit/success.html', {'job_credits': num_credits})
+                else:
+                    error_message = 'Please specify a desired quantity.'
+        except Exception as e:
+            print(e)
+            error_message = 'An error occurred, please try again later.'
 
         return render(request, self.template_name, {
             'publishable_key': STRIPE_PUBLISHABLE_KEY,

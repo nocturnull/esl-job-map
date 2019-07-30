@@ -56,7 +56,6 @@ class JobPostManager:
         for job_post in jobs:
             if limit < 5:
                 html_body = EmailTemplateManager.generate_email_body(job_post, request)
-                print(html_body)
                 message_api.send(recipient=job_post.site_user_email,
                                  subject=EmailTemplateManager.generate_email_subject(job_post),
                                  body=html_body,
