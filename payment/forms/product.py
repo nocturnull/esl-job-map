@@ -16,8 +16,6 @@ class CreateProductForm(forms.ModelForm):
             'name': self.instance.name,
             'type': 'service'
         }
-        if self.instance.descriptor:
-            kwargs['statement_descriptor'] = self.instance.descriptor
 
         stripe_product = stripe.Product.create(**kwargs)
         self.instance.stripe_product_id = stripe_product.id
@@ -25,4 +23,4 @@ class CreateProductForm(forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ['name', 'descriptor']
+        fields = ['name', 'max_jobs', 'descriptor']

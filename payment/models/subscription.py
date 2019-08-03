@@ -18,3 +18,6 @@ class Subscription(models.Model):
     trial_from_plan = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '{0}-{1}'.format(self.site_user, self.stripe_subscription_id)

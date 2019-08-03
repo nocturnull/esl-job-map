@@ -31,4 +31,4 @@ class Plan(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '{0}-{1}-{2}'.format(self.amount, self.interval, self.currency)
+        return '{0}{1}-{2}'.format(self.amount, self.currency, self.interval)

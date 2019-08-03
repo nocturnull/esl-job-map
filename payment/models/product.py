@@ -10,7 +10,8 @@ class Product(models.Model):
     """
     stripe_product_id = models.CharField(max_length=32)
     name = models.CharField(max_length=128)
-    descriptor = models.CharField(max_length=22, default='', blank=True)
+    max_jobs = models.IntegerField(default=100)
+    descriptor = models.CharField(max_length=255, default='', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

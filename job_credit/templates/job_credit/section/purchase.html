@@ -67,6 +67,23 @@
     </div>
 
     <div class="grid-x">
+        <div class="numeric-label medium-2 cell">
+            <label for="{{ form.order_code.id_for_label }}">
+                {{ form.order_code.label }}
+            </label>
+        </div>
+        <div class="numeric-field medium-2 cell">
+            {{ form.order_code }}
+        </div>
+    </div>
+
+    <div class="grid-x grid-padding-y">
+        <div class="medium-5 cell">
+            <div id="orderDisplayInfo" data-lookup-url="{% url 'order_lookup' %}"></div>
+        </div>
+    </div>
+
+    <div class="grid-x">
         <p>
             If you have any questions or concerns, please send us an email at <strong>steven@esljobmap.com</strong>
             <br/>

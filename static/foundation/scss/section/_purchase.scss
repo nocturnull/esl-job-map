@@ -35,4 +35,10 @@
     .negative-delta {
         color: $brand-danger;
     }
+    input[type="text"], input[type="password"], input[type="email"] {
+        border-radius: 0;
+    }
+    .order-code {
+        width: 6em;
+    }
 }
