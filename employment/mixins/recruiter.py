@@ -36,9 +36,14 @@ class JobPostWriteMixin:
         context = {'form': form, 'is_full_time': is_full_time}
 
         if form.is_valid():
-            if user_regulator.can_afford_post():
-                arrayed_job = ArrayedJobPost(form.save(commit=False))
-                arrayed_job.normalize_location()
+            arrayed_job = ArrayedJobPost(form.save(commit=False))
+            arrayed_job.normalize_location()
+
+            if user_regulator.has_active_subscription():
+                arrayed_job.create(is_full_time=is_full_time, user=request.user)
+                return redirect(self.success_url)
+
+            elif user_regulator.can_afford_post():
 
                 # Relevant job post, credits, and log need to be updated atomically.
                 with transaction.atomic():

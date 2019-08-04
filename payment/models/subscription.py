@@ -14,7 +14,7 @@ class Subscription(models.Model):
     https://stripe.com/docs/api/subscriptions
     """
     stripe_subscription_id = models.CharField(max_length=32)
-    site_user = models.ForeignKey(SiteUser, on_delete=models.DO_NOTHING, related_name='customer_subscription')
+    site_user = models.ForeignKey(SiteUser, on_delete=models.DO_NOTHING, related_name='customer_subscriptions')
     order = models.OneToOneField(Order, on_delete=models.DO_NOTHING, related_name='order_subscription')
     trial_from_plan = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

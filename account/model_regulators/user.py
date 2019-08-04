@@ -15,6 +15,14 @@ class UserTransformer:
         """
         self.instance = user
 
+    def has_active_subscription(self) -> bool:
+        """
+        Determine if the user has an active subscription.
+
+        :return:
+        """
+        return self.instance.has_subscription
+
     def can_afford_post(self) -> bool:
         """
         Determine if the user is allowed to post

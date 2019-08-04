@@ -35,6 +35,8 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     opted_out_of_expired_job_emails = models.BooleanField('Don’t receive job expire notification emails', default=False, blank=True)
 
     _disinterested_jobs = None
+    _has_subscription = None
+    _subscription = None
 
     is_staff = models.BooleanField(
         'Staff Status',
@@ -118,6 +120,25 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         except:
             from ..models.recruiter import AutofillOptions
             return AutofillOptions()
+
+    @property
+    def has_subscription(self) -> bool:
+        if self._has_subscription is None:
+            try:
+                self._subscription = self.customer_subscriptions.get(is_active=True)
+                self._has_subscription = True
+            except:
+                self._has_subscription = False
+        return self._has_subscription
+
+    @property
+    def active_jobs(self) -> int:
+        """
+        Get the currently active jobs.
+
+        :return:
+        """
+        return self.job_posts.filter(is_visible=True).count()
 
     def __str__(self):
         return self.email

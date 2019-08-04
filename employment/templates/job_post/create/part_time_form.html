@@ -97,7 +97,11 @@
                 {% if is_edit %}
                     <button type="submit" class="primary-button-2">Save</button>
                 {% else %}
-                    <button type="submit" class="primary-button-2">Post (-1 credit)</button>
+                    {% if request.user.has_subscription %}
+                        <button type="submit" class="primary-button-2">Post</button>
+                    {% else %}
+                        <button type="submit" class="primary-button-2">Post (-1 credit)</button>
+                    {% endif %}
                 {% endif %}
             </form>
         </div>
