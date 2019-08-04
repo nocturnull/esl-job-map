@@ -10,7 +10,7 @@ class Customer(models.Model):
 
     https://stripe.com/docs/api/customers
     """
-    site_user = models.ForeignKey(SiteUser, on_delete=models.DO_NOTHING, related_name='payment_customer')
+    site_user = models.OneToOneField(SiteUser, on_delete=models.DO_NOTHING, related_name='payment_customer')
     stripe_customer_id = models.CharField(max_length=32)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

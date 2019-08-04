@@ -6,6 +6,7 @@ from ..models import Order
 
 
 class OrderDelegate:
+    """Order model delegate"""
 
     @staticmethod
     def lookup(user: SiteUser, code: str) -> Optional[Order]:

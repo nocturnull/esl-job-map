@@ -34,16 +34,28 @@ class Index(LoginRequiredMixin, ListView):
             if form.is_valid():
                 purchase_helper = PurchaseHelper(form)
                 num_credits = purchase_helper.get_credits()
-                if num_credits > 0:
+
+                if form.order_code:
+                    status = PaymentManager.subscribe(
+                        order_code=form.order_code,
+                        user=request.user,
+                        stripe_token=request.POST.get('stripeToken')
+                    )
+                    if status:
+                        return render(request, 'job_credit/success/subscription.html')
+                    else:
+                        error_message = 'Unable to place subscription order, contact us for help.'
+
+                elif num_credits > 0:
                     PaymentManager.charge(
                         job_credits=num_credits,
                         total_price=purchase_helper.calculate_total(),
                         user=request.user,
                         stripe_token=request.POST.get('stripeToken')
                     )
-                    return render(request, 'job_credit/success.html', {'job_credits': num_credits})
+                    return render(request, 'job_credit/success/credit_purchase.html', {'job_credits': num_credits})
                 else:
-                    error_message = 'Please specify a desired quantity.'
+                    error_message = 'Please specify a desired quantity or order code.'
         except Exception as e:
             print(e)
             error_message = 'An error occurred, please try again later.'

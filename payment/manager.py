@@ -5,7 +5,10 @@ from django.db import transaction
 from job_credit.model_generators.history import RecordGenerator
 from account.models.user import SiteUser
 
-from .model_generators.charge import ChargeGenerator
+from .delegates.subscription import SubscriptionDelegate
+from .delegates.customer import CustomerDelegate
+from .delegates.charge import ChargeDelegate
+from .delegates.order import OrderDelegate
 
 import stripe
 from .settings import STRIPE_SECRET_KEY
@@ -47,7 +50,27 @@ class PaymentManager:
             user.credit_bank.save()
 
             # Create stripe charge record.
-            ChargeGenerator.create(user, charge.id)
+            ChargeDelegate.create(user, charge.id)
 
             # Create credit history purchase record.
             RecordGenerator.track_purchase_record(user, job_credits)
+
+    @staticmethod
+    def subscribe(order_code: str, user: SiteUser, stripe_token: str) -> bool:
+        """
+        Attempt to subscribe the user to a plan.
+
+        :param order_code:
+        :param user:
+        :param stripe_token:
+        :return:
+        """
+        order = OrderDelegate.lookup(user, order_code)
+        if order is not None:
+            with transaction.atomic():
+                customer = CustomerDelegate.get_or_create_customer(user, stripe_token)
+                subscription = SubscriptionDelegate.create(user, order, customer)
+                if subscription:
+                    return True
+
+        return False
