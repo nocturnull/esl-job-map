@@ -30,35 +30,35 @@ class Index(LoginRequiredMixin, ListView):
         form = CreditPurchaseForm(request.POST)
         error_message = None
 
-        try:
-            if form.is_valid():
-                purchase_helper = PurchaseHelper(form)
-                num_credits = purchase_helper.get_credits()
+        if form.is_valid():
+            purchase_helper = PurchaseHelper(form)
+            num_credits = purchase_helper.get_credits()
+            order_code = form.cleaned_data.get('order_code')
 
-                if form.order_code:
-                    status = PaymentManager.subscribe(
-                        order_code=form.order_code,
-                        user=request.user,
-                        stripe_token=request.POST.get('stripeToken')
-                    )
-                    if status:
-                        return render(request, 'job_credit/success/subscription.html')
-                    else:
-                        error_message = 'Unable to place subscription order, contact us for help.'
+            if order_code:
+                status = PaymentManager.subscribe(
+                    order_code=order_code,
+                    user=request.user,
+                    stripe_token=request.POST.get('stripeToken')
+                )
+                if status:
+                    return render(request, 'job_credit/success/subscription.html')
+                else:
+                    error_message = 'Unable to place subscription order, contact us for help.'
 
-                elif num_credits > 0:
-                    PaymentManager.charge(
-                        job_credits=num_credits,
-                        total_price=purchase_helper.calculate_total(),
-                        user=request.user,
-                        stripe_token=request.POST.get('stripeToken')
-                    )
+            elif num_credits > 0:
+                status = PaymentManager.charge(
+                    job_credits=num_credits,
+                    total_price=purchase_helper.calculate_total(),
+                    user=request.user,
+                    stripe_token=request.POST.get('stripeToken')
+                )
+                if status:
                     return render(request, 'job_credit/success/credit_purchase.html', {'job_credits': num_credits})
                 else:
-                    error_message = 'Please specify a desired quantity or order code.'
-        except Exception as e:
-            print(e)
-            error_message = 'An error occurred, please try again later.'
+                    error_message = 'An error occurred, please contact us for assistance.'
+            else:
+                error_message = 'Please specify a desired quantity or order code.'
 
         return render(request, self.template_name, {
             'publishable_key': STRIPE_PUBLISHABLE_KEY,

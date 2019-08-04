@@ -25,7 +25,10 @@ class Order(models.Model):
 
         :return:
         """
-        return self.plan.product.descriptor
+        if self.apply_trial:
+            return self.plan.product.descriptor # TODO: Calcualte billing date
+        else:
+            return '{0} [{1}]'.format(self.plan.product.descriptor, self.plan.price_display)
 
     def __str__(self):
         return '{0}-{1}'.format(self.site_user, self.code)

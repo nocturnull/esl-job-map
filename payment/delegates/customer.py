@@ -23,10 +23,11 @@ class CustomerDelegate:
         """
         try:
             return user.payment_customer
-        except Exception as e:
-            print(e)
+        except AttributeError:
+            pass
         # Create on stripe.
         stripe_customer = stripe.Customer.create(email=user.email, source=stripe_token)
+
         # Track on our database.
         customer = Customer.objects.create(site_user=user, stripe_customer_id=stripe_customer.id)
         return customer

@@ -30,5 +30,14 @@ class Plan(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def price_display(self) -> str:
+        """
+        Nice price display.
+
+        :return:
+        """
+        return '{0}{1} per {2}'.format(self.amount, self.currency, self.interval)
+
     def __str__(self):
         return '{0}{1}-{2}'.format(self.amount, self.currency, self.interval)

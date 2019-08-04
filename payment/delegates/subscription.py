@@ -23,7 +23,7 @@ class SubscriptionDelegate:
         :return:
         """
         kwargs = {
-            'customer': customer.id,
+            'customer': customer.stripe_customer_id,
             'items': [{
                 'plan': order.plan.stripe_plan_id
             }]

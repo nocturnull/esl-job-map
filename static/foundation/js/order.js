@@ -9,6 +9,7 @@ export default class Order {
     constructor() {
         this.orderCodeInput = document.getElementById('id_order_code');
         this.displayInfo = document.getElementById('orderDisplayInfo');
+        this.finalPriceDisplay = document.getElementById('finalPriceDisplay');
         if (this.displayInfo !== null) {
             this.lookupUrl = this.displayInfo.dataset.lookupUrl;
         } else {
@@ -44,8 +45,8 @@ export default class Order {
                 type: 'GET',
                 url: this.lookupUrl + orderCode
             }).done((response) => {
-                console.log(response);
                 $(this.displayInfo).html(response);
+                this.finalPriceDisplay.textContent = 'Purchase ' + response + '?'
             });
         }
     }
