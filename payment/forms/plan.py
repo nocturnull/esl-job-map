@@ -24,4 +24,4 @@ class CreatePlanForm(forms.ModelForm):
 
     class Meta:
         model = Plan
-        fields = ['product', 'amount', 'interval', 'currency']
+        fields = ['product', 'amount', 'interval', 'currency', 'trial_period_days']
