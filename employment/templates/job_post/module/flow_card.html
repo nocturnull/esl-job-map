@@ -1,6 +1,7 @@
 
 {% load job_post %}
 {% load format %}
+{% load profile %}
 
 <div class="flow-card {{ job_post.card_class|safe }}" data-filtertaglist="{{ job_post.tags }}">
     <h5>
@@ -34,14 +35,14 @@
                     {% if job_post.was_cloned %}
                         <button class="disabled-button">Reposted</button>
                     {% else %}
-                        <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
+                        <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost {% credit_text request '(-1 credit)' %}</button>
                     {% endif %}
                 {% endif %}
             {% else %}
                 {% if job_post.was_cloned %}
                     <button class="disabled-button">Reposted</button>
                 {% else %}
-                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost (-1 credit)</button>
+                    <button class="primary-button-1" onclick="window.location='{{ job_post.repost_link }}'">Repost {% credit_text request '(-1 credit)' %}</button>
                 {% endif %}
             {% endif %}
         </div>

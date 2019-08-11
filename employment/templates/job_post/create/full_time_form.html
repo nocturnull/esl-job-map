@@ -1,3 +1,5 @@
+{% load profile %}
+
 <div class="grid-container">
 
     <h4>{{ form_title }}</h4>
@@ -108,11 +110,7 @@
                 {% if is_edit %}
                     <button type="submit" class="primary-button-2">Save</button>
                 {% else %}
-                    {% if request.user.has_subscription %}
-                        <button type="submit" class="primary-button-2">Post</button>
-                    {% else %}
-                        <button type="submit" class="primary-button-2">Post (-1 credit)</button>
-                    {% endif %}
+                    <button type="submit" class="primary-button-2">Post {% credit_text request '(-1 credit)' %}</button>
                 {% endif %}
             </form>
         </div>

@@ -40,11 +40,11 @@ class JobPostWriteMixin:
             arrayed_job.normalize_location()
 
             if user_regulator.has_active_subscription():
+                # With a subcription no credits are consumed.
                 arrayed_job.create(is_full_time=is_full_time, user=request.user)
                 return redirect(self.success_url)
 
             elif user_regulator.can_afford_post():
-
                 # Relevant job post, credits, and log need to be updated atomically.
                 with transaction.atomic():
                     # Save new job post.
@@ -73,10 +73,15 @@ class JobPostWriteMixin:
         context = {'form': form, 'job_post': instance}
 
         if form.is_valid():
-            if user_regulator.can_afford_post():
-                arrayed_job = ArrayedJobPost(instance)
-                arrayed_job.normalize_location()
+            arrayed_job = ArrayedJobPost(instance)
+            arrayed_job.normalize_location()
 
+            if user_regulator.has_active_subscription():
+                # With a subcription no credits are consumed.
+                arrayed_job.repost()
+                return redirect(self.success_url)
+
+            elif user_regulator.can_afford_post():
                 # Relevant job post, credits, and log need to be updated atomically.
                 with transaction.atomic():
                     # Save job post.

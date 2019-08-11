@@ -431,9 +431,10 @@ class JobPost(models.Model, Localize):
 
         :return:
         """
-        refund = self.calculate_refund()
-        if refund > 0:
-            return '(+{0} credits)'.format(refund)
+        if not self.site_user.has_subscription:
+            refund = self.calculate_refund()
+            if refund > 0:
+                return '(+{0} credits)'.format(refund)
         return ''
 
     def __str__(self):
