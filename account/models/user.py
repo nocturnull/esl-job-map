@@ -4,7 +4,10 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
+from datetime import datetime, timedelta
+
 from esljobmap.model_attributes.localize import Localize
+from employment.settings import JOB_DAYS_VALID
 
 from ..managers import SiteUserManager
 from ..apps import AccountConfig
@@ -138,7 +141,8 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
         :return:
         """
-        return self.job_posts.filter(is_visible=True).count()
+        expire_date = datetime.today() - timedelta(days=JOB_DAYS_VALID)
+        return self.job_posts.filter(is_visible=True, posted_at__gte=expire_date).count()
 
     def __str__(self):
         return self.email
