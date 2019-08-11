@@ -64,7 +64,7 @@ class CreatePartTimeJobPost(LoginRequiredMixin, JobPostWriteMixin, TemplateView)
 
         :param request:
         :param args:
-        :param kwargs:
+        :param kwargs:xxx
         :return:
         """
         return redirect(reverse_lazy('employment_part_time_map') + "#postAnchor")

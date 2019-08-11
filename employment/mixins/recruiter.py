@@ -44,7 +44,7 @@ class JobPostWriteMixin:
                 if user_facade.has_reached_post_limit():
                     context['credits_error'] = 'Error: Upload limit reached'
                 else:
-                    arrayed_job.create(is_full_time=is_full_time, user=request.user)
+                    arrayed_job.create(is_full_time=is_full_time, user=request.user, is_subscription=True)
                     return redirect(self.success_url)
 
             elif user_facade.can_afford_post():
@@ -84,7 +84,7 @@ class JobPostWriteMixin:
                 if user_facade.has_reached_post_limit():
                     context['credits_error'] = 'Error: Upload limit reached'
                 else:
-                    arrayed_job.repost()
+                    arrayed_job.repost(is_subscription=True)
                     return redirect(self.success_url)
 
             elif user_facade.can_afford_post():

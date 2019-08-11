@@ -31,7 +31,9 @@ class FullTimeMap(ListView):
 
         :return:
         """
-        return JobPost.objects.filter(is_full_time=True, is_visible=True).prefetch_related('site_user')
+        return JobPost.objects\
+            .filter(is_full_time=True, is_visible=True, is_suspended=False)\
+            .prefetch_related('site_user')
 
     def get_context_data(self, **kwargs):
         """
@@ -88,7 +90,9 @@ class PartTimeMap(ListView):
 
         :return:
         """
-        return JobPost.objects.filter(is_full_time=False, is_visible=True).prefetch_related('site_user')
+        return JobPost.objects\
+            .filter(is_full_time=False, is_visible=True, is_suspended=False)\
+            .prefetch_related('site_user')
 
     def get_context_data(self, **kwargs):
         """
