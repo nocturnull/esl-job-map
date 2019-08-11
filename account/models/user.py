@@ -135,14 +135,23 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         return self._has_subscription
 
     @property
-    def active_jobs(self) -> int:
+    def active_jobs(self):
         """
         Get the currently active jobs.
 
         :return:
         """
         expire_date = datetime.today() - timedelta(days=JOB_DAYS_VALID)
-        return self.job_posts.filter(is_visible=True, posted_at__gte=expire_date).count()
+        return self.job_posts.filter(is_visible=True, posted_at__gte=expire_date)
+
+    @property
+    def active_job_count(self) -> int:
+        """
+        Get the amount of currently active jobs.
+
+        :return:
+        """
+        return self.active_jobs.count()
 
     def __str__(self):
         return self.email

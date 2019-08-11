@@ -11,7 +11,7 @@ class Order(models.Model):
     An order that is created for the users by admin so they can activate their subscription.
     """
     site_user = models.ForeignKey(SiteUser, on_delete=models.DO_NOTHING, related_name='order_customer')
-    plan = models.OneToOneField(Plan, on_delete=models.DO_NOTHING, related_name='order')
+    plan = models.ForeignKey(Plan, on_delete=models.DO_NOTHING, related_name='order')
     code = models.CharField(max_length=8, unique=True)
     apply_trial = models.BooleanField(default=False)
     was_consumed = models.BooleanField(default=False)

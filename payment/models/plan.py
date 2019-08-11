@@ -22,7 +22,7 @@ class Plan(models.Model):
     )
 
     stripe_plan_id = models.CharField(max_length=32)
-    product = models.OneToOneField(Product, on_delete=models.DO_NOTHING, related_name='plan')
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING, related_name='plan')
     amount = models.IntegerField()
     interval = models.CharField(max_length=32, choices=INTERVAL_CHOICES, default=INTERVAL_MONTH)
     currency = models.CharField(max_length=4, default='USD')

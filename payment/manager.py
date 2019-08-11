@@ -3,6 +3,7 @@
 from django.db import transaction
 
 from job_credit.model_generators.history import RecordGenerator
+from employment.facades.job_post import JobPostFacade
 from account.models.user import SiteUser
 
 from .delegates.subscription import SubscriptionDelegate
@@ -74,9 +75,21 @@ class PaymentManager:
         order = OrderDelegate.lookup(user, order_code)
         if order is not None:
             with transaction.atomic():
+                # Get customer or create and get.
                 customer = CustomerDelegate.get_or_create_customer(user, stripe_token)
+
+                # Actually attempt to bill the user and create a subscription.
                 subscription = SubscriptionDelegate.create(user, order, customer)
+
+                # If the subscription is created, update related data.
                 if subscription:
+                    # Update the order to inform us that the user consumed the order code.
+                    order.was_consumed = True
+                    order.save()
+
+                    # Refund jobs if needed.
+                    JobPostFacade.refund_existing_jobs(user)
+
                     return True
 
         return False

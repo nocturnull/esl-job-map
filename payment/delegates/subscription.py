@@ -34,10 +34,6 @@ class SubscriptionDelegate:
         # Create Stripe subscription.
         stripe_subscription = stripe.Subscription.create(**kwargs)
 
-        # Update the order to inform us that the user consumed the order code.
-        order.was_consumed = True
-        order.save()
-
         # Create local subscription.
         return Subscription.objects.create(
             stripe_subscription_id=stripe_subscription.id,

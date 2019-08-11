@@ -46,4 +46,4 @@ class UserFacade:
 
         :return:
         """
-        return self.instance.active_jobs >= MAX_JOBS
+        return self.instance.active_job_count >= MAX_JOBS
