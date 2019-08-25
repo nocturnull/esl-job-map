@@ -1,5 +1,9 @@
+# payment/delegates/subscription.py
 
 import stripe
+from datetime import datetime
+from typing import Optional
+
 from account.models import SiteUser
 
 from ..models import Subscription, Order, Customer
@@ -42,3 +46,28 @@ class SubscriptionDelegate:
             trial_from_plan=order.apply_trial,
             is_active=True
         )
+
+    @staticmethod
+    def get_bill_date(user: SiteUser) -> Optional[str]:
+        """
+        Try to lookup a subscription.
+
+        https://stripe.com/docs/api/subscriptions/object#subscription_object-billing_cycle_anchor
+        :param user:
+        :return:
+        """
+        try:
+            if user.has_subscription:
+                # Used cached version to prevent more API calls.
+                if user.next_billing_date is not None:
+                    return user.next_billing_date
+
+                # Attempt to lookup and set next billing date.
+                subscription = user.active_subscription
+                stripe_sub = stripe.Subscription.retrieve(subscription.stripe_subscription_id)
+                billing_date = datetime.fromtimestamp(stripe_sub.billing_cycle_anchor)
+                user.next_billing_date = billing_date.strftime('%b %d %Y')
+
+                return user.next_billing_date
+        except:
+            return None

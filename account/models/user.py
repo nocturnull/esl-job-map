@@ -39,6 +39,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
     _disinterested_jobs = None
     _has_subscription = None
+    _next_billing_date = None
     _subscription = None
 
     is_staff = models.BooleanField(
@@ -142,6 +143,15 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         return False
 
     @property
+    def active_subscription(self):
+        """
+        Accessor for currently active subscription.
+
+        :return:
+        """
+        return self._subscription
+
+    @property
     def active_jobs(self):
         """
         Get the currently active jobs.
@@ -159,6 +169,25 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         :return:
         """
         return self.active_jobs.count()
+
+    @property
+    def next_billing_date(self):
+        """
+        Getter for next bill date.
+
+        :return:
+        """
+        return self._next_billing_date
+
+    @next_billing_date.setter
+    def next_billing_date(self, val):
+        """
+        Setter for next bill date.
+
+        :param val:
+        :return:
+        """
+        self._next_billing_date = val
 
     def __str__(self):
         return self.email

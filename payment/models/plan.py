@@ -1,6 +1,8 @@
 
 from django.db import models
 
+from datetime import datetime, timedelta
+
 from .product import Product
 
 from nlib.formatter import currency_to_symbol
@@ -31,6 +33,15 @@ class Plan(models.Model):
     trial_period_days = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    def calc_billing_date_after_trial(self) -> str:
+        """
+        Calculate and format billing date.
+
+        :return:
+        """
+        now = datetime.now() + timedelta(days=self.trial_period_days)
+        return now.strftime('%b %d %Y')
 
     @property
     def detailed_display(self) -> str:

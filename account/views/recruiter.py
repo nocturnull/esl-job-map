@@ -10,6 +10,7 @@ from django.contrib import messages
 from ..forms.recruiter import RecruiterCreationForm, RecruiterUpdateForm, AutofillOptionsForm
 from ..helpers.recruiter import RecruiterHelper
 
+from payment.delegates.subscription import SubscriptionDelegate
 from task.lib.security import JwtAuthentication
 
 
@@ -40,6 +41,7 @@ class RecruiterProfile(LoginRequiredMixin, TemplateView):
             request,
             self.template_name,
             {
+                'next_bill_date': SubscriptionDelegate.get_bill_date(request.user),
                 'user_form': RecruiterUpdateForm(instance=request.user),
                 'autofill_form': AutofillOptionsForm(instance=request.user.autofill),
                 'profile_url': reverse_lazy('recruiter_profile_edit'),

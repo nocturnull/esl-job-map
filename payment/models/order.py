@@ -27,7 +27,11 @@ class Order(models.Model):
         """
         if self.apply_trial:
             # TODO: Calculate billing date and add to string.
-            return '{0}. {1}.'.format(self.plan.product.descriptor, self.plan.trial_display)
+            return '{0}. {1}. First billing ({2})'.format(
+                self.plan.product.descriptor,
+                self.plan.trial_display,
+                self.plan.calc_billing_date_after_trial()
+            )
         else:
             return '{0} [{1}]'.format(self.plan.product.descriptor, self.plan.detailed_display)
 
