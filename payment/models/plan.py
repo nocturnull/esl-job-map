@@ -3,6 +3,8 @@ from django.db import models
 
 from .product import Product
 
+from nlib.formatter import currency_to_symbol
+
 
 class Plan(models.Model):
     """
@@ -31,13 +33,27 @@ class Plan(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
-    def price_display(self) -> str:
+    def detailed_display(self) -> str:
         """
         Nice price display.
 
         :return:
         """
         return '{0}{1} per {2}'.format(self.amount, self.currency, self.interval)
+
+    @property
+    def trial_display(self) -> str:
+        """
+        Neatly format trial display.
+
+        :return:
+        """
+        days = self.trial_period_days
+        # Lazy solution
+        if days == 7:
+            return 'First week free'
+        else:
+            return 'First {} days free'.format(days)
 
     @property
     def billing_amount(self):
@@ -56,6 +72,15 @@ class Plan(models.Model):
         :return:
         """
         return self.interval
+
+    @property
+    def symbol_currency(self):
+        """
+        Get the symbol version of the currency code.
+
+        :return:
+        """
+        return currency_to_symbol(self.currency)
 
     def __str__(self):
         return '{0}{1}-{2}'.format(self.amount, self.currency, self.interval)

@@ -19,16 +19,30 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
-    def summary(self) -> str:
+    def detailed_info(self) -> str:
         """
         A summary of what the order entails.
 
         :return:
         """
         if self.apply_trial:
-            return self.plan.product.descriptor # TODO: Calcualte billing date
+            # TODO: Calculate billing date and add to string.
+            return '{0}. {1}.'.format(self.plan.product.descriptor, self.plan.trial_display)
         else:
-            return '{0} [{1}]'.format(self.plan.product.descriptor, self.plan.price_display)
+            return '{0} [{1}]'.format(self.plan.product.descriptor, self.plan.detailed_display)
+
+    @property
+    def price_info(self) -> str:
+        """
+        Price information when checking out.
+
+        :return:
+        """
+        if self.apply_trial:
+            return '{0} for 0{1}'.format(
+                self.plan.product.short_descriptor,
+                self.plan.symbol_currency
+            )
 
     def __str__(self):
         return '{0}-{1}'.format(self.site_user, self.code)

@@ -12,6 +12,7 @@ class Product(models.Model):
     name = models.CharField(max_length=128)
     max_jobs = models.IntegerField(default=100)
     descriptor = models.CharField(max_length=255, default='', blank=True)
+    short_descriptor = models.CharField(max_length=128, default='')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

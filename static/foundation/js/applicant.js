@@ -1,7 +1,7 @@
 /**
  * Application form helper
  */
-class Applicant {
+export default class Applicant {
 
     /**
      * Constructor.
@@ -34,5 +34,3 @@ class Applicant {
         }
     }
 }
-
-export default Applicant;
