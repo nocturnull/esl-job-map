@@ -10,6 +10,11 @@ stripe.api_key = STRIPE_SECRET_KEY
 
 
 class CreateProductForm(forms.ModelForm):
+    name = forms.CharField(label='Internal Name', max_length=128)
+    descriptor = forms.CharField(label='Name Displayed on Site',
+                                 max_length=255,
+                                 empty_value='',
+                                 required=False)
 
     def save(self, commit=True):
         kwargs = {

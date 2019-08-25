@@ -39,5 +39,23 @@ class Plan(models.Model):
         """
         return '{0}{1} per {2}'.format(self.amount, self.currency, self.interval)
 
+    @property
+    def billing_amount(self):
+        """
+        Label override.
+
+        :return:
+        """
+        return self.amount
+
+    @property
+    def billing_interval(self):
+        """
+        Label override.
+
+        :return:
+        """
+        return self.interval
+
     def __str__(self):
         return '{0}{1}-{2}'.format(self.amount, self.currency, self.interval)

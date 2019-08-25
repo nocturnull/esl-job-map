@@ -18,12 +18,12 @@ class OrderAdmin(admin.ModelAdmin):
 
 class PlanAdmin(admin.ModelAdmin):
     form = CreatePlanForm
-    list_display = ['amount', 'interval', 'currency', 'stripe_plan_id']
+    list_display = ['billing_amount', 'billing_interval', 'currency', 'stripe_plan_id']
 
 
 class ProductAdmin(admin.ModelAdmin):
     form = CreateProductForm
-    list_display = ['name', 'max_jobs', 'stripe_product_id']
+    list_display = ['internal_name', 'max_jobs', 'stripe_product_id']
 
 
 admin.site.register(Order, OrderAdmin)

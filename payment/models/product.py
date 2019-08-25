@@ -15,5 +15,14 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    @property
+    def internal_name(self):
+        """
+        Name label override.
+
+        :return:
+        """
+        return self.name
+
     def __str__(self):
         return self.name
