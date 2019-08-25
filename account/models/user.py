@@ -126,13 +126,20 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
 
     @property
     def has_subscription(self) -> bool:
-        if self._has_subscription is None:
-            try:
-                self._subscription = self.customer_subscriptions.get(is_active=True)
-                self._has_subscription = True
-            except:
-                self._has_subscription = False
-        return self._has_subscription
+        """
+        Determine if the user has an active subscription.
+
+        :return:
+        """
+        if self.is_recruiter:
+            if self._has_subscription is None:
+                try:
+                    self._subscription = self.customer_subscriptions.get(is_active=True)
+                    self._has_subscription = True
+                except:
+                    self._has_subscription = False
+            return self._has_subscription
+        return False
 
     @property
     def active_jobs(self):

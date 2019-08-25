@@ -13,9 +13,6 @@
                 <li>
                     <a href="{% url 'employment_my_job_posts' %}" class="{% menu_class request 'employment_my_job_posts' %}">
                         My Jobs
-                        {% if user.has_subscription %}
-                            <span class="bold-text">({{ user.active_job_count }} Active)</span>
-                        {% endif %}
                     </a>
                 </li>
             {% elif user.is_teacher %}
