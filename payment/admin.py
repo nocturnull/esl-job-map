@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from account.models import SiteUser
-from .models import Order, Plan, Product
+from .models import Order, Plan, Product, Subscription
 from .forms.order import CreateOrderForm
 from .forms.plan import CreatePlanForm
 from .forms.product import CreateProductForm
@@ -26,7 +26,13 @@ class ProductAdmin(admin.ModelAdmin):
     list_display = ['internal_name', 'max_jobs', 'stripe_product_id']
 
 
+class SubscriptionAdmin(admin.ModelAdmin):
+    fields = ('is_active',)
+    list_display = ['site_user', 'order', 'is_active', 'created_at']
+
+
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Plan, PlanAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Subscription, SubscriptionAdmin)
 

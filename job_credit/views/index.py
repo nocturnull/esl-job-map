@@ -7,6 +7,7 @@ from django.shortcuts import render
 from ..forms.purchase import CreditPurchaseForm
 from ..form_helpers.purchase import PurchaseHelper
 
+from payment.delegates.subscription import SubscriptionDelegate
 from payment.manager import PaymentManager
 from payment.settings import STRIPE_PUBLISHABLE_KEY
 
@@ -23,7 +24,8 @@ class Index(LoginRequiredMixin, ListView):
             'publishable_key': STRIPE_PUBLISHABLE_KEY,
             'tab': int(tab),
             'form': CreditPurchaseForm,
-            'history': self.get_queryset()
+            'history': self.get_queryset(),
+            'bill_date': SubscriptionDelegate.get_bill_date(request.user)
         })
 
     def post(self, request, *args, **kwargs):

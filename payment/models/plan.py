@@ -93,5 +93,14 @@ class Plan(models.Model):
         """
         return currency_to_symbol(self.currency)
 
+    @property
+    def formatted_billing_amount(self):
+        """
+        Billing amount nicely displayed.
+
+        :return:
+        """
+        return '{}{}'.format(self.symbol_currency, self.billing_amount)
+
     def __str__(self):
         return '{0}{1}-{2}'.format(self.amount, self.currency, self.interval)

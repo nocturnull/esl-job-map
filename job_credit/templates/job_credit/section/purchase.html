@@ -1,8 +1,16 @@
+{% load subscription %}
+
 <p>
     All jobs will stay up for 30 days. If you close a job early, you will get a partial credit refund on that job of 0.1-0.9 credits.
     <br/>
     포스팅 당 1 크레딧이 소요됩니다. 모든 일자리는 30일 동안 게시됩니다. 만료 기간 전에 포스팅을 내리면 기간에 따라 0.1-0.9 크레딧을 환불 받으실 수 있습니다.
 </p>
+
+{% if bill_date %}
+    <p>{% next_bill_date_en bill_date request.user %}</p>
+    <p>{% next_bill_date_ko bill_date request.user %}</p>
+{% endif %}
+
 <h4 class="checkout-title">Checkout</h4>
 
 <form action="{% url 'job_credit' %}" method="post" id="payment-form">

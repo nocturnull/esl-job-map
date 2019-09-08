@@ -48,7 +48,7 @@ class SubscriptionDelegate:
         )
 
     @staticmethod
-    def get_bill_date(user: SiteUser) -> Optional[str]:
+    def get_bill_date(user: SiteUser) -> Optional[datetime]:
         """
         Try to lookup a subscription.
 
@@ -65,8 +65,7 @@ class SubscriptionDelegate:
                 # Attempt to lookup and set next billing date.
                 subscription = user.active_subscription
                 stripe_sub = stripe.Subscription.retrieve(subscription.stripe_subscription_id)
-                billing_date = datetime.fromtimestamp(stripe_sub.billing_cycle_anchor)
-                user.next_billing_date = billing_date.strftime('%b %d %Y')
+                user.next_billing_date = datetime.fromtimestamp(stripe_sub.billing_cycle_anchor)
 
                 return user.next_billing_date
         except:
