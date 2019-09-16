@@ -7,8 +7,10 @@
 </p>
 
 {% if bill_date %}
-    <p>{% next_bill_date_en bill_date request.user %}</p>
-    <p>{% next_bill_date_ko bill_date request.user %}</p>
+    <div class="billing-date-info">
+        <p>{% next_bill_date_en bill_date request.user %}</p>
+        <p>{% next_bill_date_ko bill_date request.user %}</p>
+    </div>
 {% endif %}
 
 <h4 class="checkout-title">Checkout</h4>

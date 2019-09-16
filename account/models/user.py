@@ -162,6 +162,15 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         return self.job_posts.filter(is_visible=True, posted_at__gte=expire_date)
 
     @property
+    def all_jobs_count(self) -> int:
+        """
+        Get the total amount of jobs, regardless of status.
+
+        :return:
+        """
+        return self.job_posts.all().count()
+
+    @property
     def active_job_count(self) -> int:
         """
         Get the amount of currently active jobs.

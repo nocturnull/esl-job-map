@@ -26,11 +26,11 @@ class Order(models.Model):
         :return:
         """
         if self.apply_trial:
-            # TODO: Calculate billing date and add to string.
-            return '{0}. {1}. First billing ({2})'.format(
+            return '{0}. {1}. First billing {2} for {3}'.format(
                 self.plan.product.descriptor,
                 self.plan.trial_display,
-                self.plan.calc_billing_date_after_trial()
+                self.plan.calc_billing_date_after_trial(),
+                self.plan.formatted_billing_amount
             )
         else:
             return '{0} [{1}]'.format(self.plan.product.descriptor, self.plan.detailed_display)
@@ -43,7 +43,7 @@ class Order(models.Model):
         :return:
         """
         if self.apply_trial:
-            return '{0} for 0{1}'.format(
+            return '{0} for {1}0'.format(
                 self.plan.product.short_descriptor,
                 self.plan.symbol_currency
             )

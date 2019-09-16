@@ -28,7 +28,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 class SubscriptionAdmin(admin.ModelAdmin):
     fields = ('is_active',)
-    list_display = ['site_user', 'order', 'is_active', 'created_at']
+    list_display = ['site_user', 'order', 'is_active', 'code_consumed']
 
 
 admin.site.register(Order, OrderAdmin)
