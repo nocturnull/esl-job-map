@@ -6,7 +6,7 @@
         <a href="{% url 'job_credit' %}" class="{% menu_class request 'job_credit' %}">
             {% if user.has_subscription %}
                 Active Jobs
-                <span class="bold-text">({{ user.active_job_count }}/{{ user.all_jobs_count }} Active)</span>
+                <span class="bold-text">({{ user.active_job_count }}/{{ user.all_jobs_count }})</span>
             {% else %}
                 Job Credits
                 {% if request.user.has_credits %}

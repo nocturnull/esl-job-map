@@ -8,8 +8,10 @@
         font-size: 2.5em;
     }
     .billing-date-info > p {
-        font-weight: bold;
-        font-size: 0.9em;
+        font-size: 1.1em;
+        span {
+            font-weight: bold;
+        }
     }
     .price-info {
         font-weight: bold;
