@@ -4,6 +4,7 @@ from django.core.exceptions import MultipleObjectsReturned
 
 from account.settings import JOB_CREDIT_POST_EXPENSE
 from account.models.user import SiteUser
+from payment.models import Subscription
 
 from ..models.history import Record
 
@@ -79,6 +80,31 @@ class RecordGenerator:
             existing_record.balance = user.credits
             existing_record.description = 'Refunded {:.1f} credit(s)'.format(existing_record.amount)
             existing_record.save()
+
+    @classmethod
+    def track_subscription_record(cls, user: SiteUser, amount_refunded: int, bill_date: datetime, subscription: Subscription):
+        """
+        Create a record for the subscription.
+
+        :param user:
+        :param amount_refunded:
+        :param bill_date:
+        :param subscription:
+        :return:
+        """
+        action = Record.ACTION_PURCHASE
+        product_descriptor = subscription.order.plan.product.descriptor
+        today = datetime.now().strftime('%Y/%m/%d')
+
+        if subscription.trial_from_plan:
+            next_date = subscription.order.plan.billing_date_after_trial.strftime('%Y/%m/%d')
+            description = 'Free trial {} from {} to {}'.format(product_descriptor, today, next_date)
+        else:
+            next_date = bill_date.strftime('%Y/%m/%d')
+            description = '{} from {} to {}'.format(product_descriptor, today, next_date)
+
+        Record.objects.create(site_user=user, description=description,
+                              action=action, amount=amount_refunded, balance=user.credits)
 
     @classmethod
     def _get_existing_daily_record(cls, user: SiteUser, action: str) -> Optional[Record]:

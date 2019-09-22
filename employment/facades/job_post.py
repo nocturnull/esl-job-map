@@ -10,7 +10,7 @@ class JobPostFacade:
     """
 
     @staticmethod
-    def refund_existing_jobs(user: SiteUser):
+    def refund_existing_jobs(user: SiteUser) -> int:
         """
         Attempt to refund existing jobs and also create a record for it.
 
@@ -27,3 +27,5 @@ class JobPostFacade:
             user.credit_bank.balance += refund_credits
             user.credit_bank.save()
             RecordGenerator.track_refund_record(user, job_credits=refund_credits)
+
+        return refund_credits

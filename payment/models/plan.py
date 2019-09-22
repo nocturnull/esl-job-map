@@ -36,12 +36,21 @@ class Plan(models.Model):
 
     def calc_billing_date_after_trial(self) -> str:
         """
-        Calculate and format billing date.
+        Calculate and format billing date and format it.
 
         :return:
         """
         now = datetime.now() + timedelta(days=self.trial_period_days)
         return now.strftime('%b %d %Y')
+
+    @property
+    def billing_date_after_trial(self) -> datetime:
+        """
+        Get the actual date object for the billing date after the trial ends.
+
+        :return:
+        """
+        return datetime.now() + timedelta(days=self.trial_period_days)
 
     @property
     def detailed_display(self) -> str:
