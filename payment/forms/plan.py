@@ -11,7 +11,7 @@ stripe.api_key = STRIPE_SECRET_KEY
 
 class CreatePlanForm(forms.ModelForm):
     trial_period_days = forms.IntegerField(label='Free days at Start', min_value=0)
-    amount = forms.IntegerField(label='Billing Amount', min_value=0)
+    amount = forms.IntegerField(label='Billing Amount', min_value=1)
     interval = forms.ChoiceField(label='Billing Interval', choices=Plan.INTERVAL_CHOICES)
 
     def save(self, commit=True):

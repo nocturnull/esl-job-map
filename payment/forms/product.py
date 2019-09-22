@@ -11,6 +11,7 @@ stripe.api_key = STRIPE_SECRET_KEY
 
 class CreateProductForm(forms.ModelForm):
     name = forms.CharField(label='Internal Name', max_length=128)
+    max_jobs = forms.IntegerField(label='Max Jobs', min_value=10)
     short_descriptor = forms.CharField(label='Name Displayed on Checkout', max_length=128)
     descriptor = forms.CharField(label='Name Displayed on Site',
                                  max_length=255,
