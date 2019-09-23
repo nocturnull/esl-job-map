@@ -94,7 +94,7 @@ class Plan(models.Model):
         return self.interval
 
     @property
-    def symbol_currency(self):
+    def symbol_currency(self) -> str:
         """
         Get the symbol version of the currency code.
 
@@ -103,7 +103,7 @@ class Plan(models.Model):
         return currency_to_symbol(self.currency)
 
     @property
-    def formatted_billing_amount(self):
+    def formatted_billing_amount(self) -> str:
         """
         Billing amount nicely displayed.
 

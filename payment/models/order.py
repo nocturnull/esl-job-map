@@ -42,11 +42,14 @@ class Order(models.Model):
 
         :return:
         """
+        price = self.plan.formatted_billing_amount
         if self.apply_trial:
-            return '{0} for {1}0'.format(
-                self.plan.product.short_descriptor,
-                self.plan.symbol_currency
-            )
+            price = self.plan.symbol_currency + '0'
+
+        return '{0} for {1}'.format(
+            self.plan.product.short_descriptor,
+            price
+        )
 
     def __str__(self):
         return '{0}-{1}'.format(self.site_user, self.code)
