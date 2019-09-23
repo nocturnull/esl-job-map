@@ -7,7 +7,7 @@
  * @link https://developers.google.com/maps/documentation/javascript/infowindows
  * @link https://developers.google.com/maps/documentation/javascript/geocoding#ReverseGeocoding
  */
-class JobMapSetup {
+export default class JobMapSetup {
 
     /**
      * Constructor
@@ -428,5 +428,3 @@ class JobMapSetup {
         this.infoWindow.close();
     }
 }
-
-export default JobMapSetup;

@@ -5,10 +5,11 @@ from account.models.user import SiteUser
 from ..models.charge import Charge
 
 
-class ChargeGenerator:
+class ChargeDelegate:
+    """Charge model delegate"""
 
     @classmethod
-    def create(cls, user: SiteUser, charge_id: str):
+    def create(cls, user: SiteUser, charge_id: str) -> Charge:
         """
         Create a charge.
 
@@ -16,4 +17,4 @@ class ChargeGenerator:
         :param charge_id:
         :return:
         """
-        Charge.objects.create(site_user=user, stripe_charge_id=charge_id, status=Charge.STATUS_COMPLETED)
+        return Charge.objects.create(site_user=user, stripe_charge_id=charge_id, status=Charge.STATUS_COMPLETED)

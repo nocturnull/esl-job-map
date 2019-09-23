@@ -4,17 +4,19 @@ import JobMapSetup from './jobMap.js';
 import ListFilter from './listFilter.js';
 import StripeClient from './stripe.js';
 import Applicant from './applicant.js';
-
+import Order from './order.js';
 
 
 $(document).ready(function() {
     let lfilter = new ListFilter(),
         stripe = new StripeClient(),
-        applicant = new Applicant();
+        applicant = new Applicant(),
+        order = new Order();
 
     lfilter.init();
     stripe.init();
     applicant.init();
+    order.init();
 });
 
 function initMap() {

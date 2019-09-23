@@ -4,7 +4,10 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
 
+from datetime import datetime, timedelta
+
 from esljobmap.model_attributes.localize import Localize
+from employment.settings import JOB_DAYS_VALID
 
 from ..managers import SiteUserManager
 from ..apps import AccountConfig
@@ -35,6 +38,10 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     opted_out_of_expired_job_emails = models.BooleanField('Don’t receive job expire notification emails', default=False, blank=True)
 
     _disinterested_jobs = None
+    _has_subscription = None
+    _next_billing_date = None
+    _subscription = None
+    _max_jobs = None
 
     is_staff = models.BooleanField(
         'Staff Status',
@@ -79,7 +86,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         return self._disinterested_jobs
 
     @property
-    def credits(self) -> int:
+    def credits(self) -> float:
         """
         Format job credits when needed.
 
@@ -118,6 +125,81 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         except:
             from ..models.recruiter import AutofillOptions
             return AutofillOptions()
+
+    @property
+    def has_subscription(self) -> bool:
+        """
+        Determine if the user has an active subscription.
+
+        :return:
+        """
+        if self.is_recruiter:
+            if self._has_subscription is None:
+                try:
+                    self._subscription = self.customer_subscriptions.get(is_active=True)
+                    self._has_subscription = True
+                except:
+                    self._has_subscription = False
+            return self._has_subscription
+        return False
+
+    @property
+    def active_subscription(self):
+        """
+        Accessor for currently active subscription.
+
+        :return:
+        """
+        return self._subscription
+
+    @property
+    def active_jobs(self):
+        """
+        Get the currently active jobs.
+
+        :return:
+        """
+        expire_date = datetime.today() - timedelta(days=JOB_DAYS_VALID)
+        return self.job_posts.filter(is_visible=True, posted_at__gte=expire_date)
+
+    @property
+    def max_jobs_count(self) -> int:
+        """
+        Get the total amount of jobs, regardless of status.
+
+        :return:
+        """
+        if self._max_jobs is None:
+            self._max_jobs = self.active_subscription.order.plan.product.max_jobs
+        return self._max_jobs
+
+    @property
+    def active_job_count(self) -> int:
+        """
+        Get the amount of currently active jobs.
+
+        :return:
+        """
+        return self.active_jobs.count()
+
+    @property
+    def next_billing_date(self):
+        """
+        Getter for next bill date.
+
+        :return:
+        """
+        return self._next_billing_date
+
+    @next_billing_date.setter
+    def next_billing_date(self, val):
+        """
+        Setter for next bill date.
+
+        :param val:
+        :return:
+        """
+        self._next_billing_date = val
 
     def __str__(self):
         return self.email

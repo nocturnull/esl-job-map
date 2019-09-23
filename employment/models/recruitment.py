@@ -34,6 +34,8 @@ class JobPost(models.Model, Localize):
     longitude = models.FloatField(default=0)
     address = models.CharField(max_length=1024, default='')
     expiry_notice_sent = models.BooleanField(default=False, blank=True)
+    is_subscription_job = models.BooleanField(default=False, blank=True)
+    is_suspended = models.BooleanField(default=False, blank=True)
 
     _applicants = []
 
@@ -103,6 +105,8 @@ class JobPost(models.Model, Localize):
 
         :return: bool
         """
+        if self.is_subscription_job:
+            return False
         return self.expires_in < 1
 
     @property
@@ -431,9 +435,10 @@ class JobPost(models.Model, Localize):
 
         :return:
         """
-        refund = self.calculate_refund()
-        if refund > 0:
-            return '(+{0} credits)'.format(refund)
+        if not self.site_user.has_subscription:
+            refund = self.calculate_refund()
+            if refund > 0:
+                return '(+{0} credits)'.format(refund)
         return ''
 
     def __str__(self):

@@ -4,7 +4,7 @@
  * Relevant documentation
  * @link https://stripe.com/docs/stripe-js
  */
-class StripeClient {
+export default class StripeClient {
 
     /**
      * Constructor.
@@ -162,5 +162,3 @@ class StripeClient {
         };
     }
 }
-
-export default StripeClient;

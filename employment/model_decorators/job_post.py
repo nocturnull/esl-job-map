@@ -53,20 +53,22 @@ class ArrayedJobPost:
             self.instance.latitude += (lat_mag * LAT_OFFSET * random.random() * 3)
             self.instance.longitude += (lng_mag * LNG_OFFSET * random.random() * 3)
 
-    def create(self, is_full_time: bool, user: SiteUser):
+    def create(self, is_full_time: bool, user: SiteUser, is_subscription: bool = False):
         """
         Create a new job post.
 
         :param is_full_time:
         :param user:
+        :param is_subscription:
         :return:
         """
         self.instance.is_full_time = is_full_time
         self.instance.site_user = user
         self.instance.posted_at = datetime.now()
+        self.instance.is_subscription_job = is_subscription
         self.instance.save()
 
-    def repost(self):
+    def repost(self, is_subscription: bool = False):
         """
         Set an existing job post as a repost.
 
@@ -82,4 +84,5 @@ class ArrayedJobPost:
         self.instance.posted_at = self.instance.reposted_at
         self.instance.expiry_notice_sent = False
         self.instance.is_visible = True
+        self.instance.is_subscription_job = is_subscription
         self.instance.save()

@@ -7,6 +7,12 @@
         font-weight: bold;
         font-size: 2.5em;
     }
+    .billing-date-info > p {
+        font-size: 1.1em;
+        span {
+            font-weight: bold;
+        }
+    }
     .price-info {
         font-weight: bold;
         font-size: 2.5em;
@@ -34,5 +40,11 @@
     }
     .negative-delta {
         color: $brand-danger;
+    }
+    input[type="text"], input[type="password"], input[type="email"] {
+        border-radius: 0;
+    }
+    .order-code {
+        width: 7em;
     }
 }
