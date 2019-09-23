@@ -41,6 +41,7 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
     _has_subscription = None
     _next_billing_date = None
     _subscription = None
+    _max_jobs = None
 
     is_staff = models.BooleanField(
         'Staff Status',
@@ -162,13 +163,15 @@ class SiteUser(AbstractBaseUser, PermissionsMixin, Localize):
         return self.job_posts.filter(is_visible=True, posted_at__gte=expire_date)
 
     @property
-    def all_jobs_count(self) -> int:
+    def max_jobs_count(self) -> int:
         """
         Get the total amount of jobs, regardless of status.
 
         :return:
         """
-        return self.job_posts.all().count()
+        if self._max_jobs is None:
+            self._max_jobs = self.active_subscription.order.plan.product.max_jobs
+        return self._max_jobs
 
     @property
     def active_job_count(self) -> int:
