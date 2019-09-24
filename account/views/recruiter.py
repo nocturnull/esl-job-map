@@ -46,6 +46,7 @@ class RecruiterProfile(LoginRequiredMixin, TemplateView):
             request,
             self.template_name,
             {
+                'tab': int(request.GET.get('tab', 1)),
                 'next_bill_date': next_bill_date,
                 'user_form': RecruiterUpdateForm(instance=request.user),
                 'autofill_form': AutofillOptionsForm(instance=request.user.autofill),
@@ -71,6 +72,7 @@ class EditRecruiterProfile(LoginRequiredMixin, TemplateView):
             request,
             self.template_name,
             {
+                'tab': 1,
                 'user_form': form,
                 'autofill_form': AutofillOptionsForm(instance=request.user.autofill),
                 'profile_url': reverse_lazy('recruiter_profile_edit'),
@@ -97,7 +99,8 @@ class EditAutofillOptions(LoginRequiredMixin, TemplateView):
             request,
             self.template_name,
             {
-                'user_form': RecruiterUpdateForm(request.POST, instance=request.user),
+                'tab': 2,
+                'user_form': RecruiterUpdateForm(instance=request.user),
                 'autofill_form': form,
                 'profile_url': reverse_lazy('recruiter_profile_edit'),
                 'autofill_url': reverse_lazy('recruiter_autofill_options'),

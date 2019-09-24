@@ -4,6 +4,11 @@
             {% csrf_token %}
             <p class="bold-text">Full-time</p>
             <div>
+                {{ autofill_form.ft_class_type.errors }}
+                {{ autofill_form.ft_class_type.label_tag }}
+                {{ autofill_form.ft_class_type }}
+            </div>
+            <div>
                 {{ autofill_form.ft_other_requirements.errors }}
                 {{ autofill_form.ft_other_requirements.label_tag }}
                 {{ autofill_form.ft_other_requirements }}
