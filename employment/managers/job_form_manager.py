@@ -21,6 +21,7 @@ class JobFormManager:
             autofill = AutofillOptions()
 
         return CreateFullTimeJobForm(initial={
+            'class_type': autofill.ft_class_type,
             'other_requirements': autofill.ft_other_requirements,
             'salary': autofill.ft_salary,
             'benefits': autofill.ft_benefits

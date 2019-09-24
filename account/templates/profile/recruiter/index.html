@@ -5,20 +5,31 @@
     <div class="grid-container purchase encompassing-container">
 
         <h2>Profile for {{ request.user.email }}</h2>
+
+        {% if messages %}
+            <div class="callout success">
+                {% for message in messages %}
+                    {% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                        <p>{{ message }}</p>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
         <ul class="tabs" data-tabs id="profileTabs">
-            <li class="tabs-title is-active">
-                <a href="#profilePanel" aria-selected="true">Profile</a>
+            <li class="tabs-title {% if tab == 1 %} is-active {% endif %}">
+                <a href="#profilePanel" {% if tab == 1 %} aria-selected="true" {% endif %}>Profile</a>
             </li>
-            <li class="tabs-title">
-                <a href="#autofillPanel">Job Auto-fill</a>
+            <li class="tabs-title {% if tab == 2 %} is-active {% endif %}">
+                <a href="#autofillPanel" {% if tab == 2 %} aria-selected="true" {% endif %}>Job Auto-fill</a>
             </li>
         </ul>
 
         <div class="tabs-content" data-tabs-content="profileTabs">
-            <div class="tabs-panel is-active" id="profilePanel">
+            <div class="tabs-panel {% if tab == 1 %} is-active {% endif %}" id="profilePanel">
                 {% include 'profile/recruiter/section/edit_profile_form.html' %}
             </div>
-            <div class="tabs-panel" id="autofillPanel">
+            <div class="tabs-panel {% if tab == 2 %} is-active {% endif %}" id="autofillPanel">
                 {% include 'profile/recruiter/section/autofill_form.html' %}
             </div>
         </div>
