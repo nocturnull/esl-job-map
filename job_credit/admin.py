@@ -13,7 +13,7 @@ class CreditRecordAdmin(admin.ModelAdmin):
 
     def formfield_for_foreignkey(self, db_field, request, **kwargs):
         if db_field.name == 'site_user':
-            kwargs["queryset"] = SiteUser.objects.filter(role=SiteUser.ROLE_RECRUITER)
+            kwargs["queryset"] = SiteUser.objects.filter(role=SiteUser.ROLE_RECRUITER).order_by('email')
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
 
     def get_form(self, request, obj=None, change=False, **kwargs):

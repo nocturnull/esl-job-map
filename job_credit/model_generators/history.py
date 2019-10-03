@@ -82,12 +82,11 @@ class RecordGenerator:
             existing_record.save()
 
     @classmethod
-    def track_subscription_record(cls, user: SiteUser, amount_refunded: int, bill_date: datetime, subscription: Subscription):
+    def track_subscription_record(cls, user: SiteUser, bill_date: datetime, subscription: Subscription):
         """
         Create a record for the subscription.
 
         :param user:
-        :param amount_refunded:
         :param bill_date:
         :param subscription:
         :return:
@@ -104,7 +103,7 @@ class RecordGenerator:
             description = '{} from {} to {}'.format(product_descriptor, today, next_date)
 
         Record.objects.create(site_user=user, description=description,
-                              action=action, amount=amount_refunded, balance=user.credits)
+                              action=action, amount=0, balance=user.credits)
 
     @classmethod
     def _get_existing_daily_record(cls, user: SiteUser, action: str) -> Optional[Record]:

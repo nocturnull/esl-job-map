@@ -12,7 +12,10 @@ class OrderAdmin(admin.ModelAdmin):
     list_display = ['site_user', 'plan', 'code', 'was_consumed']
     
     def render_change_form(self, request, context, *args, **kwargs):
-        context['adminform'].form.fields['site_user'].queryset = SiteUser.objects.filter(role=SiteUser.ROLE_RECRUITER)
+        context['adminform'].form.fields['site_user'].queryset = SiteUser.objects\
+            .filter(role=SiteUser.ROLE_RECRUITER)\
+            .order_by('email')
+
         return super(OrderAdmin, self).render_change_form(request, context, *args, **kwargs)
 
 
