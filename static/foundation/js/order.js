@@ -11,6 +11,8 @@ export default class Order {
         this.displayInfo = document.getElementById('orderDisplayInfo');
         this.priceDisplay = document.getElementById('priceDisplay');
         this.finalPriceDisplay = document.getElementById('finalPriceDisplay');
+        this.creditFields = document.getElementById('creditEntryFields');
+
         if (this.displayInfo !== null) {
             this.lookupUrl = this.displayInfo.dataset.lookupUrl;
         } else {
@@ -51,9 +53,14 @@ export default class Order {
                 } else {
                     $(this.displayInfo).html(response.detailedInfo);
                     $(this.priceDisplay).html(response.priceInfo);
+                    $(this.creditFields).hide();
                     this.finalPriceDisplay.textContent = 'Purchase ' + response.priceInfo + '?'
                 }
             });
+        } else {
+            $(this.displayInfo).html('');
+            $(this.creditFields).show();
+            updateCheckoutQuantityDisplay();
         }
     }
 }
