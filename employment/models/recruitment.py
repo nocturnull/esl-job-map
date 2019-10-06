@@ -335,7 +335,10 @@ class JobPost(models.Model, Localize):
         elif user.is_recruiter and self.is_job_poster(user):
             content += '<div class="action-links">'  # Open action-links
             content += '<a href="{}" class="job-apply-link action-link">Edit job</a>'.format(self.edit_link)
-            content += '<a href="{}" class="job-not-interested-link">Close</a>'.format(self.close_link)
+            if self.can_delete():
+                content += '<a href="{}" class="job-not-interested-link">Delete</a>'.format(self.delete_link)
+            else:
+                content += '<a href="{}" class="job-not-interested-link">Close</a>'.format(self.close_link)
             content += '</div>'  # Close action-links
 
         content += '</div>'  # Close job-post

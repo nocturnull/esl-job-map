@@ -35,6 +35,15 @@ class Record(models.Model, Localize):
         return self.action == self.ACTION_PURCHASE
 
     @property
+    def is_refund(self) -> bool:
+        """
+        Determine if the record is a refund.
+
+        :return:
+        """
+        return self.action == self.ACTION_REFUND
+
+    @property
     def pretty_date(self) -> str:
         """
         Get a neatly formatted date.
@@ -50,13 +59,13 @@ class Record(models.Model, Localize):
 
         :return:
         """
-        if self.is_purchase:
+        if self.is_purchase or self.is_refund:
             return '+{}'.format(self.amount)
         return '-{}'.format(self.amount)
 
     @property
     def delta_class(self) -> str:
-        if self.is_purchase:
+        if self.is_purchase or self.is_refund:
             return 'positive-delta'
         return 'negative-delta'
 

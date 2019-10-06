@@ -88,11 +88,11 @@ class PaymentManager:
                     order.save()
 
                     # Refund jobs if needed.
-                    amount_refunded = JobPostFacade.refund_existing_jobs(user)
+                    JobPostFacade.refund_existing_jobs(user)
 
                     # Track the record
                     bill_date = SubscriptionDelegate.get_bill_date(user)
-                    RecordGenerator.track_subscription_record(user, amount_refunded, bill_date, subscription)
+                    RecordGenerator.track_subscription_record(user, bill_date, subscription)
 
                     return True
 

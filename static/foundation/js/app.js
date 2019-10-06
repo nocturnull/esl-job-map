@@ -26,6 +26,10 @@ function initMap() {
     window.jobMapHandle = jmap;
 }
 
+function updateCheckoutQuantityDisplay() {
+    new StripeClient().handleQuantityChange();
+}
+
 function updateMapMarker(event, anchor, id, isDisinterested) {
     if (event !== null) {
         event.preventDefault();
@@ -43,3 +47,4 @@ function updateMapMarker(event, anchor, id, isDisinterested) {
 
 window.initMap = initMap;
 window.updateMapMarker = updateMapMarker;
+window.updateCheckoutQuantityDisplay = updateCheckoutQuantityDisplay;

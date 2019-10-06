@@ -112,4 +112,4 @@ class Plan(models.Model):
         return '{}{}'.format(self.symbol_currency, self.billing_amount)
 
     def __str__(self):
-        return '{0}{1}-{2}'.format(self.amount, self.currency, self.interval)
+        return '{0}-{1}-{2}'.format(self.product.name, self.billing_interval, self.trial_period_days)
