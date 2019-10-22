@@ -16,7 +16,7 @@ class CreatePlanForm(forms.ModelForm):
 
     def save(self, commit=True):
         stripe_plan = stripe.Plan.create(
-            amount=self.instance.amount,
+            amount=self.instance.amount * 100,
             interval=self.instance.interval,
             product=self.instance.product.stripe_product_id,
             currency=self.instance.currency
