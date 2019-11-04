@@ -54,9 +54,13 @@ class CloseJobForm(forms.ModelForm):
         """
         # Update credits and create record.
         with transaction.atomic():
-            refund_credits = self.instance.calculate_refund()
-            self.instance.site_user.credit_bank.balance += refund_credits
-            self.instance.site_user.credit_bank.save()
+            # Don't refund any credits if the job was created before a subscription.
+            if self.instance.site_user.has_subscription and not self.instance.is_subscription_job:
+                refund_credits = 0
+            else:
+                refund_credits = self.instance.calculate_refund()
+                self.instance.site_user.credit_bank.balance += refund_credits
+                self.instance.site_user.credit_bank.save()
             RecordGenerator.track_refund_record(self.instance.site_user, job_credits=refund_credits)
 
         # Update job post.
