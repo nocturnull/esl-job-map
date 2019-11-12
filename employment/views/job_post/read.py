@@ -19,8 +19,6 @@ class ListJobPost(LoginRequiredMixin, ListView):
     template_name = 'job_post/read/list.html'
 
     def get_queryset(self):
-        if self.request.user.has_subscription:
-            return self.request.user.max_jobs_count
         return self.request.user.job_posts.all()
 
     def get(self, request, *args, **kwargs):
