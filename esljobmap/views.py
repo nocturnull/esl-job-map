@@ -9,3 +9,7 @@ class HomeView(TemplateView):
 
 class Custom404(TemplateView):
     template_name = 'errors/404.html'
+
+
+class ServiceDownView(TemplateView):
+    template_name = 'down.html'

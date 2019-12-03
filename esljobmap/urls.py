@@ -15,18 +15,28 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
-from esljobmap.views import HomeView, Custom404
+from esljobmap.views import ServiceDownView, Custom404
 
+# lazy af way of catching everything, regex wasn't working for shit....
 urlpatterns = [
-    path('', HomeView.as_view(), name='home'),
-    path('kocotutor/', admin.site.urls),
-    path('korea/about/', include('about.urls')),
-    path('korea/account/', include('account.urls')),
-    path('korea/account/', include('django.contrib.auth.urls')),
-    path('korea/employment/', include('employment.urls')),
-    path('korea/job-credit/', include('job_credit.urls')),
-    path('korea/payment/', include('payment.urls')),
-    path('api/', include('task.urls'))
+    path('', ServiceDownView.as_view(), name='home'),
+    path(r'<a>/', ServiceDownView.as_view()),
+    path(r'<a>/<b>/', ServiceDownView.as_view()),
+    path(r'<a>/<b>/<c>/', ServiceDownView.as_view()),
+    path(r'<a>/<b>/<c>/<d>/', ServiceDownView.as_view()),
+    path(r'<a>/<b>/<c>/<d>/<e>/', ServiceDownView.as_view()),
+    path(r'<a>/<b>/<c>/<d>/<e>/<f>/', ServiceDownView.as_view()),
+    path(r'<a>/<b>/<c>/<d>/<e>/<f>/<g>/', ServiceDownView.as_view()),
+    path(r'<a>/<b>/<c>/<d>/<e>/<f>/<g>/<h>/', ServiceDownView.as_view()),
+    path(r'<a>/<b>/<c>/<d>/<e>/<f>/<g>/<h>/<i>', ServiceDownView.as_view()),
+    # path('kocotutor/', admin.site.urls),
+    # path('korea/about/', include('about.urls')),
+    # path('korea/account/', include('account.urls')),
+    # path('korea/account/', include('django.contrib.auth.urls')),
+    # path('korea/employment/', include('employment.urls')),
+    # path('korea/job-credit/', include('job_credit.urls')),
+    # path('korea/payment/', include('payment.urls')),
+    # path('api/', include('task.urls'))
 ]
 
 handler404 = Custom404.as_view()
