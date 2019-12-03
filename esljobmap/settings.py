@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'j-q498+4qj04^pu%i7cq9i&e4792k^k_ps(5c*v1gkn*n(r3%j'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('ESLJOBMAP_DEBUG', False)
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
