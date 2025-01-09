@@ -59,6 +59,8 @@ npm install --global foundation-cli
 ### Environment Variables
 Add the following environment variables to your .bashrc or .bash_profile file
 ```bash
+export SECRET_KEY=secretkey
+export JWT_SECRET_KEY=jwtsecretkey
 export ESLJOBMAP_DEBUG=True
 export ESLJOBMAP_DB_NAME=esljobmap
 export ESLJOBMAP_DB_USER=username
